@@ -272,6 +272,18 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 
     .week-body {{ padding: .25rem 1.5rem 1.25rem; }}
 
+    .week-video {{
+      margin: .85rem 0 1rem; border: 1px solid var(--line); border-radius: 10px;
+      overflow: hidden; background: #0f172a;
+    }}
+    .week-video-label {{
+      padding: .55rem .85rem; font-size: .78rem; font-weight: 600;
+      background: #1e293b; color: #e2e8f0; border-bottom: 1px solid #334155;
+    }}
+    .week-video video {{
+      width: 100%; display: block; max-height: 360px; background: #000;
+    }}
+
     .simple-box {{
       background: var(--amber-soft); border: 1px solid var(--amber-border);
       border-radius: 10px; padding: 1rem 1.15rem; margin: .85rem 0 1rem;
@@ -737,6 +749,25 @@ def panel_sort_key(title: str):
     return (priority, t)
 
 
+def week_video_path(num: int) -> Path | None:
+    path = BASE / "videos" / f"hafta-{num}.mp4"
+    return path if path.exists() else None
+
+
+def build_week_video_html(num: int) -> str:
+    if not week_video_path(num):
+        return ""
+    return f"""
+        <div class="week-video">
+          <div class="week-video-label">Kisa Video Ozeti (~1 dk) — Hafta {num}</div>
+          <video controls preload="metadata" playsinline poster="">
+            <source src="videos/hafta-{num}.mp4" type="video/mp4">
+            Tarayiciniz video oynatmayi desteklemiyor.
+          </video>
+        </div>
+        """
+
+
 def build_week_block(title: str, sid: str, body: str) -> str:
     meta = WEEK_META.get(sid, {})
     num = meta.get("num", "")
@@ -760,6 +791,8 @@ def build_week_block(title: str, sid: str, body: str) -> str:
       <div class="week-body">
     """
 
+    video_html = build_week_video_html(num) if num else ""
+
     simple_html = ""
     if simple:
         items = "".join(f"<li>{html.escape(s)}</li>" for s in simple)
@@ -781,7 +814,7 @@ def build_week_block(title: str, sid: str, body: str) -> str:
         </details>
         """)
 
-    return head + simple_html + "".join(panels) + "</div></section>"
+    return head + video_html + simple_html + "".join(panels) + "</div></section>"
 
 
 def build_study_plan_section() -> str:

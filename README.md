@@ -15,11 +15,15 @@ Site yayına alındıktan sonra:
 | `index.html` | Çalışma sitesi (GitHub Pages bunu gösterir) |
 | `CALISMA_REHBERI.pdf` | PDF sürüm |
 | `CALISMA_REHBERI.md` | Kaynak metin |
+| `videos/hafta-2.mp4` … `hafta-10.mp4` | Haftalık kısa özet videolar (~30–70 sn) |
+| `generate_videos.py` | Videoları yeniden üretmek için (TTS + slayt) |
+| `video_data.py` | Video slayt ve anlatım metinleri |
 | `build_site.py` | Siteyi yeniden üretmek için |
 
 ## Siteyi güncellemek
 
 ```bash
+py generate_videos.py   # isteğe bağlı — videoları yeniden üret
 py build_site.py
 git add .
 git commit -m "Site guncellendi"

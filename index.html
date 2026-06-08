@@ -121,6 +121,18 @@
 
     .week-body { padding: .25rem 1.5rem 1.25rem; }
 
+    .week-video {
+      margin: .85rem 0 1rem; border: 1px solid var(--line); border-radius: 10px;
+      overflow: hidden; background: #0f172a;
+    }
+    .week-video-label {
+      padding: .55rem .85rem; font-size: .78rem; font-weight: 600;
+      background: #1e293b; color: #e2e8f0; border-bottom: 1px solid #334155;
+    }
+    .week-video video {
+      width: 100%; display: block; max-height: 360px; background: #000;
+    }
+
     .simple-box {
       background: var(--amber-soft); border: 1px solid var(--amber-border);
       border-radius: 10px; padding: 1rem 1.15rem; margin: .85rem 0 1rem;
@@ -997,6 +1009,14 @@
       </div>
       <div class="week-body">
     
+        <div class="week-video">
+          <div class="week-video-label">Kisa Video Ozeti (~1 dk) — Hafta 2</div>
+          <video controls preload="metadata" playsinline poster="">
+            <source src="videos/hafta-2.mp4" type="video/mp4">
+            Tarayiciniz video oynatmayi desteklemiyor.
+          </video>
+        </div>
+        
         <div class="simple-box">
           <h3>Basit Anlatim</h3>
           <ul><li>Ruby&#x27;de sayi, metin, dizi — hepsi nesnedir.</li><li>Rails = Model (veri) + View (arayuz) + Controller (mantik).</li><li>routes.rb istegi yonlendirir, controller isler, view gosterir.</li><li>rails new, db:create, rails s ile proje calistirilir.</li></ul>
@@ -1916,6 +1936,14 @@ puts &quot;#{amount} #{result}.&quot;
       </div>
       <div class="week-body">
     
+        <div class="week-video">
+          <div class="week-video-label">Kisa Video Ozeti (~1 dk) — Hafta 3</div>
+          <video controls preload="metadata" playsinline poster="">
+            <source src="videos/hafta-3.mp4" type="video/mp4">
+            Tarayiciniz video oynatmayi desteklemiyor.
+          </video>
+        </div>
+        
         <div class="simple-box">
           <h3>Basit Anlatim</h3>
           <ul><li>ORM: veritabani tablosu = Ruby sinifi.</li><li>Post.create ile kayit ekle, Post.all ile listele.</li><li>find id arar (hata verir), find_by arar (nil doner), where filtreler.</li><li>Migration ile tablo/kolon ekle; rails db:migrate calistir.</li></ul>
@@ -2546,6 +2574,14 @@ Post.last(10)
       </div>
       <div class="week-body">
     
+        <div class="week-video">
+          <div class="week-video-label">Kisa Video Ozeti (~1 dk) — Hafta 4</div>
+          <video controls preload="metadata" playsinline poster="">
+            <source src="videos/hafta-4.mp4" type="video/mp4">
+            Tarayiciniz video oynatmayi desteklemiyor.
+          </video>
+        </div>
+        
         <div class="simple-box">
           <h3>Basit Anlatim</h3>
           <ul><li>GET okur, POST olusturur, PUT/PATCH gunceller, DELETE siler.</li><li>resources :posts otomatik 7 route olusturur.</li><li>Enum: sayisal degerlere anlamli isim verir (draft: 0).</li><li>@degisken controller&#x27;dan view&#x27;a veri tasir.</li></ul>
@@ -3043,6 +3079,14 @@ değişkenler @ ile başlar.
       </div>
       <div class="week-body">
     
+        <div class="week-video">
+          <div class="week-video-label">Kisa Video Ozeti (~1 dk) — Hafta 5</div>
+          <video controls preload="metadata" playsinline poster="">
+            <source src="videos/hafta-5.mp4" type="video/mp4">
+            Tarayiciniz video oynatmayi desteklemiyor.
+          </video>
+        </div>
+        
         <div class="simple-box">
           <h3>Basit Anlatim</h3>
           <ul><li>form_with model: @post ile form olusturulur.</li><li>post_params sadece izin verilen alanlari gecirir.</li><li>Partial (_form) ile tekrar eden kod azaltilir.</li><li>before_action ile ortak kod tek yerde toplanir.</li></ul>
@@ -3465,6 +3509,14 @@ Ardından views/posts/ new.html.erb dosyasını oluşturun.
       </div>
       <div class="week-body">
     
+        <div class="week-video">
+          <div class="week-video-label">Kisa Video Ozeti (~1 dk) — Hafta 6</div>
+          <video controls preload="metadata" playsinline poster="">
+            <source src="videos/hafta-6.mp4" type="video/mp4">
+            Tarayiciniz video oynatmayi desteklemiyor.
+          </video>
+        </div>
+        
         <div class="simple-box">
           <h3>Basit Anlatim</h3>
           <ul><li>Grid 12 sutun: col-md-6 = yarim genislik.</li><li>container ortalar, container-fluid tam genislik.</li><li>Navbar ve footer partial olarak layout&#x27;a eklenir.</li><li>card, btn siniflari ile modern gorunum.</li></ul>
@@ -3873,6 +3925,14 @@ Bu kod bir örnektir.
       </div>
       <div class="week-body">
     
+        <div class="week-video">
+          <div class="week-video-label">Kisa Video Ozeti (~1 dk) — Hafta 7</div>
+          <video controls preload="metadata" playsinline poster="">
+            <source src="videos/hafta-7.mp4" type="video/mp4">
+            Tarayiciniz video oynatmayi desteklemiyor.
+          </video>
+        </div>
+        
         <div class="simple-box">
           <h3>Basit Anlatim</h3>
           <ul><li>belongs_to: FK bu tabloda. has_many: karsi taraf cok kayit.</li><li>HABTM: ara tablo, id yok, iki FK var.</li><li>scaffold ile model+view+controller hizli olusur.</li><li>category_ids: [] ile coklu kategori secilir.</li></ul>
@@ -4340,6 +4400,14 @@ db/migrate/create_join_table_posts_categories
       </div>
       <div class="week-body">
     
+        <div class="week-video">
+          <div class="week-video-label">Kisa Video Ozeti (~1 dk) — Hafta 8</div>
+          <video controls preload="metadata" playsinline poster="">
+            <source src="videos/hafta-8.mp4" type="video/mp4">
+            Tarayiciniz video oynatmayi desteklemiyor.
+          </video>
+        </div>
+        
         <div class="simple-box">
           <h3>Basit Anlatim</h3>
           <ul><li>validates: veriyi kontrol eder, gecersizse kaydetmez.</li><li>normalizes: kaydetmeden once duzenler (bosluk sil, buyuk harf).</li><li>presence, uniqueness, length en sik kullanilan kurallar.</li><li>has_one_attached :image ile dosya yukleme.</li></ul>
@@ -4934,6 +5002,14 @@ Eklenen Resmin Blog Sayfasında Gösterilmesi
       </div>
       <div class="week-body">
     
+        <div class="week-video">
+          <div class="week-video-label">Kisa Video Ozeti (~1 dk) — Hafta 9</div>
+          <video controls preload="metadata" playsinline poster="">
+            <source src="videos/hafta-9.mp4" type="video/mp4">
+            Tarayiciniz video oynatmayi desteklemiyor.
+          </video>
+        </div>
+        
         <div class="simple-box">
           <h3>Basit Anlatim</h3>
           <ul><li>I18n.t ile metin cevirirsin (tr.yml, en.yml).</li><li>?locale=en ile dil degistirilir.</li><li>FriendlyId: /posts/1 yerine /posts/baslik-slug.</li><li>Action Text: zengin metin editoru (kalin, liste, resim).</li></ul>
@@ -5367,6 +5443,14 @@ app/models/post.rb
       </div>
       <div class="week-body">
     
+        <div class="week-video">
+          <div class="week-video-label">Kisa Video Ozeti (~1 dk) — Hafta 10</div>
+          <video controls preload="metadata" playsinline poster="">
+            <source src="videos/hafta-10.mp4" type="video/mp4">
+            Tarayiciniz video oynatmayi desteklemiyor.
+          </video>
+        </div>
+        
         <div class="simple-box">
           <h3>Basit Anlatim</h3>
           <ul><li>Devise: kayit ol, giris yap, sifre sifirla.</li><li>Authentication = kimlik, Authorization = yetki.</li><li>authenticate_user! giris zorunlu kilar.</li><li>current_user.posts.new ile post kullaniciya atanir.</li></ul>
