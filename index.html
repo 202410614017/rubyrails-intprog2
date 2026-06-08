@@ -231,6 +231,57 @@
     }
     .callout-exam { background: var(--amber-soft); border: 1px solid var(--amber-border); color: #78350f; }
     .callout-tip { background: var(--green-soft); border: 1px solid var(--green-border); color: #14532d; }
+    .callout-web { background: var(--blue-soft); border: 1px solid var(--blue-border); color: #1e3a5f; }
+
+    .enrich-toolbar { display: flex; flex-wrap: wrap; gap: .5rem; margin: .75rem 0 1rem; }
+    .enrich-tab {
+      padding: .35rem .7rem; border-radius: 999px; font-size: .78rem; font-weight: 600;
+      border: 1px solid var(--line); background: white; color: var(--text-soft);
+      cursor: pointer; font-family: inherit;
+    }
+    .enrich-tab.active { background: var(--blue-soft); border-color: var(--blue-border); color: var(--blue-text); }
+    .enrich-grid { display: grid; gap: .65rem; }
+    .enrich-card {
+      border: 1px solid var(--blue-border); border-radius: 10px; background: white; overflow: hidden;
+    }
+    .enrich-card.hidden { display: none; }
+    .enrich-card-head {
+      padding: .85rem 1rem; cursor: pointer; display: flex; align-items: center; gap: .6rem;
+      background: linear-gradient(180deg, #fff 0%, var(--blue-soft) 100%);
+    }
+    .enrich-card-head h3 { font-size: .92rem; font-weight: 700; margin: 0; flex: 1; color: var(--text); }
+    .enrich-week-badge {
+      font-size: .68rem; font-weight: 700; padding: .2rem .5rem; border-radius: 6px;
+      background: var(--blue-text); color: white; flex-shrink: 0;
+    }
+    .enrich-card-body { display: none; padding: .85rem 1rem 1rem; border-top: 1px solid var(--line); }
+    .enrich-card.open .enrich-card-body { display: block; }
+    .enrich-card-body p { font-size: .88rem; color: var(--text-soft); margin: .45rem 0; line-height: 1.55; }
+    .enrich-exam {
+      margin-top: .65rem; padding: .6rem .75rem; background: var(--amber-soft);
+      border: 1px solid var(--amber-border); border-radius: 8px; font-size: .82rem; color: #78350f;
+    }
+    .enrich-sources { margin-top: .65rem; display: flex; flex-wrap: wrap; gap: .4rem; }
+    .enrich-sources a {
+      font-size: .76rem; padding: .3rem .55rem; border-radius: 6px;
+      background: var(--blue-soft); color: var(--blue-text); text-decoration: none; border: 1px solid var(--blue-border);
+    }
+    .enrich-sources a:hover { background: #dbeafe; }
+
+    .panel-enrich {
+      margin: .5rem 0 .75rem; border-left: 3px solid var(--blue-text);
+      background: var(--blue-soft); border-radius: 0 8px 8px 0; padding: .75rem .9rem;
+    }
+    .panel-enrich-label {
+      font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em;
+      color: var(--blue-text); margin-bottom: .4rem;
+    }
+    .panel-enrich p { font-size: .84rem; color: #1e3a5f; margin: .35rem 0; }
+    .panel-enrich .enrich-sources { margin-top: .45rem; }
+    .panel-enrich pre {
+      margin: .5rem 0 0; padding: .6rem .7rem; background: white; border-radius: 6px;
+      border: 1px solid var(--blue-border); overflow-x: auto; font-size: .76rem;
+    }
 
     .quiz-toolbar {
       display: flex; flex-wrap: wrap; gap: .5rem; align-items: center;
@@ -374,6 +425,7 @@
       <nav><div class="nav-label">Basla</div>
 <a href="#7-gunluk-plan"><span class="w-num">7</span>7 Gunluk Plan</a>
 <a href="#konu-indeksi"><span class="w-num">A</span>Konu Indeksi</a>
+<a href="#internet-kaynaklari"><span class="w-num">W</span>Internet Kaynaklari</a>
 <a href="#sinav-ezber-listesi"><span class="w-num">!</span>Ezber Listesi</a>
 <div class="nav-label">Haftalar</div>
 <a href="#hafta-2-ruby-rails-giris"><span class="w-num">2</span>Ruby &amp; Rails Giriş</a>
@@ -396,6 +448,7 @@
         <div class="topbar-actions">
           <a class="btn btn-red" href="#7-gunluk-plan">7 Gunluk Plan</a>
           <a class="btn btn-ghost" href="#konu-indeksi">Konu Indeksi</a>
+          <a class="btn btn-ghost" href="#internet-kaynaklari">Internet Kaynaklari</a>
           <a class="btn btn-ghost" href="#sinav-ezber-listesi">Ezber Listesi</a>
           <button class="btn btn-ghost" onclick="window.print()">PDF Indir</button>
         </div>
@@ -997,6 +1050,544 @@
     </section>
     
 
+    <section class="special-block" id="internet-kaynaklari">
+      <div class="special-head"><h2>Internet Kaynaklari ile Derinlestirilmis Konular</h2></div>
+      <div class="special-body">
+        <div class="callout callout-web">
+          PDF slayt basliklari (kapsulleme, migration, Strong Parameters vb.) resmi Ruby/Rails dokumantasyonu
+          ve guvenilir kaynaklardan derlenerek aciklandi. Ornek kodlar sinava hazirlik icin guncellendi.
+        </div>
+        <div class="enrich-toolbar"><button type="button" class="enrich-tab active" data-week="all">Tumu</button><button type="button" class="enrich-tab" data-week="2">Hafta 2</button><button type="button" class="enrich-tab" data-week="3">Hafta 3</button><button type="button" class="enrich-tab" data-week="4">Hafta 4</button><button type="button" class="enrich-tab" data-week="5">Hafta 5</button><button type="button" class="enrich-tab" data-week="6">Hafta 6</button><button type="button" class="enrich-tab" data-week="7">Hafta 7</button><button type="button" class="enrich-tab" data-week="8">Hafta 8</button><button type="button" class="enrich-tab" data-week="9">Hafta 9</button><button type="button" class="enrich-tab" data-week="10">Hafta 10</button></div>
+        <div class="enrich-grid">
+    <div class="enrich-card" id="enrich-kapsulleme" data-week="2">
+      <div class="enrich-card-head">
+        <span class="enrich-week-badge">H2</span>
+        <h3>Kapsulleme (Encapsulation)</h3>
+      </div>
+      <div class="enrich-card-body">
+        <p>Instance variable (@) disaridan dogrudan okunamaz; getter/setter ile kontrollu erisim saglanir.</p>
+        <p>Ruby&#x27;de @ ile baslayan instance variable&#x27;lar nesnenin icindedir ve disaridan dogrudan erisilemez — bu iyi kapsullemeyi destekler. attr_reader sadece okuma, attr_writer sadece yazma, attr_accessor ikisini birden otomatik uretir. Resmi Ruby FAQ: instance variable&#x27;lara erisim icin bu accessor&#x27;lar tercih edilir.</p>
+        <div class="code-block"><div class="code-label">ornek kod</div><pre><code>class Person
+  attr_reader :name
+  attr_accessor :age
+
+  def initialize(name, age)
+    @name = name
+    @age = age
+  end
+end
+
+p = Person.new(&quot;Ali&quot;, 20)
+p.name      # =&gt; &quot;Ali&quot;  (okuma)
+p.age = 21  # =&gt; 21     (yazma)</code></pre></div>
+        <div class="enrich-exam"><strong>Sinav ipucu:</strong> Sinavda: @name gizli kalir, dis erisim attr_* ile yapilir. attr_reader = sadece oku.</div>
+        <div class="enrich-sources"><a href="https://www.ruby-lang.org/en/documentation/faq/7/" target="_blank" rel="noopener">Ruby Resmi FAQ — Accessors</a><a href="https://docs.ruby-lang.org/en/master/Module.html#method-i-attr_accessor" target="_blank" rel="noopener">Ruby Module#attr_accessor API</a></div>
+      </div>
+    </div>
+    
+    <div class="enrich-card" id="enrich-kalitim" data-week="2">
+      <div class="enrich-card-head">
+        <span class="enrich-week-badge">H2</span>
+        <h3>Kalitim / Miras (Inheritance)</h3>
+      </div>
+      <div class="enrich-card-body">
+        <p>Alt sinif ust siniftan ozellikleri alir; super ile ust sinif metodu cagrilir.</p>
+        <p>Ruby&#x27;de class Child &lt; Parent ile kalitim kurulur. Alt sinif ust sinifin metotlarini kullanabilir veya override edebilir. super kelimesi ust siniftaki ayni metodu cagirir. Tek kalitim vardir (coklu kalitim yok); modul ile mixin kullanilir.</p>
+        <div class="code-block"><div class="code-label">ornek kod</div><pre><code>class Animal
+  def speak
+    &quot;Ses cikarir&quot;
+  end
+end
+
+class Dog &lt; Animal
+  def speak
+    super + &quot; — hav hav!&quot;
+  end
+end
+
+Dog.new.speak  # =&gt; &quot;Ses cikarir — hav hav!</code></pre></div>
+        <div class="enrich-exam"><strong>Sinav ipucu:</strong> class X &lt; Y = X, Y&#x27;den turetilir. super = ust metod. Polimorfizm = ayni metod farkli davranis.</div>
+        <div class="enrich-sources"><a href="https://www.ruby-lang.org/en/documentation/quickstart/3/" target="_blank" rel="noopener">Ruby Classes Tutorial</a><a href="https://rubylearning.com/satishtalim/ruby_inheritance.html" target="_blank" rel="noopener">Ruby Inheritance (Learn Ruby)</a></div>
+      </div>
+    </div>
+    
+    <div class="enrich-card" id="enrich-polimorfizm" data-week="2">
+      <div class="enrich-card-head">
+        <span class="enrich-week-badge">H2</span>
+        <h3>Polimorfizm</h3>
+      </div>
+      <div class="enrich-card-body">
+        <p>Ayni metod adi farkli siniflarda farkli davranis gosterir.</p>
+        <p>Polimorfizm, ayni arayuzun (metod adinin) alt siniflarda farkli implementasyon sunmasidir. Ornegin speak metodu Animal&#x27;da genel, Dog&#x27;da &#x27;hav&#x27;, Cat&#x27;te &#x27;miyav&#x27; doner. Ruby&#x27;de duck typing sayesinde &#x27;ne olduguna degil, ne yapabildigine bakilir&#x27;.</p>
+        <div class="code-block"><div class="code-label">ornek kod</div><pre><code>class Cat &lt; Animal
+  def speak
+    &quot;Miyav!&quot;
+  end
+end
+
+[Dog.new, Cat.new].each { |a| puts a.speak }</code></pre></div>
+        <div class="enrich-exam"><strong>Sinav ipucu:</strong> Override = alt sinif ust metodu yeniden yazar. Polimorfizm sinavda genelde speak ornegiyle gelir.</div>
+        <div class="enrich-sources"><a href="https://www.ruby-lang.org/en/documentation/" target="_blank" rel="noopener">Ruby OOP — Polymorphism</a></div>
+      </div>
+    </div>
+    
+    <div class="enrich-card" id="enrich-mvc" data-week="2">
+      <div class="enrich-card-head">
+        <span class="enrich-week-badge">H2</span>
+        <h3>MVC Mimarisi</h3>
+      </div>
+      <div class="enrich-card-body">
+        <p>Model=veri, View=arayuz, Controller=istek isleme. Rails&#x27;in temel yapisi.</p>
+        <p>Rails MVC mimarisini kullanir. Tarayici istegi routes.rb uzerinden Controller&#x27;a gelir. Controller Model ile veritabanina erisir, sonucu View&#x27;a (@degisken) aktarir. View ERB sablonu HTML uretir. Resmi Rails rehberi bu akisi &#x27;Getting Started&#x27; bolumunde anlatir.</p>
+        <div class="code-block"><div class="code-label">ornek kod</div><pre><code># config/routes.rb
+resources :posts
+
+# app/controllers/posts_controller.rb
+def show
+  @post = Post.find(params[:id])  # Model
+end
+# app/views/posts/show.html.erb  → View render</code></pre></div>
+        <div class="enrich-exam"><strong>Sinav ipucu:</strong> Akis: Browser → Routes → Controller → Model → View. @post instance variable view&#x27;a gider.</div>
+        <div class="enrich-sources"><a href="https://guides.rubyonrails.org/getting_started.html#mvc-architecture" target="_blank" rel="noopener">Rails Guides — MVC</a><a href="https://guides.rubyonrails.org/routing.html" target="_blank" rel="noopener">Rails Routing</a></div>
+      </div>
+    </div>
+    
+    <div class="enrich-card" id="enrich-symbol" data-week="2">
+      <div class="enrich-card-head">
+        <span class="enrich-week-badge">H2</span>
+        <h3>Symbol vs String</h3>
+      </div>
+      <div class="enrich-card-body">
+        <p>Symbol tekil ve degismez; String her seferinde yeni nesne. Hash key&#x27;lerde Symbol tercih edilir.</p>
+        <p>Symbol (:name) bellekte tektir, ayni sembol tekrar kullanildiginda ayni nesneye isaret eder. String her literal yeni nesne olusturur. Rails&#x27;de status: :published gibi enum ve hash key&#x27;lerde Symbol yaygindir. object_id ile fark gorulebilir.</p>
+        <div class="code-block"><div class="code-label">ornek kod</div><pre><code>:a.object_id == :a.object_id  # =&gt; true
+&quot;a&quot;.object_id == &quot;a&quot;.object_id  # =&gt; false (genelde)
+
+user = { name: &quot;Ali&quot;, role: :admin }
+user[:name]  # =&gt; &quot;Ali&quot;</code></pre></div>
+        <div class="enrich-exam"><strong>Sinav ipucu:</strong> Symbol tekil, String cogaltilir. Rails enum ve params key&#x27;lerinde :draft gibi symbol kullanilir.</div>
+        <div class="enrich-sources"><a href="https://docs.ruby-lang.org/en/master/Symbol.html" target="_blank" rel="noopener">Ruby Symbol Documentation</a></div>
+      </div>
+    </div>
+    
+    <div class="enrich-card" id="enrich-orm" data-week="3">
+      <div class="enrich-card-head">
+        <span class="enrich-week-badge">H3</span>
+        <h3>ORM (Object Relational Mapping)</h3>
+      </div>
+      <div class="enrich-card-body">
+        <p>Veritabani tablosu = Ruby sinifi. SQL yazmadan CRUD yapilir.</p>
+        <p>ORM, iliskisel veritabani tablolarini nesne yonelimli siniflara esler. posts tablosu Post modeline karsilik gelir. Active Record Rails&#x27;in ORM katmanidir. Migration ile sema, model ile veri islemleri yonetilir.</p>
+        <div class="code-block"><div class="code-label">ornek kod</div><pre><code># db/migrate/xxx_create_posts.rb → posts tablosu
+# app/models/post.rb
+class Post &lt; ApplicationRecord
+end
+
+Post.create(title: &quot;Merhaba&quot;)
+Post.all</code></pre></div>
+        <div class="enrich-exam"><strong>Sinav ipucu:</strong> ORM = tablo ↔ sinif. Active Record = Rails ORM. SQL yazmadan Post.create, Post.all kullanilir.</div>
+        <div class="enrich-sources"><a href="https://guides.rubyonrails.org/active_record_basics.html" target="_blank" rel="noopener">Rails Active Record Basics</a></div>
+      </div>
+    </div>
+    
+    <div class="enrich-card" id="enrich-migration" data-week="3">
+      <div class="enrich-card-head">
+        <span class="enrich-week-badge">H3</span>
+        <h3>Migration</h3>
+      </div>
+      <div class="enrich-card-body">
+        <p>Veritabani semasini versiyonlu Ruby dosyalariyla degistirir.</p>
+        <p>Migration dosyalari db/migrate/ altindadir. up/down veya change metodu ile tablo olusturma, kolon ekleme yapilir. rails db:migrate bekleyen migrationlari uygular. db:rollback son migrationi geri alir. schema.rb guncel semayi tutar.</p>
+        <div class="code-block"><div class="code-label">ornek kod</div><pre><code># rails g migration AddStatusToPosts status:integer
+class AddStatusToPosts &lt; ActiveRecord::Migration[7.0]
+  def change
+    add_column :posts, :status, :integer, default: 0
+  end
+end
+
+# Terminal: rails db:migrate</code></pre></div>
+        <div class="enrich-exam"><strong>Sinav ipucu:</strong> db:migrate uygula, db:rollback geri al, db:reset sil+yeniden kur+seed. Migration dosyasi db/migrate/.</div>
+        <div class="enrich-sources"><a href="https://guides.rubyonrails.org/active_record_migrations.html" target="_blank" rel="noopener">Rails Migration Guide</a><a href="https://api.rubyonrails.org/classes/ActiveRecord/Migration.html" target="_blank" rel="noopener">Rails db:migrate API</a></div>
+      </div>
+    </div>
+    
+    <div class="enrich-card" id="enrich-find-where" data-week="3">
+      <div class="enrich-card-head">
+        <span class="enrich-week-badge">H3</span>
+        <h3>find / find_by / where</h3>
+      </div>
+      <div class="enrich-card-body">
+        <p>find id ile arar (hata), find_by kosul (nil), where filtre (liste/Relation).</p>
+        <p>Post.find(1) primary key ile arar; kayit yoksa ActiveRecord::RecordNotFound hatasi. Post.find_by(title: &#x27;x&#x27;) ilk esleseni doner, yoksa nil. Post.where(status: 1) ActiveRecord::Relation doner (lazy, zincirlenebilir).</p>
+        <div class="code-block"><div class="code-label">ornek kod</div><pre><code>Post.find(1)                    # hata verebilir
+Post.find_by(title: &quot;Rails&quot;)    # nil veya kayit
+Post.where(status: :published)  # Relation
+Post.where(status: 1).order(created_at: :desc).limit(5)</code></pre></div>
+        <div class="enrich-exam"><strong>Sinav ipucu:</strong> find → exception, find_by → nil, where → koleksiyon. where sonucu uzerinde order/limit zincirlenir.</div>
+        <div class="enrich-sources"><a href="https://guides.rubyonrails.org/active_record_querying.html" target="_blank" rel="noopener">Active Record Query Interface</a></div>
+      </div>
+    </div>
+    
+    <div class="enrich-card" id="enrich-enum" data-week="4">
+      <div class="enrich-card-head">
+        <span class="enrich-week-badge">H4</span>
+        <h3>Active Record Enum</h3>
+      </div>
+      <div class="enrich-card-body">
+        <p>Integer kolona anlamli isim verir; DB&#x27;de sayi, kodda symbol.</p>
+        <p>enum status: { draft: 0, published: 1 } ile status kolonuna isimler baglanir. post.draft? ve post.published! gibi yardimci metotlar otomatik olusur. Veritabaninda integer saklanir, Ruby tarafinda okunabilir.</p>
+        <div class="code-block"><div class="code-label">ornek kod</div><pre><code>class Post &lt; ApplicationRecord
+  enum :status, { draft: 0, published: 1, archived: 2 }
+end
+
+post = Post.new
+post.draft!
+post.draft?       # =&gt; true
+post.status       # =&gt; &quot;draft&quot;</code></pre></div>
+        <div class="enrich-exam"><strong>Sinav ipucu:</strong> enum status: { draft: 0 } — DB&#x27;de 0, kodda :draft. draft?, published! otomatik metotlar.</div>
+        <div class="enrich-sources"><a href="https://api.rubyonrails.org/classes/ActiveRecord/Enum.html" target="_blank" rel="noopener">Rails Enum API</a></div>
+      </div>
+    </div>
+    
+    <div class="enrich-card" id="enrich-http-crud" data-week="4">
+      <div class="enrich-card-head">
+        <span class="enrich-week-badge">H4</span>
+        <h3>HTTP Metotlari ve CRUD</h3>
+      </div>
+      <div class="enrich-card-body">
+        <p>GET okur, POST olusturur, PATCH gunceller, DELETE siler. resources 7 route uretir.</p>
+        <p>RESTful Rails uygulamalarinda HTTP metodu islemi belirler. resources :posts tek satirda index, show, new, create, edit, update, destroy route&#x27;larini olusturur. rails routes komutu ile listelenir.</p>
+        <div class="code-block"><div class="code-label">ornek kod</div><pre><code># config/routes.rb
+resources :posts
+
+# GET    /posts          → index
+# GET    /posts/:id      → show
+# POST   /posts          → create
+# PATCH  /posts/:id      → update
+# DELETE /posts/:id      → destroy</code></pre></div>
+        <div class="enrich-exam"><strong>Sinav ipucu:</strong> GET=oku, POST=olustur, PATCH/PUT=guncelle, DELETE=sil. resources :posts = 7 CRUD route.</div>
+        <div class="enrich-sources"><a href="https://guides.rubyonrails.org/routing.html#restful-routing-the-rails-default" target="_blank" rel="noopener">Rails Routing — REST</a></div>
+      </div>
+    </div>
+    
+    <div class="enrich-card" id="enrich-erb" data-week="4">
+      <div class="enrich-card-head">
+        <span class="enrich-week-badge">H4</span>
+        <h3>ERB Sablonlari</h3>
+      </div>
+      <div class="enrich-card-body">
+        <p>&lt;% %&gt; Ruby kodu calistirir, &lt;%= %&gt; ciktiyi HTML&#x27;e yazar.</p>
+        <p>ERB (Embedded Ruby) view dosyalarinda Ruby kodu calistirir. &lt;% if @post %&gt; sadece calistirir, &lt;%= @post.title %&gt; HTML&#x27;e escape edilmis cikti yazar. &lt;%- -%&gt; bosluk kirpma icin kullanilabilir.</p>
+        <div class="code-block"><div class="code-label">ornek kod</div><pre><code>&lt;%# yorum %&gt;
+&lt;h1&gt;&lt;%= @post.title %&gt;&lt;/h1&gt;
+&lt;% @posts.each do |post| %&gt;
+  &lt;p&gt;&lt;%= link_to post.title, post %&gt;&lt;/p&gt;
+&lt;% end %&gt;</code></pre></div>
+        <div class="enrich-exam"><strong>Sinav ipucu:</strong> &lt;% %&gt; kod, &lt;%= %&gt; cikti. @degisken controller&#x27;dan view&#x27;a gelir.</div>
+        <div class="enrich-sources"><a href="https://guides.rubyonrails.org/action_view_overview.html" target="_blank" rel="noopener">Rails Action View Overview</a></div>
+      </div>
+    </div>
+    
+    <div class="enrich-card" id="enrich-strong-parameters" data-week="5">
+      <div class="enrich-card-head">
+        <span class="enrich-week-badge">H5</span>
+        <h3>Strong Parameters</h3>
+      </div>
+      <div class="enrich-card-body">
+        <p>params icinden sadece izin verilen alanlar gecirilir; guvenlik icin zorunlu.</p>
+        <p>Strong Parameters mass assignment saldirisini onler. params.require(:post).permit(:title, :body) sadece title ve body&#x27;yi kabul eder. admin gibi ek alanlar permit edilmezse atanamaz.</p>
+        <div class="code-block"><div class="code-label">ornek kod</div><pre><code>class PostsController &lt; ApplicationController
+  def create
+    @post = Post.new(post_params)
+    @post.save
+  end
+
+  private
+
+  def post_params
+    params.require(:post).permit(:title, :body, :status)
+  end
+end</code></pre></div>
+        <div class="enrich-exam"><strong>Sinav ipucu:</strong> require(:post).permit(...) — izinli alanlar. CSRF icin authenticity_token formda otomatik.</div>
+        <div class="enrich-sources"><a href="https://guides.rubyonrails.org/action_controller_overview.html#strong-parameters" target="_blank" rel="noopener">Rails Strong Parameters Guide</a></div>
+      </div>
+    </div>
+    
+    <div class="enrich-card" id="enrich-form-with" data-week="5">
+      <div class="enrich-card-head">
+        <span class="enrich-week-badge">H5</span>
+        <h3>form_with ve Partials</h3>
+      </div>
+      <div class="enrich-card-body">
+        <p>form_with model ile form olusturur; partial (_form) tekrari azaltir.</p>
+        <p>form_with model: @post otomatik action/method belirler (new→create, edit→update). Partial dosyalar _ ile baslar: render &#x27;form&#x27;. before_action :set_post gibi callback&#x27;ler tekrar eden kodu controller&#x27;da toplar.</p>
+        <div class="code-block"><div class="code-label">ornek kod</div><pre><code>&lt;%# app/views/posts/_form.html.erb %&gt;
+&lt;%= form_with model: @post do |f| %&gt;
+  &lt;%= f.text_field :title %&gt;
+  &lt;%= f.submit %&gt;
+&lt;% end %&gt;
+
+&lt;%# controller %&gt;
+before_action :set_post, only: [:show, :edit, :update, :destroy]</code></pre></div>
+        <div class="enrich-exam"><strong>Sinav ipucu:</strong> Partial _ ile baslar. before_action DRY. button_to DELETE formu olusturur.</div>
+        <div class="enrich-sources"><a href="https://guides.rubyonrails.org/form_helpers.html" target="_blank" rel="noopener">Rails Form Helpers</a></div>
+      </div>
+    </div>
+    
+    <div class="enrich-card" id="enrich-bootstrap-grid" data-week="6">
+      <div class="enrich-card-head">
+        <span class="enrich-week-badge">H6</span>
+        <h3>Bootstrap Grid</h3>
+      </div>
+      <div class="enrich-card-body">
+        <p>12 sutunluk responsive grid; container, row, col-* siniflari.</p>
+        <p>Bootstrap 5 grid sistemi 12 sutun uzerinden calisir. container icerigi ortalar, row satir, col-md-6 medium ekranda yarim genislik demektir. Rails 7+ ile rails new --css bootstrap veya importmap ile eklenir.</p>
+        <div class="code-block"><div class="code-label">ornek kod</div><pre><code>&lt;div class=&quot;container&quot;&gt;
+  &lt;div class=&quot;row&quot;&gt;
+    &lt;div class=&quot;col-md-8&quot;&gt;Ana icerik&lt;/div&gt;
+    &lt;div class=&quot;col-md-4&quot;&gt;Sidebar&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre></div>
+        <div class="enrich-exam"><strong>Sinav ipucu:</strong> 12 sutun grid. col-md-6 = yarim. container ortalar, container-fluid tam genislik.</div>
+        <div class="enrich-sources"><a href="https://getbootstrap.com/docs/5.3/layout/grid/" target="_blank" rel="noopener">Bootstrap Grid Docs</a></div>
+      </div>
+    </div>
+    
+    <div class="enrich-card" id="enrich-associations" data-week="7">
+      <div class="enrich-card-head">
+        <span class="enrich-week-badge">H7</span>
+        <h3>Model Iliskileri (belongs_to / has_many)</h3>
+      </div>
+      <div class="enrich-card-body">
+        <p>belongs_to FK bu tabloda; has_many karsi tarafta cok kayit.</p>
+        <p>Post belongs_to :category — posts tablosunda category_id vardir. Category has_many :posts — bir kategorinin cok postu olabilir. has_many :through ara model ile iliski kurar. dependent: :destroy silme davranisini belirler.</p>
+        <div class="code-block"><div class="code-label">ornek kod</div><pre><code>class Post &lt; ApplicationRecord
+  belongs_to :category
+  belongs_to :user
+end
+
+class Category &lt; ApplicationRecord
+  has_many :posts
+end
+
+post.category.name
+category.posts</code></pre></div>
+        <div class="enrich-exam"><strong>Sinav ipucu:</strong> belongs_to = FK burada. has_many = karsi tarafta cok. HABTM = ara tablo, id yok.</div>
+        <div class="enrich-sources"><a href="https://guides.rubyonrails.org/association_basics.html" target="_blank" rel="noopener">Rails Associations Guide</a></div>
+      </div>
+    </div>
+    
+    <div class="enrich-card" id="enrich-habtm" data-week="7">
+      <div class="enrich-card-head">
+        <span class="enrich-week-badge">H7</span>
+        <h3>HABTM (has_and_belongs_to_many)</h3>
+      </div>
+      <div class="enrich-card-body">
+        <p>Coktan coga iliski; ara join tablosu, genelde id kolonu yok.</p>
+        <p>has_and_belongs_to_many iki model arasinda coktan coga baglanti kurar. posts_categories gibi ara tablo sadece iki foreign key icerir. Ek ozellik (tarih vb.) gerekiyorsa has_many :through tercih edilir.</p>
+        <div class="code-block"><div class="code-label">ornek kod</div><pre><code>class Post &lt; ApplicationRecord
+  has_and_belongs_to_many :categories
+end
+
+class Category &lt; ApplicationRecord
+  has_and_belongs_to_many :posts
+end
+
+# join table: categories_posts (post_id, category_id)</code></pre></div>
+        <div class="enrich-exam"><strong>Sinav ipucu:</strong> HABTM ara tablo, id yok. category_ids = [] ile coklu secim. Scaffold hizli CRUD uretir.</div>
+        <div class="enrich-sources"><a href="https://guides.rubyonrails.org/association_basics.html#the-has-and-belongs-to-many-association" target="_blank" rel="noopener">Rails HABTM</a></div>
+      </div>
+    </div>
+    
+    <div class="enrich-card" id="enrich-validation" data-week="8">
+      <div class="enrich-card-head">
+        <span class="enrich-week-badge">H8</span>
+        <h3>Validation (validates)</h3>
+      </div>
+      <div class="enrich-card-body">
+        <p>Model kaydetmeden once veri kurallarini kontrol eder.</p>
+        <p>validates :title, presence: true bos birakilamaz der. uniqueness tekil olmayi, length uzunluk sinirini kontrol eder. Gecersiz kayit save → false doner, errors mesajlari dolar.</p>
+        <div class="code-block"><div class="code-label">ornek kod</div><pre><code>class Post &lt; ApplicationRecord
+  validates :title, presence: true, length: { minimum: 3 }
+  validates :slug, uniqueness: true
+end
+
+post = Post.new
+post.valid?   # =&gt; false
+post.errors.full_messages</code></pre></div>
+        <div class="enrich-exam"><strong>Sinav ipucu:</strong> presence, uniqueness, length en sik. Gecersizse save false. errors.full_messages hata listesi.</div>
+        <div class="enrich-sources"><a href="https://guides.rubyonrails.org/active_record_validations.html" target="_blank" rel="noopener">Rails Validations Guide</a></div>
+      </div>
+    </div>
+    
+    <div class="enrich-card" id="enrich-normalizes" data-week="8">
+      <div class="enrich-card-head">
+        <span class="enrich-week-badge">H8</span>
+        <h3>Normalization (normalizes)</h3>
+      </div>
+      <div class="enrich-card-body">
+        <p>Kaydetmeden once veriyi otomatik duzenler.</p>
+        <p>Rails 7.1+ normalizes ile attribute kaydedilmeden once transform edilir. Ornegin email downcase, title strip ile bosluk temizlenir. Validation&#x27;dan once calisir, tutarli veri saglar.</p>
+        <div class="code-block"><div class="code-label">ornek kod</div><pre><code>class User &lt; ApplicationRecord
+  normalizes :email, with: -&gt;(e) { e.strip.downcase }
+end
+
+User.create(email: &quot;  ALI@Mail.COM  &quot;)
+# email =&gt; &quot;ali@mail.com&quot;</code></pre></div>
+        <div class="enrich-exam"><strong>Sinav ipucu:</strong> normalizes = kaydetmeden duzenle. validates = kural kontrol. Ikisi birlikte kullanilir.</div>
+        <div class="enrich-sources"><a href="https://api.rubyonrails.org/classes/ActiveRecord/Normalization/ClassMethods.html" target="_blank" rel="noopener">Rails normalizes API</a></div>
+      </div>
+    </div>
+    
+    <div class="enrich-card" id="enrich-active-storage" data-week="8">
+      <div class="enrich-card-head">
+        <span class="enrich-week-badge">H8</span>
+        <h3>Active Storage</h3>
+      </div>
+      <div class="enrich-card-body">
+        <p>Dosya/resim yukleme; has_one_attached / has_many_attached.</p>
+        <p>Active Storage Cloud veya disk uzerinde dosya yonetir. has_one_attached :avatar model ile dosyayi iliskilendirir. Formda file_field :avatar kullanilir; variant ile thumbnail uretilebilir.</p>
+        <div class="code-block"><div class="code-label">ornek kod</div><pre><code>class Post &lt; ApplicationRecord
+  has_one_attached :image
+end
+
+# form
+&lt;%= f.file_field :image %&gt;
+
+# view
+&lt;%= image_tag @post.image if @post.image.attached? %&gt;</code></pre></div>
+        <div class="enrich-exam"><strong>Sinav ipucu:</strong> has_one_attached :image. file_field ile yukle. attached? dosya var mi kontrol.</div>
+        <div class="enrich-sources"><a href="https://guides.rubyonrails.org/active_storage_overview.html" target="_blank" rel="noopener">Rails Active Storage Overview</a></div>
+      </div>
+    </div>
+    
+    <div class="enrich-card" id="enrich-i18n" data-week="9">
+      <div class="enrich-card-head">
+        <span class="enrich-week-badge">H9</span>
+        <h3>I18n (Yerellestirme)</h3>
+      </div>
+      <div class="enrich-card-body">
+        <p>Coklu dil destegi; I18n.t ve config/locales/*.yml dosyalari.</p>
+        <p>I18n modulu metinleri YAML dosyalarinda tutar. I18n.t(&#x27;posts.title&#x27;) ceviri doner. URL&#x27;de ?locale=en veya session ile dil degistirilir. Rails varsayilan locale config/application.rb&#x27;de ayarlanir.</p>
+        <div class="code-block"><div class="code-label">ornek kod</div><pre><code># config/locales/tr.yml
+tr:
+  posts:
+    title: &quot;Basliklar&quot;
+
+# view
+&lt;%= t(&#x27;posts.title&#x27;) %&gt;
+&lt;%= link_to &#x27;EN&#x27;, url_for(locale: :en) %&gt;</code></pre></div>
+        <div class="enrich-exam"><strong>Sinav ipucu:</strong> I18n.t veya t() helper. locale= en/tr. YAML dosyalari config/locales/.</div>
+        <div class="enrich-sources"><a href="https://guides.rubyonrails.org/i18n.html" target="_blank" rel="noopener">Rails I18n Guide</a></div>
+      </div>
+    </div>
+    
+    <div class="enrich-card" id="enrich-friendly-id" data-week="9">
+      <div class="enrich-card-head">
+        <span class="enrich-week-badge">H9</span>
+        <h3>FriendlyId (Slug URL)</h3>
+      </div>
+      <div class="enrich-card-body">
+        <p>/posts/1 yerine /posts/rails-rehberi gibi okunabilir URL.</p>
+        <p>FriendlyId gem&#x27;i basliktan slug uretir ve URL&#x27;de id yerine slug kullanir. extend FriendlyId; friendly_id :title, use: :slugged ile model yapilandirilir. SEO ve kullanici deneyimi icin faydalidir.</p>
+        <div class="code-block"><div class="code-label">ornek kod</div><pre><code>class Post &lt; ApplicationRecord
+  extend FriendlyId
+  friendly_id :title, use: :slugged
+end
+
+# /posts/ruby-on-rails-rehberi
+Post.friendly.find(params[:id])</code></pre></div>
+        <div class="enrich-exam"><strong>Sinav ipucu:</strong> FriendlyId = slug URL. friendly_id :title. find yerine friendly.find kullanilir.</div>
+        <div class="enrich-sources"><a href="https://github.com/norman/friendly_id" target="_blank" rel="noopener">FriendlyId GitHub</a></div>
+      </div>
+    </div>
+    
+    <div class="enrich-card" id="enrich-action-text" data-week="9">
+      <div class="enrich-card-head">
+        <span class="enrich-week-badge">H9</span>
+        <h3>Action Text</h3>
+      </div>
+      <div class="enrich-card-body">
+        <p>Zengin metin editoru (Trix); kalin, liste, resim embed.</p>
+        <p>Action Text Rails&#x27;e dahil zengin metin cozumudur. has_rich_text :content ile model iliskilendirilir. Formda rich_text_area :content kullanilir. Trix editor arayuzu saglar, icerik HTML olarak saklanir.</p>
+        <div class="code-block"><div class="code-label">ornek kod</div><pre><code>class Post &lt; ApplicationRecord
+  has_rich_text :content
+end
+
+&lt;%= form_with model: @post do |f| %&gt;
+  &lt;%= f.rich_text_area :content %&gt;
+&lt;% end %&gt;</code></pre></div>
+        <div class="enrich-exam"><strong>Sinav ipucu:</strong> has_rich_text :content. rich_text_area form helper. Trix editor kullanilir.</div>
+        <div class="enrich-sources"><a href="https://guides.rubyonrails.org/action_text_overview.html" target="_blank" rel="noopener">Rails Action Text Overview</a></div>
+      </div>
+    </div>
+    
+    <div class="enrich-card" id="enrich-devise" data-week="10">
+      <div class="enrich-card-head">
+        <span class="enrich-week-badge">H10</span>
+        <h3>Devise (Authentication)</h3>
+      </div>
+      <div class="enrich-card-body">
+        <p>Hazir kullanici girisi: kayit, giris, sifre sifirlama.</p>
+        <p>Devise gem&#x27;i User modeline moduller ekler (:database_authenticatable, :registerable vb.). authenticate_user! giris zorunlu kilar. current_user oturum acmis kullaniciyi doner. devise_for :users routes.rb&#x27;ye login/register yollarini ekler.</p>
+        <div class="code-block"><div class="code-label">ornek kod</div><pre><code>class ApplicationController &lt; ActionController::Base
+  before_action :authenticate_user!
+end
+
+class PostsController &lt; ApplicationController
+  def create
+    @post = current_user.posts.new(post_params)
+  end
+end</code></pre></div>
+        <div class="enrich-exam"><strong>Sinav ipucu:</strong> Devise = authentication. authenticate_user! giris zorunlu. current_user aktif kullanici.</div>
+        <div class="enrich-sources"><a href="https://github.com/heartcombo/devise" target="_blank" rel="noopener">Devise GitHub Wiki</a><a href="https://github.com/heartcombo/devise#getting-started" target="_blank" rel="noopener">Devise Getting Started</a></div>
+      </div>
+    </div>
+    
+    <div class="enrich-card" id="enrich-authorization" data-week="10">
+      <div class="enrich-card-head">
+        <span class="enrich-week-badge">H10</span>
+        <h3>Authorization (Yetkilendirme)</h3>
+      </div>
+      <div class="enrich-card-body">
+        <p>Kim oldugunu degil, ne yapabilecegini kontrol eder.</p>
+        <p>Authentication kimlik dogrulama (Devise), Authorization yetkilendirme (admin mi?). user.admin? gibi metotlar veya Pundit/Cancancan gem&#x27;leri ile erisim kontrol edilir. Controller&#x27;da unless current_user.admin? redirect yapilir.</p>
+        <div class="code-block"><div class="code-label">ornek kod</div><pre><code>def destroy
+  unless current_user.admin?
+    redirect_to root_path, alert: &quot;Yetkiniz yok&quot;
+    return
+  end
+  @post.destroy
+end</code></pre></div>
+        <div class="enrich-exam"><strong>Sinav ipucu:</strong> Authentication=kimlik, Authorization=yetki. admin? rol kontrolu. Devise auth, rol ayri.</div>
+        <div class="enrich-sources"><a href="https://guides.rubyonrails.org/security.html" target="_blank" rel="noopener">Rails Security Guide</a></div>
+      </div>
+    </div>
+    
+    <div class="enrich-card" id="enrich-bloklar" data-week="2">
+      <div class="enrich-card-head">
+        <span class="enrich-week-badge">H2</span>
+        <h3>Bloklar, Proc ve Lambda</h3>
+      </div>
+      <div class="enrich-card-body">
+        <p>Blok do/end veya {}; Proc/Lambda farkli arguman kurallari.</p>
+        <p>Bloklar Ruby&#x27;nin guclu yonudur: [1,2,3].each { |n| puts n }. Proc arguman sayisina toleransli, Lambda katidir (arity kontrol). yield metot icinden blogu cagirir.</p>
+        <div class="code-block"><div class="code-label">ornek kod</div><pre><code>[1, 2, 3].map { |x| x * 2 }  # =&gt; [2, 4, 6]
+
+my_proc = Proc.new { |a, b| a + b }
+my_proc.call(1)      # =&gt; 1 (eksik arg OK)
+
+my_lambda = -&gt;(a, b) { a + b }
+# my_lambda.call(1)  # ArgumentError</code></pre></div>
+        <div class="enrich-exam"><strong>Sinav ipucu:</strong> each/map blok alir. Lambda -&gt; veya lambda{}. Proc toleransli, Lambda katı arguman.</div>
+        <div class="enrich-sources"><a href="https://docs.ruby-lang.org/en/master/Proc.html" target="_blank" rel="noopener">Ruby Proc vs Lambda</a></div>
+      </div>
+    </div>
+    </div>
+      </div>
+    </section>
+    
+
     <section class="week-block" id="hafta-2-ruby-rails-giris">
       <div class="week-head">
         <div class="week-head-top">
@@ -1015,6 +1606,11 @@
             <source src="videos/hafta-2.mp4" type="video/mp4">
             Tarayiciniz video oynatmayi desteklemiyor.
           </video>
+        </div>
+        
+        <div class="callout callout-web" style="margin:.85rem 0 0">
+          <strong>Bu hafta — internet kaynakli aciklamalar:</strong>
+          <div class="enrich-sources" style="margin-top:.45rem"><a href="#enrich-kapsulleme">Kapsulleme (Encapsulation)</a><a href="#enrich-kalitim">Kalitim / Miras (Inheritance)</a><a href="#enrich-polimorfizm">Polimorfizm</a><a href="#enrich-mvc">MVC Mimarisi</a><a href="#enrich-symbol">Symbol vs String</a><a href="#enrich-bloklar">Bloklar, Proc ve Lambda</a></div>
         </div>
         
         <div class="simple-box">
@@ -1165,7 +1761,19 @@ mesaj.class.superclass.superclass # =&gt; BasicObject
 mesaj.class.superclass.superclass.superclass # =&gt; nil
 Demek ki hiyerarşi şu şekilde:
 String &lt; Object &lt; BasicObject
-</code></pre></div></div>
+</code></pre></div>
+        <div class="panel-enrich" id="enrich-symbol">
+          <div class="panel-enrich-label">Internet kaynagi ile aciklama</div>
+          <p><strong>Symbol vs String</strong> — Symbol tekil ve degismez; String her seferinde yeni nesne. Hash key&#x27;lerde Symbol tercih edilir.</p>
+          <p>Symbol (:name) bellekte tektir, ayni sembol tekrar kullanildiginda ayni nesneye isaret eder. String her literal yeni nesne olusturur. Rails&#x27;de status: :published gibi enum ve hash key&#x27;lerde Symbol yaygindir. object_id ile fark gorulebilir.</p>
+          <div class="code-block"><div class="code-label">ornek kod</div><pre><code>:a.object_id == :a.object_id  # =&gt; true
+&quot;a&quot;.object_id == &quot;a&quot;.object_id  # =&gt; false (genelde)
+
+user = { name: &quot;Ali&quot;, role: :admin }
+user[:name]  # =&gt; &quot;Ali&quot;</code></pre></div>
+          <div class="enrich-sources"><a href="https://docs.ruby-lang.org/en/master/Symbol.html" target="_blank" rel="noopener">Ruby Symbol Documentation</a></div>
+        </div>
+        </div>
         </details>
         
         <details class="panel">
@@ -1256,7 +1864,27 @@ u.protected_message # Error
 u.public_message
 &quot;Bu private metot.&quot;
 &quot;Bu protected metot.&quot;
-</code></pre></div></div>
+</code></pre></div>
+        <div class="panel-enrich" id="enrich-kapsulleme">
+          <div class="panel-enrich-label">Internet kaynagi ile aciklama</div>
+          <p><strong>Kapsulleme (Encapsulation)</strong> — Instance variable (@) disaridan dogrudan okunamaz; getter/setter ile kontrollu erisim saglanir.</p>
+          <p>Ruby&#x27;de @ ile baslayan instance variable&#x27;lar nesnenin icindedir ve disaridan dogrudan erisilemez — bu iyi kapsullemeyi destekler. attr_reader sadece okuma, attr_writer sadece yazma, attr_accessor ikisini birden otomatik uretir. Resmi Ruby FAQ: instance variable&#x27;lara erisim icin b...</p>
+          <div class="code-block"><div class="code-label">ornek kod</div><pre><code>class Person
+  attr_reader :name
+  attr_accessor :age
+
+  def initialize(name, age)
+    @name = name
+    @age = age
+  end
+end
+
+p = Person.new(&quot;Ali&quot;, 20)
+p.name      # =&gt; &quot;Ali&quot;  (okuma)
+p.age = 21  # =&gt; 21     (yazma)</code></pre></div>
+          <div class="enrich-sources"><a href="https://www.ruby-lang.org/en/documentation/faq/7/" target="_blank" rel="noopener">Ruby Resmi FAQ — Accessors</a><a href="https://docs.ruby-lang.org/en/master/Module.html#method-i-attr_accessor" target="_blank" rel="noopener">Ruby Module#attr_accessor API</a></div>
+        </div>
+        </div>
         </details>
         
         <details class="panel">
@@ -1474,7 +2102,21 @@ Framework::HttpFunctions.fetch_url
         
         <details class="panel">
           <summary>Bloklar</summary>
-          <div class="panel-inner"></div>
+          <div class="panel-inner">
+        <div class="panel-enrich" id="enrich-bloklar">
+          <div class="panel-enrich-label">Internet kaynagi ile aciklama</div>
+          <p><strong>Bloklar, Proc ve Lambda</strong> — Blok do/end veya {}; Proc/Lambda farkli arguman kurallari.</p>
+          <p>Bloklar Ruby&#x27;nin guclu yonudur: [1,2,3].each { |n| puts n }. Proc arguman sayisina toleransli, Lambda katidir (arity kontrol). yield metot icinden blogu cagirir.</p>
+          <div class="code-block"><div class="code-label">ornek kod</div><pre><code>[1, 2, 3].map { |x| x * 2 }  # =&gt; [2, 4, 6]
+
+my_proc = Proc.new { |a, b| a + b }
+my_proc.call(1)      # =&gt; 1 (eksik arg OK)
+
+my_lambda = -&gt;(a, b) { a + b }
+# my_lambda.call(1)  # ArgumentError</code></pre></div>
+          <div class="enrich-sources"><a href="https://docs.ruby-lang.org/en/master/Proc.html" target="_blank" rel="noopener">Ruby Proc vs Lambda</a></div>
+        </div>
+        </div>
         </details>
         
         <details class="panel">
@@ -1718,7 +2360,22 @@ app/views/home/index.html.erb
           <summary>Rails MVC</summary>
           <div class="panel-inner"><p>routes.rb</p>
 <div class="code-block"><div class="code-label">ruby</div><pre><code>get &quot;/users&quot;, to: &quot;users/index&quot;
-</code></pre></div></div>
+</code></pre></div>
+        <div class="panel-enrich" id="enrich-mvc">
+          <div class="panel-enrich-label">Internet kaynagi ile aciklama</div>
+          <p><strong>MVC Mimarisi</strong> — Model=veri, View=arayuz, Controller=istek isleme. Rails&#x27;in temel yapisi.</p>
+          <p>Rails MVC mimarisini kullanir. Tarayici istegi routes.rb uzerinden Controller&#x27;a gelir. Controller Model ile veritabanina erisir, sonucu View&#x27;a (@degisken) aktarir. View ERB sablonu HTML uretir. Resmi Rails rehberi bu akisi &#x27;Getting Started&#x27; bolumunde anlatir.</p>
+          <div class="code-block"><div class="code-label">ornek kod</div><pre><code># config/routes.rb
+resources :posts
+
+# app/controllers/posts_controller.rb
+def show
+  @post = Post.find(params[:id])  # Model
+end
+# app/views/posts/show.html.erb  → View render</code></pre></div>
+          <div class="enrich-sources"><a href="https://guides.rubyonrails.org/getting_started.html#mvc-architecture" target="_blank" rel="noopener">Rails Guides — MVC</a><a href="https://guides.rubyonrails.org/routing.html" target="_blank" rel="noopener">Rails Routing</a></div>
+        </div>
+        </div>
         </details>
         
         <details class="panel">
@@ -1944,6 +2601,11 @@ puts &quot;#{amount} #{result}.&quot;
           </video>
         </div>
         
+        <div class="callout callout-web" style="margin:.85rem 0 0">
+          <strong>Bu hafta — internet kaynakli aciklamalar:</strong>
+          <div class="enrich-sources" style="margin-top:.45rem"><a href="#enrich-orm">ORM (Object Relational Mapping)</a><a href="#enrich-migration">Migration</a><a href="#enrich-find-where">find / find_by / where</a></div>
+        </div>
+        
         <div class="simple-box">
           <h3>Basit Anlatim</h3>
           <ul><li>ORM: veritabani tablosu = Ruby sinifi.</li><li>Post.create ile kayit ekle, Post.all ile listele.</li><li>find id arar (hata verir), find_by arar (nil doner), where filtreler.</li><li>Migration ile tablo/kolon ekle; rails db:migrate calistir.</li></ul>
@@ -1962,7 +2624,21 @@ puts &quot;#{amount} #{result}.&quot;
           <div class="panel-inner"><p>Nesneleri ilişkisel olarak eşleştirme olarak adlandırılır. Veritabanında oluşturulan</p>
 <p>her bir tabloya karşılık uygulama tarafında bir sınıf/model oluşturulur. ORM</p>
 <p>tekniği belli bir programlama diline bağlı değildir ve her nesneye yönelik dillerde</p>
-<p>yazılabilir/kullanılabilir.</p></div>
+<p>yazılabilir/kullanılabilir.</p>
+        <div class="panel-enrich" id="enrich-orm">
+          <div class="panel-enrich-label">Internet kaynagi ile aciklama</div>
+          <p><strong>ORM (Object Relational Mapping)</strong> — Veritabani tablosu = Ruby sinifi. SQL yazmadan CRUD yapilir.</p>
+          <p>ORM, iliskisel veritabani tablolarini nesne yonelimli siniflara esler. posts tablosu Post modeline karsilik gelir. Active Record Rails&#x27;in ORM katmanidir. Migration ile sema, model ile veri islemleri yonetilir.</p>
+          <div class="code-block"><div class="code-label">ornek kod</div><pre><code># db/migrate/xxx_create_posts.rb → posts tablosu
+# app/models/post.rb
+class Post &lt; ApplicationRecord
+end
+
+Post.create(title: &quot;Merhaba&quot;)
+Post.all</code></pre></div>
+          <div class="enrich-sources"><a href="https://guides.rubyonrails.org/active_record_basics.html" target="_blank" rel="noopener">Rails Active Record Basics</a></div>
+        </div>
+        </div>
         </details>
         
         <details class="panel">
@@ -2102,7 +2778,22 @@ phone = “+16105551234”
         
         <details class="panel">
           <summary>Rails Migration Status</summary>
-          <div class="panel-inner"><p>Rollback STEP parametresi ile istenilen sayı kadar geri gidilebilir.</p></div>
+          <div class="panel-inner"><p>Rollback STEP parametresi ile istenilen sayı kadar geri gidilebilir.</p>
+        <div class="panel-enrich" id="enrich-migration">
+          <div class="panel-enrich-label">Internet kaynagi ile aciklama</div>
+          <p><strong>Migration</strong> — Veritabani semasini versiyonlu Ruby dosyalariyla degistirir.</p>
+          <p>Migration dosyalari db/migrate/ altindadir. up/down veya change metodu ile tablo olusturma, kolon ekleme yapilir. rails db:migrate bekleyen migrationlari uygular. db:rollback son migrationi geri alir. schema.rb guncel semayi tutar.</p>
+          <div class="code-block"><div class="code-label">ornek kod</div><pre><code># rails g migration AddStatusToPosts status:integer
+class AddStatusToPosts &lt; ActiveRecord::Migration[7.0]
+  def change
+    add_column :posts, :status, :integer, default: 0
+  end
+end
+
+# Terminal: rails db:migrate</code></pre></div>
+          <div class="enrich-sources"><a href="https://guides.rubyonrails.org/active_record_migrations.html" target="_blank" rel="noopener">Rails Migration Guide</a><a href="https://api.rubyonrails.org/classes/ActiveRecord/Migration.html" target="_blank" rel="noopener">Rails db:migrate API</a></div>
+        </div>
+        </div>
         </details>
         
         <details class="panel">
@@ -2265,7 +2956,18 @@ kaydedilmediği için id, created_at ve updated_at zaman damgaları nil’dir.
 <p>İç içe where ve and kullanılabilir.</p>
 <p>Title ve article bilgisi boş olmayan post girdilerini bul.</p>
 <p>Post.where(id: [1, 2]).and(Post.where.not(title: nil))</p>
-<p>Id değeri 1 veya 2 olan ve title bilgisi boş olmayan post girdilerini bul.</p></div>
+<p>Id değeri 1 veya 2 olan ve title bilgisi boş olmayan post girdilerini bul.</p>
+        <div class="panel-enrich" id="enrich-find-where">
+          <div class="panel-enrich-label">Internet kaynagi ile aciklama</div>
+          <p><strong>find / find_by / where</strong> — find id ile arar (hata), find_by kosul (nil), where filtre (liste/Relation).</p>
+          <p>Post.find(1) primary key ile arar; kayit yoksa ActiveRecord::RecordNotFound hatasi. Post.find_by(title: &#x27;x&#x27;) ilk esleseni doner, yoksa nil. Post.where(status: 1) ActiveRecord::Relation doner (lazy, zincirlenebilir).</p>
+          <div class="code-block"><div class="code-label">ornek kod</div><pre><code>Post.find(1)                    # hata verebilir
+Post.find_by(title: &quot;Rails&quot;)    # nil veya kayit
+Post.where(status: :published)  # Relation
+Post.where(status: 1).order(created_at: :desc).limit(5)</code></pre></div>
+          <div class="enrich-sources"><a href="https://guides.rubyonrails.org/active_record_querying.html" target="_blank" rel="noopener">Active Record Query Interface</a></div>
+        </div>
+        </div>
         </details>
         
         <details class="panel">
@@ -2582,6 +3284,11 @@ Post.last(10)
           </video>
         </div>
         
+        <div class="callout callout-web" style="margin:.85rem 0 0">
+          <strong>Bu hafta — internet kaynakli aciklamalar:</strong>
+          <div class="enrich-sources" style="margin-top:.45rem"><a href="#enrich-enum">Active Record Enum</a><a href="#enrich-http-crud">HTTP Metotlari ve CRUD</a><a href="#enrich-erb">ERB Sablonlari</a></div>
+        </div>
+        
         <div class="simple-box">
           <h3>Basit Anlatim</h3>
           <ul><li>GET okur, POST olusturur, PUT/PATCH gunceller, DELETE siler.</li><li>resources :posts otomatik 7 route olusturur.</li><li>Enum: sayisal degerlere anlamli isim verir (draft: 0).</li><li>@degisken controller&#x27;dan view&#x27;a veri tasir.</li></ul>
@@ -2602,7 +3309,19 @@ değerini çıktı olarak vermesini söyler.
 &lt;%= post.status %&gt;&lt;br/&gt;
 &lt;% end %&gt;
 views/posts/index.html.erb
-</code></pre></div></div>
+</code></pre></div>
+        <div class="panel-enrich" id="enrich-erb">
+          <div class="panel-enrich-label">Internet kaynagi ile aciklama</div>
+          <p><strong>ERB Sablonlari</strong> — &lt;% %&gt; Ruby kodu calistirir, &lt;%= %&gt; ciktiyi HTML&#x27;e yazar.</p>
+          <p>ERB (Embedded Ruby) view dosyalarinda Ruby kodu calistirir. &lt;% if @post %&gt; sadece calistirir, &lt;%= @post.title %&gt; HTML&#x27;e escape edilmis cikti yazar. &lt;%- -%&gt; bosluk kirpma icin kullanilabilir.</p>
+          <div class="code-block"><div class="code-label">ornek kod</div><pre><code>&lt;%# yorum %&gt;
+&lt;h1&gt;&lt;%= @post.title %&gt;&lt;/h1&gt;
+&lt;% @posts.each do |post| %&gt;
+  &lt;p&gt;&lt;%= link_to post.title, post %&gt;&lt;/p&gt;
+&lt;% end %&gt;</code></pre></div>
+          <div class="enrich-sources"><a href="https://guides.rubyonrails.org/action_view_overview.html" target="_blank" rel="noopener">Rails Action View Overview</a></div>
+        </div>
+        </div>
         </details>
         
         <details class="panel">
@@ -2613,7 +3332,37 @@ def index
 end
 end
 controllers/posts_controller.rb
-</code></pre></div></div>
+</code></pre></div>
+        <div class="panel-enrich" id="enrich-enum">
+          <div class="panel-enrich-label">Internet kaynagi ile aciklama</div>
+          <p><strong>Active Record Enum</strong> — Integer kolona anlamli isim verir; DB&#x27;de sayi, kodda symbol.</p>
+          <p>enum status: { draft: 0, published: 1 } ile status kolonuna isimler baglanir. post.draft? ve post.published! gibi yardimci metotlar otomatik olusur. Veritabaninda integer saklanir, Ruby tarafinda okunabilir.</p>
+          <div class="code-block"><div class="code-label">ornek kod</div><pre><code>class Post &lt; ApplicationRecord
+  enum :status, { draft: 0, published: 1, archived: 2 }
+end
+
+post = Post.new
+post.draft!
+post.draft?       # =&gt; true
+post.status       # =&gt; &quot;draft&quot;</code></pre></div>
+          <div class="enrich-sources"><a href="https://api.rubyonrails.org/classes/ActiveRecord/Enum.html" target="_blank" rel="noopener">Rails Enum API</a></div>
+        </div>
+        
+        <div class="panel-enrich" id="enrich-http-crud">
+          <div class="panel-enrich-label">Internet kaynagi ile aciklama</div>
+          <p><strong>HTTP Metotlari ve CRUD</strong> — GET okur, POST olusturur, PATCH gunceller, DELETE siler. resources 7 route uretir.</p>
+          <p>RESTful Rails uygulamalarinda HTTP metodu islemi belirler. resources :posts tek satirda index, show, new, create, edit, update, destroy route&#x27;larini olusturur. rails routes komutu ile listelenir.</p>
+          <div class="code-block"><div class="code-label">ornek kod</div><pre><code># config/routes.rb
+resources :posts
+
+# GET    /posts          → index
+# GET    /posts/:id      → show
+# POST   /posts          → create
+# PATCH  /posts/:id      → update
+# DELETE /posts/:id      → destroy</code></pre></div>
+          <div class="enrich-sources"><a href="https://guides.rubyonrails.org/routing.html#restful-routing-the-rails-default" target="_blank" rel="noopener">Rails Routing — REST</a></div>
+        </div>
+        </div>
         </details>
         
         <details class="panel">
@@ -3087,6 +3836,11 @@ değişkenler @ ile başlar.
           </video>
         </div>
         
+        <div class="callout callout-web" style="margin:.85rem 0 0">
+          <strong>Bu hafta — internet kaynakli aciklamalar:</strong>
+          <div class="enrich-sources" style="margin-top:.45rem"><a href="#enrich-strong-parameters">Strong Parameters</a><a href="#enrich-form-with">form_with ve Partials</a></div>
+        </div>
+        
         <div class="simple-box">
           <h3>Basit Anlatim</h3>
           <ul><li>form_with model: @post ile form olusturulur.</li><li>post_params sadece izin verilen alanlari gecirir.</li><li>Partial (_form) ile tekrar eden kod azaltilir.</li><li>before_action ile ortak kod tek yerde toplanir.</li></ul>
@@ -3252,7 +4006,26 @@ controllers/posts_controller.rbArayüzden Post Oluşturmak
 <div class="code-block"><div class="code-label">ruby</div><pre><code>def post_params
 params.require(:post).permit(:title, :article, :status)
 end
-</code></pre></div></div>
+</code></pre></div>
+        <div class="panel-enrich" id="enrich-strong-parameters">
+          <div class="panel-enrich-label">Internet kaynagi ile aciklama</div>
+          <p><strong>Strong Parameters</strong> — params icinden sadece izin verilen alanlar gecirilir; guvenlik icin zorunlu.</p>
+          <p>Strong Parameters mass assignment saldirisini onler. params.require(:post).permit(:title, :body) sadece title ve body&#x27;yi kabul eder. admin gibi ek alanlar permit edilmezse atanamaz.</p>
+          <div class="code-block"><div class="code-label">ornek kod</div><pre><code>class PostsController &lt; ApplicationController
+  def create
+    @post = Post.new(post_params)
+    @post.save
+  end
+
+  private
+
+  def post_params
+    params.require(:post).permit(:title, :body, :status)
+  end
+end</code></pre></div>
+          <div class="enrich-sources"><a href="https://guides.rubyonrails.org/action_controller_overview.html#strong-parameters" target="_blank" rel="noopener">Rails Strong Parameters Guide</a></div>
+        </div>
+        </div>
         </details>
         
         <details class="panel">
@@ -3309,7 +4082,22 @@ Post 1 Başlık - Görüntüle
 <p>views/posts/new.html.erb</p>
 <div class="code-block"><div class="code-label">ruby</div><pre><code>&lt;%= render &quot;form&quot;, post: @post, form_title: &quot;Yeni Post Ekle&quot; %&gt;
 &lt;%= link_to &quot;Geri&quot;, posts_path %&gt;
-</code></pre></div></div>
+</code></pre></div>
+        <div class="panel-enrich" id="enrich-form-with">
+          <div class="panel-enrich-label">Internet kaynagi ile aciklama</div>
+          <p><strong>form_with ve Partials</strong> — form_with model ile form olusturur; partial (_form) tekrari azaltir.</p>
+          <p>form_with model: @post otomatik action/method belirler (new→create, edit→update). Partial dosyalar _ ile baslar: render &#x27;form&#x27;. before_action :set_post gibi callback&#x27;ler tekrar eden kodu controller&#x27;da toplar.</p>
+          <div class="code-block"><div class="code-label">ornek kod</div><pre><code>&lt;%# app/views/posts/_form.html.erb %&gt;
+&lt;%= form_with model: @post do |f| %&gt;
+  &lt;%= f.text_field :title %&gt;
+  &lt;%= f.submit %&gt;
+&lt;% end %&gt;
+
+&lt;%# controller %&gt;
+before_action :set_post, only: [:show, :edit, :update, :destroy]</code></pre></div>
+          <div class="enrich-sources"><a href="https://guides.rubyonrails.org/form_helpers.html" target="_blank" rel="noopener">Rails Form Helpers</a></div>
+        </div>
+        </div>
         </details>
         
         <details class="panel">
@@ -3517,6 +4305,11 @@ Ardından views/posts/ new.html.erb dosyasını oluşturun.
           </video>
         </div>
         
+        <div class="callout callout-web" style="margin:.85rem 0 0">
+          <strong>Bu hafta — internet kaynakli aciklamalar:</strong>
+          <div class="enrich-sources" style="margin-top:.45rem"><a href="#enrich-bootstrap-grid">Bootstrap Grid</a></div>
+        </div>
+        
         <div class="simple-box">
           <h3>Basit Anlatim</h3>
           <ul><li>Grid 12 sutun: col-md-6 = yarim genislik.</li><li>container ortalar, container-fluid tam genislik.</li><li>Navbar ve footer partial olarak layout&#x27;a eklenir.</li><li>card, btn siniflari ile modern gorunum.</li></ul>
@@ -3526,7 +4319,20 @@ Ardından views/posts/ new.html.erb dosyasını oluşturun.
           <summary>Bootstrap</summary>
           <div class="panel-inner"><p>Hızlı ve kolay bir şekilde web uygulaması geliştirebilmek için kullanılan ücretsiz</p>
 <p>bir frontend çerçevesidir. Formlar, butonlar, tablolar, navigation, modals gibi html</p>
-<p>ve css templateleri mevcuttur ve isteğe bağlı bazı JS eklentileri de mevcuttur.</p></div>
+<p>ve css templateleri mevcuttur ve isteğe bağlı bazı JS eklentileri de mevcuttur.</p>
+        <div class="panel-enrich" id="enrich-bootstrap-grid">
+          <div class="panel-enrich-label">Internet kaynagi ile aciklama</div>
+          <p><strong>Bootstrap Grid</strong> — 12 sutunluk responsive grid; container, row, col-* siniflari.</p>
+          <p>Bootstrap 5 grid sistemi 12 sutun uzerinden calisir. container icerigi ortalar, row satir, col-md-6 medium ekranda yarim genislik demektir. Rails 7+ ile rails new --css bootstrap veya importmap ile eklenir.</p>
+          <div class="code-block"><div class="code-label">ornek kod</div><pre><code>&lt;div class=&quot;container&quot;&gt;
+  &lt;div class=&quot;row&quot;&gt;
+    &lt;div class=&quot;col-md-8&quot;&gt;Ana icerik&lt;/div&gt;
+    &lt;div class=&quot;col-md-4&quot;&gt;Sidebar&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre></div>
+          <div class="enrich-sources"><a href="https://getbootstrap.com/docs/5.3/layout/grid/" target="_blank" rel="noopener">Bootstrap Grid Docs</a></div>
+        </div>
+        </div>
         </details>
         
         <details class="panel">
@@ -3933,6 +4739,11 @@ Bu kod bir örnektir.
           </video>
         </div>
         
+        <div class="callout callout-web" style="margin:.85rem 0 0">
+          <strong>Bu hafta — internet kaynakli aciklamalar:</strong>
+          <div class="enrich-sources" style="margin-top:.45rem"><a href="#enrich-associations">Model Iliskileri (belongs_to / has_many)</a><a href="#enrich-habtm">HABTM (has_and_belongs_to_many)</a></div>
+        </div>
+        
         <div class="simple-box">
           <h3>Basit Anlatim</h3>
           <ul><li>belongs_to: FK bu tabloda. has_many: karsi taraf cok kayit.</li><li>HABTM: ara tablo, id yok, iki FK var.</li><li>scaffold ile model+view+controller hizli olusur.</li><li>category_ids: [] ile coklu kategori secilir.</li></ul>
@@ -3948,7 +4759,25 @@ Bu kod bir örnektir.
           <div class="panel-inner"><div class="code-block"><div class="code-label">ruby</div><pre><code>class Book &lt; ApplicationRecord
 belongs_to :author
 end
-</code></pre></div></div>
+</code></pre></div>
+        <div class="panel-enrich" id="enrich-associations">
+          <div class="panel-enrich-label">Internet kaynagi ile aciklama</div>
+          <p><strong>Model Iliskileri (belongs_to / has_many)</strong> — belongs_to FK bu tabloda; has_many karsi tarafta cok kayit.</p>
+          <p>Post belongs_to :category — posts tablosunda category_id vardir. Category has_many :posts — bir kategorinin cok postu olabilir. has_many :through ara model ile iliski kurar. dependent: :destroy silme davranisini belirler.</p>
+          <div class="code-block"><div class="code-label">ornek kod</div><pre><code>class Post &lt; ApplicationRecord
+  belongs_to :category
+  belongs_to :user
+end
+
+class Category &lt; ApplicationRecord
+  has_many :posts
+end
+
+post.category.name
+category.posts</code></pre></div>
+          <div class="enrich-sources"><a href="https://guides.rubyonrails.org/association_basics.html" target="_blank" rel="noopener">Rails Associations Guide</a></div>
+        </div>
+        </div>
         </details>
         
         <details class="panel">
@@ -3959,7 +4788,23 @@ end
 class Role &lt; ApplicationRecord
 has_and_belongs_to_many :users
 end
-</code></pre></div></div>
+</code></pre></div>
+        <div class="panel-enrich" id="enrich-habtm">
+          <div class="panel-enrich-label">Internet kaynagi ile aciklama</div>
+          <p><strong>HABTM (has_and_belongs_to_many)</strong> — Coktan coga iliski; ara join tablosu, genelde id kolonu yok.</p>
+          <p>has_and_belongs_to_many iki model arasinda coktan coga baglanti kurar. posts_categories gibi ara tablo sadece iki foreign key icerir. Ek ozellik (tarih vb.) gerekiyorsa has_many :through tercih edilir.</p>
+          <div class="code-block"><div class="code-label">ornek kod</div><pre><code>class Post &lt; ApplicationRecord
+  has_and_belongs_to_many :categories
+end
+
+class Category &lt; ApplicationRecord
+  has_and_belongs_to_many :posts
+end
+
+# join table: categories_posts (post_id, category_id)</code></pre></div>
+          <div class="enrich-sources"><a href="https://guides.rubyonrails.org/association_basics.html#the-has-and-belongs-to-many-association" target="_blank" rel="noopener">Rails HABTM</a></div>
+        </div>
+        </div>
         </details>
         
         <details class="panel">
@@ -4408,6 +5253,11 @@ db/migrate/create_join_table_posts_categories
           </video>
         </div>
         
+        <div class="callout callout-web" style="margin:.85rem 0 0">
+          <strong>Bu hafta — internet kaynakli aciklamalar:</strong>
+          <div class="enrich-sources" style="margin-top:.45rem"><a href="#enrich-validation">Validation (validates)</a><a href="#enrich-normalizes">Normalization (normalizes)</a><a href="#enrich-active-storage">Active Storage</a></div>
+        </div>
+        
         <div class="simple-box">
           <h3>Basit Anlatim</h3>
           <ul><li>validates: veriyi kontrol eder, gecersizse kaydetmez.</li><li>normalizes: kaydetmeden once duzenler (bosluk sil, buyuk harf).</li><li>presence, uniqueness, length en sik kullanilan kurallar.</li><li>has_one_attached :image ile dosya yukleme.</li></ul>
@@ -4421,12 +5271,40 @@ db/migrate/create_join_table_posts_categories
 validates :title, presence: { message: &quot;Post başlığı boş
 bırakılamaz.&quot;}
 end
-</code></pre></div></div>
+</code></pre></div>
+        <div class="panel-enrich" id="enrich-validation">
+          <div class="panel-enrich-label">Internet kaynagi ile aciklama</div>
+          <p><strong>Validation (validates)</strong> — Model kaydetmeden once veri kurallarini kontrol eder.</p>
+          <p>validates :title, presence: true bos birakilamaz der. uniqueness tekil olmayi, length uzunluk sinirini kontrol eder. Gecersiz kayit save → false doner, errors mesajlari dolar.</p>
+          <div class="code-block"><div class="code-label">ornek kod</div><pre><code>class Post &lt; ApplicationRecord
+  validates :title, presence: true, length: { minimum: 3 }
+  validates :slug, uniqueness: true
+end
+
+post = Post.new
+post.valid?   # =&gt; false
+post.errors.full_messages</code></pre></div>
+          <div class="enrich-sources"><a href="https://guides.rubyonrails.org/active_record_validations.html" target="_blank" rel="noopener">Rails Validations Guide</a></div>
+        </div>
+        </div>
         </details>
         
         <details class="panel">
           <summary>Kategori modelindeki name alanının boş geçilmemesini ve normalizasyon</summary>
-          <div class="panel-inner"><p>ile titleize edilmesini sağlayın.</p></div>
+          <div class="panel-inner"><p>ile titleize edilmesini sağlayın.</p>
+        <div class="panel-enrich" id="enrich-normalizes">
+          <div class="panel-enrich-label">Internet kaynagi ile aciklama</div>
+          <p><strong>Normalization (normalizes)</strong> — Kaydetmeden once veriyi otomatik duzenler.</p>
+          <p>Rails 7.1+ normalizes ile attribute kaydedilmeden once transform edilir. Ornegin email downcase, title strip ile bosluk temizlenir. Validation&#x27;dan once calisir, tutarli veri saglar.</p>
+          <div class="code-block"><div class="code-label">ornek kod</div><pre><code>class User &lt; ApplicationRecord
+  normalizes :email, with: -&gt;(e) { e.strip.downcase }
+end
+
+User.create(email: &quot;  ALI@Mail.COM  &quot;)
+# email =&gt; &quot;ali@mail.com&quot;</code></pre></div>
+          <div class="enrich-sources"><a href="https://api.rubyonrails.org/classes/ActiveRecord/Normalization/ClassMethods.html" target="_blank" rel="noopener">Rails normalizes API</a></div>
+        </div>
+        </div>
         </details>
         
         <details class="panel">
@@ -4884,7 +5762,23 @@ dolayı sunucu veriyi işleyemiyor.
 rails db:migrate
 Blog postuna resim alanı ekleyebilmek için dosya upload edebilmemiz
 gerekiyor. Burada Active Storage devreye giriyor.
-</code></pre></div></div>
+</code></pre></div>
+        <div class="panel-enrich" id="enrich-active-storage">
+          <div class="panel-enrich-label">Internet kaynagi ile aciklama</div>
+          <p><strong>Active Storage</strong> — Dosya/resim yukleme; has_one_attached / has_many_attached.</p>
+          <p>Active Storage Cloud veya disk uzerinde dosya yonetir. has_one_attached :avatar model ile dosyayi iliskilendirir. Formda file_field :avatar kullanilir; variant ile thumbnail uretilebilir.</p>
+          <div class="code-block"><div class="code-label">ornek kod</div><pre><code>class Post &lt; ApplicationRecord
+  has_one_attached :image
+end
+
+# form
+&lt;%= f.file_field :image %&gt;
+
+# view
+&lt;%= image_tag @post.image if @post.image.attached? %&gt;</code></pre></div>
+          <div class="enrich-sources"><a href="https://guides.rubyonrails.org/active_storage_overview.html" target="_blank" rel="noopener">Rails Active Storage Overview</a></div>
+        </div>
+        </div>
         </details>
         
         <details class="panel">
@@ -5010,6 +5904,11 @@ Eklenen Resmin Blog Sayfasında Gösterilmesi
           </video>
         </div>
         
+        <div class="callout callout-web" style="margin:.85rem 0 0">
+          <strong>Bu hafta — internet kaynakli aciklamalar:</strong>
+          <div class="enrich-sources" style="margin-top:.45rem"><a href="#enrich-i18n">I18n (Yerellestirme)</a><a href="#enrich-friendly-id">FriendlyId (Slug URL)</a><a href="#enrich-action-text">Action Text</a></div>
+        </div>
+        
         <div class="simple-box">
           <h3>Basit Anlatim</h3>
           <ul><li>I18n.t ile metin cevirirsin (tr.yml, en.yml).</li><li>?locale=en ile dil degistirilir.</li><li>FriendlyId: /posts/1 yerine /posts/baslik-slug.</li><li>Action Text: zengin metin editoru (kalin, liste, resim).</li></ul>
@@ -5083,7 +5982,22 @@ Bütün görüntüleme linklerini güncelleyelim. Örnek Post index sayfasındak
 show linki.
 &lt;%= link_to t(&quot;actions.show&quot;), post_path(post), class:&quot;btn btn-info
 btn-sm&quot; %&gt;
-</code></pre></div></div>
+</code></pre></div>
+        <div class="panel-enrich" id="enrich-i18n">
+          <div class="panel-enrich-label">Internet kaynagi ile aciklama</div>
+          <p><strong>I18n (Yerellestirme)</strong> — Coklu dil destegi; I18n.t ve config/locales/*.yml dosyalari.</p>
+          <p>I18n modulu metinleri YAML dosyalarinda tutar. I18n.t(&#x27;posts.title&#x27;) ceviri doner. URL&#x27;de ?locale=en veya session ile dil degistirilir. Rails varsayilan locale config/application.rb&#x27;de ayarlanir.</p>
+          <div class="code-block"><div class="code-label">ornek kod</div><pre><code># config/locales/tr.yml
+tr:
+  posts:
+    title: &quot;Basliklar&quot;
+
+# view
+&lt;%= t(&#x27;posts.title&#x27;) %&gt;
+&lt;%= link_to &#x27;EN&#x27;, url_for(locale: :en) %&gt;</code></pre></div>
+          <div class="enrich-sources"><a href="https://guides.rubyonrails.org/i18n.html" target="_blank" rel="noopener">Rails I18n Guide</a></div>
+        </div>
+        </div>
         </details>
         
         <details class="panel">
@@ -5451,6 +6365,11 @@ app/models/post.rb
           </video>
         </div>
         
+        <div class="callout callout-web" style="margin:.85rem 0 0">
+          <strong>Bu hafta — internet kaynakli aciklamalar:</strong>
+          <div class="enrich-sources" style="margin-top:.45rem"><a href="#enrich-devise">Devise (Authentication)</a><a href="#enrich-authorization">Authorization (Yetkilendirme)</a></div>
+        </div>
+        
         <div class="simple-box">
           <h3>Basit Anlatim</h3>
           <ul><li>Devise: kayit ol, giris yap, sifre sifirla.</li><li>Authentication = kimlik, Authorization = yetki.</li><li>authenticate_user! giris zorunlu kilar.</li><li>current_user.posts.new ile post kullaniciya atanir.</li></ul>
@@ -5463,7 +6382,23 @@ app/models/post.rb
 <div class="code-block"><div class="code-label">ruby</div><pre><code>end
 app/models/user.rb
 User modeline gender (cinsiyet) için parametreleri enum olarak ekleyelim ve
-</code></pre></div></div>
+</code></pre></div>
+        <div class="panel-enrich" id="enrich-devise">
+          <div class="panel-enrich-label">Internet kaynagi ile aciklama</div>
+          <p><strong>Devise (Authentication)</strong> — Hazir kullanici girisi: kayit, giris, sifre sifirlama.</p>
+          <p>Devise gem&#x27;i User modeline moduller ekler (:database_authenticatable, :registerable vb.). authenticate_user! giris zorunlu kilar. current_user oturum acmis kullaniciyi doner. devise_for :users routes.rb&#x27;ye login/register yollarini ekler.</p>
+          <div class="code-block"><div class="code-label">ornek kod</div><pre><code>class ApplicationController &lt; ActionController::Base
+  before_action :authenticate_user!
+end
+
+class PostsController &lt; ApplicationController
+  def create
+    @post = current_user.posts.new(post_params)
+  end
+end</code></pre></div>
+          <div class="enrich-sources"><a href="https://github.com/heartcombo/devise" target="_blank" rel="noopener">Devise GitHub Wiki</a><a href="https://github.com/heartcombo/devise#getting-started" target="_blank" rel="noopener">Devise Getting Started</a></div>
+        </div>
+        </div>
         </details>
         
         <details class="panel">
@@ -5608,7 +6543,21 @@ tr:
         
         <details class="panel">
           <summary>Authentication ve Authorization Farkları</summary>
-          <div class="panel-inner"></div>
+          <div class="panel-inner">
+        <div class="panel-enrich" id="enrich-authorization">
+          <div class="panel-enrich-label">Internet kaynagi ile aciklama</div>
+          <p><strong>Authorization (Yetkilendirme)</strong> — Kim oldugunu degil, ne yapabilecegini kontrol eder.</p>
+          <p>Authentication kimlik dogrulama (Devise), Authorization yetkilendirme (admin mi?). user.admin? gibi metotlar veya Pundit/Cancancan gem&#x27;leri ile erisim kontrol edilir. Controller&#x27;da unless current_user.admin? redirect yapilir.</p>
+          <div class="code-block"><div class="code-label">ornek kod</div><pre><code>def destroy
+  unless current_user.admin?
+    redirect_to root_path, alert: &quot;Yetkiniz yok&quot;
+    return
+  end
+  @post.destroy
+end</code></pre></div>
+          <div class="enrich-sources"><a href="https://guides.rubyonrails.org/security.html" target="_blank" rel="noopener">Rails Security Guide</a></div>
+        </div>
+        </div>
         </details>
         
         <details class="panel">
@@ -6238,6 +7187,24 @@ git add . &amp;&amp; git commit -m &quot;mesaj&quot; &amp;&amp; git push
         });
         week.style.display = any ? '' : 'none';
       });
+      document.querySelectorAll('.enrich-card').forEach(card => {
+        if (!q) { card.classList.remove('hidden'); return; }
+        card.classList.toggle('hidden', !card.textContent.toLowerCase().includes(q));
+      });
+    });
+
+    document.querySelectorAll('.enrich-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        const week = tab.dataset.week;
+        document.querySelectorAll('.enrich-tab').forEach(t => t.classList.toggle('active', t === tab));
+        document.querySelectorAll('.enrich-card').forEach(card => {
+          if (week === 'all') card.classList.remove('hidden');
+          else card.classList.toggle('hidden', card.dataset.week !== week);
+        });
+      });
+    });
+    document.querySelectorAll('.enrich-card-head').forEach(head => {
+      head.addEventListener('click', () => head.closest('.enrich-card').classList.toggle('open'));
     });
 
     function setQuizAnswer(card, show) {

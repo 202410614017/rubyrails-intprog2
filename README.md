@@ -17,7 +17,7 @@ Site yayına alındıktan sonra:
 | `CALISMA_REHBERI.md` | Kaynak metin |
 | `videos/hafta-2.mp4` … `hafta-10.mp4` | Haftalık kısa özet videolar (~30–70 sn) |
 | `generate_videos.py` | Videoları yeniden üretmek için (TTS + slayt) |
-| `video_data.py` | Video slayt ve anlatım metinleri |
+| `web_enrichment.py` | PDF konulari icin internet kaynakli aciklama ve ornek kodlar |
 | `build_site.py` | Siteyi yeniden üretmek için |
 
 ## Siteyi güncellemek

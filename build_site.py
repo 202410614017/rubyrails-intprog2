@@ -21,6 +21,7 @@ except ImportError:
 
 from quiz_data import QUIZ
 from study_plan import STUDY_PLAN, MUST_KNOW
+from web_enrichment import TOPICS, match_panel_topics, topics_for_week
 
 BASE = Path(__file__).parent
 MD_FILE = BASE / "CALISMA_REHBERI.md"
@@ -382,6 +383,57 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     }}
     .callout-exam {{ background: var(--amber-soft); border: 1px solid var(--amber-border); color: #78350f; }}
     .callout-tip {{ background: var(--green-soft); border: 1px solid var(--green-border); color: #14532d; }}
+    .callout-web {{ background: var(--blue-soft); border: 1px solid var(--blue-border); color: #1e3a5f; }}
+
+    .enrich-toolbar {{ display: flex; flex-wrap: wrap; gap: .5rem; margin: .75rem 0 1rem; }}
+    .enrich-tab {{
+      padding: .35rem .7rem; border-radius: 999px; font-size: .78rem; font-weight: 600;
+      border: 1px solid var(--line); background: white; color: var(--text-soft);
+      cursor: pointer; font-family: inherit;
+    }}
+    .enrich-tab.active {{ background: var(--blue-soft); border-color: var(--blue-border); color: var(--blue-text); }}
+    .enrich-grid {{ display: grid; gap: .65rem; }}
+    .enrich-card {{
+      border: 1px solid var(--blue-border); border-radius: 10px; background: white; overflow: hidden;
+    }}
+    .enrich-card.hidden {{ display: none; }}
+    .enrich-card-head {{
+      padding: .85rem 1rem; cursor: pointer; display: flex; align-items: center; gap: .6rem;
+      background: linear-gradient(180deg, #fff 0%, var(--blue-soft) 100%);
+    }}
+    .enrich-card-head h3 {{ font-size: .92rem; font-weight: 700; margin: 0; flex: 1; color: var(--text); }}
+    .enrich-week-badge {{
+      font-size: .68rem; font-weight: 700; padding: .2rem .5rem; border-radius: 6px;
+      background: var(--blue-text); color: white; flex-shrink: 0;
+    }}
+    .enrich-card-body {{ display: none; padding: .85rem 1rem 1rem; border-top: 1px solid var(--line); }}
+    .enrich-card.open .enrich-card-body {{ display: block; }}
+    .enrich-card-body p {{ font-size: .88rem; color: var(--text-soft); margin: .45rem 0; line-height: 1.55; }}
+    .enrich-exam {{
+      margin-top: .65rem; padding: .6rem .75rem; background: var(--amber-soft);
+      border: 1px solid var(--amber-border); border-radius: 8px; font-size: .82rem; color: #78350f;
+    }}
+    .enrich-sources {{ margin-top: .65rem; display: flex; flex-wrap: wrap; gap: .4rem; }}
+    .enrich-sources a {{
+      font-size: .76rem; padding: .3rem .55rem; border-radius: 6px;
+      background: var(--blue-soft); color: var(--blue-text); text-decoration: none; border: 1px solid var(--blue-border);
+    }}
+    .enrich-sources a:hover {{ background: #dbeafe; }}
+
+    .panel-enrich {{
+      margin: .5rem 0 .75rem; border-left: 3px solid var(--blue-text);
+      background: var(--blue-soft); border-radius: 0 8px 8px 0; padding: .75rem .9rem;
+    }}
+    .panel-enrich-label {{
+      font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em;
+      color: var(--blue-text); margin-bottom: .4rem;
+    }}
+    .panel-enrich p {{ font-size: .84rem; color: #1e3a5f; margin: .35rem 0; }}
+    .panel-enrich .enrich-sources {{ margin-top: .45rem; }}
+    .panel-enrich pre {{
+      margin: .5rem 0 0; padding: .6rem .7rem; background: white; border-radius: 6px;
+      border: 1px solid var(--blue-border); overflow-x: auto; font-size: .76rem;
+    }}
 
     .quiz-toolbar {{
       display: flex; flex-wrap: wrap; gap: .5rem; align-items: center;
@@ -531,6 +583,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         <div class="topbar-actions">
           <a class="btn btn-red" href="#7-gunluk-plan">7 Gunluk Plan</a>
           <a class="btn btn-ghost" href="#konu-indeksi">Konu Indeksi</a>
+          <a class="btn btn-ghost" href="#internet-kaynaklari">Internet Kaynaklari</a>
           <a class="btn btn-ghost" href="#sinav-ezber-listesi">Ezber Listesi</a>
           <button class="btn btn-ghost" onclick="window.print()">PDF Indir</button>
         </div>
@@ -576,6 +629,24 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         }});
         week.style.display = any ? '' : 'none';
       }});
+      document.querySelectorAll('.enrich-card').forEach(card => {{
+        if (!q) {{ card.classList.remove('hidden'); return; }}
+        card.classList.toggle('hidden', !card.textContent.toLowerCase().includes(q));
+      }});
+    }});
+
+    document.querySelectorAll('.enrich-tab').forEach(tab => {{
+      tab.addEventListener('click', () => {{
+        const week = tab.dataset.week;
+        document.querySelectorAll('.enrich-tab').forEach(t => t.classList.toggle('active', t === tab));
+        document.querySelectorAll('.enrich-card').forEach(card => {{
+          if (week === 'all') card.classList.remove('hidden');
+          else card.classList.toggle('hidden', card.dataset.week !== week);
+        }});
+      }});
+    }});
+    document.querySelectorAll('.enrich-card-head').forEach(head => {{
+      head.addEventListener('click', () => head.closest('.enrich-card').classList.toggle('open'));
     }});
 
     function setQuizAnswer(card, show) {{
@@ -793,6 +864,21 @@ def build_week_block(title: str, sid: str, body: str) -> str:
 
     video_html = build_week_video_html(num) if num else ""
 
+    week_enrich_html = ""
+    if num:
+        week_topics = topics_for_week(num)
+        if week_topics:
+            links = "".join(
+                f'<a href="#enrich-{html.escape(t["id"])}">{html.escape(t["title"])}</a>'
+                for t in week_topics
+            )
+            week_enrich_html = f"""
+        <div class="callout callout-web" style="margin:.85rem 0 0">
+          <strong>Bu hafta — internet kaynakli aciklamalar:</strong>
+          <div class="enrich-sources" style="margin-top:.45rem">{links}</div>
+        </div>
+        """
+
     simple_html = ""
     if simple:
         items = "".join(f"<li>{html.escape(s)}</li>" for s in simple)
@@ -804,17 +890,25 @@ def build_week_block(title: str, sid: str, body: str) -> str:
         """
 
     panels = []
+    seen_enrich = set()
     h3_sections = sorted(split_h3_sections(body), key=lambda x: panel_sort_key(x[0]))
     for h3_title, h3_body in h3_sections:
         inner = enhance_inner_html(md_to_html_fragment(h3_body))
+        enrich_html = ""
+        if num:
+            for topic in match_panel_topics(h3_title, num):
+                if topic["id"] in seen_enrich:
+                    continue
+                seen_enrich.add(topic["id"])
+                enrich_html += build_inline_enrichment_html(topic, compact=True)
         panels.append(f"""
         <details class="panel">
           <summary>{html.escape(h3_title)}</summary>
-          <div class="panel-inner">{inner}</div>
+          <div class="panel-inner">{inner}{enrich_html}</div>
         </details>
         """)
 
-    return head + video_html + simple_html + "".join(panels) + "</div></section>"
+    return head + video_html + week_enrich_html + simple_html + "".join(panels) + "</div></section>"
 
 
 def build_study_plan_section() -> str:
@@ -875,6 +969,78 @@ def build_topic_index_section(body: str) -> str:
       <div class="special-body">
         <div class="callout callout-tip">Tum PDF slaytlarindan cikarilmis konu listesi. <strong>Kapsulleme</strong>, <strong>kalitim (miras)</strong>, <strong>polimorfizm</strong> ve diger OOP kavramlari asagida tabloda vurgulanmistir.</div>
         {inner}
+      </div>
+    </section>
+    """
+
+
+def build_enrich_sources_html(sources: list) -> str:
+    links = "".join(
+        f'<a href="{html.escape(s["url"])}" target="_blank" rel="noopener">{html.escape(s["name"])}</a>'
+        for s in sources
+    )
+    return f'<div class="enrich-sources">{links}</div>' if links else ""
+
+
+def build_enrich_code_html(code: str) -> str:
+    if not code:
+        return ""
+    return f'<div class="code-block"><div class="code-label">ornek kod</div><pre><code>{html.escape(code)}</code></pre></div>'
+
+
+def build_inline_enrichment_html(topic: dict, compact: bool = False) -> str:
+    code = build_enrich_code_html(topic["code"]) if not compact else ""
+    exam = (
+        f'<div class="enrich-exam"><strong>Sinav ipucu:</strong> {html.escape(topic["exam_tip"])}</div>'
+        if topic.get("exam_tip") and not compact
+        else ""
+    )
+    if compact:
+        return f"""
+        <div class="panel-enrich" id="enrich-{html.escape(topic['id'])}">
+          <div class="panel-enrich-label">Internet kaynagi ile aciklama</div>
+          <p><strong>{html.escape(topic['title'])}</strong> — {html.escape(topic['summary'])}</p>
+          <p>{html.escape(topic['explain'][:280])}{'...' if len(topic['explain']) > 280 else ''}</p>
+          {build_enrich_code_html(topic['code'])}
+          {build_enrich_sources_html(topic['sources'])}
+        </div>
+        """
+    return ""
+
+
+def build_enrich_card_html(topic: dict) -> str:
+    return f"""
+    <div class="enrich-card" id="enrich-{html.escape(topic['id'])}" data-week="{topic['week']}">
+      <div class="enrich-card-head">
+        <span class="enrich-week-badge">H{topic['week']}</span>
+        <h3>{html.escape(topic['title'])}</h3>
+      </div>
+      <div class="enrich-card-body">
+        <p>{html.escape(topic['summary'])}</p>
+        <p>{html.escape(topic['explain'])}</p>
+        {build_enrich_code_html(topic['code'])}
+        {f'<div class="enrich-exam"><strong>Sinav ipucu:</strong> {html.escape(topic["exam_tip"])}</div>' if topic.get("exam_tip") else ""}
+        {build_enrich_sources_html(topic['sources'])}
+      </div>
+    </div>
+    """
+
+
+def build_web_enrichment_section() -> str:
+    tabs = ['<button type="button" class="enrich-tab active" data-week="all">Tumu</button>']
+    for w in range(2, 11):
+        tabs.append(f'<button type="button" class="enrich-tab" data-week="{w}">Hafta {w}</button>')
+    cards = "".join(build_enrich_card_html(t) for t in TOPICS)
+    return f"""
+    <section class="special-block" id="internet-kaynaklari">
+      <div class="special-head"><h2>Internet Kaynaklari ile Derinlestirilmis Konular</h2></div>
+      <div class="special-body">
+        <div class="callout callout-web">
+          PDF slayt basliklari (kapsulleme, migration, Strong Parameters vb.) resmi Ruby/Rails dokumantasyonu
+          ve guvenilir kaynaklardan derlenerek aciklandi. Ornek kodlar sinava hazirlik icin guncellendi.
+        </div>
+        <div class="enrich-toolbar">{"".join(tabs)}</div>
+        <div class="enrich-grid">{cards}</div>
       </div>
     </section>
     """
@@ -958,6 +1124,7 @@ def build_toc(sections) -> str:
         '<div class="nav-label">Basla</div>',
         '<a href="#7-gunluk-plan"><span class="w-num">7</span>7 Gunluk Plan</a>',
         '<a href="#konu-indeksi"><span class="w-num">A</span>Konu Indeksi</a>',
+        '<a href="#internet-kaynaklari"><span class="w-num">W</span>Internet Kaynaklari</a>',
         '<a href="#sinav-ezber-listesi"><span class="w-num">!</span>Ezber Listesi</a>',
         '<div class="nav-label">Haftalar</div>',
     ]
@@ -985,6 +1152,7 @@ def build_content(sections) -> str:
             blocks.append(build_topic_index_section(body))
             break
     blocks.append(build_must_know_section())
+    blocks.append(build_web_enrichment_section())
     for title, sid, body in sections:
         if "cevap" in sid.lower() or "konu-indeksi" in sid:
             continue
