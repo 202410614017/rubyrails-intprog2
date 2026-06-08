@@ -6,7 +6,7 @@ Hafta 2–10 ders notlarının anlatımlı özeti. Site GitHub Pages üzerinde y
 
 Site yayına alındıktan sonra:
 
-`https://10develop.github.io/internet-programciligi/`
+`https://202410614017.github.io/rubyrails-intprog2/`
 
 ## Dosyalar
 
