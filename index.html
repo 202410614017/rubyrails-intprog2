@@ -248,6 +248,68 @@
       width: 48px; height: 48px; font-size: 1.2rem; cursor: pointer; box-shadow: var(--shadow-lg);
     }
 
+    /* 7-day plan */
+    .plan-hero {
+      background: linear-gradient(135deg, #991b1b 0%, #b91c1c 50%, #dc2626 100%);
+      color: white; border-radius: var(--radius); padding: 1.5rem 1.75rem;
+      margin-bottom: 1.5rem; box-shadow: var(--shadow-lg);
+    }
+    .plan-hero h2 { font-size: 1.35rem; font-weight: 700; margin-bottom: .4rem; }
+    .plan-hero p { opacity: .92; font-size: .9rem; max-width: 560px; }
+    .plan-progress {
+      margin-top: 1rem; background: rgba(255,255,255,.2); border-radius: 999px; height: 8px; overflow: hidden;
+    }
+    .plan-progress-bar { height: 100%; background: white; border-radius: 999px; width: 0%; transition: width .3s; }
+    .plan-progress-text { font-size: .78rem; margin-top: .45rem; opacity: .9; }
+
+    .plan-day {
+      border: 1px solid var(--line); border-radius: var(--radius); margin-bottom: .85rem;
+      background: var(--paper); overflow: hidden; box-shadow: var(--shadow);
+    }
+    .plan-day-head {
+      padding: 1rem 1.15rem; cursor: pointer; display: flex; align-items: flex-start; gap: .85rem;
+      background: #fafbfc; border-bottom: 1px solid transparent;
+    }
+    .plan-day.open .plan-day-head { border-bottom-color: var(--line); }
+    .plan-day-num {
+      width: 2.2rem; height: 2.2rem; border-radius: 10px; background: var(--accent); color: white;
+      display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .95rem; flex-shrink: 0;
+    }
+    .plan-day.done .plan-day-num { background: var(--green-text); }
+    .plan-day-title { font-weight: 700; font-size: .95rem; }
+    .plan-day-meta { font-size: .78rem; color: var(--text-soft); margin-top: .2rem; }
+    .plan-day-goal { font-size: .84rem; color: var(--text-soft); margin-top: .35rem; }
+    .plan-day-toggle { margin-left: auto; color: var(--text-soft); font-size: 1.1rem; flex-shrink: 0; }
+
+    .plan-day-body { display: none; padding: 1rem 1.15rem 1.15rem; }
+    .plan-day.open .plan-day-body { display: block; }
+    .plan-tasks { list-style: none; margin: 0; padding: 0; }
+    .plan-tasks li {
+      display: flex; align-items: flex-start; gap: .6rem; padding: .55rem 0;
+      border-bottom: 1px solid var(--line); font-size: .88rem;
+    }
+    .plan-tasks li:last-child { border-bottom: none; }
+    .plan-tasks input[type=checkbox] { margin-top: .25rem; width: 16px; height: 16px; accent-color: var(--accent); cursor: pointer; flex-shrink: 0; }
+    .plan-tasks label { cursor: pointer; flex: 1; }
+    .plan-tasks label.done { text-decoration: line-through; color: var(--text-soft); opacity: .7; }
+    .plan-tasks a { color: var(--blue-text); text-decoration: none; font-size: .78rem; display: block; margin-top: .2rem; }
+    .plan-tasks a:hover { text-decoration: underline; }
+    .plan-remember {
+      margin-top: .85rem; padding: .75rem .9rem; background: var(--amber-soft);
+      border: 1px solid var(--amber-border); border-radius: 8px; font-size: .82rem;
+    }
+    .plan-remember strong { color: var(--amber-text); display: block; margin-bottom: .35rem; }
+    .plan-remember ul { margin: 0 0 0 1rem; color: #78350f; }
+
+    .must-know-grid { display: grid; gap: .5rem; }
+    .must-know-item {
+      display: grid; grid-template-columns: 1fr 1.2fr; gap: .75rem;
+      padding: .65rem .85rem; background: #fafbfc; border: 1px solid var(--line); border-radius: 8px; font-size: .84rem;
+    }
+    .must-know-item strong { color: var(--accent); }
+    .must-know-item span { color: var(--text-soft); }
+    @media (max-width: 600px) { .must-know-item { grid-template-columns: 1fr; } }
+
     @media (max-width: 768px) {
       .sidebar { transform: translateX(-100%); transition: transform .25s; }
       .sidebar.open { transform: translateX(0); box-shadow: var(--shadow-lg); }
@@ -273,9 +335,12 @@
       <div class="brand">
         <div class="brand-kicker">Sinav Rehberi</div>
         <h1>Internet Programciligi II</h1>
-        <p>Hafta 2-10 | Ruby on Rails</p>
+        <p>Hafta 2-10 | 7 gunluk sinav plani</p>
       </div>
-      <nav><div class="nav-label">Haftalar</div>
+      <nav><div class="nav-label">Basla</div>
+<a href="#7-gunluk-plan"><span class="w-num">7</span>7 Gunluk Plan</a>
+<a href="#sinav-ezber-listesi"><span class="w-num">!</span>Ezber Listesi</a>
+<div class="nav-label">Haftalar</div>
 <a href="#hafta-2-ruby-rails-giris"><span class="w-num">2</span>Ruby &amp; Rails Giriş</a>
 <a href="#hafta-3-orm-active-record"><span class="w-num">3</span>ORM &amp; Active Record</a>
 <a href="#hafta-4-enum-routes-controllers"><span class="w-num">4</span>Enum, Routes, Controllers</a>
@@ -291,14 +356,345 @@
     </aside>
     <main class="main">
       <div class="topbar">
-        <h2>Ders Notlari — Anlatimli Ozet</h2>
-        <p>Tum konular korundu; her hafta acilir-kapanir bolumler halinde sadelestirildi. Soldan hafta sec veya asagidan incele.</p>
+        <h2>7 Gunluk Sinav Plani</h2>
+        <p>Sifirdan basliyorsun — her gun ne okuyacagin asagida. Gorevleri tikla, ilerlemeni takip et.</p>
         <div class="topbar-actions">
-          <button class="btn btn-red" onclick="window.print()">PDF Olarak Indir</button>
-          <a class="btn btn-ghost" href="#sinav-sorulari-kendini-test-et">Test Sorulari</a>
+          <a class="btn btn-red" href="#7-gunluk-plan">Plana Basla</a>
+          <a class="btn btn-ghost" href="#sinav-ezber-listesi">Ezber Listesi</a>
+          <button class="btn btn-ghost" onclick="window.print()">PDF Indir</button>
         </div>
       </div>
       
+    <section class="special-block" id="7-gunluk-plan">
+      <div class="plan-hero">
+        <h2>7 Gun Kala — Sifirdan Gecer Not Plani</h2>
+        <p>Ruby/Rails bilgin yoksa bu plani takip et. Her gun 2-3 saat yeterli. Gorevleri tiklayarak ilerlemeni kaydet.</p>
+        <div class="plan-progress"><div class="plan-progress-bar" id="planProgressBar"></div></div>
+        <div class="plan-progress-text" id="planProgressText">0 / 0 gorev tamamlandi</div>
+        <div style="margin-top:.85rem"><button type="button" class="btn btn-ghost" id="openToday" style="background:rgba(255,255,255,.15);color:white;border-color:rgba(255,255,255,.3)">Bugunun gorevine git</button></div>
+      </div>
+      <div class="special-body" style="padding-top:0">
+        
+        <div class="plan-day" data-day="1">
+          <div class="plan-day-head">
+            <div class="plan-day-num">1</div>
+            <div>
+              <div class="plan-day-title">Gun 1: Rails nedir? Temel iskelet</div>
+              <div class="plan-day-meta">2-3 saat</div>
+              <div class="plan-day-goal">MVC ve Ruby mantigini anla. Kod yazmana gerek yok.</div>
+            </div>
+            <span class="plan-day-toggle">+</span>
+          </div>
+          <div class="plan-day-body">
+            <ul class="plan-tasks">
+            <li>
+              <input type="checkbox" id="d1-t1" data-task-id="d1-t1">
+              <label for="d1-t1">Hafta 2 — Basit Anlatim kutusunu oku<a href="#hafta-2-ruby-rails-giris">Konuya git →</a></label>
+            </li>
+            
+            <li>
+              <input type="checkbox" id="d1-t2" data-task-id="d1-t2">
+              <label for="d1-t2">MVC akisini ezberle: routes → controller → model → view<a href="#hafta-2-ruby-rails-giris">Konuya git →</a></label>
+            </li>
+            
+            <li>
+              <input type="checkbox" id="d1-t3" data-task-id="d1-t3">
+              <label for="d1-t3">Ruby Temelleri panelini ac (Integer, String, Symbol farki)<a href="#hafta-2-ruby-rails-giris">Konuya git →</a></label>
+            </li>
+            
+            <li>
+              <input type="checkbox" id="d1-t4" data-task-id="d1-t4">
+              <label for="d1-t4">Rails Dizin Yapisini gozden gecir (app/, config/, db/)<a href="#hafta-2-ruby-rails-giris">Konuya git →</a></label>
+            </li>
+            
+            <li>
+              <input type="checkbox" id="d1-t5" data-task-id="d1-t5">
+              <label for="d1-t5">Test: Hafta 2 sorulari (1-5) — cevaplari kontrol et<a href="#sinav-sorulari-kendini-test-et">Konuya git →</a></label>
+            </li>
+            </ul>
+            <div class="plan-remember"><strong>Bu gunun sonunda bilmen gerekenler:</strong><ul><li>Ruby&#x27;de her sey nesnedir</li><li>Symbol tekil, String her seferinde yeni nesne</li><li>? metot → true/false, ! metot → orijinali degistirir</li></ul></div>
+          </div>
+        </div>
+        
+        <div class="plan-day" data-day="2">
+          <div class="plan-day-head">
+            <div class="plan-day-num">2</div>
+            <div>
+              <div class="plan-day-title">Gun 2: Veritabani &amp; Active Record</div>
+              <div class="plan-day-meta">2-3 saat</div>
+              <div class="plan-day-goal">ORM ve find/find_by/where farkini bil.</div>
+            </div>
+            <span class="plan-day-toggle">+</span>
+          </div>
+          <div class="plan-day-body">
+            <ul class="plan-tasks">
+            <li>
+              <input type="checkbox" id="d2-t6" data-task-id="d2-t6">
+              <label for="d2-t6">Hafta 3 — Basit Anlatim oku<a href="#hafta-3-orm-active-record">Konuya git →</a></label>
+            </li>
+            
+            <li>
+              <input type="checkbox" id="d2-t7" data-task-id="d2-t7">
+              <label for="d2-t7">ORM = tablo ↔ Ruby sinifi mantigini anla<a href="#hafta-3-orm-active-record">Konuya git →</a></label>
+            </li>
+            
+            <li>
+              <input type="checkbox" id="d2-t8" data-task-id="d2-t8">
+              <label for="d2-t8">find vs find_by vs where tablosunu ezberle<a href="#hafta-3-orm-active-record">Konuya git →</a></label>
+            </li>
+            
+            <li>
+              <input type="checkbox" id="d2-t9" data-task-id="d2-t9">
+              <label for="d2-t9">Migration panelini oku (db:migrate, db:rollback)<a href="#hafta-3-orm-active-record">Konuya git →</a></label>
+            </li>
+            
+            <li>
+              <input type="checkbox" id="d2-t10" data-task-id="d2-t10">
+              <label for="d2-t10">Komutlar bolumunden db:* komutlarina bak<a href="#komut-hizli-referans">Konuya git →</a></label>
+            </li>
+            
+            <li>
+              <input type="checkbox" id="d2-t11" data-task-id="d2-t11">
+              <label for="d2-t11">Test: Hafta 3 sorulari (6-10)<a href="#sinav-sorulari-kendini-test-et">Konuya git →</a></label>
+            </li>
+            </ul>
+            <div class="plan-remember"><strong>Bu gunun sonunda bilmen gerekenler:</strong><ul><li>find(1) → bulamazsa HATA</li><li>find_by → bulamazsa nil</li><li>where → liste doner</li><li>db:reset = sil + yeniden kur + seed</li></ul></div>
+          </div>
+        </div>
+        
+        <div class="plan-day" data-day="3">
+          <div class="plan-day-head">
+            <div class="plan-day-num">3</div>
+            <div>
+              <div class="plan-day-title">Gun 3: Routes, HTTP &amp; CRUD</div>
+              <div class="plan-day-meta">2-3 saat</div>
+              <div class="plan-day-goal">HTTP metotlari ve 7 CRUD route&#x27;u bil.</div>
+            </div>
+            <span class="plan-day-toggle">+</span>
+          </div>
+          <div class="plan-day-body">
+            <ul class="plan-tasks">
+            <li>
+              <input type="checkbox" id="d3-t12" data-task-id="d3-t12">
+              <label for="d3-t12">Hafta 4 — Basit Anlatim oku<a href="#hafta-4-enum-routes-controllers">Konuya git →</a></label>
+            </li>
+            
+            <li>
+              <input type="checkbox" id="d3-t13" data-task-id="d3-t13">
+              <label for="d3-t13">GET/POST/PUT/PATCH/DELETE ne zaman kullanilir ezberle<a href="#hafta-4-enum-routes-controllers">Konuya git →</a></label>
+            </li>
+            
+            <li>
+              <input type="checkbox" id="d3-t14" data-task-id="d3-t14">
+              <label for="d3-t14">resources :posts = 7 route (index,show,new,create,edit,update,destroy)<a href="#hafta-4-enum-routes-controllers">Konuya git →</a></label>
+            </li>
+            
+            <li>
+              <input type="checkbox" id="d3-t15" data-task-id="d3-t15">
+              <label for="d3-t15">Enum panelini oku (draft: 0 ne demek?)<a href="#hafta-4-enum-routes-controllers">Konuya git →</a></label>
+            </li>
+            
+            <li>
+              <input type="checkbox" id="d3-t16" data-task-id="d3-t16">
+              <label for="d3-t16">posts_path vs posts_url farkini ogren<a href="#hafta-4-enum-routes-controllers">Konuya git →</a></label>
+            </li>
+            
+            <li>
+              <input type="checkbox" id="d3-t17" data-task-id="d3-t17">
+              <label for="d3-t17">Test: Hafta 4 sorulari (11-15)<a href="#sinav-sorulari-kendini-test-et">Konuya git →</a></label>
+            </li>
+            </ul>
+            <div class="plan-remember"><strong>Bu gunun sonunda bilmen gerekenler:</strong><ul><li>GET = oku, POST = olustur, DELETE = sil</li><li>Enum: DB&#x27;de sayi, kodda isim (draft: 0)</li><li>_path = goreceli yol, _url = tam URL</li></ul></div>
+          </div>
+        </div>
+        
+        <div class="plan-day" data-day="4">
+          <div class="plan-day-head">
+            <div class="plan-day-num">4</div>
+            <div>
+              <div class="plan-day-title">Gun 4: Formlar &amp; Guvenlik</div>
+              <div class="plan-day-meta">2 saat</div>
+              <div class="plan-day-goal">Strong Parameters ve form mantigini anla.</div>
+            </div>
+            <span class="plan-day-toggle">+</span>
+          </div>
+          <div class="plan-day-body">
+            <ul class="plan-tasks">
+            <li>
+              <input type="checkbox" id="d4-t18" data-task-id="d4-t18">
+              <label for="d4-t18">Hafta 5 — Basit Anlatim oku<a href="#hafta-5-form-helpers-strong-parameters">Konuya git →</a></label>
+            </li>
+            
+            <li>
+              <input type="checkbox" id="d4-t19" data-task-id="d4-t19">
+              <label for="d4-t19">form_with model: @post ne ise yarar?<a href="#hafta-5-form-helpers-strong-parameters">Konuya git →</a></label>
+            </li>
+            
+            <li>
+              <input type="checkbox" id="d4-t20" data-task-id="d4-t20">
+              <label for="d4-t20">Strong Parameters panelini oku (post_params)<a href="#hafta-5-form-helpers-strong-parameters">Konuya git →</a></label>
+            </li>
+            
+            <li>
+              <input type="checkbox" id="d4-t21" data-task-id="d4-t21">
+              <label for="d4-t21">authenticity_token = CSRF korumasi<a href="#hafta-5-form-helpers-strong-parameters">Konuya git →</a></label>
+            </li>
+            
+            <li>
+              <input type="checkbox" id="d4-t22" data-task-id="d4-t22">
+              <label for="d4-t22">Partial (_form) ve before_action mantigi<a href="#hafta-5-form-helpers-strong-parameters">Konuya git →</a></label>
+            </li>
+            
+            <li>
+              <input type="checkbox" id="d4-t23" data-task-id="d4-t23">
+              <label for="d4-t23">Test: Hafta 5 sorulari (16-20)<a href="#sinav-sorulari-kendini-test-et">Konuya git →</a></label>
+            </li>
+            </ul>
+            <div class="plan-remember"><strong>Bu gunun sonunda bilmen gerekenler:</strong><ul><li>Strong Params → mass assignment saldirisini onler</li><li>Partial dosya adi _ ile baslar</li><li>button_to DELETE icin form olusturur</li></ul></div>
+          </div>
+        </div>
+        
+        <div class="plan-day" data-day="5">
+          <div class="plan-day-head">
+            <div class="plan-day-num">5</div>
+            <div>
+              <div class="plan-day-title">Gun 5: Bootstrap &amp; Model Iliskileri</div>
+              <div class="plan-day-meta">2-3 saat</div>
+              <div class="plan-day-goal">Grid sistemi ve tablo iliskilerini bil.</div>
+            </div>
+            <span class="plan-day-toggle">+</span>
+          </div>
+          <div class="plan-day-body">
+            <ul class="plan-tasks">
+            <li>
+              <input type="checkbox" id="d5-t24" data-task-id="d5-t24">
+              <label for="d5-t24">Hafta 6 — Basit Anlatim (12 sutun grid, container)<a href="#hafta-6-bootstrap-frontend">Konuya git →</a></label>
+            </li>
+            
+            <li>
+              <input type="checkbox" id="d5-t25" data-task-id="d5-t25">
+              <label for="d5-t25">Hafta 7 — Basit Anlatim (belongs_to, has_many, HABTM)<a href="#hafta-7-model-iliskileri-kategori">Konuya git →</a></label>
+            </li>
+            
+            <li>
+              <input type="checkbox" id="d5-t26" data-task-id="d5-t26">
+              <label for="d5-t26">belongs_to FK hangi tabloda? — ezberle<a href="#hafta-7-model-iliskileri-kategori">Konuya git →</a></label>
+            </li>
+            
+            <li>
+              <input type="checkbox" id="d5-t27" data-task-id="d5-t27">
+              <label for="d5-t27">HABTM join table: id yok, iki FK var<a href="#hafta-7-model-iliskileri-kategori">Konuya git →</a></label>
+            </li>
+            
+            <li>
+              <input type="checkbox" id="d5-t28" data-task-id="d5-t28">
+              <label for="d5-t28">Test: Hafta 6 sorulari (21-23) + Hafta 7 (24-27)<a href="#sinav-sorulari-kendini-test-et">Konuya git →</a></label>
+            </li>
+            </ul>
+            <div class="plan-remember"><strong>Bu gunun sonunda bilmen gerekenler:</strong><ul><li>Bootstrap grid = 12 sutun</li><li>col-md-8: 768px+ yan yana, mobilde alt alta</li><li>dependent: :destroy → ust silinince alt da silinir</li></ul></div>
+          </div>
+        </div>
+        
+        <div class="plan-day" data-day="6">
+          <div class="plan-day-head">
+            <div class="plan-day-num">6</div>
+            <div>
+              <div class="plan-day-title">Gun 6: Validation, I18n &amp; Devise</div>
+              <div class="plan-day-meta">2-3 saat</div>
+              <div class="plan-day-goal">Dogrulama, coklu dil ve kullanici girisi konularini bitir.</div>
+            </div>
+            <span class="plan-day-toggle">+</span>
+          </div>
+          <div class="plan-day-body">
+            <ul class="plan-tasks">
+            <li>
+              <input type="checkbox" id="d6-t29" data-task-id="d6-t29">
+              <label for="d6-t29">Hafta 8 — validation vs normalization farki<a href="#hafta-8-validation-active-storage">Konuya git →</a></label>
+            </li>
+            
+            <li>
+              <input type="checkbox" id="d6-t30" data-task-id="d6-t30">
+              <label for="d6-t30">presence, uniqueness, length ne kontrol eder?<a href="#hafta-8-validation-active-storage">Konuya git →</a></label>
+            </li>
+            
+            <li>
+              <input type="checkbox" id="d6-t31" data-task-id="d6-t31">
+              <label for="d6-t31">HTTP 422 = validasyon hatasi<a href="#hafta-8-validation-active-storage">Konuya git →</a></label>
+            </li>
+            
+            <li>
+              <input type="checkbox" id="d6-t32" data-task-id="d6-t32">
+              <label for="d6-t32">Hafta 9 — I18n.t, FriendlyId, Action Text (kisa oku)<a href="#hafta-9-i18n-friendlyid-action-text">Konuya git →</a></label>
+            </li>
+            
+            <li>
+              <input type="checkbox" id="d6-t33" data-task-id="d6-t33">
+              <label for="d6-t33">Hafta 10 — Devise, Authentication vs Authorization<a href="#hafta-10-devise-authorization">Konuya git →</a></label>
+            </li>
+            
+            <li>
+              <input type="checkbox" id="d6-t34" data-task-id="d6-t34">
+              <label for="d6-t34">Test: Hafta 8-10 sorulari (28-39)<a href="#sinav-sorulari-kendini-test-et">Konuya git →</a></label>
+            </li>
+            </ul>
+            <div class="plan-remember"><strong>Bu gunun sonunda bilmen gerekenler:</strong><ul><li>Validation reddeder, normalization duzenler</li><li>Authentication = kimlik, Authorization = yetki</li><li>authenticate_user! → giris zorunlu</li></ul></div>
+          </div>
+        </div>
+        
+        <div class="plan-day" data-day="7">
+          <div class="plan-day-head">
+            <div class="plan-day-num">7</div>
+            <div>
+              <div class="plan-day-title">Gun 7: Tekrar &amp; Sinav Gunu</div>
+              <div class="plan-day-meta">3-4 saat</div>
+              <div class="plan-day-goal">Tum test sorularini 2. kez coz. Ezber listesini tekrar et.</div>
+            </div>
+            <span class="plan-day-toggle">+</span>
+          </div>
+          <div class="plan-day-body">
+            <ul class="plan-tasks">
+            <li>
+              <input type="checkbox" id="d7-t35" data-task-id="d7-t35">
+              <label for="d7-t35">15 maddelik SINAV EZBER listesini oku (asagida)<a href="#sinav-ezber-listesi">Konuya git →</a></label>
+            </li>
+            
+            <li>
+              <input type="checkbox" id="d7-t36" data-task-id="d7-t36">
+              <label for="d7-t36">39 test sorusunun TAMAMINI 2. tur coz<a href="#sinav-sorulari-kendini-test-et">Konuya git →</a></label>
+            </li>
+            
+            <li>
+              <input type="checkbox" id="d7-t37" data-task-id="d7-t37">
+              <label for="d7-t37">Yanlis yaptigin haftalari tekrar oku<a href="#7-gunluk-plan">Konuya git →</a></label>
+            </li>
+            
+            <li>
+              <input type="checkbox" id="d7-t38" data-task-id="d7-t38">
+              <label for="d7-t38">Komutlar bolumunu son kez gozden gecir<a href="#komut-hizli-referans">Konuya git →</a></label>
+            </li>
+            
+            <li>
+              <input type="checkbox" id="d7-t39" data-task-id="d7-t39">
+              <label for="d7-t39">MVC + HTTP + find/find_by/where tekrar et<a href="#sinav-ezber-listesi">Konuya git →</a></label>
+            </li>
+            </ul>
+            <div class="plan-remember"><strong>Bu gunun sonunda bilmen gerekenler:</strong><ul><li>Sakin ol — cogu soru kavram sorusu</li><li>Bilmediginde mantik yurut: MVC akisina bak</li><li>Enum, Strong Params, Devise en cok cikan konular</li></ul></div>
+          </div>
+        </div>
+        
+      </div>
+    </section>
+    
+
+    <section class="special-block" id="sinav-ezber-listesi">
+      <div class="special-head"><h2>Sinav Ezber Listesi — 15 Kritik Madde</h2></div>
+      <div class="special-body">
+        <div class="callout callout-exam">7. gun ve sinav sabahi bu listeyi 2 kez oku. Cogu sinav sorusu bu maddelerden turetilir.</div>
+        <div class="must-know-grid"><div class="must-know-item"><strong>Ruby&#x27;de her sey nesnedir</strong><span>3.class → Integer → Numeric → Object</span></div><div class="must-know-item"><strong>MVC akisi</strong><span>routes.rb → Controller → Model → View → HTML</span></div><div class="must-know-item"><strong>ORM</strong><span>Veritabani tablosu = Ruby model sinifi</span></div><div class="must-know-item"><strong>find(1)</strong><span>Bulamazsa exception (hata) firlatir</span></div><div class="must-know-item"><strong>find_by(...)</strong><span>Bulamazsa nil doner</span></div><div class="must-know-item"><strong>where(...)</strong><span>Filtreler, liste (Relation) doner</span></div><div class="must-know-item"><strong>resources :posts</strong><span>7 CRUD route otomatik olusturur</span></div><div class="must-know-item"><strong>GET / POST / DELETE</strong><span>Oku / Olustur / Sil</span></div><div class="must-know-item"><strong>Enum draft: 0</strong><span>DB&#x27;de 0, kodda draft anlamina gelir</span></div><div class="must-know-item"><strong>Strong Parameters</strong><span>Sadece izin verilen alanlar gecer (guvenlik)</span></div><div class="must-know-item"><strong>Partial _form</strong><span>Dosya adi _ ile baslar, tekrar kullanilir</span></div><div class="must-know-item"><strong>Bootstrap grid</strong><span>12 sutun; col-md-6 = yarim genislik</span></div><div class="must-know-item"><strong>belongs_to</strong><span>Foreign key bu tabloda bulunur</span></div><div class="must-know-item"><strong>Validation vs Normalization</strong><span>Validation reddeder, normalization duzenler</span></div><div class="must-know-item"><strong>Authentication vs Authorization</strong><span>Kimlik dogrulama vs yetki kontrolu</span></div></div>
+      </div>
+    </section>
+    
+
     <section class="week-block" id="hafta-2-ruby-rails-giris">
       <div class="week-head">
         <div class="week-head-top">
@@ -2480,7 +2876,7 @@ git status / git add . / git commit -m &quot;...&quot; / git push origin main
   <button class="mobile-toggle" id="menuBtn" aria-label="Menu">&#9776;</button>
   <script>
     const links = document.querySelectorAll('.sidebar nav a');
-    const sections = [...document.querySelectorAll('.week-block, .special-block')];
+    const sections = [...document.querySelectorAll('.week-block, .special-block, .plan-hero')];
     window.addEventListener('scroll', () => {
       let cur = '';
       sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) cur = s.id; });
@@ -2524,6 +2920,54 @@ git status / git add . / git commit -m &quot;...&quot; / git push origin main
         });
       });
     });
+
+    // 7-day plan checkboxes
+    const PLAN_KEY = 'intprog2-plan-v1';
+    function loadPlan() {
+      try { return JSON.parse(localStorage.getItem(PLAN_KEY) || '{}'); } catch(e) { return {}; }
+    }
+    function savePlan(data) { localStorage.setItem(PLAN_KEY, JSON.stringify(data)); }
+    function updateProgress() {
+      const boxes = document.querySelectorAll('.plan-tasks input[type=checkbox]');
+      const done = [...boxes].filter(b => b.checked).length;
+      const total = boxes.length;
+      const pct = total ? Math.round(done / total * 100) : 0;
+      const bar = document.getElementById('planProgressBar');
+      const txt = document.getElementById('planProgressText');
+      if (bar) bar.style.width = pct + '%';
+      if (txt) txt.textContent = done + ' / ' + total + ' gorev tamamlandi (' + pct + '%)';
+      document.querySelectorAll('.plan-day').forEach(day => {
+        const dboxes = day.querySelectorAll('.plan-tasks input[type=checkbox]');
+        const ddone = [...dboxes].filter(b => b.checked).length;
+        day.classList.toggle('done', dboxes.length > 0 && ddone === dboxes.length);
+      });
+    }
+    const saved = loadPlan();
+    document.querySelectorAll('.plan-tasks input[type=checkbox]').forEach(box => {
+      const id = box.dataset.taskId;
+      if (saved[id]) box.checked = true;
+      const label = box.closest('li')?.querySelector('label');
+      if (label && box.checked) label.classList.add('done');
+      box.addEventListener('change', () => {
+        saved[id] = box.checked;
+        savePlan(saved);
+        if (label) label.classList.toggle('done', box.checked);
+        updateProgress();
+      });
+    });
+    document.querySelectorAll('.plan-day-head').forEach(head => {
+      head.addEventListener('click', e => {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'A' || e.target.tagName === 'LABEL') return;
+        head.closest('.plan-day').classList.toggle('open');
+      });
+    });
+    document.getElementById('openToday')?.addEventListener('click', () => {
+      document.querySelectorAll('.plan-day').forEach(d => d.classList.remove('open'));
+      const first = document.querySelector('.plan-day:not(.done)');
+      if (first) { first.classList.add('open'); first.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    });
+    updateProgress();
+    document.querySelector('.plan-day')?.classList.add('open');
   </script>
 </body>
 </html>

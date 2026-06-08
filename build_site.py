@@ -20,6 +20,7 @@ except ImportError:
     from markdown.extensions.toc import TocExtension
 
 from quiz_data import QUIZ
+from study_plan import STUDY_PLAN, MUST_KNOW
 
 BASE = Path(__file__).parent
 MD_FILE = BASE / "CALISMA_REHBERI.md"
@@ -398,6 +399,68 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       width: 48px; height: 48px; font-size: 1.2rem; cursor: pointer; box-shadow: var(--shadow-lg);
     }}
 
+    /* 7-day plan */
+    .plan-hero {{
+      background: linear-gradient(135deg, #991b1b 0%, #b91c1c 50%, #dc2626 100%);
+      color: white; border-radius: var(--radius); padding: 1.5rem 1.75rem;
+      margin-bottom: 1.5rem; box-shadow: var(--shadow-lg);
+    }}
+    .plan-hero h2 {{ font-size: 1.35rem; font-weight: 700; margin-bottom: .4rem; }}
+    .plan-hero p {{ opacity: .92; font-size: .9rem; max-width: 560px; }}
+    .plan-progress {{
+      margin-top: 1rem; background: rgba(255,255,255,.2); border-radius: 999px; height: 8px; overflow: hidden;
+    }}
+    .plan-progress-bar {{ height: 100%; background: white; border-radius: 999px; width: 0%; transition: width .3s; }}
+    .plan-progress-text {{ font-size: .78rem; margin-top: .45rem; opacity: .9; }}
+
+    .plan-day {{
+      border: 1px solid var(--line); border-radius: var(--radius); margin-bottom: .85rem;
+      background: var(--paper); overflow: hidden; box-shadow: var(--shadow);
+    }}
+    .plan-day-head {{
+      padding: 1rem 1.15rem; cursor: pointer; display: flex; align-items: flex-start; gap: .85rem;
+      background: #fafbfc; border-bottom: 1px solid transparent;
+    }}
+    .plan-day.open .plan-day-head {{ border-bottom-color: var(--line); }}
+    .plan-day-num {{
+      width: 2.2rem; height: 2.2rem; border-radius: 10px; background: var(--accent); color: white;
+      display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .95rem; flex-shrink: 0;
+    }}
+    .plan-day.done .plan-day-num {{ background: var(--green-text); }}
+    .plan-day-title {{ font-weight: 700; font-size: .95rem; }}
+    .plan-day-meta {{ font-size: .78rem; color: var(--text-soft); margin-top: .2rem; }}
+    .plan-day-goal {{ font-size: .84rem; color: var(--text-soft); margin-top: .35rem; }}
+    .plan-day-toggle {{ margin-left: auto; color: var(--text-soft); font-size: 1.1rem; flex-shrink: 0; }}
+
+    .plan-day-body {{ display: none; padding: 1rem 1.15rem 1.15rem; }}
+    .plan-day.open .plan-day-body {{ display: block; }}
+    .plan-tasks {{ list-style: none; margin: 0; padding: 0; }}
+    .plan-tasks li {{
+      display: flex; align-items: flex-start; gap: .6rem; padding: .55rem 0;
+      border-bottom: 1px solid var(--line); font-size: .88rem;
+    }}
+    .plan-tasks li:last-child {{ border-bottom: none; }}
+    .plan-tasks input[type=checkbox] {{ margin-top: .25rem; width: 16px; height: 16px; accent-color: var(--accent); cursor: pointer; flex-shrink: 0; }}
+    .plan-tasks label {{ cursor: pointer; flex: 1; }}
+    .plan-tasks label.done {{ text-decoration: line-through; color: var(--text-soft); opacity: .7; }}
+    .plan-tasks a {{ color: var(--blue-text); text-decoration: none; font-size: .78rem; display: block; margin-top: .2rem; }}
+    .plan-tasks a:hover {{ text-decoration: underline; }}
+    .plan-remember {{
+      margin-top: .85rem; padding: .75rem .9rem; background: var(--amber-soft);
+      border: 1px solid var(--amber-border); border-radius: 8px; font-size: .82rem;
+    }}
+    .plan-remember strong {{ color: var(--amber-text); display: block; margin-bottom: .35rem; }}
+    .plan-remember ul {{ margin: 0 0 0 1rem; color: #78350f; }}
+
+    .must-know-grid {{ display: grid; gap: .5rem; }}
+    .must-know-item {{
+      display: grid; grid-template-columns: 1fr 1.2fr; gap: .75rem;
+      padding: .65rem .85rem; background: #fafbfc; border: 1px solid var(--line); border-radius: 8px; font-size: .84rem;
+    }}
+    .must-know-item strong {{ color: var(--accent); }}
+    .must-know-item span {{ color: var(--text-soft); }}
+    @media (max-width: 600px) {{ .must-know-item {{ grid-template-columns: 1fr; }} }}
+
     @media (max-width: 768px) {{
       .sidebar {{ transform: translateX(-100%); transition: transform .25s; }}
       .sidebar.open {{ transform: translateX(0); box-shadow: var(--shadow-lg); }}
@@ -423,17 +486,18 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       <div class="brand">
         <div class="brand-kicker">Sinav Rehberi</div>
         <h1>Internet Programciligi II</h1>
-        <p>Hafta 2-10 | Ruby on Rails</p>
+        <p>Hafta 2-10 | 7 gunluk sinav plani</p>
       </div>
       <nav>{toc}</nav>
     </aside>
     <main class="main">
       <div class="topbar">
-        <h2>Ders Notlari — Anlatimli Ozet</h2>
-        <p>Tum konular korundu; her hafta acilir-kapanir bolumler halinde sadelestirildi. Soldan hafta sec veya asagidan incele.</p>
+        <h2>7 Gunluk Sinav Plani</h2>
+        <p>Sifirdan basliyorsun — her gun ne okuyacagin asagida. Gorevleri tikla, ilerlemeni takip et.</p>
         <div class="topbar-actions">
-          <button class="btn btn-red" onclick="window.print()">PDF Olarak Indir</button>
-          <a class="btn btn-ghost" href="#sinav-sorulari-kendini-test-et">Test Sorulari</a>
+          <a class="btn btn-red" href="#7-gunluk-plan">Plana Basla</a>
+          <a class="btn btn-ghost" href="#sinav-ezber-listesi">Ezber Listesi</a>
+          <button class="btn btn-ghost" onclick="window.print()">PDF Indir</button>
         </div>
       </div>
       {content}
@@ -442,7 +506,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
   <button class="mobile-toggle" id="menuBtn" aria-label="Menu">&#9776;</button>
   <script>
     const links = document.querySelectorAll('.sidebar nav a');
-    const sections = [...document.querySelectorAll('.week-block, .special-block')];
+    const sections = [...document.querySelectorAll('.week-block, .special-block, .plan-hero')];
     window.addEventListener('scroll', () => {{
       let cur = '';
       sections.forEach(s => {{ if (window.scrollY >= s.offsetTop - 100) cur = s.id; }});
@@ -486,6 +550,54 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         }});
       }});
     }});
+
+    // 7-day plan checkboxes
+    const PLAN_KEY = 'intprog2-plan-v1';
+    function loadPlan() {{
+      try {{ return JSON.parse(localStorage.getItem(PLAN_KEY) || '{{}}'); }} catch(e) {{ return {{}}; }}
+    }}
+    function savePlan(data) {{ localStorage.setItem(PLAN_KEY, JSON.stringify(data)); }}
+    function updateProgress() {{
+      const boxes = document.querySelectorAll('.plan-tasks input[type=checkbox]');
+      const done = [...boxes].filter(b => b.checked).length;
+      const total = boxes.length;
+      const pct = total ? Math.round(done / total * 100) : 0;
+      const bar = document.getElementById('planProgressBar');
+      const txt = document.getElementById('planProgressText');
+      if (bar) bar.style.width = pct + '%';
+      if (txt) txt.textContent = done + ' / ' + total + ' gorev tamamlandi (' + pct + '%)';
+      document.querySelectorAll('.plan-day').forEach(day => {{
+        const dboxes = day.querySelectorAll('.plan-tasks input[type=checkbox]');
+        const ddone = [...dboxes].filter(b => b.checked).length;
+        day.classList.toggle('done', dboxes.length > 0 && ddone === dboxes.length);
+      }});
+    }}
+    const saved = loadPlan();
+    document.querySelectorAll('.plan-tasks input[type=checkbox]').forEach(box => {{
+      const id = box.dataset.taskId;
+      if (saved[id]) box.checked = true;
+      const label = box.closest('li')?.querySelector('label');
+      if (label && box.checked) label.classList.add('done');
+      box.addEventListener('change', () => {{
+        saved[id] = box.checked;
+        savePlan(saved);
+        if (label) label.classList.toggle('done', box.checked);
+        updateProgress();
+      }});
+    }});
+    document.querySelectorAll('.plan-day-head').forEach(head => {{
+      head.addEventListener('click', e => {{
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'A' || e.target.tagName === 'LABEL') return;
+        head.closest('.plan-day').classList.toggle('open');
+      }});
+    }});
+    document.getElementById('openToday')?.addEventListener('click', () => {{
+      document.querySelectorAll('.plan-day').forEach(d => d.classList.remove('open'));
+      const first = document.querySelector('.plan-day:not(.done)');
+      if (first) {{ first.classList.add('open'); first.scrollIntoView({{ behavior: 'smooth', block: 'start' }}); }}
+    }});
+    updateProgress();
+    document.querySelector('.plan-day')?.classList.add('open');
   </script>
 </body>
 </html>"""
@@ -629,6 +741,72 @@ def build_week_block(title: str, sid: str, body: str) -> str:
     return head + simple_html + "".join(panels) + "</div></section>"
 
 
+def build_study_plan_section() -> str:
+    days_html = []
+    task_id = 0
+    for day in STUDY_PLAN:
+        tasks_li = []
+        for task in day["tasks"]:
+            task_id += 1
+            tid = f"d{day['day']}-t{task_id}"
+            link = f'<a href="{html.escape(task["link"])}">Konuya git →</a>' if task.get("link") else ""
+            tasks_li.append(f"""
+            <li>
+              <input type="checkbox" id="{tid}" data-task-id="{tid}">
+              <label for="{tid}">{html.escape(task["text"])}{link}</label>
+            </li>
+            """)
+        remember_li = "".join(f"<li>{html.escape(r)}</li>" for r in day["remember"])
+        days_html.append(f"""
+        <div class="plan-day" data-day="{day['day']}">
+          <div class="plan-day-head">
+            <div class="plan-day-num">{day['day']}</div>
+            <div>
+              <div class="plan-day-title">Gun {day['day']}: {html.escape(day['title'])}</div>
+              <div class="plan-day-meta">{html.escape(day['time'])}</div>
+              <div class="plan-day-goal">{html.escape(day['goal'])}</div>
+            </div>
+            <span class="plan-day-toggle">+</span>
+          </div>
+          <div class="plan-day-body">
+            <ul class="plan-tasks">{"".join(tasks_li)}</ul>
+            <div class="plan-remember"><strong>Bu gunun sonunda bilmen gerekenler:</strong><ul>{remember_li}</ul></div>
+          </div>
+        </div>
+        """)
+
+    return f"""
+    <section class="special-block" id="7-gunluk-plan">
+      <div class="plan-hero">
+        <h2>7 Gun Kala — Sifirdan Gecer Not Plani</h2>
+        <p>Ruby/Rails bilgin yoksa bu plani takip et. Her gun 2-3 saat yeterli. Gorevleri tiklayarak ilerlemeni kaydet.</p>
+        <div class="plan-progress"><div class="plan-progress-bar" id="planProgressBar"></div></div>
+        <div class="plan-progress-text" id="planProgressText">0 / 0 gorev tamamlandi</div>
+        <div style="margin-top:.85rem"><button type="button" class="btn btn-ghost" id="openToday" style="background:rgba(255,255,255,.15);color:white;border-color:rgba(255,255,255,.3)">Bugunun gorevine git</button></div>
+      </div>
+      <div class="special-body" style="padding-top:0">
+        {"".join(days_html)}
+      </div>
+    </section>
+    """
+
+
+def build_must_know_section() -> str:
+    items = "".join(
+        f'<div class="must-know-item"><strong>{html.escape(k)}</strong><span>{html.escape(v)}</span></div>'
+        for k, v in MUST_KNOW
+    )
+    return f"""
+    <section class="special-block" id="sinav-ezber-listesi">
+      <div class="special-head"><h2>Sinav Ezber Listesi — 15 Kritik Madde</h2></div>
+      <div class="special-body">
+        <div class="callout callout-exam">7. gun ve sinav sabahi bu listeyi 2 kez oku. Cogu sinav sorusu bu maddelerden turetilir.</div>
+        <div class="must-know-grid">{items}</div>
+      </div>
+    </section>
+    """
+
+
 def build_quiz_section() -> str:
     total = sum(len(block["items"]) for block in QUIZ)
     tabs = ['<button type="button" class="quiz-tab active" data-week="all">Tumu</button>']
@@ -687,7 +865,12 @@ def build_commands_section(body: str) -> str:
 
 
 def build_toc(sections) -> str:
-    lines = ['<div class="nav-label">Haftalar</div>']
+    lines = [
+        '<div class="nav-label">Basla</div>',
+        '<a href="#7-gunluk-plan"><span class="w-num">7</span>7 Gunluk Plan</a>',
+        '<a href="#sinav-ezber-listesi"><span class="w-num">!</span>Ezber Listesi</a>',
+        '<div class="nav-label">Haftalar</div>',
+    ]
     for title, sid, _ in sections:
         if "sinav" in sid or "komut" in sid or "cevap" in sid:
             continue
@@ -706,7 +889,7 @@ def build_toc(sections) -> str:
 
 
 def build_content(sections) -> str:
-    blocks = []
+    blocks = [build_study_plan_section(), build_must_know_section()]
     for title, sid, body in sections:
         if "cevap" in sid.lower():
             continue
