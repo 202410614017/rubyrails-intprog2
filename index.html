@@ -43,7 +43,6 @@
     }
     .layout { display: flex; min-height: 100vh; }
 
-    /* Sidebar */
     .sidebar {
       width: var(--sidebar-w);
       background: var(--sidebar);
@@ -72,7 +71,6 @@
     }
     .sidebar nav a.active .w-num { background: var(--accent); color: white; }
 
-    /* Main */
     .main { margin-left: var(--sidebar-w); flex: 1; padding: 2rem 2.5rem 4rem; max-width: 820px; }
 
     .topbar {
@@ -92,7 +90,6 @@
     .btn-ghost { background: white; color: var(--text); border: 1px solid var(--line); }
     .btn-ghost:hover { border-color: #cbd5e1; }
 
-    /* Week blocks */
     .week-block {
       background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
       margin-bottom: 1.5rem; box-shadow: var(--shadow); overflow: hidden;
@@ -124,7 +121,16 @@
 
     .week-body { padding: .25rem 1.5rem 1.25rem; }
 
-    /* Accordion panels */
+    .simple-box {
+      background: var(--amber-soft); border: 1px solid var(--amber-border);
+      border-radius: 10px; padding: 1rem 1.15rem; margin: .85rem 0 1rem;
+    }
+    .simple-box h3 {
+      font-size: .88rem; font-weight: 700; color: var(--amber-text); margin-bottom: .55rem;
+    }
+    .simple-box ul { margin: 0 0 0 1.15rem; font-size: .88rem; color: #78350f; }
+    .simple-box li { margin: .3rem 0; }
+
     .panel {
       border: 1px solid var(--line); border-radius: 10px; margin: .65rem 0;
       background: #fafbfc; overflow: hidden;
@@ -137,10 +143,9 @@
     .panel summary::-webkit-details-marker { display: none; }
     .panel summary::after { content: '+'; font-size: 1.1rem; color: var(--text-soft); font-weight: 400; }
     .panel[open] summary { border-bottom: 1px solid var(--line); background: white; }
-    .panel[open] summary::after { content: '−'; }
+    .panel[open] summary::after { content: '\2212'; }
     .panel-inner { padding: .85rem 1rem 1rem; background: white; }
 
-    /* Content typography */
     .panel-inner h3, .panel-inner h4 { display: none; }
     .panel-inner p { margin: .5rem 0; color: var(--text-soft); font-size: .9rem; }
     .panel-inner ul, .panel-inner ol { margin: .5rem 0 .5rem 1.25rem; color: var(--text-soft); font-size: .9rem; }
@@ -179,26 +184,63 @@
       background: #eef1f5; padding: .1em .35em; border-radius: 4px; color: #be123c;
     }
 
-    /* Special sections (quiz, commands) */
-    .special-block { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); margin-bottom: 1.5rem; box-shadow: var(--shadow); overflow: hidden; scroll-margin-top: 1rem; }
+    .special-block {
+      background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
+      margin-bottom: 1.5rem; box-shadow: var(--shadow); overflow: hidden; scroll-margin-top: 1rem;
+    }
     .special-head { padding: 1.1rem 1.5rem; border-bottom: 1px solid var(--line); background: #fafbfc; }
     .special-head h2 { font-size: 1.1rem; font-weight: 700; border: none; margin: 0; padding: 0; }
     .special-body { padding: .5rem 1.5rem 1.25rem; }
-
-    .quiz-grid { display: grid; gap: .5rem; }
-    .quiz-item {
-      border: 1px solid var(--line); border-radius: 8px; padding: .7rem .85rem; background: #fafbfc;
-    }
-    .quiz-item summary { cursor: pointer; font-weight: 500; font-size: .88rem; list-style: none; }
-    .quiz-item summary::-webkit-details-marker { display: none; }
-    .quiz-item .q-num { color: var(--accent); font-weight: 700; margin-right: .25rem; }
-    .quiz-item .ans { margin-top: .5rem; padding-top: .5rem; border-top: 1px dashed var(--line); font-size: .84rem; color: var(--green-text); }
 
     .callout {
       border-radius: 8px; padding: .75rem 1rem; margin: .65rem 0; font-size: .86rem;
     }
     .callout-exam { background: var(--amber-soft); border: 1px solid var(--amber-border); color: #78350f; }
     .callout-tip { background: var(--green-soft); border: 1px solid var(--green-border); color: #14532d; }
+
+    .quiz-toolbar {
+      display: flex; flex-wrap: wrap; gap: .5rem; align-items: center;
+      margin: .75rem 0 1rem;
+    }
+    .quiz-tabs { display: flex; flex-wrap: wrap; gap: .35rem; flex: 1; }
+    .quiz-tab {
+      padding: .35rem .7rem; border-radius: 999px; font-size: .78rem; font-weight: 600;
+      border: 1px solid var(--line); background: white; color: var(--text-soft);
+      cursor: pointer; font-family: inherit;
+    }
+    .quiz-tab:hover { border-color: #cbd5e1; color: var(--text); }
+    .quiz-tab.active {
+      background: var(--accent-soft); border-color: var(--accent-border);
+      color: var(--accent);
+    }
+    .quiz-actions { display: flex; gap: .4rem; flex-wrap: wrap; }
+    .quiz-actions .btn { font-size: .78rem; padding: .4rem .75rem; }
+
+    .quiz-grid { display: grid; gap: .55rem; }
+    .quiz-card {
+      border: 1px solid var(--line); border-radius: 8px; padding: .75rem .9rem;
+      background: #fafbfc;
+    }
+    .quiz-card.hidden { display: none; }
+    .quiz-q { font-weight: 500; font-size: .88rem; margin-bottom: .55rem; line-height: 1.5; }
+    .quiz-q .q-n {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-width: 1.4rem; height: 1.4rem; border-radius: 6px;
+      background: var(--accent-soft); color: var(--accent);
+      font-size: .72rem; font-weight: 700; margin-right: .4rem;
+    }
+    .quiz-btn {
+      font-size: .78rem; font-weight: 600; padding: .35rem .7rem;
+      border-radius: 6px; border: 1px solid var(--line); background: white;
+      color: var(--text); cursor: pointer; font-family: inherit;
+    }
+    .quiz-btn:hover { border-color: var(--accent-border); background: var(--accent-soft); }
+    .quiz-a {
+      display: none; margin-top: .6rem; padding-top: .6rem;
+      border-top: 1px dashed var(--line); font-size: .84rem;
+      color: var(--green-text); line-height: 1.55;
+    }
+    .quiz-a.visible { display: block; }
 
     .mobile-toggle {
       display: none; position: fixed; bottom: 1.25rem; right: 1.25rem; z-index: 200;
@@ -211,14 +253,17 @@
       .sidebar.open { transform: translateX(0); box-shadow: var(--shadow-lg); }
       .main { margin-left: 0; padding: 1rem; }
       .mobile-toggle { display: flex; align-items: center; justify-content: center; }
+      .quiz-toolbar { flex-direction: column; align-items: stretch; }
     }
 
     @media print {
-      .sidebar, .mobile-toggle, .topbar-actions { display: none !important; }
+      .sidebar, .mobile-toggle, .topbar-actions, .quiz-toolbar, .quiz-btn { display: none !important; }
       .main { margin-left: 0; max-width: 100%; padding: .5rem; }
       .week-block, .special-block { break-inside: avoid; box-shadow: none; }
       .panel { break-inside: avoid; }
       .panel[open] summary { border-bottom: 1px solid #ddd; }
+      .quiz-a { display: block !important; }
+      .quiz-card.hidden { display: block !important; }
     }
   </style>
 </head>
@@ -231,15 +276,15 @@
         <p>Hafta 2-10 | Ruby on Rails</p>
       </div>
       <nav><div class="nav-label">Haftalar</div>
-<a href="#hafta-2-ruby-rails-giris"><span class="w-num">2</span>Ruby & Rails Giriş</a>
-<a href="#hafta-3-orm-active-record"><span class="w-num">3</span>ORM & Active Record</a>
+<a href="#hafta-2-ruby-rails-giris"><span class="w-num">2</span>Ruby &amp; Rails Giriş</a>
+<a href="#hafta-3-orm-active-record"><span class="w-num">3</span>ORM &amp; Active Record</a>
 <a href="#hafta-4-enum-routes-controllers"><span class="w-num">4</span>Enum, Routes, Controllers</a>
-<a href="#hafta-5-form-helpers-strong-parameters"><span class="w-num">5</span>Form Helpers & Strong Parameters</a>
+<a href="#hafta-5-form-helpers-strong-parameters"><span class="w-num">5</span>Form Helpers &amp; Strong Parameters</a>
 <a href="#hafta-6-bootstrap-frontend"><span class="w-num">6</span>Bootstrap Frontend</a>
-<a href="#hafta-7-model-iliskileri-kategori"><span class="w-num">7</span>Model İlişkileri & Kategori</a>
-<a href="#hafta-8-validation-active-storage"><span class="w-num">8</span>Validation & Active Storage</a>
+<a href="#hafta-7-model-iliskileri-kategori"><span class="w-num">7</span>Model İlişkileri &amp; Kategori</a>
+<a href="#hafta-8-validation-active-storage"><span class="w-num">8</span>Validation &amp; Active Storage</a>
 <a href="#hafta-9-i18n-friendlyid-action-text"><span class="w-num">9</span>I18n, FriendlyId, Action Text</a>
-<a href="#hafta-10-devise-authorization"><span class="w-num">10</span>Devise & Authorization</a>
+<a href="#hafta-10-devise-authorization"><span class="w-num">10</span>Devise &amp; Authorization</a>
 <div class="nav-label">Sinav</div>
 <a href="#komut-hizli-referans"><span class="w-num">#</span>Komutlar</a>
 <a href="#sinav-sorulari-kendini-test-et"><span class="w-num">?</span>Test Sorulari</a></nav>
@@ -258,14 +303,19 @@
       <div class="week-head">
         <div class="week-head-top">
           <span class='week-badge'>Hafta 2</span>
-          <span class='week-tag'>Ruby & Rails Temelleri</span>
+          <span class='week-tag'>Ruby &amp; Rails</span>
         </div>
-        <h2>Hafta 2 — Ruby & Rails Giriş</h2>
-        <div class='week-summary'><strong>Bu haftada ne ogreniyorsun?</strong> Ruby dilinin temel yapı taşlarını ve Rails projesinin nasıl kurulup çalıştığını öğrenirsin. MVC mimarisi bu haftanın omurgasıdır.</div>
-        <div class='focus-chips'><span class="chip">Ruby'de her sey nesnedir</span><span class="chip">MVC: routes -> controller -> model -> view</span><span class="chip">rails new, db:create, rails s</span></div>
+        <h2>Hafta 2 — Ruby &amp; Rails Giriş</h2>
+        <div class='week-summary'><strong>Bu haftada ne ogreniyorsun?</strong> Ruby dilini ogrenir, Rails projesini kurar ve MVC yapisini anlarsin.</div>
+        <div class='focus-chips'><span class="chip">Her sey nesne</span><span class="chip">MVC akisi</span><span class="chip">rails s</span></div>
       </div>
       <div class="week-body">
     
+        <div class="simple-box">
+          <h3>Basit Anlatim</h3>
+          <ul><li>Ruby&#x27;de sayi, metin, dizi — hepsi nesnedir.</li><li>Rails = Model (veri) + View (arayuz) + Controller (mantik).</li><li>routes.rb istegi yonlendirir, controller isler, view gosterir.</li><li>rails new, db:create, rails s ile proje calistirilir.</li></ul>
+        </div>
+        
         <details class="panel">
           <summary>Ruby Temelleri</summary>
           <div class="panel-inner"><table>
@@ -306,6 +356,14 @@
 </tr>
 </tbody>
 </table></div>
+        </details>
+        
+        <details class="panel">
+          <summary>RubyGems</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">bash</div><pre><code>gem search -r rails
+gem install gem_name
+gem list
+</code></pre></div></div>
         </details>
         
         <details class="panel">
@@ -359,7 +417,22 @@
         </details>
         
         <details class="panel">
-          <summary>Sınıflar & OOP</summary>
+          <summary>Rails Blog Projesi Kurulumu</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">bash</div><pre><code>rails new blogger-a-ogrencino -d postgresql --css bootstrap
+cd blogger-a-ogrencino
+git init
+git remote add origin https://...
+git add .
+git commit -m &quot;First commit&quot;
+git push -u origin main
+rails db:create
+rails s                    # localhost:3000
+rails s -p 3001            # farklı port
+</code></pre></div></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Sınıflar &amp; OOP</summary>
           <div class="panel-inner"><div class="code-block"><div class="code-label">ruby</div><pre><code>class Dog &lt; Animal          # Kalıtım
   def speak; super; end     # super → üst sınıf metodu
 end
@@ -402,21 +475,6 @@ amount == 1 ? &quot;apple&quot; : &quot;apples&quot;   # ternary
 for i in 1..3
 </code></pre></div>
 </div>
-        </details>
-        
-        <details class="panel">
-          <summary>Rails Blog Projesi Kurulumu</summary>
-          <div class="panel-inner"><div class="code-block"><div class="code-label">bash</div><pre><code>rails new blogger-a-ogrencino -d postgresql --css bootstrap
-cd blogger-a-ogrencino
-git init
-git remote add origin https://...
-git add .
-git commit -m &quot;First commit&quot;
-git push -u origin main
-rails db:create
-rails s                    # localhost:3000
-rails s -p 3001            # farklı port
-</code></pre></div></div>
         </details>
         
         <details class="panel">
@@ -506,6 +564,13 @@ rails s -p 3001            # farklı port
         </details>
         
         <details class="panel">
+          <summary>MVC Akışı</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">kod</div><pre><code>routes.rb → Controller → Model → View → HTML yanıt
+get &quot;/users&quot;, to: &quot;users#index&quot;
+</code></pre></div></div>
+        </details>
+        
+        <details class="panel">
           <summary>Credentials</summary>
           <div class="panel-inner"><div class="code-block"><div class="code-label">bash</div><pre><code>EDITOR=&quot;code --wait&quot; rails credentials:edit
 </code></pre></div>
@@ -514,13 +579,6 @@ rails s -p 3001            # farklı port
 &lt;%= Rails.application.credentials.dig(:pg, :password) %&gt;
 </code></pre></div>
 <p><code>&lt;% %&gt;</code> → Ruby çalıştır | <code>&lt;%= %&gt;</code> → çıktı ver</p></div>
-        </details>
-        
-        <details class="panel">
-          <summary>MVC Akışı</summary>
-          <div class="panel-inner"><div class="code-block"><div class="code-label">kod</div><pre><code>routes.rb → Controller → Model → View → HTML yanıt
-get &quot;/users&quot;, to: &quot;users#index&quot;
-</code></pre></div></div>
         </details>
         
         <details class="panel">
@@ -537,28 +595,25 @@ end
 &lt;h1&gt;Merhaba Rails&lt;/h1&gt;
 </code></pre></div></div>
         </details>
-        
-        <details class="panel">
-          <summary>RubyGems</summary>
-          <div class="panel-inner"><div class="code-block"><div class="code-label">bash</div><pre><code>gem search -r rails
-gem install gem_name
-gem list
-</code></pre></div></div>
-        </details>
         </div></section>
 
     <section class="week-block" id="hafta-3-orm-active-record">
       <div class="week-head">
         <div class="week-head-top">
           <span class='week-badge'>Hafta 3</span>
-          <span class='week-tag'>Veritabani & ORM</span>
+          <span class='week-tag'>Veritabani</span>
         </div>
-        <h2>Hafta 3 — ORM & Active Record</h2>
-        <div class='week-summary'><strong>Bu haftada ne ogreniyorsun?</strong> SQL yazmadan veritabani islemleri yapmayi ogrenirsin. Active Record, tablolari Ruby siniflarina cevirir.</div>
-        <div class='focus-chips'><span class="chip">ORM = tablo <-> sinif eslestirmesi</span><span class="chip">find / find_by / where farki</span><span class="chip">Migration ile sema yonetimi</span></div>
+        <h2>Hafta 3 — ORM &amp; Active Record</h2>
+        <div class='week-summary'><strong>Bu haftada ne ogreniyorsun?</strong> SQL yazmadan veritabani islemleri yaparsin. Tablo = Model sinifi.</div>
+        <div class='focus-chips'><span class="chip">ORM</span><span class="chip">find vs where</span><span class="chip">migration</span></div>
       </div>
       <div class="week-body">
     
+        <div class="simple-box">
+          <h3>Basit Anlatim</h3>
+          <ul><li>ORM: veritabani tablosu = Ruby sinifi.</li><li>Post.create ile kayit ekle, Post.all ile listele.</li><li>find id arar (hata verir), find_by arar (nil doner), where filtreler.</li><li>Migration ile tablo/kolon ekle; rails db:migrate calistir.</li></ul>
+        </div>
+        
         <details class="panel">
           <summary>ORM Nedir?</summary>
           <div class="panel-inner"><ul>
@@ -655,43 +710,6 @@ rails db:migrate
     end
   end
 end
-</code></pre></div></div>
-        </details>
-        
-        <details class="panel">
-          <summary>Rails Console Komutları</summary>
-          <div class="panel-inner"><div class="code-block"><div class="code-label">ruby</div><pre><code>rails c
-Post.column_names
-post = Post.new(title: &quot;...&quot;, article: &quot;...&quot;)  # henüz kaydedilmedi, id nil
-post.save
-Post.create(title: &quot;...&quot;, article: &quot;...&quot;)       # oluştur + kaydet
-
-Post.all
-Post.count
-Post.first / Post.second / Post.last
-Post.first(10) / Post.last(10)
-Post.take / Post.take(2)   # sıralama yok, LIMIT
-
-Post.where(title: &quot;Git Commit Komutu&quot;)
-Post.where('title LIKE ?', &quot;%Commit%&quot;)
-Post.where.not(title: nil)
-Post.where.not(title: nil).or(Post.where(article: nil))
-Post.where.not(title: nil).where(article: nil)
-Post.where(id: [1,2]).and(Post.where.not(title: nil))
-
-Post.order(:created_at)              # ASC (varsayılan)
-Post.order(created_at: :desc)        # DESC
-
-Post.find(1)                         # id ile, bulamazsa exception
-Post.find_by(title: &quot;...&quot;)           # tek kayıt veya nil
-Post.find([1, 3])                    # çoklu id
-Post.where(...)                      # ActiveRecord::Relation döner
-
-post.update(title: &quot;...&quot;)
-post.title = &quot;...&quot;; post.save
-
-Post.first.destroy
-Post.destroy_all
 </code></pre></div></div>
         </details>
         
@@ -802,20 +820,62 @@ rails db:migrate:status
 </tbody>
 </table></div>
         </details>
+        
+        <details class="panel">
+          <summary>Rails Console Komutları</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">ruby</div><pre><code>rails c
+Post.column_names
+post = Post.new(title: &quot;...&quot;, article: &quot;...&quot;)  # henüz kaydedilmedi, id nil
+post.save
+Post.create(title: &quot;...&quot;, article: &quot;...&quot;)       # oluştur + kaydet
+
+Post.all
+Post.count
+Post.first / Post.second / Post.last
+Post.first(10) / Post.last(10)
+Post.take / Post.take(2)   # sıralama yok, LIMIT
+
+Post.where(title: &quot;Git Commit Komutu&quot;)
+Post.where('title LIKE ?', &quot;%Commit%&quot;)
+Post.where.not(title: nil)
+Post.where.not(title: nil).or(Post.where(article: nil))
+Post.where.not(title: nil).where(article: nil)
+Post.where(id: [1,2]).and(Post.where.not(title: nil))
+
+Post.order(:created_at)              # ASC (varsayılan)
+Post.order(created_at: :desc)        # DESC
+
+Post.find(1)                         # id ile, bulamazsa exception
+Post.find_by(title: &quot;...&quot;)           # tek kayıt veya nil
+Post.find([1, 3])                    # çoklu id
+Post.where(...)                      # ActiveRecord::Relation döner
+
+post.update(title: &quot;...&quot;)
+post.title = &quot;...&quot;; post.save
+
+Post.first.destroy
+Post.destroy_all
+</code></pre></div></div>
+        </details>
         </div></section>
 
     <section class="week-block" id="hafta-4-enum-routes-controllers">
       <div class="week-head">
         <div class="week-head-top">
           <span class='week-badge'>Hafta 4</span>
-          <span class='week-tag'>Routes & CRUD</span>
+          <span class='week-tag'>Routes &amp; CRUD</span>
         </div>
         <h2>Hafta 4 — Enum, Routes, Controllers</h2>
-        <div class='week-summary'><strong>Bu haftada ne ogreniyorsun?</strong> HTTP isteklerini controller action'larina baglarsin. Enum, scope ve CRUD rotalarini kullanirsin.</div>
-        <div class='focus-chips'><span class="chip">resources :posts = 7 CRUD route</span><span class="chip">GET/POST/PUT/PATCH/DELETE</span><span class="chip">Enum ile status yonetimi</span></div>
+        <div class='week-summary'><strong>Bu haftada ne ogreniyorsun?</strong> URL&#x27;leri controller&#x27;a baglarsin. 7 CRUD islemi resources ile gelir.</div>
+        <div class='focus-chips'><span class="chip">HTTP metotlari</span><span class="chip">resources :posts</span><span class="chip">Enum</span></div>
       </div>
       <div class="week-body">
     
+        <div class="simple-box">
+          <h3>Basit Anlatim</h3>
+          <ul><li>GET okur, POST olusturur, PUT/PATCH gunceller, DELETE siler.</li><li>resources :posts otomatik 7 route olusturur.</li><li>Enum: sayisal degerlere anlamli isim verir (draft: 0).</li><li>@degisken controller&#x27;dan view&#x27;a veri tasir.</li></ul>
+        </div>
+        
         <details class="panel">
           <summary>Status Alanı Ekleme</summary>
           <div class="panel-inner"><div class="code-block"><div class="code-label">bash</div><pre><code>rails g migration AddStatusToPost status:integer
@@ -842,6 +902,45 @@ end
         </details>
         
         <details class="panel">
+          <summary>Path Helpers</summary>
+          <div class="panel-inner"><table>
+<thead>
+<tr>
+<th>Helper</th>
+<th>Üretir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>posts_path</code></td>
+<td><code>/posts</code></td>
+</tr>
+<tr>
+<td><code>posts_url</code></td>
+<td><code>http://localhost:3000/posts</code></td>
+</tr>
+<tr>
+<td><code>post_path(1)</code></td>
+<td><code>/posts/1</code></td>
+</tr>
+<tr>
+<td><code>post_url(1)</code></td>
+<td>Tam URL</td>
+</tr>
+<tr>
+<td><code>new_post_path</code></td>
+<td><code>/posts/new</code></td>
+</tr>
+<tr>
+<td><code>edit_post_path(post)</code></td>
+<td><code>/posts/1/edit</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>_path</code> → göreceli yol | <code>_url</code> → tam URL (protokol+host+port)</p></div>
+        </details>
+        
+        <details class="panel">
           <summary>Scope</summary>
           <div class="panel-inner"><div class="code-block"><div class="code-label">ruby</div><pre><code>scope :published, -&gt; { where(status: :published) }
 Post.published.or(Post.inactive)
@@ -849,7 +948,30 @@ Post.published.or(Post.inactive)
         </details>
         
         <details class="panel">
-          <summary>HTTP & URL</summary>
+          <summary>Controller &amp; ERB</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">bash</div><pre><code>rails g controller Posts index --skip-routes
+</code></pre></div>
+<div class="code-block"><div class="code-label">ruby</div><pre><code>class PostsController &lt; ApplicationController
+  def index
+    @posts = Post.published   # @ ile instance variable → view'a gider
+  end
+  def show
+    @post = Post.find(params[:id])
+  end
+end
+</code></pre></div>
+<p><strong>ERB:</strong>
+- <code>&lt;% %&gt;</code> → kod çalıştır, çıktı yok
+- <code>&lt;%= %&gt;</code> → kod çalıştır, çıktı ver</p>
+<div class="code-block"><div class="code-label">erb</div><pre><code>&lt;% @posts.each do |post| %&gt;
+  &lt;%= post.title %&gt;
+  &lt;%= link_to &quot;Görüntüle&quot;, post_path(post) %&gt;
+&lt;% end %&gt;
+</code></pre></div></div>
+        </details>
+        
+        <details class="panel">
+          <summary>HTTP &amp; URL</summary>
           <div class="panel-inner"><div class="code-block"><div class="code-label">kod</div><pre><code>http://example.org/posts?query=rails&amp;sort=asc
   ↑protokol  ↑host        ↑path  ↑parametreler (? ile başlar)
 </code></pre></div>
@@ -949,68 +1071,6 @@ rails routes             # terminalde route listesi
         </details>
         
         <details class="panel">
-          <summary>Controller & ERB</summary>
-          <div class="panel-inner"><div class="code-block"><div class="code-label">bash</div><pre><code>rails g controller Posts index --skip-routes
-</code></pre></div>
-<div class="code-block"><div class="code-label">ruby</div><pre><code>class PostsController &lt; ApplicationController
-  def index
-    @posts = Post.published   # @ ile instance variable → view'a gider
-  end
-  def show
-    @post = Post.find(params[:id])
-  end
-end
-</code></pre></div>
-<p><strong>ERB:</strong>
-- <code>&lt;% %&gt;</code> → kod çalıştır, çıktı yok
-- <code>&lt;%= %&gt;</code> → kod çalıştır, çıktı ver</p>
-<div class="code-block"><div class="code-label">erb</div><pre><code>&lt;% @posts.each do |post| %&gt;
-  &lt;%= post.title %&gt;
-  &lt;%= link_to &quot;Görüntüle&quot;, post_path(post) %&gt;
-&lt;% end %&gt;
-</code></pre></div></div>
-        </details>
-        
-        <details class="panel">
-          <summary>Path Helpers</summary>
-          <div class="panel-inner"><table>
-<thead>
-<tr>
-<th>Helper</th>
-<th>Üretir</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>posts_path</code></td>
-<td><code>/posts</code></td>
-</tr>
-<tr>
-<td><code>posts_url</code></td>
-<td><code>http://localhost:3000/posts</code></td>
-</tr>
-<tr>
-<td><code>post_path(1)</code></td>
-<td><code>/posts/1</code></td>
-</tr>
-<tr>
-<td><code>post_url(1)</code></td>
-<td>Tam URL</td>
-</tr>
-<tr>
-<td><code>new_post_path</code></td>
-<td><code>/posts/new</code></td>
-</tr>
-<tr>
-<td><code>edit_post_path(post)</code></td>
-<td><code>/posts/1/edit</code></td>
-</tr>
-</tbody>
-</table>
-<p><code>_path</code> → göreceli yol | <code>_url</code> → tam URL (protokol+host+port)</p></div>
-        </details>
-        
-        <details class="panel">
           <summary>Seed Verisi</summary>
           <div class="panel-inner"><div class="code-block"><div class="code-label">ruby</div><pre><code># db/seeds.rb
 posts = YAML.load_file(Rails.root.join(&quot;db/data/posts.json&quot;), symbolize_names: true)
@@ -1027,37 +1087,25 @@ end
       <div class="week-head">
         <div class="week-head-top">
           <span class='week-badge'>Hafta 5</span>
-          <span class='week-tag'>Formlar & Guvenlik</span>
+          <span class='week-tag'>Form &amp; Guvenlik</span>
         </div>
-        <h2>Hafta 5 — Form Helpers & Strong Parameters</h2>
-        <div class='week-summary'><strong>Bu haftada ne ogreniyorsun?</strong> Kullanicidan veri almak icin form helper'lari ve guvenli parametre filtreleme (Strong Parameters) kullanilir.</div>
-        <div class='focus-chips'><span class="chip">form_with model: @post</span><span class="chip">post_params ile mass assignment korumasi</span><span class="chip">Partials ve before_action</span></div>
+        <h2>Hafta 5 — Form Helpers &amp; Strong Parameters</h2>
+        <div class='week-summary'><strong>Bu haftada ne ogreniyorsun?</strong> Form ile veri alir, Strong Parameters ile guvenli kaydedersin.</div>
+        <div class='focus-chips'><span class="chip">form_with</span><span class="chip">Strong Params</span><span class="chip">partial</span></div>
       </div>
       <div class="week-body">
     
+        <div class="simple-box">
+          <h3>Basit Anlatim</h3>
+          <ul><li>form_with model: @post ile form olusturulur.</li><li>post_params sadece izin verilen alanlari gecirir.</li><li>Partial (_form) ile tekrar eden kod azaltilir.</li><li>before_action ile ortak kod tek yerde toplanir.</li></ul>
+        </div>
+        
         <details class="panel">
           <summary>Action View</summary>
           <div class="panel-inner"><ul>
 <li>MVC'de <strong>View</strong> katmanı</li>
 <li>Controller veriyi alır → View HTML yanıt üretir</li>
 <li><code>form_with</code> ana form helper</li>
-</ul></div>
-        </details>
-        
-        <details class="panel">
-          <summary>form_with</summary>
-          <div class="panel-inner"><div class="code-block"><div class="code-label">erb</div><pre><code>&lt;%= form_with model: @post do |form| %&gt;
-  &lt;%= form.label :title, &quot;Başlık&quot; %&gt;
-  &lt;%= form.text_field :title %&gt;
-  &lt;%= form.text_area :article, size: &quot;70x5&quot; %&gt;
-  &lt;%= form.select(:status, Post.statuses.keys) %&gt;
-  &lt;%= form.collection_radio_buttons :status, Post.statuses, :first, :first %&gt;
-  &lt;%= form.submit %&gt;
-&lt;% end %&gt;
-</code></pre></div>
-<ul>
-<li><code>authenticity_token</code> → CSRF koruması (hidden field)</li>
-<li>Model bağlı form → <code>params[:post][:title]</code> şeklinde gelir</li>
 </ul></div>
         </details>
         
@@ -1109,6 +1157,33 @@ end
 </tr>
 </tbody>
 </table></div>
+        </details>
+        
+        <details class="panel">
+          <summary>form_with</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">erb</div><pre><code>&lt;%= form_with model: @post do |form| %&gt;
+  &lt;%= form.label :title, &quot;Başlık&quot; %&gt;
+  &lt;%= form.text_field :title %&gt;
+  &lt;%= form.text_area :article, size: &quot;70x5&quot; %&gt;
+  &lt;%= form.select(:status, Post.statuses.keys) %&gt;
+  &lt;%= form.collection_radio_buttons :status, Post.statuses, :first, :first %&gt;
+  &lt;%= form.submit %&gt;
+&lt;% end %&gt;
+</code></pre></div>
+<ul>
+<li><code>authenticity_token</code> → CSRF koruması (hidden field)</li>
+<li>Model bağlı form → <code>params[:post][:title]</code> şeklinde gelir</li>
+</ul></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Strong Parameters</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">ruby</div><pre><code>params.require(:post).permit(:title, :article, :status)
+</code></pre></div>
+<ul>
+<li><code>:post</code> anahtarının varlığını zorunlu kılar</li>
+<li>Sadece izin verilen alanları geçirir → <strong>Mass Assignment</strong> saldırısını önler</li>
+</ul></div>
         </details>
         
         <details class="panel">
@@ -1164,16 +1239,6 @@ end
         </details>
         
         <details class="panel">
-          <summary>Strong Parameters</summary>
-          <div class="panel-inner"><div class="code-block"><div class="code-label">ruby</div><pre><code>params.require(:post).permit(:title, :article, :status)
-</code></pre></div>
-<ul>
-<li><code>:post</code> anahtarının varlığını zorunlu kılar</li>
-<li>Sadece izin verilen alanları geçirir → <strong>Mass Assignment</strong> saldırısını önler</li>
-</ul></div>
-        </details>
-        
-        <details class="panel">
           <summary>link_to</summary>
           <div class="panel-inner"><div class="code-block"><div class="code-label">erb</div><pre><code>&lt;%= link_to &quot;Post&quot;, @post %&gt;
 &lt;%= link_to &quot;Posts&quot;, posts_path, class: &quot;btn btn-primary&quot; %&gt;
@@ -1181,16 +1246,6 @@ end
   &lt;strong&gt;&lt;%= @post.title %&gt;&lt;/strong&gt;
 &lt;% end %&gt;
 </code></pre></div></div>
-        </details>
-        
-        <details class="panel">
-          <summary>button_to (DELETE için)</summary>
-          <div class="panel-inner"><div class="code-block"><div class="code-label">erb</div><pre><code>&lt;%= button_to &quot;Sil&quot;, @post, method: :delete, data: { turbo_confirm: &quot;Emin misin?&quot; } %&gt;
-</code></pre></div>
-<ul>
-<li>Kendi mini formunu oluşturur</li>
-<li><code>_method=delete</code> hidden field ekler</li>
-</ul></div>
         </details>
         
         <details class="panel">
@@ -1206,20 +1261,35 @@ end
           <div class="panel-inner"><div class="code-block"><div class="code-label">ruby</div><pre><code>before_action :set_post, only: %i[show edit update destroy]
 </code></pre></div></div>
         </details>
+        
+        <details class="panel">
+          <summary>button_to (DELETE için)</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">erb</div><pre><code>&lt;%= button_to &quot;Sil&quot;, @post, method: :delete, data: { turbo_confirm: &quot;Emin misin?&quot; } %&gt;
+</code></pre></div>
+<ul>
+<li>Kendi mini formunu oluşturur</li>
+<li><code>_method=delete</code> hidden field ekler</li>
+</ul></div>
+        </details>
         </div></section>
 
     <section class="week-block" id="hafta-6-bootstrap-frontend">
       <div class="week-head">
         <div class="week-head-top">
           <span class='week-badge'>Hafta 6</span>
-          <span class='week-tag'>Bootstrap UI</span>
+          <span class='week-tag'>Bootstrap</span>
         </div>
         <h2>Hafta 6 — Bootstrap Frontend</h2>
-        <div class='week-summary'><strong>Bu haftada ne ogreniyorsun?</strong> Blog arayuzunu Bootstrap ile duzenlersin. Grid, navbar, footer ve card yapilari kullanilir.</div>
-        <div class='focus-chips'><span class="chip">12 sutunlu grid sistemi</span><span class="chip">container vs container-fluid</span><span class="chip">Partial: _navbar, _footer</span></div>
+        <div class='week-summary'><strong>Bu haftada ne ogreniyorsun?</strong> Blog arayuzunu Bootstrap ile duzenlersin.</div>
+        <div class='focus-chips'><span class="chip">12 sutun grid</span><span class="chip">navbar/footer</span><span class="chip">card</span></div>
       </div>
       <div class="week-body">
     
+        <div class="simple-box">
+          <h3>Basit Anlatim</h3>
+          <ul><li>Grid 12 sutun: col-md-6 = yarim genislik.</li><li>container ortalar, container-fluid tam genislik.</li><li>Navbar ve footer partial olarak layout&#x27;a eklenir.</li><li>card, btn siniflari ile modern gorunum.</li></ul>
+        </div>
+        
         <details class="panel">
           <summary>Bootstrap 5</summary>
           <div class="panel-inner"><ul>
@@ -1227,6 +1297,26 @@ end
 <li>Responsive (mobil uyumlu)</li>
 <li>Viewport meta: <code>&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;</code></li>
 </ul></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Bootstrap Icons</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">erb</div><pre><code>&lt;%= link_to &quot;https://github.com/username&quot; do %&gt;
+  &lt;i class=&quot;bi bi-github link-dark&quot;&gt;&lt;/i&gt;
+&lt;% end %&gt;
+</code></pre></div></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Popper.js (Bootstrap JS için)</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">ruby</div><pre><code># config/importmap.rb
+pin &quot;@popperjs/core&quot;, to: &quot;https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js&quot;
+</code></pre></div>
+<div class="code-block"><div class="code-label">javascript</div><pre><code>// app/javascript/application.js
+import &quot;@popperjs/core&quot;
+</code></pre></div>
+<div class="code-block"><div class="code-label">bash</div><pre><code>rails assets:precompile
+</code></pre></div></div>
         </details>
         
         <details class="panel">
@@ -1316,31 +1406,7 @@ end
         </details>
         
         <details class="panel">
-          <summary>Popper.js (Bootstrap JS için)</summary>
-          <div class="panel-inner"><div class="code-block"><div class="code-label">ruby</div><pre><code># config/importmap.rb
-pin &quot;@popperjs/core&quot;, to: &quot;https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js&quot;
-</code></pre></div>
-<div class="code-block"><div class="code-label">javascript</div><pre><code>// app/javascript/application.js
-import &quot;@popperjs/core&quot;
-</code></pre></div>
-<div class="code-block"><div class="code-label">bash</div><pre><code>rails assets:precompile
-</code></pre></div></div>
-        </details>
-        
-        <details class="panel">
-          <summary>Layout Yapısı</summary>
-          <div class="panel-inner"><div class="code-block"><div class="code-label">erb</div><pre><code>&lt;body class=&quot;d-flex flex-column min-vh-100&quot;&gt;
-  &lt;%= render &quot;shared/navbar&quot; %&gt;
-  &lt;div class=&quot;container&quot;&gt;
-    &lt;%= yield %&gt;
-  &lt;/div&gt;
-  &lt;%= render &quot;shared/footer&quot; %&gt;
-&lt;/body&gt;
-</code></pre></div></div>
-        </details>
-        
-        <details class="panel">
-          <summary>Navbar & Footer</summary>
+          <summary>Navbar &amp; Footer</summary>
           <div class="panel-inner"><ul>
 <li><code>app/views/shared/_navbar.html.erb</code></li>
 <li><code>app/views/shared/_footer.html.erb</code></li>
@@ -1367,14 +1433,6 @@ import &quot;@popperjs/core&quot;
         </details>
         
         <details class="panel">
-          <summary>Ek Sayfalar</summary>
-          <div class="panel-inner"><div class="code-block"><div class="code-label">ruby</div><pre><code># routes.rb
-get &quot;about&quot;, to: &quot;home#about&quot;
-get &quot;projects&quot;, to: &quot;home#projects&quot;
-</code></pre></div></div>
-        </details>
-        
-        <details class="panel">
           <summary>image_tag</summary>
           <div class="panel-inner"><div class="code-block"><div class="code-label">erb</div><pre><code>&lt;%= image_tag(&quot;profile.jpg&quot;, width: &quot;200&quot;, alt: &quot;Profile&quot;) %&gt;
 </code></pre></div>
@@ -1385,10 +1443,22 @@ get &quot;projects&quot;, to: &quot;home#projects&quot;
         </details>
         
         <details class="panel">
-          <summary>Bootstrap Icons</summary>
-          <div class="panel-inner"><div class="code-block"><div class="code-label">erb</div><pre><code>&lt;%= link_to &quot;https://github.com/username&quot; do %&gt;
-  &lt;i class=&quot;bi bi-github link-dark&quot;&gt;&lt;/i&gt;
-&lt;% end %&gt;
+          <summary>Ek Sayfalar</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">ruby</div><pre><code># routes.rb
+get &quot;about&quot;, to: &quot;home#about&quot;
+get &quot;projects&quot;, to: &quot;home#projects&quot;
+</code></pre></div></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Layout Yapısı</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">erb</div><pre><code>&lt;body class=&quot;d-flex flex-column min-vh-100&quot;&gt;
+  &lt;%= render &quot;shared/navbar&quot; %&gt;
+  &lt;div class=&quot;container&quot;&gt;
+    &lt;%= yield %&gt;
+  &lt;/div&gt;
+  &lt;%= render &quot;shared/footer&quot; %&gt;
+&lt;/body&gt;
 </code></pre></div></div>
         </details>
         </div></section>
@@ -1397,50 +1467,29 @@ get &quot;projects&quot;, to: &quot;home#projects&quot;
       <div class="week-head">
         <div class="week-head-top">
           <span class='week-badge'>Hafta 7</span>
-          <span class='week-tag'>Model Iliskileri</span>
+          <span class='week-tag'>Iliskiler</span>
         </div>
-        <h2>Hafta 7 — Model İlişkileri & Kategori</h2>
-        <div class='week-summary'><strong>Bu haftada ne ogreniyorsun?</strong> Tablolar arasi iliskileri kurarsin. Post ve Category coktan coga (HABTM) baglanir.</div>
-        <div class='focus-chips'><span class="chip">belongs_to / has_many / HABTM</span><span class="chip">scaffold ile hizli CRUD</span><span class="chip">category_ids: [] strong param</span></div>
+        <h2>Hafta 7 — Model İlişkileri &amp; Kategori</h2>
+        <div class='week-summary'><strong>Bu haftada ne ogreniyorsun?</strong> Tablolar arasi baglanti kurarsin. Post-Category coktan coga.</div>
+        <div class='focus-chips'><span class="chip">belongs_to/has_many</span><span class="chip">HABTM</span><span class="chip">scaffold</span></div>
       </div>
       <div class="week-body">
     
+        <div class="simple-box">
+          <h3>Basit Anlatim</h3>
+          <ul><li>belongs_to: FK bu tabloda. has_many: karsi taraf cok kayit.</li><li>HABTM: ara tablo, id yok, iki FK var.</li><li>scaffold ile model+view+controller hizli olusur.</li><li>category_ids: [] ile coklu kategori secilir.</li></ul>
+        </div>
+        
         <details class="panel">
-          <summary>6 İlişki Türü</summary>
-          <div class="panel-inner"><table>
-<thead>
-<tr>
-<th>İlişki</th>
-<th>Örnek</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>belongs_to</code></td>
-<td>Book → Author (FK book'ta)</td>
-</tr>
-<tr>
-<td><code>has_one</code></td>
-<td>User → Profile</td>
-</tr>
-<tr>
-<td><code>has_many</code></td>
-<td>Author → Books</td>
-</tr>
-<tr>
-<td><code>has_many :through</code></td>
-<td>Physician → Patients (Appointment üzerinden)</td>
-</tr>
-<tr>
-<td><code>has_one :through</code></td>
-<td>User → Account (Profile üzerinden)</td>
-</tr>
-<tr>
-<td><code>has_and_belongs_to_many</code> (HABTM)</td>
-<td>User ↔ Role (join table)</td>
-</tr>
-</tbody>
-</table></div>
+          <summary>Form — Çoklu Kategori</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">erb</div><pre><code>&lt;%= form.select :category_ids,
+  Category.all.collect { |c| [c.name, c.id] },
+  {}, { class: &quot;form-select&quot;, multiple: true } %&gt;
+</code></pre></div>
+<div class="code-block"><div class="code-label">ruby</div><pre><code>def post_params
+  params.require(:post).permit(:title, :article, :status, category_ids: [])
+end
+</code></pre></div></div>
         </details>
         
         <details class="panel">
@@ -1498,13 +1547,6 @@ end
         </details>
         
         <details class="panel">
-          <summary>Scaffold & Kategori</summary>
-          <div class="panel-inner"><div class="code-block"><div class="code-label">bash</div><pre><code>rails g scaffold Category name code
-rails db:migrate
-</code></pre></div></div>
-        </details>
-        
-        <details class="panel">
           <summary>Post ↔ Category (HABTM)</summary>
           <div class="panel-inner"><div class="code-block"><div class="code-label">bash</div><pre><code>rails g migration CreateJoinTablePostsCategories posts categories
 </code></pre></div>
@@ -1528,15 +1570,48 @@ Category.last.posts
         </details>
         
         <details class="panel">
-          <summary>Form — Çoklu Kategori</summary>
-          <div class="panel-inner"><div class="code-block"><div class="code-label">erb</div><pre><code>&lt;%= form.select :category_ids,
-  Category.all.collect { |c| [c.name, c.id] },
-  {}, { class: &quot;form-select&quot;, multiple: true } %&gt;
-</code></pre></div>
-<div class="code-block"><div class="code-label">ruby</div><pre><code>def post_params
-  params.require(:post).permit(:title, :article, :status, category_ids: [])
-end
+          <summary>Scaffold &amp; Kategori</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">bash</div><pre><code>rails g scaffold Category name code
+rails db:migrate
 </code></pre></div></div>
+        </details>
+        
+        <details class="panel">
+          <summary>6 İlişki Türü</summary>
+          <div class="panel-inner"><table>
+<thead>
+<tr>
+<th>İlişki</th>
+<th>Örnek</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>belongs_to</code></td>
+<td>Book → Author (FK book'ta)</td>
+</tr>
+<tr>
+<td><code>has_one</code></td>
+<td>User → Profile</td>
+</tr>
+<tr>
+<td><code>has_many</code></td>
+<td>Author → Books</td>
+</tr>
+<tr>
+<td><code>has_many :through</code></td>
+<td>Physician → Patients (Appointment üzerinden)</td>
+</tr>
+<tr>
+<td><code>has_one :through</code></td>
+<td>User → Account (Profile üzerinden)</td>
+</tr>
+<tr>
+<td><code>has_and_belongs_to_many</code> (HABTM)</td>
+<td>User ↔ Role (join table)</td>
+</tr>
+</tbody>
+</table></div>
         </details>
         </div></section>
 
@@ -1544,37 +1619,34 @@ end
       <div class="week-head">
         <div class="week-head-top">
           <span class='week-badge'>Hafta 8</span>
-          <span class='week-tag'>Dogrulama & Dosya</span>
+          <span class='week-tag'>Dogrulama</span>
         </div>
-        <h2>Hafta 8 — Validation & Active Storage</h2>
-        <div class='week-summary'><strong>Bu haftada ne ogreniyorsun?</strong> Veri kalitesini model seviyesinde kontrol edersin. Active Storage ile resim yuklersin.</div>
-        <div class='focus-chips'><span class="chip">validates vs normalizes farki</span><span class="chip">presence, uniqueness, length</span><span class="chip">has_one_attached :image</span></div>
+        <h2>Hafta 8 — Validation &amp; Active Storage</h2>
+        <div class='week-summary'><strong>Bu haftada ne ogreniyorsun?</strong> Veri kurallarini modelde tanimlarsin. Resim yuklemek icin Active Storage.</div>
+        <div class='focus-chips'><span class="chip">validates</span><span class="chip">normalizes</span><span class="chip">Active Storage</span></div>
       </div>
       <div class="week-body">
     
-        <details class="panel">
-          <summary>Validation Seviyeleri</summary>
-          <div class="panel-inner"><ol>
-<li>Veritabanı kısıtları</li>
-<li>Client-side</li>
-<li>Controller level</li>
-<li><strong>Model level</strong> (en çok kullanılan)</li>
-</ol></div>
-        </details>
+        <div class="simple-box">
+          <h3>Basit Anlatim</h3>
+          <ul><li>validates: veriyi kontrol eder, gecersizse kaydetmez.</li><li>normalizes: kaydetmeden once duzenler (bosluk sil, buyuk harf).</li><li>presence, uniqueness, length en sik kullanilan kurallar.</li><li>has_one_attached :image ile dosya yukleme.</li></ul>
+        </div>
         
         <details class="panel">
-          <summary>Tetikleyen Metotlar</summary>
-          <div class="panel-inner"><p><code>create</code>, <code>create!</code>, <code>save</code>, <code>save!</code>, <code>update</code>, <code>update!</code></p>
-<ul>
-<li><code>!</code> → hata olursa <strong>exception</strong></li>
-<li><code>!</code> yok → <code>save</code>/<code>update</code> <strong>false</strong> döner</li>
-<li><code>save(validate: false)</code> → doğrulama atlanır</li>
-</ul></div>
-        </details>
-        
-        <details class="panel">
-          <summary>Validasyon Atlayan Metotlar (DİKKAT!)</summary>
-          <div class="panel-inner"><p><code>decrement!</code>, <code>increment!</code>, <code>toggle!</code>, <code>touch</code>, <code>update_all</code>, <code>update_attribute</code></p></div>
+          <summary>Form Hata Gösterimi</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">erb</div><pre><code>&lt;% if post.errors.any? %&gt;
+  &lt;div class=&quot;alert alert-danger&quot;&gt;
+    &lt;h5&gt;&lt;%= post.errors.count %&gt; hata bulundu:&lt;/h5&gt;
+    &lt;ul&gt;
+      &lt;% post.errors.full_messages.each do |message| %&gt;
+        &lt;li&gt;&lt;%= message %&gt;&lt;/li&gt;
+      &lt;% end %&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+&lt;% end %&gt;
+</code></pre></div>
+<div class="code-block"><div class="code-label">ruby</div><pre><code>render :new, status: :unprocessable_entity   # HTTP 422
+</code></pre></div></div>
         </details>
         
         <details class="panel">
@@ -1698,6 +1770,31 @@ end
         </details>
         
         <details class="panel">
+          <summary>Validation Seviyeleri</summary>
+          <div class="panel-inner"><ol>
+<li>Veritabanı kısıtları</li>
+<li>Client-side</li>
+<li>Controller level</li>
+<li><strong>Model level</strong> (en çok kullanılan)</li>
+</ol></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Tetikleyen Metotlar</summary>
+          <div class="panel-inner"><p><code>create</code>, <code>create!</code>, <code>save</code>, <code>save!</code>, <code>update</code>, <code>update!</code></p>
+<ul>
+<li><code>!</code> → hata olursa <strong>exception</strong></li>
+<li><code>!</code> yok → <code>save</code>/<code>update</code> <strong>false</strong> döner</li>
+<li><code>save(validate: false)</code> → doğrulama atlanır</li>
+</ul></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Validasyon Atlayan Metotlar (DİKKAT!)</summary>
+          <div class="panel-inner"><p><code>decrement!</code>, <code>increment!</code>, <code>toggle!</code>, <code>touch</code>, <code>update_all</code>, <code>update_attribute</code></p></div>
+        </details>
+        
+        <details class="panel">
           <summary>Hata Mesajları</summary>
           <div class="panel-inner"><div class="code-block"><div class="code-label">ruby</div><pre><code>post.errors.any?
 post.errors.messages          # {:title=&gt;[&quot;...&quot;]}
@@ -1705,34 +1802,6 @@ post.errors.full_messages     # [&quot;Title ...&quot;]
 post.errors[:title]
 post.errors.count / .size
 post.errors.clear
-</code></pre></div></div>
-        </details>
-        
-        <details class="panel">
-          <summary>Post Model Son Hali</summary>
-          <div class="panel-inner"><div class="code-block"><div class="code-label">ruby</div><pre><code>class Post &lt; ApplicationRecord
-  normalizes :title, with: -&gt; title { title.squish.titlecase }
-  validates :title, presence: true, uniqueness: true, length: { maximum: 255 }
-  validates :article, presence: true, length: { maximum: 65_535 }
-  validates :status, inclusion: { in: statuses.keys }
-end
-</code></pre></div></div>
-        </details>
-        
-        <details class="panel">
-          <summary>Form Hata Gösterimi</summary>
-          <div class="panel-inner"><div class="code-block"><div class="code-label">erb</div><pre><code>&lt;% if post.errors.any? %&gt;
-  &lt;div class=&quot;alert alert-danger&quot;&gt;
-    &lt;h5&gt;&lt;%= post.errors.count %&gt; hata bulundu:&lt;/h5&gt;
-    &lt;ul&gt;
-      &lt;% post.errors.full_messages.each do |message| %&gt;
-        &lt;li&gt;&lt;%= message %&gt;&lt;/li&gt;
-      &lt;% end %&gt;
-    &lt;/ul&gt;
-  &lt;/div&gt;
-&lt;% end %&gt;
-</code></pre></div>
-<div class="code-block"><div class="code-label">ruby</div><pre><code>render :new, status: :unprocessable_entity   # HTTP 422
 </code></pre></div></div>
         </details>
         
@@ -1755,20 +1824,36 @@ end
 &lt;% end %&gt;
 </code></pre></div></div>
         </details>
+        
+        <details class="panel">
+          <summary>Post Model Son Hali</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">ruby</div><pre><code>class Post &lt; ApplicationRecord
+  normalizes :title, with: -&gt; title { title.squish.titlecase }
+  validates :title, presence: true, uniqueness: true, length: { maximum: 255 }
+  validates :article, presence: true, length: { maximum: 65_535 }
+  validates :status, inclusion: { in: statuses.keys }
+end
+</code></pre></div></div>
+        </details>
         </div></section>
 
     <section class="week-block" id="hafta-9-i18n-friendlyid-action-text">
       <div class="week-head">
         <div class="week-head-top">
           <span class='week-badge'>Hafta 9</span>
-          <span class='week-tag'>I18n & Zengin Icerik</span>
+          <span class='week-tag'>I18n &amp; Gems</span>
         </div>
         <h2>Hafta 9 — I18n, FriendlyId, Action Text</h2>
-        <div class='week-summary'><strong>Bu haftada ne ogreniyorsun?</strong> Uygulamayi coklu dile cevirirsin. FriendlyId ile SEO dostu URL, Action Text ile zengin metin.</div>
-        <div class='focus-chips'><span class="chip">I18n.t ve locale dosyalari</span><span class="chip">friendly_id :title, use: :slugged</span><span class="chip">has_rich_text :article</span></div>
+        <div class='week-summary'><strong>Bu haftada ne ogreniyorsun?</strong> Coklu dil, SEO URL ve zengin metin editoru.</div>
+        <div class='focus-chips'><span class="chip">I18n.t</span><span class="chip">FriendlyId</span><span class="chip">Action Text</span></div>
       </div>
       <div class="week-body">
     
+        <div class="simple-box">
+          <h3>Basit Anlatim</h3>
+          <ul><li>I18n.t ile metin cevirirsin (tr.yml, en.yml).</li><li>?locale=en ile dil degistirilir.</li><li>FriendlyId: /posts/1 yerine /posts/baslik-slug.</li><li>Action Text: zengin metin editoru (kalin, liste, resim).</li></ul>
+        </div>
+        
         <details class="panel">
           <summary>I18n (Internationalization)</summary>
           <div class="panel-inner"><div class="code-block"><div class="code-label">ruby</div><pre><code>I18n.t &quot;store.title&quot;    # translate
@@ -1783,39 +1868,6 @@ I18n.load_path += Dir[Rails.root.join(&quot;config/locales/**/*.yml&quot;).to_s]
 I18n.available_locales = [:tr, :en]
 I18n.default_locale = :tr
 </code></pre></div></div>
-        </details>
-        
-        <details class="panel">
-          <summary>Dil Değiştirme</summary>
-          <div class="panel-inner"><div class="code-block"><div class="code-label">ruby</div><pre><code># application_controller.rb
-around_action :switch_locale
-
-private
-def switch_locale(&amp;action)
-  locale = params[:locale] || I18n.default_locale
-  I18n.with_locale(locale, &amp;action)
-end
-</code></pre></div>
-<p>URL: <code>localhost:3000/posts?locale=en</code></p></div>
-        </details>
-        
-        <details class="panel">
-          <summary>Dosya Yapısı</summary>
-          <div class="panel-inner"><div class="code-block"><div class="code-label">kod</div><pre><code>config/locales/
-  defaults/tr.yml, en.yml
-  models/post/tr.yml, en.yml
-  views/posts/tr.yml, en.yml
-  views/shared/tr.yml, en.yml
-</code></pre></div></div>
-        </details>
-        
-        <details class="panel">
-          <summary>Kullanım</summary>
-          <div class="panel-inner"><div class="code-block"><div class="code-label">erb</div><pre><code>&lt;%= link_to t(&quot;actions.show&quot;), post_path(post) %&gt;
-&lt;%= render &quot;form&quot;, post: @post, form_title: t(&quot;.title&quot;) %&gt;
-&lt;%= link_to t(&quot;.home&quot;), root_path %&gt;
-</code></pre></div>
-<p><code>t(".title")</code> → mevcut view dosyasının yoluna göre çeviri arar</p></div>
         </details>
         
         <details class="panel">
@@ -1834,13 +1886,6 @@ end
         statuses:
           draft: Taslak
           published: Yayınlandı
-</code></pre></div></div>
-        </details>
-        
-        <details class="panel">
-          <summary>Dil Bayrağı</summary>
-          <div class="panel-inner"><div class="code-block"><div class="code-label">erb</div><pre><code>&lt;%= link_to url_for(locale: :tr) %&gt;
-&lt;%= link_to url_for(locale: :en) %&gt;
 </code></pre></div></div>
         </details>
         
@@ -1877,55 +1922,64 @@ end
 <div class="code-block"><div class="code-label">erb</div><pre><code>&lt;%= form.rich_textarea :article %&gt;
 </code></pre></div></div>
         </details>
+        
+        <details class="panel">
+          <summary>Dil Bayrağı</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">erb</div><pre><code>&lt;%= link_to url_for(locale: :tr) %&gt;
+&lt;%= link_to url_for(locale: :en) %&gt;
+</code></pre></div></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Dil Değiştirme</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">ruby</div><pre><code># application_controller.rb
+around_action :switch_locale
+
+private
+def switch_locale(&amp;action)
+  locale = params[:locale] || I18n.default_locale
+  I18n.with_locale(locale, &amp;action)
+end
+</code></pre></div>
+<p>URL: <code>localhost:3000/posts?locale=en</code></p></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Dosya Yapısı</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">kod</div><pre><code>config/locales/
+  defaults/tr.yml, en.yml
+  models/post/tr.yml, en.yml
+  views/posts/tr.yml, en.yml
+  views/shared/tr.yml, en.yml
+</code></pre></div></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Kullanım</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">erb</div><pre><code>&lt;%= link_to t(&quot;actions.show&quot;), post_path(post) %&gt;
+&lt;%= render &quot;form&quot;, post: @post, form_title: t(&quot;.title&quot;) %&gt;
+&lt;%= link_to t(&quot;.home&quot;), root_path %&gt;
+</code></pre></div>
+<p><code>t(".title")</code> → mevcut view dosyasının yoluna göre çeviri arar</p></div>
+        </details>
         </div></section>
 
     <section class="week-block" id="hafta-10-devise-authorization">
       <div class="week-head">
         <div class="week-head-top">
           <span class='week-badge'>Hafta 10</span>
-          <span class='week-tag'>Kimlik & Yetki</span>
+          <span class='week-tag'>Devise</span>
         </div>
-        <h2>Hafta 10 — Devise & Authorization</h2>
-        <div class='week-summary'><strong>Bu haftada ne ogreniyorsun?</strong> Devise ile kullanici girisi yapilir. Roller (editor/admin) ve yetkilendirme eklenir.</div>
-        <div class='focus-chips'><span class="chip">Authentication vs Authorization</span><span class="chip">authenticate_user!</span><span class="chip">current_user</span><span class="chip">belongs_to :user</span></div>
+        <h2>Hafta 10 — Devise &amp; Authorization</h2>
+        <div class='week-summary'><strong>Bu haftada ne ogreniyorsun?</strong> Kullanici girisi ve rol bazli yetkilendirme.</div>
+        <div class='focus-chips'><span class="chip">Devise</span><span class="chip">authenticate_user!</span><span class="chip">roller</span></div>
       </div>
       <div class="week-body">
     
-        <details class="panel">
-          <summary>Authentication vs Authorization</summary>
-          <div class="panel-inner"><table>
-<thead>
-<tr>
-<th></th>
-<th>Authentication</th>
-<th>Authorization</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Ne</td>
-<td>Kim olduğunu doğrular</td>
-<td>Ne yapabileceğini belirler</td>
-</tr>
-<tr>
-<td>Ne zaman</td>
-<td>Login</td>
-<td>Login sonrası</td>
-</tr>
-<tr>
-<td>Nasıl</td>
-<td>Şifre, 2FA</td>
-<td>Roller, izinler</td>
-</tr>
-<tr>
-<td>Örnek</td>
-<td>Email+şifre giriş</td>
-<td>Sadece kendi dosyalarına erişim</td>
-</tr>
-</tbody>
-</table>
-<p>Devise → Authentication | Pundit/CanCanCan → Authorization</p></div>
-        </details>
+        <div class="simple-box">
+          <h3>Basit Anlatim</h3>
+          <ul><li>Devise: kayit ol, giris yap, sifre sifirla.</li><li>Authentication = kimlik, Authorization = yetki.</li><li>authenticate_user! giris zorunlu kilar.</li><li>current_user.posts.new ile post kullaniciya atanir.</li></ul>
+        </div>
         
         <details class="panel">
           <summary>Devise Modülleri</summary>
@@ -1978,6 +2032,57 @@ end
         </details>
         
         <details class="panel">
+          <summary>Strong Parameter (Devise)</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">ruby</div><pre><code>class ApplicationController &lt; ActionController::Base
+  before_action :configure_permitted_parameters, if: :devise_controller?
+
+  protected
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:firstname, :lastname, :email, :username, :gender])
+    devise_parameter_sanitizer.permit(:sign_in, keys: [:email, :password])
+  end
+end
+</code></pre></div></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Authentication vs Authorization</summary>
+          <div class="panel-inner"><table>
+<thead>
+<tr>
+<th></th>
+<th>Authentication</th>
+<th>Authorization</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ne</td>
+<td>Kim olduğunu doğrular</td>
+<td>Ne yapabileceğini belirler</td>
+</tr>
+<tr>
+<td>Ne zaman</td>
+<td>Login</td>
+<td>Login sonrası</td>
+</tr>
+<tr>
+<td>Nasıl</td>
+<td>Şifre, 2FA</td>
+<td>Roller, izinler</td>
+</tr>
+<tr>
+<td>Örnek</td>
+<td>Email+şifre giriş</td>
+<td>Sadece kendi dosyalarına erişim</td>
+</tr>
+</tbody>
+</table>
+<p>Devise → Authentication | Pundit/CanCanCan → Authorization</p></div>
+        </details>
+        
+        <details class="panel">
           <summary>Kurulum</summary>
           <div class="panel-inner"><div class="code-block"><div class="code-label">bash</div><pre><code>bundle add devise
 rails generate devise:install
@@ -2011,31 +2116,10 @@ end
         </details>
         
         <details class="panel">
-          <summary>Strong Parameter (Devise)</summary>
-          <div class="panel-inner"><div class="code-block"><div class="code-label">ruby</div><pre><code>class ApplicationController &lt; ActionController::Base
-  before_action :configure_permitted_parameters, if: :devise_controller?
-
-  protected
-
-  def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:firstname, :lastname, :email, :username, :gender])
-    devise_parameter_sanitizer.permit(:sign_in, keys: [:email, :password])
-  end
-end
-</code></pre></div></div>
-        </details>
-        
-        <details class="panel">
           <summary>Navbar — Oturum Kontrolü</summary>
           <div class="panel-inner"><div class="code-block"><div class="code-label">ruby</div><pre><code>current_user           # giriş yapmış kullanıcı
 user_signed_in?        # giriş yapılmış mı?
 destroy_user_session_path, method: :delete
-</code></pre></div></div>
-        </details>
-        
-        <details class="panel">
-          <summary>Giriş Zorunluluğu</summary>
-          <div class="panel-inner"><div class="code-block"><div class="code-label">ruby</div><pre><code>before_action :authenticate_user!
 </code></pre></div></div>
         </details>
         
@@ -2100,6 +2184,12 @@ end
 end
 </code></pre></div></div>
         </details>
+        
+        <details class="panel">
+          <summary>Giriş Zorunluluğu</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">ruby</div><pre><code>before_action :authenticate_user!
+</code></pre></div></div>
+        </details>
         </div></section>
 
     <section class="special-block" id="komut-hizli-referans">
@@ -2140,201 +2230,247 @@ git status / git add . / git commit -m &quot;...&quot; / git push origin main
       <div class="special-head"><h2>Kendini Test Et — 39 Soru</h2></div>
       <div class="special-body">
         <div class="callout callout-exam">Soruya tikla, cevabi gor. Sinav oncesi tum sorulari en az bir kez coz.</div>
+        <div class="quiz-toolbar">
+          <div class="quiz-tabs"><button type="button" class="quiz-tab active" data-week="all">Tumu</button><button type="button" class="quiz-tab" data-week="2">H2: Ruby Temelleri</button><button type="button" class="quiz-tab" data-week="3">H3: ORM &amp; Active Record</button><button type="button" class="quiz-tab" data-week="4">H4: Routes &amp; HTTP</button><button type="button" class="quiz-tab" data-week="5">H5: Formlar &amp; Guvenlik</button><button type="button" class="quiz-tab" data-week="6">H6: Bootstrap</button><button type="button" class="quiz-tab" data-week="7">H7: Model Iliskileri</button><button type="button" class="quiz-tab" data-week="8">H8: Validation &amp; Storage</button><button type="button" class="quiz-tab" data-week="9">H9: I18n &amp; Gems</button><button type="button" class="quiz-tab" data-week="10">H10: Devise &amp; Yetki</button></div>
+          <div class="quiz-actions">
+            <button type="button" class="btn btn-ghost" id="quizShowAll">Tum cevaplari ac</button>
+            <button type="button" class="btn btn-ghost" id="quizHideAll">Tum cevaplari kapat</button>
+          </div>
+        </div>
         <div class="quiz-grid">
-            <details class="quiz-item">
-              <summary><span class="q-num">1.</span> Ruby'de 3.class.superclass.superclass ne döner?</summary>
-              <div class="ans">Cevap icin slaytlara bak.</div>
-            </details>
+            <div class="quiz-card" data-week="2">
+              <div class="quiz-q"><span class="q-n">1</span> Ruby&#x27;de 3.class.superclass.superclass ne doner?</div>
+              <button type="button" class="quiz-btn">Cevabi Goster</button>
+              <div class="quiz-a">Object doner. Hiyerarsi: Integer → Numeric → Object → BasicObject. Yani 3 bir Integer nesnesidir ve ust sinifi Numeric, onun ust sinifi Object&#x27;tir.</div>
+            </div>
             
-            <details class="quiz-item">
-              <summary><span class="q-num">2.</span> Symbol ile String arasındaki temel fark nedir?</summary>
-              <div class="ans">Cevap icin slaytlara bak.</div>
-            </details>
+            <div class="quiz-card" data-week="2">
+              <div class="quiz-q"><span class="q-n">2</span> Symbol ile String arasindaki temel fark nedir?</div>
+              <button type="button" class="quiz-btn">Cevabi Goster</button>
+              <div class="quiz-a">Symbol (:user) tekil bir nesnedir; ayni sembol her zaman ayni object_id&#x27;ye sahiptir. String her olusturuldugunda yeni bir nesne yaratir. Semboller genelde hash key ve sabit isimler icin kullanilir.</div>
+            </div>
             
-            <details class="quiz-item">
-              <summary><span class="q-num">3.</span> attr_accessor, attr_reader, attr_writer farkları?</summary>
-              <div class="ans">Cevap icin slaytlara bak.</div>
-            </details>
+            <div class="quiz-card" data-week="2">
+              <div class="quiz-q"><span class="q-n">3</span> attr_accessor, attr_reader, attr_writer farklari?</div>
+              <button type="button" class="quiz-btn">Cevabi Goster</button>
+              <div class="quiz-a">attr_reader: sadece okuma (getter). attr_writer: sadece yazma (setter). attr_accessor: hem getter hem setter olusturur. Ornek: attr_accessor :name ile hem name hem name= kullanilabilir.</div>
+            </div>
             
-            <details class="quiz-item">
-              <summary><span class="q-num">4.</span> Proc ile Lambda arasındaki argüman farkı?</summary>
-              <div class="ans">Cevap icin slaytlara bak.</div>
-            </details>
+            <div class="quiz-card" data-week="2">
+              <div class="quiz-q"><span class="q-n">4</span> Proc ile Lambda arasindaki arguman farki?</div>
+              <button type="button" class="quiz-btn">Cevabi Goster</button>
+              <div class="quiz-a">Proc fazla veya eksik argumanda hata vermez (eksigi nil sayar, fazlasini yok sayar). Lambda arguman sayisina katidir; yanlis sayida arguman verilirse ArgumentError olusur.</div>
+            </div>
             
-            <details class="quiz-item">
-              <summary><span class="q-num">5.</span> ? ve ! ile biten metotların anlamı?</summary>
-              <div class="ans">Cevap icin slaytlara bak.</div>
-            </details>
+            <div class="quiz-card" data-week="2">
+              <div class="quiz-q"><span class="q-n">5</span> ? ve ! ile biten metotlarin anlami?</div>
+              <button type="button" class="quiz-btn">Cevabi Goster</button>
+              <div class="quiz-a">? ile biten metotlar boolean doner (even?, zero?). ! ile biten metotlar destructive/tehlikeli islem yapar; orijinal veriyi degistirir (upcase! gibi).</div>
+            </div>
             
-            <details class="quiz-item">
-              <summary><span class="q-num">6.</span> ORM'in avantajları nelerdir?</summary>
-              <div class="ans">Cevap icin slaytlara bak.</div>
-            </details>
+            <div class="quiz-card" data-week="3">
+              <div class="quiz-q"><span class="q-n">6</span> ORM&#x27;in avantajlari nelerdir?</div>
+              <button type="button" class="quiz-btn">Cevabi Goster</button>
+              <div class="quiz-a">Daha az SQL yazilir, nesne yonelimli calisilir, veritabani platformundan bagimsizlik saglanir (PostgreSQL&#x27;den MySQL&#x27;e gecis kolay), modelleme uygulama tarafinda yapilir, bakim maliyeti dusuktur.</div>
+            </div>
             
-            <details class="quiz-item">
-              <summary><span class="q-num">7.</span> find, find_by ve where arasındaki fark?</summary>
-              <div class="ans">Cevap icin slaytlara bak.</div>
-            </details>
+            <div class="quiz-card" data-week="3">
+              <div class="quiz-q"><span class="q-n">7</span> find, find_by ve where arasindaki fark?</div>
+              <button type="button" class="quiz-btn">Cevabi Goster</button>
+              <div class="quiz-a">find(id): id ile arar, bulamazsa exception firlatir. find_by(...): tek kayit veya nil doner. where(...): sifir veya cok kayit donen ActiveRecord::Relation nesnesi doner.</div>
+            </div>
             
-            <details class="quiz-item">
-              <summary><span class="q-num">8.</span> save ile create arasındaki fark?</summary>
-              <div class="ans">Cevap icin slaytlara bak.</div>
-            </details>
+            <div class="quiz-card" data-week="3">
+              <div class="quiz-q"><span class="q-n">8</span> save ile create arasindaki fark?</div>
+              <button type="button" class="quiz-btn">Cevabi Goster</button>
+              <div class="quiz-a">Post.new ile once nesne olusturulur, save ile kaydedilir (iki adim). Post.create ile nesne olusturulur ve aninda veritabanina yazilir (tek adim).</div>
+            </div>
             
-            <details class="quiz-item">
-              <summary><span class="q-num">9.</span> db:setup ile db:reset ne yapar?</summary>
-              <div class="ans">Cevap icin slaytlara bak.</div>
-            </details>
+            <div class="quiz-card" data-week="3">
+              <div class="quiz-q"><span class="q-n">9</span> db:setup ile db:reset ne yapar?</div>
+              <button type="button" class="quiz-btn">Cevabi Goster</button>
+              <div class="quiz-a">db:setup = schema:load + seed (sema yuklenir, seed verisi eklenir). db:reset = db:drop + setup (veritabani silinir, sifirdan olusturulur ve seed eklenir).</div>
+            </div>
             
-            <details class="quiz-item">
-              <summary><span class="q-num">10.</span> Migration rollback nasıl yapılır?</summary>
-              <div class="ans">Cevap icin slaytlara bak.</div>
-            </details>
+            <div class="quiz-card" data-week="3">
+              <div class="quiz-q"><span class="q-n">10</span> Migration rollback nasil yapilir?</div>
+              <button type="button" class="quiz-btn">Cevabi Goster</button>
+              <div class="quiz-a">rails db:rollback komutu son migration&#x27;i geri alir. rails db:migrate:status ile durum kontrol edilir. STEP parametresi ile birden fazla migration geri alinabilir.</div>
+            </div>
             
-            <details class="quiz-item">
-              <summary><span class="q-num">11.</span> GET ve POST ne zaman kullanılır?</summary>
-              <div class="ans">Cevap icin slaytlara bak.</div>
-            </details>
+            <div class="quiz-card" data-week="4">
+              <div class="quiz-q"><span class="q-n">11</span> GET ve POST ne zaman kullanilir?</div>
+              <button type="button" class="quiz-btn">Cevabi Goster</button>
+              <div class="quiz-a">GET: veri okumak icin (sayfa gosterme, listeleme). POST: yeni kayit olusturmak icin (form gonderme). GET ile hassas veri gonderilmemeli.</div>
+            </div>
             
-            <details class="quiz-item">
-              <summary><span class="q-num">12.</span> PUT ile PATCH farkı?</summary>
-              <div class="ans">Cevap icin slaytlara bak.</div>
-            </details>
+            <div class="quiz-card" data-week="4">
+              <div class="quiz-q"><span class="q-n">12</span> PUT ile PATCH farki?</div>
+              <button type="button" class="quiz-btn">Cevabi Goster</button>
+              <div class="quiz-a">PUT kaynagin tum alanlarini gunceller. PATCH sadece degisen alanlari gunceller (kismi guncelleme). Ikisi de mevcut kaydi guncellemek icin kullanilir.</div>
+            </div>
             
-            <details class="quiz-item">
-              <summary><span class="q-num">13.</span> resources :posts kaç route oluşturur? İsimlerini yaz.</summary>
-              <div class="ans">Cevap icin slaytlara bak.</div>
-            </details>
+            <div class="quiz-card" data-week="4">
+              <div class="quiz-q"><span class="q-n">13</span> resources :posts kac route olusturur? Isimleri?</div>
+              <button type="button" class="quiz-btn">Cevabi Goster</button>
+              <div class="quiz-a">7 CRUD route: index, show, new, create, edit, update, destroy. Ornek: GET /posts (index), GET /posts/:id (show), POST /posts (create), DELETE /posts/:id (destroy).</div>
+            </div>
             
-            <details class="quiz-item">
-              <summary><span class="q-num">14.</span> posts_path ile posts_url farkı?</summary>
-              <div class="ans">Cevap icin slaytlara bak.</div>
-            </details>
+            <div class="quiz-card" data-week="4">
+              <div class="quiz-q"><span class="q-n">14</span> posts_path ile posts_url farki?</div>
+              <button type="button" class="quiz-btn">Cevabi Goster</button>
+              <div class="quiz-a">posts_path sadece yol doner: /posts. posts_url tam URL doner: http://localhost:3000/posts (protokol + host + port dahil).</div>
+            </div>
             
-            <details class="quiz-item">
-              <summary><span class="q-num">15.</span> Enum'da draft: 0 ne anlama gelir?</summary>
-              <div class="ans">Cevap icin slaytlara bak.</div>
-            </details>
+            <div class="quiz-card" data-week="4">
+              <div class="quiz-q"><span class="q-n">15</span> Enum&#x27;da draft: 0 ne anlama gelir?</div>
+              <button type="button" class="quiz-btn">Cevabi Goster</button>
+              <div class="quiz-a">Veritabaninda status alani 0 olarak saklanir, Ruby tarafinda draft anlamina gelir. Yeni kayit default 0 ise otomatik draft olur. post.draft? ve Post.draft scope kullanilabilir.</div>
+            </div>
             
-            <details class="quiz-item">
-              <summary><span class="q-num">16.</span> Strong Parameters neden gerekli?</summary>
-              <div class="ans">Cevap icin slaytlara bak.</div>
-            </details>
+            <div class="quiz-card" data-week="5">
+              <div class="quiz-q"><span class="q-n">16</span> Strong Parameters neden gerekli?</div>
+              <button type="button" class="quiz-btn">Cevabi Goster</button>
+              <div class="quiz-a">Mass assignment saldirisini onler. Sadece izin verilen alanlar (permit) modele aktarilir. Ornek: params.require(:post).permit(:title, :article) — baska alanlar yok sayilir.</div>
+            </div>
             
-            <details class="quiz-item">
-              <summary><span class="q-num">17.</span> authenticity_token ne işe yarar?</summary>
-              <div class="ans">Cevap icin slaytlara bak.</div>
-            </details>
+            <div class="quiz-card" data-week="5">
+              <div class="quiz-q"><span class="q-n">17</span> authenticity_token ne ise yarar?</div>
+              <button type="button" class="quiz-btn">Cevabi Goster</button>
+              <div class="quiz-a">CSRF (Cross-Site Request Forgery) korumasi saglar. Formda hidden field olarak gonderilir, Rails oturumdaki token ile karsilastirir. Eslesmezse istek reddedilir.</div>
+            </div>
             
-            <details class="quiz-item">
-              <summary><span class="q-num">18.</span> Partial dosya adlandırma kuralı?</summary>
-              <div class="ans">Cevap icin slaytlara bak.</div>
-            </details>
+            <div class="quiz-card" data-week="5">
+              <div class="quiz-q"><span class="q-n">18</span> Partial dosya adlandirma kurali?</div>
+              <button type="button" class="quiz-btn">Cevabi Goster</button>
+              <div class="quiz-a">Partial dosya adi _ ile baslar: _form.html.erb. render &#x27;form&#x27; veya render partial: &#x27;form&#x27; ile cagrilir. Ayni formu new ve edit sayfalarinda tekrar kullanmak icin idealdir.</div>
+            </div>
             
-            <details class="quiz-item">
-              <summary><span class="q-num">19.</span> button_to ile link_to farkı (DELETE için)?</summary>
-              <div class="ans">Cevap icin slaytlara bak.</div>
-            </details>
+            <div class="quiz-card" data-week="5">
+              <div class="quiz-q"><span class="q-n">19</span> button_to ile link_to farki (DELETE icin)?</div>
+              <button type="button" class="quiz-btn">Cevabi Goster</button>
+              <div class="quiz-a">link_to sadece link olusturur; DELETE icin ek ayar gerekir. button_to kendi mini formunu olusturur, _method=delete hidden field ekler — silme islemi icin daha guvenli ve standart.</div>
+            </div>
             
-            <details class="quiz-item">
-              <summary><span class="q-num">20.</span> before_action ne sağlar?</summary>
-              <div class="ans">Cevap icin slaytlara bak.</div>
-            </details>
+            <div class="quiz-card" data-week="5">
+              <div class="quiz-q"><span class="q-n">20</span> before_action ne saglar?</div>
+              <button type="button" class="quiz-btn">Cevabi Goster</button>
+              <div class="quiz-a">DRY prensibi: tekrarlayan kodu action&#x27;lardan once calistirir. Ornek: before_action :set_post, only: [:show, :edit, :update] — @post her action&#x27;da otomatik yuklenir.</div>
+            </div>
             
-            <details class="quiz-item">
-              <summary><span class="q-num">21.</span> Bootstrap grid kaç sütunludur?</summary>
-              <div class="ans">Cevap icin slaytlara bak.</div>
-            </details>
+            <div class="quiz-card" data-week="6">
+              <div class="quiz-q"><span class="q-n">21</span> Bootstrap grid kac sutundur?</div>
+              <button type="button" class="quiz-btn">Cevabi Goster</button>
+              <div class="quiz-a">12 sutunludur. Ornek: col-4 + col-4 + col-4 = 12, yan yana 3 esit sutun. col-8 + col-4 = 12, genis + dar sutun.</div>
+            </div>
             
-            <details class="quiz-item">
-              <summary><span class="q-num">22.</span> .container ile .container-fluid farkı?</summary>
-              <div class="ans">Cevap icin slaytlara bak.</div>
-            </details>
+            <div class="quiz-card" data-week="6">
+              <div class="quiz-q"><span class="q-n">22</span> .container ile .container-fluid farki?</div>
+              <button type="button" class="quiz-btn">Cevabi Goster</button>
+              <div class="quiz-a">container: ekran genisligine gore max-width sinirli (ortalanmis). container-fluid: her zaman %100 genislik, sinir yok.</div>
+            </div>
             
-            <details class="quiz-item">
-              <summary><span class="q-num">23.</span> col-md-8 ne zaman yan yana, ne zaman alt alta?</summary>
-              <div class="ans">Cevap icin slaytlara bak.</div>
-            </details>
+            <div class="quiz-card" data-week="6">
+              <div class="quiz-q"><span class="q-n">23</span> col-md-8 ne zaman yan yana, ne zaman alt alta?</div>
+              <button type="button" class="quiz-btn">Cevabi Goster</button>
+              <div class="quiz-a">768px ve uzeri ekranlarda yan yana durur. 768px altinda (mobil) sutunlar otomatik ust uste yigilir (responsive).</div>
+            </div>
             
-            <details class="quiz-item">
-              <summary><span class="q-num">24.</span> belongs_to FK hangi tabloda?</summary>
-              <div class="ans">Cevap icin slaytlara bak.</div>
-            </details>
+            <div class="quiz-card" data-week="7">
+              <div class="quiz-q"><span class="q-n">24</span> belongs_to FK hangi tabloda?</div>
+              <button type="button" class="quiz-btn">Cevabi Goster</button>
+              <div class="quiz-a">Foreign key, belongs_to tanimlanan modelin tablosundadir. Ornek: Book belongs_to :author → books tablosunda author_id sutunu vardir.</div>
+            </div>
             
-            <details class="quiz-item">
-              <summary><span class="q-num">25.</span> has_many :through ne zaman kullanılır?</summary>
-              <div class="ans">Cevap icin slaytlara bak.</div>
-            </details>
+            <div class="quiz-card" data-week="7">
+              <div class="quiz-q"><span class="q-n">25</span> has_many :through ne zaman kullanilir?</div>
+              <button type="button" class="quiz-btn">Cevabi Goster</button>
+              <div class="quiz-a">Iki model arasinda ara (join) tablo oldugunda. Ornek: Physician has_many :patients, through: :appointments — randevu tablosu uzerinden doktor-hasta iliskisi.</div>
+            </div>
             
-            <details class="quiz-item">
-              <summary><span class="q-num">26.</span> HABTM join table özelliği?</summary>
-              <div class="ans">Cevap icin slaytlara bak.</div>
-            </details>
+            <div class="quiz-card" data-week="7">
+              <div class="quiz-q"><span class="q-n">26</span> HABTM join table ozelligi?</div>
+              <button type="button" class="quiz-btn">Cevabi Goster</button>
+              <div class="quiz-a">id sutunu yoktur (id: false). Sadece iki foreign key icerir (post_id, category_id). Post ve Category coktan coga baglanir. Ornek: categories_posts tablosu.</div>
+            </div>
             
-            <details class="quiz-item">
-              <summary><span class="q-num">27.</span> dependent: :destroy ne yapar?</summary>
-              <div class="ans">Cevap icin slaytlara bak.</div>
-            </details>
+            <div class="quiz-card" data-week="7">
+              <div class="quiz-q"><span class="q-n">27</span> dependent: :destroy ne yapar?</div>
+              <button type="button" class="quiz-btn">Cevabi Goster</button>
+              <div class="quiz-a">Ust kayit silindiginde bagli alt kayitlari da otomatik siler. Ornek: Author silinince has_many :books, dependent: :destroy ile kitaplari da silinir.</div>
+            </div>
             
-            <details class="quiz-item">
-              <summary><span class="q-num">28.</span> Validation ile Normalization farkı?</summary>
-              <div class="ans">Cevap icin slaytlara bak.</div>
-            </details>
+            <div class="quiz-card" data-week="8">
+              <div class="quiz-q"><span class="q-n">28</span> Validation ile Normalization farki?</div>
+              <button type="button" class="quiz-btn">Cevabi Goster</button>
+              <div class="quiz-a">Validation veriyi kontrol eder, gecersizse reddeder (save basarisiz). Normalization veriyi kaydetmeden once degistirir (squish, titlecase) — reddetmez, duzenler.</div>
+            </div>
             
-            <details class="quiz-item">
-              <summary><span class="q-num">29.</span> create! ile create farkı?</summary>
-              <div class="ans">Cevap icin slaytlara bak.</div>
-            </details>
+            <div class="quiz-card" data-week="8">
+              <div class="quiz-q"><span class="q-n">29</span> create! ile create farki?</div>
+              <button type="button" class="quiz-btn">Cevabi Goster</button>
+              <div class="quiz-a">create basarisiz olursa false doner veya hatali nesne doner. create! basarisiz olursa exception firlatir (ActiveRecord::RecordInvalid). ! isareti exception garantisi verir.</div>
+            </div>
             
-            <details class="quiz-item">
-              <summary><span class="q-num">30.</span> validates :title, presence: true, uniqueness: true, length: { maximum: 255 } ne kontrol eder?</summary>
-              <div class="ans">Cevap icin slaytlara bak.</div>
-            </details>
+            <div class="quiz-card" data-week="8">
+              <div class="quiz-q"><span class="q-n">30</span> validates :title, presence: true, uniqueness: true, length: { maximum: 255 } ne kontrol eder?</div>
+              <button type="button" class="quiz-btn">Cevabi Goster</button>
+              <div class="quiz-a">Baslik bos olamaz, benzersiz olmali (ayni baslikla ikinci kayit olamaz) ve en fazla 255 karakter olabilir.</div>
+            </div>
             
-            <details class="quiz-item">
-              <summary><span class="q-num">31.</span> HTTP 422 ne anlama gelir?</summary>
-              <div class="ans">Cevap icin slaytlara bak.</div>
-            </details>
+            <div class="quiz-card" data-week="8">
+              <div class="quiz-q"><span class="q-n">31</span> HTTP 422 ne anlama gelir?</div>
+              <button type="button" class="quiz-btn">Cevabi Goster</button>
+              <div class="quiz-a">Unprocessable Entity — sunucu istegi anladi ama validasyon hatalari nedeniyle isleyemedi. render :new, status: :unprocessable_entity ile form hatalari gosterilir.</div>
+            </div>
             
-            <details class="quiz-item">
-              <summary><span class="q-num">32.</span> I18n.t ve I18n.l farkı?</summary>
-              <div class="ans">Cevap icin slaytlara bak.</div>
-            </details>
+            <div class="quiz-card" data-week="9">
+              <div class="quiz-q"><span class="q-n">32</span> I18n.t ve I18n.l farki?</div>
+              <button type="button" class="quiz-btn">Cevabi Goster</button>
+              <div class="quiz-a">I18n.t (translate): metin cevirir — buton, label, mesaj. I18n.l (localize): tarih ve saat nesnelerini yerel formata cevirir. Ornek: t(&#x27;actions.show&#x27;), l(Time.now).</div>
+            </div>
             
-            <details class="quiz-item">
-              <summary><span class="q-num">33.</span> FriendlyId ne sağlar?</summary>
-              <div class="ans">Cevap icin slaytlara bak.</div>
-            </details>
+            <div class="quiz-card" data-week="9">
+              <div class="quiz-q"><span class="q-n">33</span> FriendlyId ne saglar?</div>
+              <button type="button" class="quiz-btn">Cevabi Goster</button>
+              <div class="quiz-a">URL&#x27;de id yerine okunabilir slug kullanir. /posts/1 yerine /posts/ruby-programlamaya-giris. SEO icin faydalidir. friendly_id :title, use: :slugged</div>
+            </div>
             
-            <details class="quiz-item">
-              <summary><span class="q-num">34.</span> Action Text ne için kullanılır?</summary>
-              <div class="ans">Cevap icin slaytlara bak.</div>
-            </details>
+            <div class="quiz-card" data-week="9">
+              <div class="quiz-q"><span class="q-n">34</span> Action Text ne icin kullanilir?</div>
+              <button type="button" class="quiz-btn">Cevabi Goster</button>
+              <div class="quiz-a">Zengin metin editoru (WYSIWYG) saglar — kalin, italik, liste, resim ekleme. has_rich_text :article ve form.rich_textarea :article ile kullanilir.</div>
+            </div>
             
-            <details class="quiz-item">
-              <summary><span class="q-num">35.</span> Authentication ile Authorization farkı?</summary>
-              <div class="ans">Cevap icin slaytlara bak.</div>
-            </details>
+            <div class="quiz-card" data-week="10">
+              <div class="quiz-q"><span class="q-n">35</span> Authentication ile Authorization farki?</div>
+              <button type="button" class="quiz-btn">Cevabi Goster</button>
+              <div class="quiz-a">Authentication (kimlik dogrulama): Kullanici kim? — giris yapma. Authorization (yetkilendirme): Ne yapabilir? — giris sonrasi erisim hakki. Devise authentication, Pundit/CanCanCan authorization icin.</div>
+            </div>
             
-            <details class="quiz-item">
-              <summary><span class="q-num">36.</span> current_user ve user_signed_in? ne döner?</summary>
-              <div class="ans">Cevap icin slaytlara bak.</div>
-            </details>
+            <div class="quiz-card" data-week="10">
+              <div class="quiz-q"><span class="q-n">36</span> current_user ve user_signed_in? ne doner?</div>
+              <button type="button" class="quiz-btn">Cevabi Goster</button>
+              <div class="quiz-a">current_user: giris yapmis User nesnesini doner (yoksa nil). user_signed_in?: boolean — true ise oturum acik, false ise acik degil.</div>
+            </div>
             
-            <details class="quiz-item">
-              <summary><span class="q-num">37.</span> authenticate_user! ne yapar?</summary>
-              <div class="ans">Cevap icin slaytlara bak.</div>
-            </details>
+            <div class="quiz-card" data-week="10">
+              <div class="quiz-q"><span class="q-n">37</span> authenticate_user! ne yapar?</div>
+              <button type="button" class="quiz-btn">Cevabi Goster</button>
+              <div class="quiz-a">Giris yapilmamissa kullaniciyi login sayfasina yonlendirir. before_action :authenticate_user! ile korumali sayfalar olusturulur.</div>
+            </div>
             
-            <details class="quiz-item">
-              <summary><span class="q-num">38.</span> Admin namespace'te yetki kontrolü nasıl yapılır?</summary>
-              <div class="ans">Cevap icin slaytlara bak.</div>
-            </details>
+            <div class="quiz-card" data-week="10">
+              <div class="quiz-q"><span class="q-n">38</span> Admin namespace&#x27;te yetki kontrolu nasil yapilir?</div>
+              <button type="button" class="quiz-btn">Cevabi Goster</button>
+              <div class="quiz-a">before_action :authorize_admin tanimlanir. unless current_user.admin? ise root_path&#x27;e redirect edilir. Sadece admin rolundekiler admin/users sayfalarina erisebilir.</div>
+            </div>
             
-            <details class="quiz-item">
-              <summary><span class="q-num">39.</span> current_user.posts.new neden kullanılır?</summary>
-              <div class="ans">Cevap icin slaytlara bak.</div>
-            </details>
+            <div class="quiz-card" data-week="10">
+              <div class="quiz-q"><span class="q-n">39</span> current_user.posts.new neden kullanilir?</div>
+              <button type="button" class="quiz-btn">Cevabi Goster</button>
+              <div class="quiz-a">Post otomatik olarak giris yapan kullaniciya atanir. user_id elle gondermek yerine iliski uzerinden olusturma guvenli ve dogru yontemdir.</div>
+            </div>
             </div>
       </div>
     </section>
@@ -2353,6 +2489,41 @@ git status / git add . / git commit -m &quot;...&quot; / git push origin main
     document.getElementById('menuBtn').onclick = () => document.getElementById('sidebar').classList.toggle('open');
     links.forEach(a => a.onclick = () => document.getElementById('sidebar').classList.remove('open'));
     document.querySelectorAll('.week-block .panel').forEach((p, i) => { if (i === 0) p.open = true; });
+
+    function setQuizAnswer(card, show) {
+      const ans = card.querySelector('.quiz-a');
+      const btn = card.querySelector('.quiz-btn');
+      if (!ans || !btn) return;
+      ans.classList.toggle('visible', show);
+      btn.textContent = show ? 'Cevabi Gizle' : 'Cevabi Goster';
+    }
+
+    document.querySelectorAll('.quiz-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const card = btn.closest('.quiz-card');
+        const ans = card.querySelector('.quiz-a');
+        setQuizAnswer(card, !ans.classList.contains('visible'));
+      });
+    });
+
+    document.getElementById('quizShowAll')?.addEventListener('click', () => {
+      document.querySelectorAll('.quiz-card:not(.hidden)').forEach(card => setQuizAnswer(card, true));
+    });
+
+    document.getElementById('quizHideAll')?.addEventListener('click', () => {
+      document.querySelectorAll('.quiz-card').forEach(card => setQuizAnswer(card, false));
+    });
+
+    document.querySelectorAll('.quiz-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        const week = tab.dataset.week;
+        document.querySelectorAll('.quiz-tab').forEach(t => t.classList.toggle('active', t === tab));
+        document.querySelectorAll('.quiz-card').forEach(card => {
+          if (week === 'all') card.classList.remove('hidden');
+          else card.classList.toggle('hidden', card.dataset.week !== week);
+        });
+      });
+    });
   </script>
 </body>
 </html>
