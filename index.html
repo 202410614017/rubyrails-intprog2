@@ -1,0 +1,2358 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Internet Programciligi II | Calisma Rehberi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f8f9fb;
+      --paper: #ffffff;
+      --sidebar: #ffffff;
+      --text: #1a1d26;
+      --text-soft: #5c6370;
+      --line: #e8ebf0;
+      --accent: #b91c1c;
+      --accent-soft: #fef2f2;
+      --accent-border: #fecaca;
+      --blue-soft: #eff6ff;
+      --blue-border: #bfdbfe;
+      --blue-text: #1d4ed8;
+      --green-soft: #f0fdf4;
+      --green-border: #bbf7d0;
+      --green-text: #15803d;
+      --amber-soft: #fffbeb;
+      --amber-border: #fde68a;
+      --amber-text: #b45309;
+      --code-bg: #f4f6f8;
+      --shadow: 0 1px 3px rgba(16,24,40,.06), 0 1px 2px rgba(16,24,40,.04);
+      --shadow-lg: 0 8px 24px rgba(16,24,40,.08);
+      --sidebar-w: 260px;
+      --radius: 12px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      font-size: 15px;
+    }
+    .layout { display: flex; min-height: 100vh; }
+
+    /* Sidebar */
+    .sidebar {
+      width: var(--sidebar-w);
+      background: var(--sidebar);
+      border-right: 1px solid var(--line);
+      position: fixed; inset: 0 auto 0 0;
+      overflow-y: auto; z-index: 100;
+      padding: 1.25rem 0 2rem;
+    }
+    .brand { padding: 0 1.25rem 1.25rem; border-bottom: 1px solid var(--line); margin-bottom: .75rem; }
+    .brand-kicker { font-size: .68rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+    .brand h1 { font-size: 1rem; font-weight: 700; margin-top: .35rem; line-height: 1.35; }
+    .brand p { font-size: .78rem; color: var(--text-soft); margin-top: .35rem; }
+    .nav-label { padding: .85rem 1.25rem .35rem; font-size: .68rem; font-weight: 600; text-transform: uppercase; letter-spacing: .07em; color: #9ca3af; }
+    .sidebar nav a {
+      display: flex; align-items: center; gap: .55rem;
+      padding: .5rem 1.25rem; color: var(--text-soft); text-decoration: none;
+      font-size: .84rem; border-left: 3px solid transparent; transition: .15s;
+    }
+    .sidebar nav a .w-num {
+      width: 1.35rem; height: 1.35rem; border-radius: 6px; background: var(--bg);
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: .68rem; font-weight: 700; color: var(--text-soft); flex-shrink: 0;
+    }
+    .sidebar nav a:hover, .sidebar nav a.active {
+      color: var(--text); background: var(--accent-soft); border-left-color: var(--accent);
+    }
+    .sidebar nav a.active .w-num { background: var(--accent); color: white; }
+
+    /* Main */
+    .main { margin-left: var(--sidebar-w); flex: 1; padding: 2rem 2.5rem 4rem; max-width: 820px; }
+
+    .topbar {
+      background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
+      padding: 1.75rem 2rem; margin-bottom: 1.75rem; box-shadow: var(--shadow);
+    }
+    .topbar h2 { font-size: 1.55rem; font-weight: 700; letter-spacing: -.02em; }
+    .topbar > p { color: var(--text-soft); margin-top: .5rem; max-width: 540px; }
+    .topbar-actions { display: flex; gap: .6rem; margin-top: 1.1rem; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: .35rem;
+      padding: .5rem .95rem; border-radius: 8px; font-size: .84rem; font-weight: 600;
+      text-decoration: none; cursor: pointer; border: none; font-family: inherit;
+    }
+    .btn-red { background: var(--accent); color: white; }
+    .btn-red:hover { background: #991b1b; }
+    .btn-ghost { background: white; color: var(--text); border: 1px solid var(--line); }
+    .btn-ghost:hover { border-color: #cbd5e1; }
+
+    /* Week blocks */
+    .week-block {
+      background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
+      margin-bottom: 1.5rem; box-shadow: var(--shadow); overflow: hidden;
+      scroll-margin-top: 1rem;
+    }
+    .week-head {
+      padding: 1.35rem 1.5rem 1.1rem;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, #fff 0%, #fafbfc 100%);
+    }
+    .week-head-top { display: flex; align-items: center; gap: .75rem; flex-wrap: wrap; margin-bottom: .65rem; }
+    .week-badge {
+      background: var(--accent); color: white; font-size: .72rem; font-weight: 700;
+      padding: .25rem .6rem; border-radius: 6px;
+    }
+    .week-tag { font-size: .78rem; color: var(--text-soft); font-weight: 500; }
+    .week-head h2 { font-size: 1.2rem; font-weight: 700; letter-spacing: -.01em; border: none; margin: 0; padding: 0; }
+    .week-summary {
+      background: var(--blue-soft); border: 1px solid var(--blue-border);
+      border-radius: 8px; padding: .85rem 1rem; margin-top: .85rem;
+      font-size: .88rem; color: #1e3a5f; line-height: 1.55;
+    }
+    .week-summary strong { color: var(--blue-text); font-weight: 600; }
+    .focus-chips { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .75rem; }
+    .chip {
+      font-size: .72rem; font-weight: 500; padding: .25rem .55rem; border-radius: 999px;
+      background: var(--green-soft); color: var(--green-text); border: 1px solid var(--green-border);
+    }
+
+    .week-body { padding: .25rem 1.5rem 1.25rem; }
+
+    /* Accordion panels */
+    .panel {
+      border: 1px solid var(--line); border-radius: 10px; margin: .65rem 0;
+      background: #fafbfc; overflow: hidden;
+    }
+    .panel summary {
+      padding: .85rem 1rem; cursor: pointer; font-weight: 600; font-size: .92rem;
+      list-style: none; display: flex; align-items: center; justify-content: space-between;
+      user-select: none;
+    }
+    .panel summary::-webkit-details-marker { display: none; }
+    .panel summary::after { content: '+'; font-size: 1.1rem; color: var(--text-soft); font-weight: 400; }
+    .panel[open] summary { border-bottom: 1px solid var(--line); background: white; }
+    .panel[open] summary::after { content: '−'; }
+    .panel-inner { padding: .85rem 1rem 1rem; background: white; }
+
+    /* Content typography */
+    .panel-inner h3, .panel-inner h4 { display: none; }
+    .panel-inner p { margin: .5rem 0; color: var(--text-soft); font-size: .9rem; }
+    .panel-inner ul, .panel-inner ol { margin: .5rem 0 .5rem 1.25rem; color: var(--text-soft); font-size: .9rem; }
+    .panel-inner li { margin: .25rem 0; }
+    .panel-inner li::marker { color: var(--accent); }
+    .panel-inner strong { color: var(--text); }
+
+    .panel-inner table {
+      width: 100%; border-collapse: collapse; font-size: .82rem;
+      margin: .65rem 0; border: 1px solid var(--line); border-radius: 8px; overflow: hidden;
+    }
+    .panel-inner th {
+      background: #f1f5f9; padding: .55rem .7rem; text-align: left;
+      font-weight: 600; color: var(--text); font-size: .78rem;
+    }
+    .panel-inner td { padding: .5rem .7rem; border-top: 1px solid var(--line); color: var(--text-soft); vertical-align: top; }
+    .panel-inner tr:nth-child(even) td { background: #fafbfc; }
+
+    .code-block {
+      background: var(--code-bg); border: 1px solid var(--line); border-radius: 8px;
+      margin: .65rem 0; overflow: hidden;
+    }
+    .code-label {
+      font-size: .68rem; font-weight: 600; text-transform: uppercase; letter-spacing: .06em;
+      color: var(--text-soft); padding: .4rem .75rem; background: #eef1f5; border-bottom: 1px solid var(--line);
+    }
+    .panel-inner pre {
+      margin: 0; padding: .75rem .85rem; overflow-x: auto; background: transparent; border: none;
+    }
+    .panel-inner pre code {
+      font-family: 'IBM Plex Mono', monospace; font-size: .78rem; line-height: 1.55;
+      color: #334155; background: none; border: none; padding: 0;
+    }
+    .panel-inner code {
+      font-family: 'IBM Plex Mono', monospace; font-size: .8em;
+      background: #eef1f5; padding: .1em .35em; border-radius: 4px; color: #be123c;
+    }
+
+    /* Special sections (quiz, commands) */
+    .special-block { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); margin-bottom: 1.5rem; box-shadow: var(--shadow); overflow: hidden; scroll-margin-top: 1rem; }
+    .special-head { padding: 1.1rem 1.5rem; border-bottom: 1px solid var(--line); background: #fafbfc; }
+    .special-head h2 { font-size: 1.1rem; font-weight: 700; border: none; margin: 0; padding: 0; }
+    .special-body { padding: .5rem 1.5rem 1.25rem; }
+
+    .quiz-grid { display: grid; gap: .5rem; }
+    .quiz-item {
+      border: 1px solid var(--line); border-radius: 8px; padding: .7rem .85rem; background: #fafbfc;
+    }
+    .quiz-item summary { cursor: pointer; font-weight: 500; font-size: .88rem; list-style: none; }
+    .quiz-item summary::-webkit-details-marker { display: none; }
+    .quiz-item .q-num { color: var(--accent); font-weight: 700; margin-right: .25rem; }
+    .quiz-item .ans { margin-top: .5rem; padding-top: .5rem; border-top: 1px dashed var(--line); font-size: .84rem; color: var(--green-text); }
+
+    .callout {
+      border-radius: 8px; padding: .75rem 1rem; margin: .65rem 0; font-size: .86rem;
+    }
+    .callout-exam { background: var(--amber-soft); border: 1px solid var(--amber-border); color: #78350f; }
+    .callout-tip { background: var(--green-soft); border: 1px solid var(--green-border); color: #14532d; }
+
+    .mobile-toggle {
+      display: none; position: fixed; bottom: 1.25rem; right: 1.25rem; z-index: 200;
+      background: var(--accent); color: white; border: none; border-radius: 50%;
+      width: 48px; height: 48px; font-size: 1.2rem; cursor: pointer; box-shadow: var(--shadow-lg);
+    }
+
+    @media (max-width: 768px) {
+      .sidebar { transform: translateX(-100%); transition: transform .25s; }
+      .sidebar.open { transform: translateX(0); box-shadow: var(--shadow-lg); }
+      .main { margin-left: 0; padding: 1rem; }
+      .mobile-toggle { display: flex; align-items: center; justify-content: center; }
+    }
+
+    @media print {
+      .sidebar, .mobile-toggle, .topbar-actions { display: none !important; }
+      .main { margin-left: 0; max-width: 100%; padding: .5rem; }
+      .week-block, .special-block { break-inside: avoid; box-shadow: none; }
+      .panel { break-inside: avoid; }
+      .panel[open] summary { border-bottom: 1px solid #ddd; }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-kicker">Sinav Rehberi</div>
+        <h1>Internet Programciligi II</h1>
+        <p>Hafta 2-10 | Ruby on Rails</p>
+      </div>
+      <nav><div class="nav-label">Haftalar</div>
+<a href="#hafta-2-ruby-rails-giris"><span class="w-num">2</span>Ruby & Rails Giriş</a>
+<a href="#hafta-3-orm-active-record"><span class="w-num">3</span>ORM & Active Record</a>
+<a href="#hafta-4-enum-routes-controllers"><span class="w-num">4</span>Enum, Routes, Controllers</a>
+<a href="#hafta-5-form-helpers-strong-parameters"><span class="w-num">5</span>Form Helpers & Strong Parameters</a>
+<a href="#hafta-6-bootstrap-frontend"><span class="w-num">6</span>Bootstrap Frontend</a>
+<a href="#hafta-7-model-iliskileri-kategori"><span class="w-num">7</span>Model İlişkileri & Kategori</a>
+<a href="#hafta-8-validation-active-storage"><span class="w-num">8</span>Validation & Active Storage</a>
+<a href="#hafta-9-i18n-friendlyid-action-text"><span class="w-num">9</span>I18n, FriendlyId, Action Text</a>
+<a href="#hafta-10-devise-authorization"><span class="w-num">10</span>Devise & Authorization</a>
+<div class="nav-label">Sinav</div>
+<a href="#komut-hizli-referans"><span class="w-num">#</span>Komutlar</a>
+<a href="#sinav-sorulari-kendini-test-et"><span class="w-num">?</span>Test Sorulari</a></nav>
+    </aside>
+    <main class="main">
+      <div class="topbar">
+        <h2>Ders Notlari — Anlatimli Ozet</h2>
+        <p>Tum konular korundu; her hafta acilir-kapanir bolumler halinde sadelestirildi. Soldan hafta sec veya asagidan incele.</p>
+        <div class="topbar-actions">
+          <button class="btn btn-red" onclick="window.print()">PDF Olarak Indir</button>
+          <a class="btn btn-ghost" href="#sinav-sorulari-kendini-test-et">Test Sorulari</a>
+        </div>
+      </div>
+      
+    <section class="week-block" id="hafta-2-ruby-rails-giris">
+      <div class="week-head">
+        <div class="week-head-top">
+          <span class='week-badge'>Hafta 2</span>
+          <span class='week-tag'>Ruby & Rails Temelleri</span>
+        </div>
+        <h2>Hafta 2 — Ruby & Rails Giriş</h2>
+        <div class='week-summary'><strong>Bu haftada ne ogreniyorsun?</strong> Ruby dilinin temel yapı taşlarını ve Rails projesinin nasıl kurulup çalıştığını öğrenirsin. MVC mimarisi bu haftanın omurgasıdır.</div>
+        <div class='focus-chips'><span class="chip">Ruby'de her sey nesnedir</span><span class="chip">MVC: routes -> controller -> model -> view</span><span class="chip">rails new, db:create, rails s</span></div>
+      </div>
+      <div class="week-body">
+    
+        <details class="panel">
+          <summary>Ruby Temelleri</summary>
+          <div class="panel-inner"><table>
+<thead>
+<tr>
+<th>Konu</th>
+<th>Önemli Nokta</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ruby</td>
+<td>1995, Matz Matsumoto, açık kaynak, OOP, <strong>her şey nesnedir</strong></td>
+</tr>
+<tr>
+<td>Integer</td>
+<td><code>3.class</code> → Integer → Numeric → Object → BasicObject</td>
+</tr>
+<tr>
+<td>Float</td>
+<td><code>to_i</code>, <code>negative?</code>, <code>floor</code>, <code>ceil</code></td>
+</tr>
+<tr>
+<td>String</td>
+<td><code>downcase</code>, <code>upcase</code>, <code>capitalize</code>, <code>strip</code>, <code>%w{}</code>, <code>%i{}</code>, <code>#{}</code> interpolation</td>
+</tr>
+<tr>
+<td>Array</td>
+<td><code>length</code>, <code>count</code>, <code>include?</code>, <code>first</code>, <code>last</code>, <code>sort</code>, <code>compact</code>, <code>uniq</code>, <code>flatten</code>, <code>+</code>, <code>\|</code>, <code>-</code>, <code>&lt;&lt;</code>, <code>push</code>, <code>unshift</code>, <code>pop</code>, <code>shift</code>, <code>delete</code></td>
+</tr>
+<tr>
+<td>Hash</td>
+<td>Key-value, <code>:symbol</code> key, <code>keys</code>, <code>values</code>, <code>key?</code>, <code>value?</code></td>
+</tr>
+<tr>
+<td>Symbol</td>
+<td><code>:user</code> — tekil, <code>object_id</code> sabit kalır (String'den fark)</td>
+</tr>
+</tbody>
+</table></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Metot Kuralları</summary>
+          <div class="panel-inner"><ul>
+<li><code>?</code> ile biten → <code>true</code>/<code>false</code> döner (<code>even?</code>, <code>odd?</code>, <code>zero?</code>)</li>
+<li><code>!</code> ile biten → tehlikeli/destructive (<code>upcase!</code> orijinali değiştirir)</li>
+<li><code>return</code> yoksa <strong>son satırın değeri</strong> döner</li>
+<li><code>*isimler</code> → değişken sayıda argüman</li>
+</ul></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Değişken Türleri</summary>
+          <div class="panel-inner"><table>
+<thead>
+<tr>
+<th>Tür</th>
+<th>Sözdizimi</th>
+<th>Kapsam</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Local</td>
+<td><code>out_text</code> (küçük harf/<code>_</code>)</td>
+<td>Fonksiyon içi</td>
+</tr>
+<tr>
+<td>Global</td>
+<td><code>$monday</code></td>
+<td>Her yerden erişim</td>
+</tr>
+<tr>
+<td>Instance</td>
+<td><code>@name</code></td>
+<td>Nesneye ait</td>
+</tr>
+<tr>
+<td>Class</td>
+<td><code>@@coffee_number</code></td>
+<td>Sınıfa ait, <code>@@</code> ile</td>
+</tr>
+<tr>
+<td>Constant</td>
+<td><code>PI = 3.14</code></td>
+<td>Büyük harf, değiştirilmez</td>
+</tr>
+</tbody>
+</table></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Sınıflar & OOP</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">ruby</div><pre><code>class Dog &lt; Animal          # Kalıtım
+  def speak; super; end     # super → üst sınıf metodu
+end
+
+attr_accessor :name        # getter + setter
+attr_reader :name          # sadece getter
+attr_writer :name          # sadece setter
+</code></pre></div>
+<p><strong>Erişim:</strong> <code>public</code> (her yerden) | <code>private</code> (sadece dolaylı) | <code>protected</code> (dolaylı + alt sınıf)</p></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Modül</summary>
+          <div class="panel-inner"><ul>
+<li>Metot/sabit koleksiyonu, <strong>türetilemez</strong></li>
+<li><code>include Movable</code> → sınıfa karıştırılır</li>
+<li>Namespacing: <code>Framework::VERSION</code>, <code>Framework::HttpFunctions.fetch_url</code></li>
+</ul></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Bloklar, Proc, Lambda</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">ruby</div><pre><code>[1,2,3].each { |n| puts n }
+[1,2,3].map { |n| n * 2 }
+
+def test_function
+  yield if block_given?
+end
+
+my_proc = Proc.new { |x,y| puts x+y }   # fazla/eksik argüman tolere eder
+my_lambda = -&gt;(x,y) { puts x+y }      # yanlış argüman → ArgumentError
+</code></pre></div></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Koşullar</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">ruby</div><pre><code>if / elsif / else / end
+unless a == b
+amount == 1 ? &quot;apple&quot; : &quot;apples&quot;   # ternary
+for i in 1..3
+</code></pre></div>
+</div>
+        </details>
+        
+        <details class="panel">
+          <summary>Rails Blog Projesi Kurulumu</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">bash</div><pre><code>rails new blogger-a-ogrencino -d postgresql --css bootstrap
+cd blogger-a-ogrencino
+git init
+git remote add origin https://...
+git add .
+git commit -m &quot;First commit&quot;
+git push -u origin main
+rails db:create
+rails s                    # localhost:3000
+rails s -p 3001            # farklı port
+</code></pre></div></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Rails Dizin Yapısı (EZBERLE!)</summary>
+          <div class="panel-inner"><table>
+<thead>
+<tr>
+<th>Dizin/Dosya</th>
+<th>Görevi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>app/controllers</code></td>
+<td>İstekleri alır, model+view ile etkileşir</td>
+</tr>
+<tr>
+<td><code>app/models</code></td>
+<td>Veri yapısı, iş mantığı, DB etkileşimi</td>
+</tr>
+<tr>
+<td><code>app/views</code></td>
+<td>Arayüz (<code>.html.erb</code>)</td>
+</tr>
+<tr>
+<td><code>config/database.yml</code></td>
+<td>DB ayarları</td>
+</tr>
+<tr>
+<td><code>config/routes.rb</code></td>
+<td>URL yolları</td>
+</tr>
+<tr>
+<td><code>config/importmap.rb</code></td>
+<td>JS paketleri</td>
+</tr>
+<tr>
+<td><code>config/locales/</code></td>
+<td>Çoklu dil (tr.yml, en.yml)</td>
+</tr>
+<tr>
+<td><code>config/environments/</code></td>
+<td>development, production, test</td>
+</tr>
+<tr>
+<td><code>config/master.key</code> + <code>credentials.yml.enc</code></td>
+<td>Gizli bilgiler (şifreli)</td>
+</tr>
+<tr>
+<td><code>db/migrate/</code></td>
+<td>Migration dosyaları</td>
+</tr>
+<tr>
+<td><code>db/schema.rb</code></td>
+<td>Güncel DB şeması</td>
+</tr>
+<tr>
+<td><code>db/seeds.rb</code></td>
+<td>Ön tanımlı veri</td>
+</tr>
+<tr>
+<td><code>public/</code></td>
+<td>Statik dosyalar</td>
+</tr>
+<tr>
+<td><code>log/</code></td>
+<td>Log dosyaları</td>
+</tr>
+<tr>
+<td><code>test/</code></td>
+<td>Test dosyaları</td>
+</tr>
+<tr>
+<td><code>vendor/</code></td>
+<td>3. parti kütüphaneler</td>
+</tr>
+<tr>
+<td><code>Gemfile</code> / <code>Gemfile.lock</code></td>
+<td>Gem bağımlılıkları</td>
+</tr>
+<tr>
+<td><code>package.json</code></td>
+<td>npm bağımlılıkları</td>
+</tr>
+</tbody>
+</table></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Credentials</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">bash</div><pre><code>EDITOR=&quot;code --wait&quot; rails credentials:edit
+</code></pre></div>
+<div class="code-block"><div class="code-label">yaml</div><pre><code># database.yml içinde:
+&lt;%= Rails.application.credentials.dig(:pg, :username) %&gt;
+&lt;%= Rails.application.credentials.dig(:pg, :password) %&gt;
+</code></pre></div>
+<p><code>&lt;% %&gt;</code> → Ruby çalıştır | <code>&lt;%= %&gt;</code> → çıktı ver</p></div>
+        </details>
+        
+        <details class="panel">
+          <summary>MVC Akışı</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">kod</div><pre><code>routes.rb → Controller → Model → View → HTML yanıt
+get &quot;/users&quot;, to: &quot;users#index&quot;
+</code></pre></div></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Anasayfa</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">ruby</div><pre><code># config/routes.rb
+root &quot;home#index&quot;
+
+# app/controllers/home_controller.rb
+class HomeController &lt; ApplicationController
+  def index; end
+end
+
+# app/views/home/index.html.erb
+&lt;h1&gt;Merhaba Rails&lt;/h1&gt;
+</code></pre></div></div>
+        </details>
+        
+        <details class="panel">
+          <summary>RubyGems</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">bash</div><pre><code>gem search -r rails
+gem install gem_name
+gem list
+</code></pre></div></div>
+        </details>
+        </div></section>
+
+    <section class="week-block" id="hafta-3-orm-active-record">
+      <div class="week-head">
+        <div class="week-head-top">
+          <span class='week-badge'>Hafta 3</span>
+          <span class='week-tag'>Veritabani & ORM</span>
+        </div>
+        <h2>Hafta 3 — ORM & Active Record</h2>
+        <div class='week-summary'><strong>Bu haftada ne ogreniyorsun?</strong> SQL yazmadan veritabani islemleri yapmayi ogrenirsin. Active Record, tablolari Ruby siniflarina cevirir.</div>
+        <div class='focus-chips'><span class="chip">ORM = tablo <-> sinif eslestirmesi</span><span class="chip">find / find_by / where farki</span><span class="chip">Migration ile sema yonetimi</span></div>
+      </div>
+      <div class="week-body">
+    
+        <details class="panel">
+          <summary>ORM Nedir?</summary>
+          <div class="panel-inner"><ul>
+<li><strong>Object Relational Mapping</strong> — tablo ↔ sınıf, satır ↔ nesne, sütun ↔ attribute, FK ↔ ilişki</li>
+<li>SQL yazmadan DDL ve DML işlemleri</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>DDL</th>
+<th>DML</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Create, Alter, Drop</td>
+<td>Select, Insert, Update, Delete</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Avantajlar:</strong> Az SQL, OOP, platform bağımsızlığı, uygulama tarafında modelleme, düşük maliyet</p>
+<p><strong>Dillere göre ORM:</strong> Ruby→ActiveRecord, Java→Hibernate, C#→Entity Framework, Python→Django, Go→Gorm</p></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Active Record</summary>
+          <div class="panel-inner"><ul>
+<li>MVC'de <strong>Model</strong> katmanı</li>
+<li>Tablo adı → çoğul snake_case (<code>Post</code> → <code>posts</code>, <code>Person</code> → <code>people</code>)</li>
+</ul></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Veri Türleri</summary>
+          <div class="panel-inner"><table>
+<thead>
+<tr>
+<th>Tür</th>
+<th>Açıklama</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>string</code></td>
+<td>Max 255 karakter</td>
+</tr>
+<tr>
+<td><code>text</code></td>
+<td>Max 65.535 karakter</td>
+</tr>
+<tr>
+<td><code>integer</code></td>
+<td>-2147483648 – 2147483647</td>
+</tr>
+<tr>
+<td><code>float</code></td>
+<td>8 byte ondalık</td>
+</tr>
+<tr>
+<td><code>boolean</code></td>
+<td>true/false</td>
+</tr>
+<tr>
+<td><code>decimal</code></td>
+<td>Hassas finansal veri (precision, scale)</td>
+</tr>
+<tr>
+<td><code>date</code></td>
+<td>Yıl-ay-gün</td>
+</tr>
+<tr>
+<td><code>datetime</code></td>
+<td>Tarih + saat</td>
+</tr>
+<tr>
+<td><code>timestamps</code></td>
+<td><code>created_at</code>, <code>updated_at</code> otomatik</td>
+</tr>
+</tbody>
+</table></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Model Oluşturma</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">bash</div><pre><code>rails g model Post title article:text
+rails db:migrate
+</code></pre></div>
+<div class="code-block"><div class="code-label">ruby</div><pre><code>class CreatePosts &lt; ActiveRecord::Migration[8.0]
+  def change
+    create_table :posts do |t|
+      t.string :title
+      t.text :article
+      t.timestamps
+    end
+  end
+end
+</code></pre></div></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Rails Console Komutları</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">ruby</div><pre><code>rails c
+Post.column_names
+post = Post.new(title: &quot;...&quot;, article: &quot;...&quot;)  # henüz kaydedilmedi, id nil
+post.save
+Post.create(title: &quot;...&quot;, article: &quot;...&quot;)       # oluştur + kaydet
+
+Post.all
+Post.count
+Post.first / Post.second / Post.last
+Post.first(10) / Post.last(10)
+Post.take / Post.take(2)   # sıralama yok, LIMIT
+
+Post.where(title: &quot;Git Commit Komutu&quot;)
+Post.where('title LIKE ?', &quot;%Commit%&quot;)
+Post.where.not(title: nil)
+Post.where.not(title: nil).or(Post.where(article: nil))
+Post.where.not(title: nil).where(article: nil)
+Post.where(id: [1,2]).and(Post.where.not(title: nil))
+
+Post.order(:created_at)              # ASC (varsayılan)
+Post.order(created_at: :desc)        # DESC
+
+Post.find(1)                         # id ile, bulamazsa exception
+Post.find_by(title: &quot;...&quot;)           # tek kayıt veya nil
+Post.find([1, 3])                    # çoklu id
+Post.where(...)                      # ActiveRecord::Relation döner
+
+post.update(title: &quot;...&quot;)
+post.title = &quot;...&quot;; post.save
+
+Post.first.destroy
+Post.destroy_all
+</code></pre></div></div>
+        </details>
+        
+        <details class="panel">
+          <summary>find vs find_by vs where</summary>
+          <div class="panel-inner"><table>
+<thead>
+<tr>
+<th>Metot</th>
+<th>Döner</th>
+<th>Bulamazsa</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>find(id)</code></td>
+<td>Tek kayıt</td>
+<td>Exception</td>
+</tr>
+<tr>
+<td><code>find_by(...)</code></td>
+<td>Tek kayıt veya nil</td>
+<td>nil</td>
+</tr>
+<tr>
+<td><code>where(...)</code></td>
+<td>Relation (çoklu)</td>
+<td>Boş relation</td>
+</tr>
+</tbody>
+</table></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Migration</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">bash</div><pre><code>rails g migration CreateUser first_name last_name
+rails g migration AddIdNumberToUser id_number:integer
+rails g migration RemoveIdNumberFromUser id_number:integer
+rails g migration DropUser
+rails db:migrate
+rails db:rollback
+rails db:migrate:status
+</code></pre></div></div>
+        </details>
+        
+        <details class="panel">
+          <summary>DB Komutları</summary>
+          <div class="panel-inner"><table>
+<thead>
+<tr>
+<th>Komut</th>
+<th>İşlev</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>db:create</code></td>
+<td>Mevcut ortam için DB oluştur</td>
+</tr>
+<tr>
+<td><code>db:create:all</code></td>
+<td>Tüm ortamlar</td>
+</tr>
+<tr>
+<td><code>db:drop</code></td>
+<td>Mevcut ortam DB sil</td>
+</tr>
+<tr>
+<td><code>db:drop:all</code></td>
+<td>Tüm ortamlar</td>
+</tr>
+<tr>
+<td><code>db:migrate</code></td>
+<td>Bekleyen migration'ları çalıştır</td>
+</tr>
+<tr>
+<td><code>db:migrate:up</code></td>
+<td>Tek migration çalıştır</td>
+</tr>
+<tr>
+<td><code>db:migrate:down</code></td>
+<td>Tek migration geri al</td>
+</tr>
+<tr>
+<td><code>db:migrate:status</code></td>
+<td>Durum</td>
+</tr>
+<tr>
+<td><code>db:rollback</code></td>
+<td>Son migration geri al</td>
+</tr>
+<tr>
+<td><code>db:seed</code></td>
+<td>seeds.rb çalıştır</td>
+</tr>
+<tr>
+<td><code>db:schema:load</code></td>
+<td>Şemayı yükle</td>
+</tr>
+<tr>
+<td><code>db:setup</code></td>
+<td>schema:load + seed</td>
+</tr>
+<tr>
+<td><code>db:reset</code></td>
+<td>drop + setup</td>
+</tr>
+</tbody>
+</table></div>
+        </details>
+        </div></section>
+
+    <section class="week-block" id="hafta-4-enum-routes-controllers">
+      <div class="week-head">
+        <div class="week-head-top">
+          <span class='week-badge'>Hafta 4</span>
+          <span class='week-tag'>Routes & CRUD</span>
+        </div>
+        <h2>Hafta 4 — Enum, Routes, Controllers</h2>
+        <div class='week-summary'><strong>Bu haftada ne ogreniyorsun?</strong> HTTP isteklerini controller action'larina baglarsin. Enum, scope ve CRUD rotalarini kullanirsin.</div>
+        <div class='focus-chips'><span class="chip">resources :posts = 7 CRUD route</span><span class="chip">GET/POST/PUT/PATCH/DELETE</span><span class="chip">Enum ile status yonetimi</span></div>
+      </div>
+      <div class="week-body">
+    
+        <details class="panel">
+          <summary>Status Alanı Ekleme</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">bash</div><pre><code>rails g migration AddStatusToPost status:integer
+</code></pre></div>
+<div class="code-block"><div class="code-label">ruby</div><pre><code>add_column :posts, :status, :integer, default: 0
+</code></pre></div></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Enum</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">ruby</div><pre><code>class Post &lt; ApplicationRecord
+  enum :status, { draft: 0, published: 1, inactive: 2 }
+end
+</code></pre></div>
+<ul>
+<li>Default 0 → <code>draft</code></li>
+<li>Otomatik scope: <code>Post.published</code>, <code>Post.draft</code>, <code>Post.inactive</code></li>
+<li>Soru metodları: <code>post.published?</code>, <code>post.draft?</code></li>
+<li><code>Post.statuses</code> → <code>{"draft"=&gt;0, "published"=&gt;1, "inactive"=&gt;2}</code></li>
+<li><code>scopes: false</code> → otomatik scope kapatılır</li>
+<li><code>prefix: true</code> → <code>Post.status_draft</code></li>
+<li><code>suffix: true</code> → <code>Post.draft_status</code></li>
+</ul></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Scope</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">ruby</div><pre><code>scope :published, -&gt; { where(status: :published) }
+Post.published.or(Post.inactive)
+</code></pre></div></div>
+        </details>
+        
+        <details class="panel">
+          <summary>HTTP & URL</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">kod</div><pre><code>http://example.org/posts?query=rails&amp;sort=asc
+  ↑protokol  ↑host        ↑path  ↑parametreler (? ile başlar)
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Metot</th>
+<th>Amaç</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td>Veri iste (hassas veri gönderme!)</td>
+</tr>
+<tr>
+<td>POST</td>
+<td>Yeni kayıt oluştur</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td>Tüm kaynağı güncelle (id zorunlu)</td>
+</tr>
+<tr>
+<td>PATCH</td>
+<td>Kısmi güncelleme</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td>Kaynak sil</td>
+</tr>
+</tbody>
+</table></div>
+        </details>
+        
+        <details class="panel">
+          <summary>CRUD Routes</summary>
+          <div class="panel-inner"><table>
+<thead>
+<tr>
+<th>Action</th>
+<th>HTTP</th>
+<th>Route</th>
+<th>Açıklama</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>index</td>
+<td>GET</td>
+<td><code>/posts</code></td>
+<td>Tümünü listele</td>
+</tr>
+<tr>
+<td>show</td>
+<td>GET</td>
+<td><code>/posts/:id</code></td>
+<td>Tek kayıt</td>
+</tr>
+<tr>
+<td>new</td>
+<td>GET</td>
+<td><code>/posts/new</code></td>
+<td>Form göster</td>
+</tr>
+<tr>
+<td>create</td>
+<td>POST</td>
+<td><code>/posts</code></td>
+<td>Kaydet</td>
+</tr>
+<tr>
+<td>edit</td>
+<td>GET</td>
+<td><code>/posts/:id/edit</code></td>
+<td>Düzenleme formu</td>
+</tr>
+<tr>
+<td>update</td>
+<td>PUT/PATCH</td>
+<td><code>/posts/:id</code></td>
+<td>Güncelle</td>
+</tr>
+<tr>
+<td>destroy</td>
+<td>DELETE</td>
+<td><code>/posts/:id</code></td>
+<td>Sil</td>
+</tr>
+</tbody>
+</table>
+<div class="code-block"><div class="code-label">ruby</div><pre><code>resources :posts          # 7 CRUD route otomatik
+root &quot;posts#index&quot;
+rails routes             # terminalde route listesi
+# localhost:3000/rails/info/routes
+</code></pre></div></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Controller & ERB</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">bash</div><pre><code>rails g controller Posts index --skip-routes
+</code></pre></div>
+<div class="code-block"><div class="code-label">ruby</div><pre><code>class PostsController &lt; ApplicationController
+  def index
+    @posts = Post.published   # @ ile instance variable → view'a gider
+  end
+  def show
+    @post = Post.find(params[:id])
+  end
+end
+</code></pre></div>
+<p><strong>ERB:</strong>
+- <code>&lt;% %&gt;</code> → kod çalıştır, çıktı yok
+- <code>&lt;%= %&gt;</code> → kod çalıştır, çıktı ver</p>
+<div class="code-block"><div class="code-label">erb</div><pre><code>&lt;% @posts.each do |post| %&gt;
+  &lt;%= post.title %&gt;
+  &lt;%= link_to &quot;Görüntüle&quot;, post_path(post) %&gt;
+&lt;% end %&gt;
+</code></pre></div></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Path Helpers</summary>
+          <div class="panel-inner"><table>
+<thead>
+<tr>
+<th>Helper</th>
+<th>Üretir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>posts_path</code></td>
+<td><code>/posts</code></td>
+</tr>
+<tr>
+<td><code>posts_url</code></td>
+<td><code>http://localhost:3000/posts</code></td>
+</tr>
+<tr>
+<td><code>post_path(1)</code></td>
+<td><code>/posts/1</code></td>
+</tr>
+<tr>
+<td><code>post_url(1)</code></td>
+<td>Tam URL</td>
+</tr>
+<tr>
+<td><code>new_post_path</code></td>
+<td><code>/posts/new</code></td>
+</tr>
+<tr>
+<td><code>edit_post_path(post)</code></td>
+<td><code>/posts/1/edit</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>_path</code> → göreceli yol | <code>_url</code> → tam URL (protokol+host+port)</p></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Seed Verisi</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">ruby</div><pre><code># db/seeds.rb
+posts = YAML.load_file(Rails.root.join(&quot;db/data/posts.json&quot;), symbolize_names: true)
+posts.each do |post|
+  Post.find_or_create_by(title: post[:title], article: post[:article], status: post[:status])
+end
+</code></pre></div>
+<div class="code-block"><div class="code-label">bash</div><pre><code>rails db:seed
+</code></pre></div></div>
+        </details>
+        </div></section>
+
+    <section class="week-block" id="hafta-5-form-helpers-strong-parameters">
+      <div class="week-head">
+        <div class="week-head-top">
+          <span class='week-badge'>Hafta 5</span>
+          <span class='week-tag'>Formlar & Guvenlik</span>
+        </div>
+        <h2>Hafta 5 — Form Helpers & Strong Parameters</h2>
+        <div class='week-summary'><strong>Bu haftada ne ogreniyorsun?</strong> Kullanicidan veri almak icin form helper'lari ve guvenli parametre filtreleme (Strong Parameters) kullanilir.</div>
+        <div class='focus-chips'><span class="chip">form_with model: @post</span><span class="chip">post_params ile mass assignment korumasi</span><span class="chip">Partials ve before_action</span></div>
+      </div>
+      <div class="week-body">
+    
+        <details class="panel">
+          <summary>Action View</summary>
+          <div class="panel-inner"><ul>
+<li>MVC'de <strong>View</strong> katmanı</li>
+<li>Controller veriyi alır → View HTML yanıt üretir</li>
+<li><code>form_with</code> ana form helper</li>
+</ul></div>
+        </details>
+        
+        <details class="panel">
+          <summary>form_with</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">erb</div><pre><code>&lt;%= form_with model: @post do |form| %&gt;
+  &lt;%= form.label :title, &quot;Başlık&quot; %&gt;
+  &lt;%= form.text_field :title %&gt;
+  &lt;%= form.text_area :article, size: &quot;70x5&quot; %&gt;
+  &lt;%= form.select(:status, Post.statuses.keys) %&gt;
+  &lt;%= form.collection_radio_buttons :status, Post.statuses, :first, :first %&gt;
+  &lt;%= form.submit %&gt;
+&lt;% end %&gt;
+</code></pre></div>
+<ul>
+<li><code>authenticity_token</code> → CSRF koruması (hidden field)</li>
+<li>Model bağlı form → <code>params[:post][:title]</code> şeklinde gelir</li>
+</ul></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Form Elemanları</summary>
+          <div class="panel-inner"><table>
+<thead>
+<tr>
+<th>Helper</th>
+<th>HTML</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>text_field</code></td>
+<td><code>&lt;input type="text"&gt;</code></td>
+</tr>
+<tr>
+<td><code>text_area</code></td>
+<td><code>&lt;textarea&gt;</code></td>
+</tr>
+<tr>
+<td><code>hidden_field</code></td>
+<td><code>&lt;input type="hidden"&gt;</code></td>
+</tr>
+<tr>
+<td><code>number_field</code></td>
+<td><code>&lt;input type="number"&gt;</code></td>
+</tr>
+<tr>
+<td><code>password_field</code></td>
+<td><code>&lt;input type="password"&gt;</code></td>
+</tr>
+<tr>
+<td><code>date_field</code></td>
+<td><code>&lt;input type="date"&gt;</code></td>
+</tr>
+<tr>
+<td><code>file_field</code></td>
+<td>Dosya yükleme</td>
+</tr>
+<tr>
+<td><code>select</code></td>
+<td><code>&lt;select&gt;</code> dropdown</td>
+</tr>
+<tr>
+<td><code>collection_radio_buttons</code></td>
+<td>Radio butonlar</td>
+</tr>
+</tbody>
+</table></div>
+        </details>
+        
+        <details class="panel">
+          <summary>CRUD Controller (Tam)</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">ruby</div><pre><code>class PostsController &lt; ApplicationController
+  before_action :set_post, only: %i[show edit update destroy]
+
+  def index
+    @posts = Post.published
+  end
+
+  def show; end
+
+  def new
+    @post = Post.new
+  end
+
+  def create
+    @post = Post.new(post_params)
+    if @post.save
+      redirect_to posts_path
+    else
+      render :new
+    end
+  end
+
+  def edit; end
+
+  def update
+    if @post.update(post_params)
+      redirect_to @post
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    @post.destroy
+    redirect_to posts_path
+  end
+
+  private
+
+  def set_post
+    @post = Post.find(params[:id])
+  end
+
+  def post_params
+    params.require(:post).permit(:title, :article, :status)
+  end
+end
+</code></pre></div></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Strong Parameters</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">ruby</div><pre><code>params.require(:post).permit(:title, :article, :status)
+</code></pre></div>
+<ul>
+<li><code>:post</code> anahtarının varlığını zorunlu kılar</li>
+<li>Sadece izin verilen alanları geçirir → <strong>Mass Assignment</strong> saldırısını önler</li>
+</ul></div>
+        </details>
+        
+        <details class="panel">
+          <summary>link_to</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">erb</div><pre><code>&lt;%= link_to &quot;Post&quot;, @post %&gt;
+&lt;%= link_to &quot;Posts&quot;, posts_path, class: &quot;btn btn-primary&quot; %&gt;
+&lt;%= link_to(@post) do %&gt;
+  &lt;strong&gt;&lt;%= @post.title %&gt;&lt;/strong&gt;
+&lt;% end %&gt;
+</code></pre></div></div>
+        </details>
+        
+        <details class="panel">
+          <summary>button_to (DELETE için)</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">erb</div><pre><code>&lt;%= button_to &quot;Sil&quot;, @post, method: :delete, data: { turbo_confirm: &quot;Emin misin?&quot; } %&gt;
+</code></pre></div>
+<ul>
+<li>Kendi mini formunu oluşturur</li>
+<li><code>_method=delete</code> hidden field ekler</li>
+</ul></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Partials</summary>
+          <div class="panel-inner"><ul>
+<li>Dosya adı <code>_</code> ile başlar: <code>_form.html.erb</code></li>
+<li><code>render "form", post: @post, form_title: "Yeni Post Ekle"</code></li>
+</ul></div>
+        </details>
+        
+        <details class="panel">
+          <summary>before_action (DRY)</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">ruby</div><pre><code>before_action :set_post, only: %i[show edit update destroy]
+</code></pre></div></div>
+        </details>
+        </div></section>
+
+    <section class="week-block" id="hafta-6-bootstrap-frontend">
+      <div class="week-head">
+        <div class="week-head-top">
+          <span class='week-badge'>Hafta 6</span>
+          <span class='week-tag'>Bootstrap UI</span>
+        </div>
+        <h2>Hafta 6 — Bootstrap Frontend</h2>
+        <div class='week-summary'><strong>Bu haftada ne ogreniyorsun?</strong> Blog arayuzunu Bootstrap ile duzenlersin. Grid, navbar, footer ve card yapilari kullanilir.</div>
+        <div class='focus-chips'><span class="chip">12 sutunlu grid sistemi</span><span class="chip">container vs container-fluid</span><span class="chip">Partial: _navbar, _footer</span></div>
+      </div>
+      <div class="week-body">
+    
+        <details class="panel">
+          <summary>Bootstrap 5</summary>
+          <div class="panel-inner"><ul>
+<li>Ücretsiz frontend framework</li>
+<li>Responsive (mobil uyumlu)</li>
+<li>Viewport meta: <code>&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;</code></li>
+</ul></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Breakpoints</summary>
+          <div class="panel-inner"><table>
+<thead>
+<tr>
+<th>Breakpoint</th>
+<th>Class</th>
+<th>Boyut</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Extra small</td>
+<td>(none)</td>
+<td>&lt;576px</td>
+</tr>
+<tr>
+<td>Small</td>
+<td><code>sm</code></td>
+<td>≥576px</td>
+</tr>
+<tr>
+<td>Medium</td>
+<td><code>md</code></td>
+<td>≥768px</td>
+</tr>
+<tr>
+<td>Large</td>
+<td><code>lg</code></td>
+<td>≥992px</td>
+</tr>
+<tr>
+<td>X-Large</td>
+<td><code>xl</code></td>
+<td>≥1200px</td>
+</tr>
+<tr>
+<td>XX-Large</td>
+<td><code>xxl</code></td>
+<td>≥1400px</td>
+</tr>
+</tbody>
+</table></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Container</summary>
+          <div class="panel-inner"><table>
+<thead>
+<tr>
+<th>Sınıf</th>
+<th>Davranış</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>.container</code></td>
+<td>Her breakpoint'te max-width değişir</td>
+</tr>
+<tr>
+<td><code>.container-md</code></td>
+<td>Belirtilene kadar %100</td>
+</tr>
+<tr>
+<td><code>.container-fluid</code></td>
+<td>Her zaman %100</td>
+</tr>
+</tbody>
+</table></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Grid (12 sütun)</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">html</div><pre><code>&lt;div class=&quot;container&quot;&gt;
+  &lt;div class=&quot;row&quot;&gt;
+    &lt;div class=&quot;col-md-8&quot;&gt;...&lt;/div&gt;
+    &lt;div class=&quot;col-md-4&quot;&gt;...&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre></div>
+<ul>
+<li><code>&lt;768px</code> → sütunlar üst üste yığılır</li>
+<li>Prefix: <code>.col-</code>, <code>.col-sm-</code>, <code>.col-md-</code>, <code>.col-lg-</code>, <code>.col-xl-</code>, <code>.col-xxl-</code></li>
+</ul></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Popper.js (Bootstrap JS için)</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">ruby</div><pre><code># config/importmap.rb
+pin &quot;@popperjs/core&quot;, to: &quot;https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js&quot;
+</code></pre></div>
+<div class="code-block"><div class="code-label">javascript</div><pre><code>// app/javascript/application.js
+import &quot;@popperjs/core&quot;
+</code></pre></div>
+<div class="code-block"><div class="code-label">bash</div><pre><code>rails assets:precompile
+</code></pre></div></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Layout Yapısı</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">erb</div><pre><code>&lt;body class=&quot;d-flex flex-column min-vh-100&quot;&gt;
+  &lt;%= render &quot;shared/navbar&quot; %&gt;
+  &lt;div class=&quot;container&quot;&gt;
+    &lt;%= yield %&gt;
+  &lt;/div&gt;
+  &lt;%= render &quot;shared/footer&quot; %&gt;
+&lt;/body&gt;
+</code></pre></div></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Navbar & Footer</summary>
+          <div class="panel-inner"><ul>
+<li><code>app/views/shared/_navbar.html.erb</code></li>
+<li><code>app/views/shared/_footer.html.erb</code></li>
+<li><code>link_to "Blogger", root_path, class: "navbar-brand"</code></li>
+</ul></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Card Örneği (Index)</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">erb</div><pre><code>&lt;div class=&quot;row&quot;&gt;
+  &lt;% @posts.each do |post| %&gt;
+    &lt;div class=&quot;col-md-8 mx-auto mt-4&quot;&gt;
+      &lt;div class=&quot;card&quot;&gt;
+        &lt;div class=&quot;card-header&quot;&gt;&lt;%= link_to post.title, post_path(post) %&gt;&lt;/div&gt;
+        &lt;div class=&quot;card-body&quot;&gt;&lt;%= post.article %&gt;&lt;/div&gt;
+        &lt;div class=&quot;card-footer&quot;&gt;
+          &lt;%= link_to &quot;Güncelle&quot;, edit_post_path(post), class: &quot;btn btn-outline-warning btn-sm&quot; %&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;% end %&gt;
+&lt;/div&gt;
+</code></pre></div></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Ek Sayfalar</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">ruby</div><pre><code># routes.rb
+get &quot;about&quot;, to: &quot;home#about&quot;
+get &quot;projects&quot;, to: &quot;home#projects&quot;
+</code></pre></div></div>
+        </details>
+        
+        <details class="panel">
+          <summary>image_tag</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">erb</div><pre><code>&lt;%= image_tag(&quot;profile.jpg&quot;, width: &quot;200&quot;, alt: &quot;Profile&quot;) %&gt;
+</code></pre></div>
+<ul>
+<li>Resimler: <code>app/assets/images/</code></li>
+<li>Yeni resim sonrası: <code>rails assets:precompile</code></li>
+</ul></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Bootstrap Icons</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">erb</div><pre><code>&lt;%= link_to &quot;https://github.com/username&quot; do %&gt;
+  &lt;i class=&quot;bi bi-github link-dark&quot;&gt;&lt;/i&gt;
+&lt;% end %&gt;
+</code></pre></div></div>
+        </details>
+        </div></section>
+
+    <section class="week-block" id="hafta-7-model-iliskileri-kategori">
+      <div class="week-head">
+        <div class="week-head-top">
+          <span class='week-badge'>Hafta 7</span>
+          <span class='week-tag'>Model Iliskileri</span>
+        </div>
+        <h2>Hafta 7 — Model İlişkileri & Kategori</h2>
+        <div class='week-summary'><strong>Bu haftada ne ogreniyorsun?</strong> Tablolar arasi iliskileri kurarsin. Post ve Category coktan coga (HABTM) baglanir.</div>
+        <div class='focus-chips'><span class="chip">belongs_to / has_many / HABTM</span><span class="chip">scaffold ile hizli CRUD</span><span class="chip">category_ids: [] strong param</span></div>
+      </div>
+      <div class="week-body">
+    
+        <details class="panel">
+          <summary>6 İlişki Türü</summary>
+          <div class="panel-inner"><table>
+<thead>
+<tr>
+<th>İlişki</th>
+<th>Örnek</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>belongs_to</code></td>
+<td>Book → Author (FK book'ta)</td>
+</tr>
+<tr>
+<td><code>has_one</code></td>
+<td>User → Profile</td>
+</tr>
+<tr>
+<td><code>has_many</code></td>
+<td>Author → Books</td>
+</tr>
+<tr>
+<td><code>has_many :through</code></td>
+<td>Physician → Patients (Appointment üzerinden)</td>
+</tr>
+<tr>
+<td><code>has_one :through</code></td>
+<td>User → Account (Profile üzerinden)</td>
+</tr>
+<tr>
+<td><code>has_and_belongs_to_many</code> (HABTM)</td>
+<td>User ↔ Role (join table)</td>
+</tr>
+</tbody>
+</table></div>
+        </details>
+        
+        <details class="panel">
+          <summary>belongs_to + has_many</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">ruby</div><pre><code>class Book &lt; ApplicationRecord
+  belongs_to :author
+end
+
+class Author &lt; ApplicationRecord
+  has_many :books, dependent: :destroy
+end
+</code></pre></div>
+<div class="code-block"><div class="code-label">bash</div><pre><code>rails g model Author name
+rails g model Book author:references published_at:datetime
+</code></pre></div></div>
+        </details>
+        
+        <details class="panel">
+          <summary>has_many :through</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">ruby</div><pre><code>class Physician &lt; ApplicationRecord
+  has_many :appointments, dependent: :destroy
+  has_many :patients, through: :appointments
+end
+
+class Appointment &lt; ApplicationRecord
+  belongs_to :physician
+  belongs_to :patient
+end
+</code></pre></div></div>
+        </details>
+        
+        <details class="panel">
+          <summary>has_one</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">ruby</div><pre><code>class User &lt; ApplicationRecord
+  has_one :profile
+end
+
+class Profile &lt; ApplicationRecord
+  belongs_to :user
+end
+</code></pre></div></div>
+        </details>
+        
+        <details class="panel">
+          <summary>HABTM</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">ruby</div><pre><code>class User &lt; ApplicationRecord
+  has_and_belongs_to_many :roles
+end
+
+class Role &lt; ApplicationRecord
+  has_and_belongs_to_many :users
+end
+</code></pre></div>
+<p>Join table: <code>users_roles</code> (<code>id: false</code>)</p></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Scaffold & Kategori</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">bash</div><pre><code>rails g scaffold Category name code
+rails db:migrate
+</code></pre></div></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Post ↔ Category (HABTM)</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">bash</div><pre><code>rails g migration CreateJoinTablePostsCategories posts categories
+</code></pre></div>
+<div class="code-block"><div class="code-label">ruby</div><pre><code>class Post &lt; ApplicationRecord
+  has_and_belongs_to_many :categories
+end
+
+class Category &lt; ApplicationRecord
+  has_and_belongs_to_many :posts
+end
+</code></pre></div></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Konsol</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">ruby</div><pre><code>Category.create(name: &quot;Java Programming&quot;, code: &quot;java&quot;)
+Post.last.categories &lt;&lt; Category.find_by(name: &quot;Java Programming&quot;)
+Post.last.categories.count
+Category.last.posts
+</code></pre></div></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Form — Çoklu Kategori</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">erb</div><pre><code>&lt;%= form.select :category_ids,
+  Category.all.collect { |c| [c.name, c.id] },
+  {}, { class: &quot;form-select&quot;, multiple: true } %&gt;
+</code></pre></div>
+<div class="code-block"><div class="code-label">ruby</div><pre><code>def post_params
+  params.require(:post).permit(:title, :article, :status, category_ids: [])
+end
+</code></pre></div></div>
+        </details>
+        </div></section>
+
+    <section class="week-block" id="hafta-8-validation-active-storage">
+      <div class="week-head">
+        <div class="week-head-top">
+          <span class='week-badge'>Hafta 8</span>
+          <span class='week-tag'>Dogrulama & Dosya</span>
+        </div>
+        <h2>Hafta 8 — Validation & Active Storage</h2>
+        <div class='week-summary'><strong>Bu haftada ne ogreniyorsun?</strong> Veri kalitesini model seviyesinde kontrol edersin. Active Storage ile resim yuklersin.</div>
+        <div class='focus-chips'><span class="chip">validates vs normalizes farki</span><span class="chip">presence, uniqueness, length</span><span class="chip">has_one_attached :image</span></div>
+      </div>
+      <div class="week-body">
+    
+        <details class="panel">
+          <summary>Validation Seviyeleri</summary>
+          <div class="panel-inner"><ol>
+<li>Veritabanı kısıtları</li>
+<li>Client-side</li>
+<li>Controller level</li>
+<li><strong>Model level</strong> (en çok kullanılan)</li>
+</ol></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Tetikleyen Metotlar</summary>
+          <div class="panel-inner"><p><code>create</code>, <code>create!</code>, <code>save</code>, <code>save!</code>, <code>update</code>, <code>update!</code></p>
+<ul>
+<li><code>!</code> → hata olursa <strong>exception</strong></li>
+<li><code>!</code> yok → <code>save</code>/<code>update</code> <strong>false</strong> döner</li>
+<li><code>save(validate: false)</code> → doğrulama atlanır</li>
+</ul></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Validasyon Atlayan Metotlar (DİKKAT!)</summary>
+          <div class="panel-inner"><p><code>decrement!</code>, <code>increment!</code>, <code>toggle!</code>, <code>touch</code>, <code>update_all</code>, <code>update_attribute</code></p></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Normalization</summary>
+          <div class="panel-inner"><ul>
+<li>Validasyondan <strong>önce</strong> çalışır (<code>before_validation</code>)</li>
+<li>Veriyi reddetmez, <strong>değiştirir</strong></li>
+</ul>
+<div class="code-block"><div class="code-label">ruby</div><pre><code>normalizes :title, with: -&gt; title { title.squish.titlecase }
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Validation</th>
+<th>Normalization</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ne yapar</td>
+<td>Kontrol eder</td>
+<td>Değiştirir</td>
+</tr>
+<tr>
+<td>Başarısız olabilir mi</td>
+<td>Evet</td>
+<td>Hayır</td>
+</tr>
+<tr>
+<td>Ne zaman</td>
+<td>save sırasında</td>
+<td>doğrulamadan önce</td>
+</tr>
+</tbody>
+</table></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Validation Helpers</summary>
+          <div class="panel-inner"><table>
+<thead>
+<tr>
+<th>Helper</th>
+<th>Açıklama</th>
+<th>Örnek</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>presence</code></td>
+<td>Boş olamaz</td>
+<td><code>validates :title, presence: true</code></td>
+</tr>
+<tr>
+<td><code>uniqueness</code></td>
+<td>Benzersiz</td>
+<td><code>validates :title, uniqueness: true</code></td>
+</tr>
+<tr>
+<td><code>inclusion</code></td>
+<td>Kümede olmalı</td>
+<td><code>inclusion: { in: statuses.keys }</code></td>
+</tr>
+<tr>
+<td><code>exclusion</code></td>
+<td>Kümede olmamalı</td>
+<td><code>exclusion: { in: %w(www us ca) }</code></td>
+</tr>
+<tr>
+<td><code>length</code></td>
+<td>Uzunluk</td>
+<td><code>maximum: 255</code>, <code>in: 6..20</code>, <code>is: 11</code></td>
+</tr>
+<tr>
+<td><code>numericality</code></td>
+<td>Sayısal</td>
+<td><code>only_integer: true, greater_than: 0</code></td>
+</tr>
+<tr>
+<td><code>format</code></td>
+<td>Regex</td>
+<td><code>with: /\A\d+\z/</code></td>
+</tr>
+</tbody>
+</table></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Validation Options</summary>
+          <div class="panel-inner"><table>
+<thead>
+<tr>
+<th>Seçenek</th>
+<th>Açıklama</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>allow_nil: true</code></td>
+<td>nil ise doğrulama atlanır</td>
+</tr>
+<tr>
+<td><code>allow_blank: true</code></td>
+<td>nil veya boş string geçer</td>
+</tr>
+<tr>
+<td><code>on: :create</code> / <code>:update</code></td>
+<td>Ne zaman çalışır</td>
+</tr>
+<tr>
+<td><code>if:</code> / <code>unless:</code></td>
+<td>Koşullu doğrulama</td>
+</tr>
+<tr>
+<td><code>message:</code></td>
+<td>Özel hata mesajı</td>
+</tr>
+</tbody>
+</table></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Hata Mesajları</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">ruby</div><pre><code>post.errors.any?
+post.errors.messages          # {:title=&gt;[&quot;...&quot;]}
+post.errors.full_messages     # [&quot;Title ...&quot;]
+post.errors[:title]
+post.errors.count / .size
+post.errors.clear
+</code></pre></div></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Post Model Son Hali</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">ruby</div><pre><code>class Post &lt; ApplicationRecord
+  normalizes :title, with: -&gt; title { title.squish.titlecase }
+  validates :title, presence: true, uniqueness: true, length: { maximum: 255 }
+  validates :article, presence: true, length: { maximum: 65_535 }
+  validates :status, inclusion: { in: statuses.keys }
+end
+</code></pre></div></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Form Hata Gösterimi</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">erb</div><pre><code>&lt;% if post.errors.any? %&gt;
+  &lt;div class=&quot;alert alert-danger&quot;&gt;
+    &lt;h5&gt;&lt;%= post.errors.count %&gt; hata bulundu:&lt;/h5&gt;
+    &lt;ul&gt;
+      &lt;% post.errors.full_messages.each do |message| %&gt;
+        &lt;li&gt;&lt;%= message %&gt;&lt;/li&gt;
+      &lt;% end %&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+&lt;% end %&gt;
+</code></pre></div>
+<div class="code-block"><div class="code-label">ruby</div><pre><code>render :new, status: :unprocessable_entity   # HTTP 422
+</code></pre></div></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Active Storage</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">bash</div><pre><code>rails active_storage:install
+rails db:migrate
+</code></pre></div>
+<div class="code-block"><div class="code-label">ruby</div><pre><code>class Post &lt; ApplicationRecord
+  has_one_attached :image
+end
+
+def post_params
+  params.require(:post).permit(:title, :article, :status, :image, category_ids: [])
+end
+</code></pre></div>
+<div class="code-block"><div class="code-label">erb</div><pre><code>&lt;%= form.file_field :image, class: &quot;form-control&quot; %&gt;
+&lt;% if @post.image.present? %&gt;
+  &lt;%= image_tag(@post.image) %&gt;
+&lt;% end %&gt;
+</code></pre></div></div>
+        </details>
+        </div></section>
+
+    <section class="week-block" id="hafta-9-i18n-friendlyid-action-text">
+      <div class="week-head">
+        <div class="week-head-top">
+          <span class='week-badge'>Hafta 9</span>
+          <span class='week-tag'>I18n & Zengin Icerik</span>
+        </div>
+        <h2>Hafta 9 — I18n, FriendlyId, Action Text</h2>
+        <div class='week-summary'><strong>Bu haftada ne ogreniyorsun?</strong> Uygulamayi coklu dile cevirirsin. FriendlyId ile SEO dostu URL, Action Text ile zengin metin.</div>
+        <div class='focus-chips'><span class="chip">I18n.t ve locale dosyalari</span><span class="chip">friendly_id :title, use: :slugged</span><span class="chip">has_rich_text :article</span></div>
+      </div>
+      <div class="week-body">
+    
+        <details class="panel">
+          <summary>I18n (Internationalization)</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">ruby</div><pre><code>I18n.t &quot;store.title&quot;    # translate
+I18n.l Time.now         # localize
+</code></pre></div></div>
+        </details>
+        
+        <details class="panel">
+          <summary>locale.rb</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">ruby</div><pre><code># config/initializers/locale.rb
+I18n.load_path += Dir[Rails.root.join(&quot;config/locales/**/*.yml&quot;).to_s]
+I18n.available_locales = [:tr, :en]
+I18n.default_locale = :tr
+</code></pre></div></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Dil Değiştirme</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">ruby</div><pre><code># application_controller.rb
+around_action :switch_locale
+
+private
+def switch_locale(&amp;action)
+  locale = params[:locale] || I18n.default_locale
+  I18n.with_locale(locale, &amp;action)
+end
+</code></pre></div>
+<p>URL: <code>localhost:3000/posts?locale=en</code></p></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Dosya Yapısı</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">kod</div><pre><code>config/locales/
+  defaults/tr.yml, en.yml
+  models/post/tr.yml, en.yml
+  views/posts/tr.yml, en.yml
+  views/shared/tr.yml, en.yml
+</code></pre></div></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Kullanım</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">erb</div><pre><code>&lt;%= link_to t(&quot;actions.show&quot;), post_path(post) %&gt;
+&lt;%= render &quot;form&quot;, post: @post, form_title: t(&quot;.title&quot;) %&gt;
+&lt;%= link_to t(&quot;.home&quot;), root_path %&gt;
+</code></pre></div>
+<p><code>t(".title")</code> → mevcut view dosyasının yoluna göre çeviri arar</p></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Model Yerelleştirme (tr.yml)</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">yaml</div><pre><code>tr:
+  activerecord:
+    models:
+      post:
+        one: Blog Girdisi
+        other: Blog Girdileri
+    attributes:
+      post:
+        title: Post Başlığı
+    enums:
+      post:
+        statuses:
+          draft: Taslak
+          published: Yayınlandı
+</code></pre></div></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Dil Bayrağı</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">erb</div><pre><code>&lt;%= link_to url_for(locale: :tr) %&gt;
+&lt;%= link_to url_for(locale: :en) %&gt;
+</code></pre></div></div>
+        </details>
+        
+        <details class="panel">
+          <summary>FriendlyId</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">ruby</div><pre><code># Gemfile
+gem 'friendly_id', '~# Model
+extend FriendlyId
+friendly_id :title, use: :slugged
+
+# Controller
+@post = Post.friendly.find(params[:id])
+</code></pre></div>
+<div class="code-block"><div class="code-label">bash</div><pre><code>bundle install
+rails generate friendly_id
+rails g migration AddSlugToPosts slug:uniq
+rails db:migrate
+Post.find_each(&amp;:save)   # mevcut kayıtlara slug oluştur
+</code></pre></div>
+<p>URL: <code>/posts/1</code> → <code>/posts/java-ya-giris</code></p></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Action Text (Zengin İçerik)</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">bash</div><pre><code>bin/rails action_text:install
+rails db:migrate
+rails assets:precompile
+sudo apt-get install libvips   # resimler için
+</code></pre></div>
+<div class="code-block"><div class="code-label">ruby</div><pre><code>class Post &lt; ApplicationRecord
+  has_rich_text :article
+end
+</code></pre></div>
+<div class="code-block"><div class="code-label">erb</div><pre><code>&lt;%= form.rich_textarea :article %&gt;
+</code></pre></div></div>
+        </details>
+        </div></section>
+
+    <section class="week-block" id="hafta-10-devise-authorization">
+      <div class="week-head">
+        <div class="week-head-top">
+          <span class='week-badge'>Hafta 10</span>
+          <span class='week-tag'>Kimlik & Yetki</span>
+        </div>
+        <h2>Hafta 10 — Devise & Authorization</h2>
+        <div class='week-summary'><strong>Bu haftada ne ogreniyorsun?</strong> Devise ile kullanici girisi yapilir. Roller (editor/admin) ve yetkilendirme eklenir.</div>
+        <div class='focus-chips'><span class="chip">Authentication vs Authorization</span><span class="chip">authenticate_user!</span><span class="chip">current_user</span><span class="chip">belongs_to :user</span></div>
+      </div>
+      <div class="week-body">
+    
+        <details class="panel">
+          <summary>Authentication vs Authorization</summary>
+          <div class="panel-inner"><table>
+<thead>
+<tr>
+<th></th>
+<th>Authentication</th>
+<th>Authorization</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ne</td>
+<td>Kim olduğunu doğrular</td>
+<td>Ne yapabileceğini belirler</td>
+</tr>
+<tr>
+<td>Ne zaman</td>
+<td>Login</td>
+<td>Login sonrası</td>
+</tr>
+<tr>
+<td>Nasıl</td>
+<td>Şifre, 2FA</td>
+<td>Roller, izinler</td>
+</tr>
+<tr>
+<td>Örnek</td>
+<td>Email+şifre giriş</td>
+<td>Sadece kendi dosyalarına erişim</td>
+</tr>
+</tbody>
+</table>
+<p>Devise → Authentication | Pundit/CanCanCan → Authorization</p></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Devise Modülleri</summary>
+          <div class="panel-inner"><table>
+<thead>
+<tr>
+<th>Modül</th>
+<th>Özellik</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Database Authenticatable</td>
+<td>Email+şifre giriş</td>
+</tr>
+<tr>
+<td>Registerable</td>
+<td>Kayıt ol</td>
+</tr>
+<tr>
+<td>Recoverable</td>
+<td>Şifre sıfırlama</td>
+</tr>
+<tr>
+<td>Rememberable</td>
+<td>Beni hatırla</td>
+</tr>
+<tr>
+<td>Trackable</td>
+<td>Oturum takibi</td>
+</tr>
+<tr>
+<td>Confirmable</td>
+<td>Email onayı</td>
+</tr>
+<tr>
+<td>Lockable</td>
+<td>Hesap kilitleme</td>
+</tr>
+<tr>
+<td>Timeoutable</td>
+<td>İşlem yoksa oturum düşer</td>
+</tr>
+<tr>
+<td>Omniauthable</td>
+<td>OAuth (Google, Facebook)</td>
+</tr>
+</tbody>
+</table></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Kurulum</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">bash</div><pre><code>bundle add devise
+rails generate devise:install
+rails generate devise User firstname lastname gender:integer username slug active:boolean
+rails db:migrate
+rails g devise:views
+</code></pre></div>
+<div class="code-block"><div class="code-label">ruby</div><pre><code>class User &lt; ApplicationRecord
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable,
+         :timeoutable
+
+  extend FriendlyId
+  friendly_id :username, use: :slugged
+
+  enum :gender, { secret: 0, male: 1, female: 2 }
+  enum :role, { editor: 1, admin: 2 }
+
+  normalizes :firstname, with: -&gt; firstname { firstname.squish.titlecase }
+  validates :firstname, presence: true, length: { maximum: 255 }
+  validates :username, presence: true, uniqueness: true
+  validates :email, presence: true, uniqueness: true
+
+  has_many :posts, dependent: :destroy
+
+  def fullname
+    &quot;#{firstname} #{lastname}&quot;
+  end
+end
+</code></pre></div></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Strong Parameter (Devise)</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">ruby</div><pre><code>class ApplicationController &lt; ActionController::Base
+  before_action :configure_permitted_parameters, if: :devise_controller?
+
+  protected
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:firstname, :lastname, :email, :username, :gender])
+    devise_parameter_sanitizer.permit(:sign_in, keys: [:email, :password])
+  end
+end
+</code></pre></div></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Navbar — Oturum Kontrolü</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">ruby</div><pre><code>current_user           # giriş yapmış kullanıcı
+user_signed_in?        # giriş yapılmış mı?
+destroy_user_session_path, method: :delete
+</code></pre></div></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Giriş Zorunluluğu</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">ruby</div><pre><code>before_action :authenticate_user!
+</code></pre></div></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Rol Sistemi</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">bash</div><pre><code>rails g migration AddRoleToUser role:integer
+# default: 1 (editor)
+</code></pre></div></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Admin Namespace</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">ruby</div><pre><code># routes.rb
+namespace :admin do
+  resources :users, only: [:index, :show, :edit, :update]
+end
+</code></pre></div>
+<div class="code-block"><div class="code-label">ruby</div><pre><code>module Admin
+  class UsersController &lt; ApplicationController
+    before_action :authenticate_user!
+    before_action :authorize_admin
+
+    def index
+      @users = User.all
+    end
+
+    private
+
+    def authorize_admin
+      redirect_to root_path, alert: &quot;Permissions denied&quot; unless current_user.admin?
+    end
+
+    def set_user
+      @user = User.friendly.find(params[:id])
+    end
+  end
+end
+</code></pre></div></div>
+        </details>
+        
+        <details class="panel">
+          <summary>Post ↔ User İlişkisi</summary>
+          <div class="panel-inner"><div class="code-block"><div class="code-label">bash</div><pre><code>Post.destroy_all
+rails g migration AddUserToPost user:references
+rails db:migrate
+</code></pre></div>
+<div class="code-block"><div class="code-label">ruby</div><pre><code>class Post &lt; ApplicationRecord
+  belongs_to :user
+end
+
+class User &lt; ApplicationRecord
+  has_many :posts, dependent: :destroy
+end
+</code></pre></div>
+<div class="code-block"><div class="code-label">ruby</div><pre><code>def create
+  @post = current_user.posts.new(post_params)
+  if @post.save
+    redirect_to posts_path, notice: &quot;Post başarılı bir şekilde oluşturuldu.&quot;
+  else
+    render :new, status: :unprocessable_entity
+  end
+end
+</code></pre></div></div>
+        </details>
+        </div></section>
+
+    <section class="special-block" id="komut-hizli-referans">
+      <div class="special-head"><h2>Komut Hizli Referans</h2></div>
+      <div class="special-body">
+        <div class="callout callout-tip">Terminalde en cok kullanacagin Rails komutlari. Ezber listesi olarak kullan.</div>
+        <div class="code-block"><div class="code-label">bash</div><pre><code># Proje
+rails new app -d postgresql --css bootstrap
+rails s / rails c
+
+# Model &amp; Migration
+rails g model Post title:text
+rails g migration AddStatusToPost status:integer
+rails g controller Posts index --skip-routes
+rails g scaffold Category name code
+
+# Veritabanı
+rails db:create / db:migrate / db:rollback / db:seed / db:reset
+rails db:migrate:status
+
+# Diğer
+rails routes
+rails assets:precompile
+rails active_storage:install
+bin/rails action_text:install
+bundle add devise
+rails generate devise:install
+rails g devise:views
+
+# Git
+git status / git add . / git commit -m &quot;...&quot; / git push origin main
+</code></pre></div>
+      </div>
+    </section>
+    
+
+    <section class="special-block" id="sinav-sorulari-kendini-test-et">
+      <div class="special-head"><h2>Kendini Test Et — 39 Soru</h2></div>
+      <div class="special-body">
+        <div class="callout callout-exam">Soruya tikla, cevabi gor. Sinav oncesi tum sorulari en az bir kez coz.</div>
+        <div class="quiz-grid">
+            <details class="quiz-item">
+              <summary><span class="q-num">1.</span> Ruby'de 3.class.superclass.superclass ne döner?</summary>
+              <div class="ans">Cevap icin slaytlara bak.</div>
+            </details>
+            
+            <details class="quiz-item">
+              <summary><span class="q-num">2.</span> Symbol ile String arasındaki temel fark nedir?</summary>
+              <div class="ans">Cevap icin slaytlara bak.</div>
+            </details>
+            
+            <details class="quiz-item">
+              <summary><span class="q-num">3.</span> attr_accessor, attr_reader, attr_writer farkları?</summary>
+              <div class="ans">Cevap icin slaytlara bak.</div>
+            </details>
+            
+            <details class="quiz-item">
+              <summary><span class="q-num">4.</span> Proc ile Lambda arasındaki argüman farkı?</summary>
+              <div class="ans">Cevap icin slaytlara bak.</div>
+            </details>
+            
+            <details class="quiz-item">
+              <summary><span class="q-num">5.</span> ? ve ! ile biten metotların anlamı?</summary>
+              <div class="ans">Cevap icin slaytlara bak.</div>
+            </details>
+            
+            <details class="quiz-item">
+              <summary><span class="q-num">6.</span> ORM'in avantajları nelerdir?</summary>
+              <div class="ans">Cevap icin slaytlara bak.</div>
+            </details>
+            
+            <details class="quiz-item">
+              <summary><span class="q-num">7.</span> find, find_by ve where arasındaki fark?</summary>
+              <div class="ans">Cevap icin slaytlara bak.</div>
+            </details>
+            
+            <details class="quiz-item">
+              <summary><span class="q-num">8.</span> save ile create arasındaki fark?</summary>
+              <div class="ans">Cevap icin slaytlara bak.</div>
+            </details>
+            
+            <details class="quiz-item">
+              <summary><span class="q-num">9.</span> db:setup ile db:reset ne yapar?</summary>
+              <div class="ans">Cevap icin slaytlara bak.</div>
+            </details>
+            
+            <details class="quiz-item">
+              <summary><span class="q-num">10.</span> Migration rollback nasıl yapılır?</summary>
+              <div class="ans">Cevap icin slaytlara bak.</div>
+            </details>
+            
+            <details class="quiz-item">
+              <summary><span class="q-num">11.</span> GET ve POST ne zaman kullanılır?</summary>
+              <div class="ans">Cevap icin slaytlara bak.</div>
+            </details>
+            
+            <details class="quiz-item">
+              <summary><span class="q-num">12.</span> PUT ile PATCH farkı?</summary>
+              <div class="ans">Cevap icin slaytlara bak.</div>
+            </details>
+            
+            <details class="quiz-item">
+              <summary><span class="q-num">13.</span> resources :posts kaç route oluşturur? İsimlerini yaz.</summary>
+              <div class="ans">Cevap icin slaytlara bak.</div>
+            </details>
+            
+            <details class="quiz-item">
+              <summary><span class="q-num">14.</span> posts_path ile posts_url farkı?</summary>
+              <div class="ans">Cevap icin slaytlara bak.</div>
+            </details>
+            
+            <details class="quiz-item">
+              <summary><span class="q-num">15.</span> Enum'da draft: 0 ne anlama gelir?</summary>
+              <div class="ans">Cevap icin slaytlara bak.</div>
+            </details>
+            
+            <details class="quiz-item">
+              <summary><span class="q-num">16.</span> Strong Parameters neden gerekli?</summary>
+              <div class="ans">Cevap icin slaytlara bak.</div>
+            </details>
+            
+            <details class="quiz-item">
+              <summary><span class="q-num">17.</span> authenticity_token ne işe yarar?</summary>
+              <div class="ans">Cevap icin slaytlara bak.</div>
+            </details>
+            
+            <details class="quiz-item">
+              <summary><span class="q-num">18.</span> Partial dosya adlandırma kuralı?</summary>
+              <div class="ans">Cevap icin slaytlara bak.</div>
+            </details>
+            
+            <details class="quiz-item">
+              <summary><span class="q-num">19.</span> button_to ile link_to farkı (DELETE için)?</summary>
+              <div class="ans">Cevap icin slaytlara bak.</div>
+            </details>
+            
+            <details class="quiz-item">
+              <summary><span class="q-num">20.</span> before_action ne sağlar?</summary>
+              <div class="ans">Cevap icin slaytlara bak.</div>
+            </details>
+            
+            <details class="quiz-item">
+              <summary><span class="q-num">21.</span> Bootstrap grid kaç sütunludur?</summary>
+              <div class="ans">Cevap icin slaytlara bak.</div>
+            </details>
+            
+            <details class="quiz-item">
+              <summary><span class="q-num">22.</span> .container ile .container-fluid farkı?</summary>
+              <div class="ans">Cevap icin slaytlara bak.</div>
+            </details>
+            
+            <details class="quiz-item">
+              <summary><span class="q-num">23.</span> col-md-8 ne zaman yan yana, ne zaman alt alta?</summary>
+              <div class="ans">Cevap icin slaytlara bak.</div>
+            </details>
+            
+            <details class="quiz-item">
+              <summary><span class="q-num">24.</span> belongs_to FK hangi tabloda?</summary>
+              <div class="ans">Cevap icin slaytlara bak.</div>
+            </details>
+            
+            <details class="quiz-item">
+              <summary><span class="q-num">25.</span> has_many :through ne zaman kullanılır?</summary>
+              <div class="ans">Cevap icin slaytlara bak.</div>
+            </details>
+            
+            <details class="quiz-item">
+              <summary><span class="q-num">26.</span> HABTM join table özelliği?</summary>
+              <div class="ans">Cevap icin slaytlara bak.</div>
+            </details>
+            
+            <details class="quiz-item">
+              <summary><span class="q-num">27.</span> dependent: :destroy ne yapar?</summary>
+              <div class="ans">Cevap icin slaytlara bak.</div>
+            </details>
+            
+            <details class="quiz-item">
+              <summary><span class="q-num">28.</span> Validation ile Normalization farkı?</summary>
+              <div class="ans">Cevap icin slaytlara bak.</div>
+            </details>
+            
+            <details class="quiz-item">
+              <summary><span class="q-num">29.</span> create! ile create farkı?</summary>
+              <div class="ans">Cevap icin slaytlara bak.</div>
+            </details>
+            
+            <details class="quiz-item">
+              <summary><span class="q-num">30.</span> validates :title, presence: true, uniqueness: true, length: { maximum: 255 } ne kontrol eder?</summary>
+              <div class="ans">Cevap icin slaytlara bak.</div>
+            </details>
+            
+            <details class="quiz-item">
+              <summary><span class="q-num">31.</span> HTTP 422 ne anlama gelir?</summary>
+              <div class="ans">Cevap icin slaytlara bak.</div>
+            </details>
+            
+            <details class="quiz-item">
+              <summary><span class="q-num">32.</span> I18n.t ve I18n.l farkı?</summary>
+              <div class="ans">Cevap icin slaytlara bak.</div>
+            </details>
+            
+            <details class="quiz-item">
+              <summary><span class="q-num">33.</span> FriendlyId ne sağlar?</summary>
+              <div class="ans">Cevap icin slaytlara bak.</div>
+            </details>
+            
+            <details class="quiz-item">
+              <summary><span class="q-num">34.</span> Action Text ne için kullanılır?</summary>
+              <div class="ans">Cevap icin slaytlara bak.</div>
+            </details>
+            
+            <details class="quiz-item">
+              <summary><span class="q-num">35.</span> Authentication ile Authorization farkı?</summary>
+              <div class="ans">Cevap icin slaytlara bak.</div>
+            </details>
+            
+            <details class="quiz-item">
+              <summary><span class="q-num">36.</span> current_user ve user_signed_in? ne döner?</summary>
+              <div class="ans">Cevap icin slaytlara bak.</div>
+            </details>
+            
+            <details class="quiz-item">
+              <summary><span class="q-num">37.</span> authenticate_user! ne yapar?</summary>
+              <div class="ans">Cevap icin slaytlara bak.</div>
+            </details>
+            
+            <details class="quiz-item">
+              <summary><span class="q-num">38.</span> Admin namespace'te yetki kontrolü nasıl yapılır?</summary>
+              <div class="ans">Cevap icin slaytlara bak.</div>
+            </details>
+            
+            <details class="quiz-item">
+              <summary><span class="q-num">39.</span> current_user.posts.new neden kullanılır?</summary>
+              <div class="ans">Cevap icin slaytlara bak.</div>
+            </details>
+            </div>
+      </div>
+    </section>
+    
+    </main>
+  </div>
+  <button class="mobile-toggle" id="menuBtn" aria-label="Menu">&#9776;</button>
+  <script>
+    const links = document.querySelectorAll('.sidebar nav a');
+    const sections = [...document.querySelectorAll('.week-block, .special-block')];
+    window.addEventListener('scroll', () => {
+      let cur = '';
+      sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) cur = s.id; });
+      links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
+    });
+    document.getElementById('menuBtn').onclick = () => document.getElementById('sidebar').classList.toggle('open');
+    links.forEach(a => a.onclick = () => document.getElementById('sidebar').classList.remove('open'));
+    document.querySelectorAll('.week-block .panel').forEach((p, i) => { if (i === 0) p.open = true; });
+  </script>
+</body>
+</html>
