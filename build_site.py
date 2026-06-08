@@ -154,7 +154,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Internet Programciligi II | Calisma Rehberi</title>
+  <title>Internet Programciligi II | Ders Notu Arsivi</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
@@ -342,6 +342,28 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     .special-head {{ padding: 1.1rem 1.5rem; border-bottom: 1px solid var(--line); background: #fafbfc; }}
     .special-head h2 {{ font-size: 1.1rem; font-weight: 700; border: none; margin: 0; padding: 0; }}
     .special-body {{ padding: .5rem 1.5rem 1.25rem; }}
+    .special-body h3 {{ font-size: .95rem; font-weight: 700; margin: 1rem 0 .55rem; color: var(--text); }}
+    .special-body p {{ margin: .5rem 0; color: var(--text-soft); font-size: .9rem; }}
+    .special-body table {{
+      width: 100%; border-collapse: collapse; font-size: .82rem;
+      margin: .65rem 0 1rem; border: 1px solid var(--line); border-radius: 8px; overflow: hidden;
+    }}
+    .special-body th {{
+      background: #f1f5f9; padding: .55rem .7rem; text-align: left;
+      font-weight: 600; color: var(--text); font-size: .78rem;
+    }}
+    .special-body td {{ padding: .5rem .7rem; border-top: 1px solid var(--line); color: var(--text-soft); vertical-align: top; }}
+    .special-body tr:nth-child(even) td {{ background: #fafbfc; }}
+    .special-body strong {{ color: var(--text); }}
+
+    .archive-toolbar {{
+      display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; margin-top: 1rem;
+    }}
+    .archive-search {{
+      flex: 1; min-width: 200px; padding: .55rem .85rem; border-radius: 8px;
+      border: 1px solid var(--line); font-family: inherit; font-size: .86rem;
+    }}
+    .archive-search:focus {{ outline: none; border-color: var(--accent-border); box-shadow: 0 0 0 3px var(--accent-soft); }}
 
     .callout {{
       border-radius: 8px; padding: .75rem 1rem; margin: .65rem 0; font-size: .86rem;
@@ -484,20 +506,26 @@ HTML_TEMPLATE = """<!DOCTYPE html>
   <div class="layout">
     <aside class="sidebar" id="sidebar">
       <div class="brand">
-        <div class="brand-kicker">Sinav Rehberi</div>
+        <div class="brand-kicker">Ders Notu Arsivi</div>
         <h1>Internet Programciligi II</h1>
-        <p>Hafta 2-10 | 7 gunluk sinav plani</p>
+        <p>Hafta 2-10 | Tum PDF icerigi</p>
       </div>
       <nav>{toc}</nav>
     </aside>
     <main class="main">
       <div class="topbar">
-        <h2>7 Gunluk Sinav Plani</h2>
-        <p>Sifirdan basliyorsun — her gun ne okuyacagin asagida. Gorevleri tikla, ilerlemeni takip et.</p>
+        <h2>Eksiksiz Ders Notu Arsivi</h2>
+        <p>Tum PDF slaytlarindan cikarilmis haftalik notlar — kapsulleme, kalitim, migration, Devise dahil hicbir konu atlanmadi. 7 gunluk plan ve ezber listesi ile sinava hazirlan.</p>
         <div class="topbar-actions">
-          <a class="btn btn-red" href="#7-gunluk-plan">Plana Basla</a>
+          <a class="btn btn-red" href="#7-gunluk-plan">7 Gunluk Plan</a>
+          <a class="btn btn-ghost" href="#konu-indeksi">Konu Indeksi</a>
           <a class="btn btn-ghost" href="#sinav-ezber-listesi">Ezber Listesi</a>
           <button class="btn btn-ghost" onclick="window.print()">PDF Indir</button>
+        </div>
+        <div class="archive-toolbar">
+          <input type="search" class="archive-search" id="panelSearch" placeholder="Konu ara: kapsulleme, kalitim, migration, devise...">
+          <button type="button" class="btn btn-ghost" id="expandAll">Tum panelleri ac</button>
+          <button type="button" class="btn btn-ghost" id="collapseAll">Tum panelleri kapat</button>
         </div>
       </div>
       {content}
@@ -514,7 +542,29 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     }});
     document.getElementById('menuBtn').onclick = () => document.getElementById('sidebar').classList.toggle('open');
     links.forEach(a => a.onclick = () => document.getElementById('sidebar').classList.remove('open'));
-    document.querySelectorAll('.week-block .panel').forEach((p, i) => {{ if (i === 0) p.open = true; }});
+    document.querySelectorAll('.week-block').forEach(week => {{
+      const first = week.querySelector('.panel');
+      if (first) first.open = true;
+    }});
+
+    document.getElementById('expandAll')?.addEventListener('click', () => {{
+      document.querySelectorAll('.week-block .panel').forEach(p => {{ p.open = true; }});
+    }});
+    document.getElementById('collapseAll')?.addEventListener('click', () => {{
+      document.querySelectorAll('.week-block .panel').forEach(p => {{ p.open = false; }});
+    }});
+    document.getElementById('panelSearch')?.addEventListener('input', e => {{
+      const q = e.target.value.trim().toLowerCase();
+      document.querySelectorAll('.week-block').forEach(week => {{
+        let any = !q;
+        week.querySelectorAll('.panel').forEach(panel => {{
+          const match = !q || panel.textContent.toLowerCase().includes(q);
+          panel.style.display = match ? '' : 'none';
+          if (match) any = true;
+        }});
+        week.style.display = any ? '' : 'none';
+      }});
+    }});
 
     function setQuizAnswer(card, show) {{
       const ans = card.querySelector('.quiz-a');
@@ -632,23 +682,16 @@ def md_to_html_fragment(md: str) -> str:
 
 def split_sections(md_text: str):
     md_text = re.sub(r"^# .+\n\n", "", md_text)
-    md_text = re.sub(r"> .+\n\n", "", md_text)
-    md_text = re.sub(r"## İçindekiler\n\n.*?(?=\n---\n)", "", md_text, flags=re.DOTALL)
-    parts = re.split(r"\n---\n\n## ", md_text)
+    md_text = re.sub(r"(?:^> .+\n)+\n?", "", md_text, flags=re.MULTILINE)
+    md_text = re.sub(r"## İçindekiler\n\n.*?(?=\n## )", "", md_text, flags=re.DOTALL)
+    matches = list(re.finditer(r"^## (.+?)$", md_text, re.MULTILINE))
     sections = []
-    for i, part in enumerate(parts):
-        if i == 0:
-            if part.startswith("## "):
-                part = part[3:]
-            else:
-                continue
-        else:
-            part = "## " + part
-        m = re.match(r"## (.+?)\n", part)
-        if not m:
-            continue
-        title = m.group(1).strip()
-        body = part[m.end() :].strip()
+    for i, match in enumerate(matches):
+        title = match.group(1).strip()
+        start = match.end()
+        end = matches[i + 1].start() if i + 1 < len(matches) else len(md_text)
+        body = md_text[start:end].strip()
+        body = re.sub(r"\n---+\s*$", "", body)
         sections.append((title, slugify(title), body))
     return sections
 
@@ -791,6 +834,19 @@ def build_study_plan_section() -> str:
     """
 
 
+def build_topic_index_section(body: str) -> str:
+    inner = enhance_inner_html(md_to_html_fragment(body))
+    return f"""
+    <section class="special-block" id="konu-indeksi">
+      <div class="special-head"><h2>Konu Indeksi — Alfabetik</h2></div>
+      <div class="special-body">
+        <div class="callout callout-tip">Tum PDF slaytlarindan cikarilmis konu listesi. <strong>Kapsulleme</strong>, <strong>kalitim (miras)</strong>, <strong>polimorfizm</strong> ve diger OOP kavramlari asagida tabloda vurgulanmistir.</div>
+        {inner}
+      </div>
+    </section>
+    """
+
+
 def build_must_know_section() -> str:
     items = "".join(
         f'<div class="must-know-item"><strong>{html.escape(k)}</strong><span>{html.escape(v)}</span></div>'
@@ -868,11 +924,12 @@ def build_toc(sections) -> str:
     lines = [
         '<div class="nav-label">Basla</div>',
         '<a href="#7-gunluk-plan"><span class="w-num">7</span>7 Gunluk Plan</a>',
+        '<a href="#konu-indeksi"><span class="w-num">A</span>Konu Indeksi</a>',
         '<a href="#sinav-ezber-listesi"><span class="w-num">!</span>Ezber Listesi</a>',
         '<div class="nav-label">Haftalar</div>',
     ]
     for title, sid, _ in sections:
-        if "sinav" in sid or "komut" in sid or "cevap" in sid:
+        if "konu-indeksi" in sid or "sinav" in sid or "komut" in sid or "cevap" in sid:
             continue
         meta = WEEK_META.get(sid, {})
         num = meta.get("num", "?")
@@ -889,15 +946,20 @@ def build_toc(sections) -> str:
 
 
 def build_content(sections) -> str:
-    blocks = [build_study_plan_section(), build_must_know_section()]
+    blocks = [build_study_plan_section()]
     for title, sid, body in sections:
-        if "cevap" in sid.lower():
+        if "konu-indeksi" in sid:
+            blocks.append(build_topic_index_section(body))
+            break
+    blocks.append(build_must_know_section())
+    for title, sid, body in sections:
+        if "cevap" in sid.lower() or "konu-indeksi" in sid:
             continue
         if "sinav-sorular" in sid:
             blocks.append(build_quiz_section())
         elif "komut-hizli" in sid:
             blocks.append(build_commands_section(body))
-        else:
+        elif title.lower().startswith("hafta"):
             blocks.append(build_week_block(title, sid, body))
     return "\n".join(blocks)
 
