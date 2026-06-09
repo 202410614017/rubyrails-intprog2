@@ -231,7 +231,8 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#1a1d26">
   <title>Sinav Calisma Merkezi | Int Prog II + OOP</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -261,6 +262,10 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       --sidebar-w: 272px;
       --topbar-h: 58px;
       --nav-strip-h: min(38vh, 320px);
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+      --safe-left: env(safe-area-inset-left, 0px);
+      --safe-right: env(safe-area-inset-right, 0px);
       --pane-divider: #e2e8f0;
       --oop-accent: #6d28d9;
       --oop-soft: #f5f3ff;
@@ -268,24 +273,30 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       --oop-text: #5b21b6;
     }}
     * {{ box-sizing: border-box; margin: 0; padding: 0; }}
-    html {{ scroll-behavior: smooth; }}
+    html {{ scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }}
     body {{
       font-family: 'DM Sans', system-ui, sans-serif;
       background: var(--bg);
       color: var(--text);
       line-height: 1.65;
       font-size: 15px;
+      overflow-x: hidden;
     }}
     body:not(.in-course) {{ overflow: hidden; }}
     body.in-course {{ overflow: hidden; }}
     .layout {{ display: flex; flex-direction: column; min-height: 100vh; }}
-    body.in-course .layout {{ height: 100vh; overflow: hidden; }}
+    body.in-course .layout {{
+      height: 100vh;
+      height: 100dvh;
+      overflow: hidden;
+    }}
 
     .course-topbar {{
-      flex-shrink: 0; height: var(--topbar-h); background: var(--paper);
+      flex-shrink: 0; min-height: var(--topbar-h); background: var(--paper);
       border-bottom: 2px solid var(--line); box-shadow: var(--shadow);
       z-index: 250; display: flex; align-items: center;
-      padding: 0 1rem; gap: .75rem;
+      padding: var(--safe-top) calc(.75rem + var(--safe-right)) 0 calc(.75rem + var(--safe-left));
+      gap: .5rem;
     }}
     .course-topbar .site-nav-brand-inner {{ display: flex; align-items: center; gap: .75rem; flex: 1; min-width: 0; }}
     .course-topbar .brand {{ padding: 0; border: none; margin: 0; flex: 1; min-width: 0; }}
@@ -347,8 +358,9 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     .nav-col-title-oop {{ background: var(--oop-soft); color: var(--oop-text); border-bottom: 1px solid var(--oop-border); }}
     .nav-col a {{
       display: flex; align-items: center; gap: .5rem;
-      padding: .42rem 1rem; color: var(--text-soft); text-decoration: none;
+      padding: .55rem 1rem; color: var(--text-soft); text-decoration: none;
       font-size: .8rem; border-left: 3px solid transparent; transition: .12s;
+      min-height: 44px; touch-action: manipulation;
     }}
     .nav-col a .w-num {{
       width: 1.25rem; height: 1.25rem; border-radius: 5px; background: var(--bg);
@@ -370,6 +382,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     .landing-screen {{
       position: fixed; inset: 0; z-index: 3000;
       display: grid; grid-template-columns: 1fr 1fr; overflow: hidden;
+      padding-bottom: var(--safe-bottom);
     }}
     .landing-screen.hidden {{
       display: none !important;
@@ -424,7 +437,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     .landing-card:hover .landing-cta {{ opacity: 1; transform: translateY(-2px); }}
 
     .app-shell {{
-      display: flex; flex-direction: column; height: 100vh; overflow: hidden;
+      display: flex; flex-direction: column; height: 100vh; height: 100dvh; overflow: hidden;
     }}
     .app-shell.hidden {{ display: none !important; pointer-events: none !important; }}
     .app-shell .layout {{ flex: 1; min-height: 0; display: flex; flex-direction: column; height: 100%; }}
@@ -496,7 +509,9 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       padding: .42rem .8rem; border-radius: 8px; font-size: .76rem; font-weight: 600;
       border: 1px solid var(--line); background: white; color: var(--text-soft);
       cursor: pointer; font-family: inherit; flex-shrink: 0;
+      min-height: 44px; touch-action: manipulation;
     }}
+    .back-home-label {{ white-space: nowrap; }}
     .back-home-btn:hover {{ border-color: #cbd5e1; color: var(--text); }}
     .app-shell.view-intprog .back-home-btn:hover {{ border-color: var(--accent-border); color: var(--accent); }}
     .app-shell.view-oop .back-home-btn:hover {{ border-color: var(--oop-border); color: var(--oop-accent); }}
@@ -636,7 +651,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     .panel-inner strong {{ color: var(--text); }}
 
     .panel-inner table {{
-      width: 100%; border-collapse: collapse; font-size: .82rem;
+      width: 100%; min-width: 480px; border-collapse: collapse; font-size: .82rem;
       margin: .65rem 0; border: 1px solid var(--line); border-radius: 8px; overflow: hidden;
     }}
     .panel-inner th {{
@@ -676,7 +691,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     .special-body h3 {{ font-size: .95rem; font-weight: 700; margin: 1rem 0 .55rem; color: var(--text); }}
     .special-body p {{ margin: .5rem 0; color: var(--text-soft); font-size: .9rem; }}
     .special-body table {{
-      width: 100%; border-collapse: collapse; font-size: .82rem;
+      width: 100%; min-width: 480px; border-collapse: collapse; font-size: .82rem;
       margin: .65rem 0 1rem; border: 1px solid var(--line); border-radius: 8px; overflow: hidden;
     }}
     .special-body th {{
@@ -999,20 +1014,91 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     }}
 
     @media (max-width: 768px) {{
-      :root {{ --sidebar-w: min(85vw, 300px); }}
+      :root {{ --sidebar-w: min(88vw, 320px); --topbar-h: 54px; }}
+      body {{ font-size: 14px; }}
+      .course-topbar .brand-kicker {{ display: none; }}
+      .course-topbar .brand h1 {{ font-size: .82rem; max-width: 42vw; }}
+      .course-topbar .mobile-toggle {{
+        display: flex; align-items: center; justify-content: center;
+        min-width: 44px; min-height: 44px; touch-action: manipulation;
+      }}
       .course-aside {{
-        position: fixed; left: 0; top: var(--topbar-h); bottom: 0; z-index: 400;
+        position: fixed; left: 0; top: 0; bottom: 0; z-index: 400;
+        padding-top: calc(var(--topbar-h) + var(--safe-top));
+        padding-bottom: var(--safe-bottom);
         transform: translateX(-105%); transition: transform .22s ease;
-        box-shadow: 8px 0 32px rgba(0,0,0,.15);
+        box-shadow: 8px 0 32px rgba(0,0,0,.18);
+        width: var(--sidebar-w);
       }}
       .course-topbar.nav-open ~ .course-body .course-aside {{ transform: translateX(0); }}
-      .course-topbar .mobile-toggle {{ display: flex; align-items: center; justify-content: center; }}
       .aside-backdrop {{
-        display: none; position: fixed; inset: var(--topbar-h) 0 0 0;
-        background: rgba(15,23,42,.35); z-index: 350;
+        display: none; position: fixed; inset: 0; z-index: 350;
+        background: rgba(15,23,42,.45);
       }}
       .course-topbar.nav-open ~ .course-body .aside-backdrop {{ display: block; }}
+      body.nav-open-mobile {{ overflow: hidden; }}
+      .course-main {{
+        padding: .75rem .85rem calc(1.5rem + var(--safe-bottom));
+      }}
+      .course-banner {{
+        flex-direction: column; align-items: flex-start; text-align: left;
+        padding: 1rem; gap: .75rem;
+      }}
+      .course-banner h2 {{ font-size: 1.1rem; line-height: 1.3; }}
+      .course-banner p {{ font-size: .82rem; }}
+      .course-banner-actions {{ width: 100%; gap: .4rem; }}
+      .course-banner .btn {{ flex: 1 1 calc(50% - .25rem); justify-content: center; font-size: .78rem; padding: .55rem .5rem; min-height: 44px; }}
+      .archive-toolbar {{ flex-direction: column; align-items: stretch; }}
+      .archive-search {{ min-width: 0; width: 100%; min-height: 44px; font-size: 16px; }}
+      .archive-toolbar .btn {{ width: 100%; justify-content: center; min-height: 44px; }}
+      .week-head {{ padding: 1rem .85rem .85rem; }}
+      .week-body {{ padding: .25rem .85rem 1rem; }}
+      .week-head h2 {{ font-size: 1.05rem; }}
+      .special-head {{ padding: .9rem .85rem; }}
+      .special-body {{ padding: .5rem .85rem 1rem; }}
+      .study-path-hero, .plan-hero {{ padding: 1.1rem .95rem; }}
+      .study-path-hero h2, .plan-hero h2 {{ font-size: 1.12rem; }}
+      .plan-day-head {{ padding: .85rem .9rem; }}
+      .panel summary {{ padding: .75rem .85rem; font-size: .88rem; min-height: 44px; }}
+      .panel-inner {{ padding: .75rem .85rem 1rem; }}
+      .panel-inner pre {{ font-size: .72rem; }}
       .quiz-toolbar {{ flex-direction: column; align-items: stretch; }}
+      .quiz-tabs {{ width: 100%; }}
+      .quiz-tab {{ min-height: 40px; }}
+      .quiz-actions {{ width: 100%; }}
+      .quiz-actions .btn {{ flex: 1; justify-content: center; min-height: 44px; }}
+      .enrich-toolbar {{ gap: .35rem; }}
+      .enrich-tab {{ min-height: 40px; }}
+      .term-tip-pop {{ left: auto; right: 0; width: min(260px, 92vw); }}
+      .panel-inner,
+      .special-body {{
+        overflow-x: auto; -webkit-overflow-scrolling: touch;
+      }}
+      .panel-inner table,
+      .special-body table {{ min-width: 520px; font-size: .75rem; }}
+      .landing-card {{ gap: .75rem; padding: 1.25rem 1rem; }}
+      .landing-title {{ font-size: 1rem; }}
+      .landing-sub {{ font-size: .72rem; }}
+      .hero-icon {{ width: min(42vw, 120px); height: min(42vw, 120px); }}
+      .jumpscare.is-active {{ animation-duration: 0.45s; }}
+    }}
+
+    @media (max-width: 480px) {{
+      .back-home-label {{ display: none; }}
+      .course-topbar .brand h1 {{ max-width: 52vw; font-size: .78rem; }}
+      .course-banner .btn {{ flex: 1 1 100%; }}
+      .course-banner-icon .course-icon-svg {{ width: 44px; height: 44px; }}
+      .focus-chips {{ gap: .3rem; }}
+      .chip {{ font-size: .68rem; }}
+      .plan-tasks li {{ font-size: .84rem; }}
+      .must-know-item {{ padding: .55rem .65rem; font-size: .8rem; }}
+    }}
+
+    @media (hover: none) and (pointer: coarse) {{
+      .landing-card:hover {{ transform: none; }}
+      .landing-card:hover .hero-icon {{ transform: none; }}
+      .nav-col a:active {{ opacity: .85; }}
+      .btn:active {{ opacity: .9; }}
     }}
 
     @media print {{
@@ -1141,7 +1227,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
   <div class="app-shell hidden" id="app-shell">
   <div class="layout">
     <header class="course-topbar" id="siteNav">
-      <button type="button" class="back-home-btn" data-action="back-home" aria-label="Ders secimine don">&#8592; Ders Secimi</button>
+      <button type="button" class="back-home-btn" data-action="back-home" aria-label="Ders secimine don">&#8592; <span class="back-home-label">Ders Secimi</span></button>
       <div class="brand">
         <div class="brand-kicker">Sinav Calisma Merkezi</div>
         <h1 id="courseTitle">Internet Prog II + Nesne Yonelimli Prog</h1>
@@ -1278,6 +1364,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         const top = el.getBoundingClientRect().top - main.getBoundingClientRect().top + main.scrollTop - 12;
         main.scrollTo({{ top: Math.max(0, top), behavior: 'smooth' }});
         document.getElementById('siteNav')?.classList.remove('nav-open');
+        document.body.classList.remove('nav-open-mobile');
       }} else {{
         el.scrollIntoView({{ behavior: 'smooth', block: 'start' }});
       }}
@@ -1309,6 +1396,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         e.preventDefault();
         scrollToSection(id);
         document.getElementById('siteNav')?.classList.remove('nav-open');
+        document.body.classList.remove('nav-open-mobile');
       }});
     }});
 
@@ -1331,7 +1419,8 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       landingEl?.classList.remove('hidden');
       appShell?.classList.add('hidden');
       appShell?.classList.remove('view-intprog', 'view-oop');
-      document.body.classList.remove('in-course', 'theme-intprog', 'theme-oop');
+      document.body.classList.remove('in-course', 'theme-intprog', 'theme-oop', 'nav-open-mobile');
+      document.getElementById('siteNav')?.classList.remove('nav-open');
       if (courseTitle) courseTitle.textContent = 'Internet Prog II + Nesne Yonelimli Prog';
       if (courseSubtitle) courseSubtitle.textContent = 'Ders sec — hangi derse calisacaksin?';
       window.scrollTo({{ top: 0 }});
@@ -1418,9 +1507,14 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     setupScrollSpy('pane-intprog', '.nav-intprog');
     setupScrollSpy('pane-oop', '.nav-oop');
 
-    document.getElementById('menuBtn').onclick = () => document.getElementById('siteNav').classList.toggle('nav-open');
+    document.getElementById('menuBtn').onclick = () => {{
+      const nav = document.getElementById('siteNav');
+      nav.classList.toggle('nav-open');
+      document.body.classList.toggle('nav-open-mobile', nav.classList.contains('nav-open'));
+    }};
     document.getElementById('asideBackdrop')?.addEventListener('click', () => {{
       document.getElementById('siteNav')?.classList.remove('nav-open');
+      document.body.classList.remove('nav-open-mobile');
     }});
 
     document.querySelectorAll('.term-tip-btn').forEach(btn => {{
