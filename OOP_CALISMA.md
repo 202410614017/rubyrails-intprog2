@@ -1,0 +1,3405 @@
+# Nesne Yönelimli Programlama II — Eksiksiz Ders Notu Arşivi
+
+> **Kaynak:** NYP II Hafta 1–9 slaytları (Öğr. Gör. Ecmel Albayrak)  
+> Python OOP + SOLID prensipleri. Hafta 9 alıştırmaları site üzerinde çözümlü.
+
+## Konu İndeksi — NYP II
+
+| Konu | Hafta | Açıklama |
+|------|-------|----------|
+| Prosedürel vs OOP | 1 | Fonksiyon merkezli vs nesne merkezli |
+| Sınıf & Nesne | 2 | class, __init__, self, instance variable |
+| Kapsülleme | 3 | private, getter/setter, @property |
+| Kalıtım | 4 | class Child(Parent), override |
+| super() | 5 | Üst sınıf constructor/metot çağrısı |
+| Çoklu miras & MRO | 5 | Birden fazla üst sınıf |
+| @staticmethod | 5 | Nesneye bağlı olmayan metot |
+| Polimorfizm | 6 | Aynı arayüz, farklı davranış |
+| Soyut sınıf (ABC) | 6 | @abstractmethod |
+| Tasarım desenleri | 7–8 | Singleton, Factory, Observer vb. |
+| **SOLID** | 9 | S, O, L, I, D ilkeleri |
+| SRP | 9 | Tek sorumluluk |
+| OCP | 9 | Açık/kapalı — AlanHesaplayici alıştırması |
+| LSP | 9 | Dosya sistemi alıştırması |
+| ISP | 9 | Akıllı ev cihazları alıştırması |
+| DIP | 9 | Bildirim sistemi alıştırması |
+
+## Hafta 1 — OOP Giriş & Prosedürel Programlama
+
+### 1. Hafta
+
+Öğr. Gör. Ecmel Albayrak
+
+### 1. Hafta
+
+1. Ders Kapsamında Genel Bilgilerin Verilmesi
+
+2. Prosedürel Programlama Temelleri
+
+3. Nesne Yönelimli Programlama Tarihi
+
+4.Nesne Yönelimli Programlama Temel Prensipleri
+
+### Dersin Kuralları
+
+- Derse devam zorunludur.
+
+- Ders ile ilgili her türlü duyuru, ödev, Teams’de sizin
+
+için oluşturulan sınıfta yapılacaktır.  Burayı takip
+
+etmek sizin sorumluluğunuzdadır.
+
+- Ödevler, Github gist kodu olarak yazılıp Teams
+
+üzerinden gönderilecek.
+
+- Verilen ödevlerin zamanında yapılması.
+
+- Anlaşılmayan yerlerin sorulması.
+
+- Ders ile alakalı herhangi bir
+
+yardım/bilgi/bilgilendirme durumunda Teams üzerinden
+
+iletişime geçme.
+
+- Kendi başınıza kod yazma/kod okuma pratiği yapma.
+
+### Beklentiler
+
+### Dersin Amacı
+
+### Nesne Yönelimli Programlama (Object
+
+Oriented Programming - OOP) prensiplerini
+
+öğrenmek ve Python’da OOP kullanarak
+
+yazılım geliştirmeyi sağlamak.
+
+### Ders Kaynakları (Kitap)
+
+- Python Object-Oriented
+
+Programming - Fourth Edition, Steven
+
+Lott, Dusty Phillips, Packt Publishing,
+
+2021
+
+- Learning Python: Powerful Object-
+
+Oriented Programming, Mark Lutz,
+
+O'Reilly Media, 2025
+
+- https://python.yazbel.com/
+
+A Şubesi: 40foygt
+
+B Şubesi: wv021g3
+
+### Teams Katılım Kodu
+
+### Geliştirme Ortamı
+
+- VSCode -> https://code.visualstudio.com/
+
+- PyCharm ->
+
+https://www.jetbrains.com/pycharm/
+
+- Atom Text Editor -> https://atom-editor.cc/
+
+- Sublime Text -> https://www.sublimetext.com/
+
+Programın fonksiyonlar (prosedürler) ve kontrol yapıları kullanılarak yukarıdan
+
+aşağıya doğru adım adım çalışacak şekilde tasarlandığı bir programlama
+
+paradigmasıdır.
+
+### Prosedürel Programlama
+
+- Adım adım ilerler
+
+- Fonksiyon merkezlidir
+
+- Global değişken kullanımı yaygındır
+
+- Akış kontrolü (if, for, while) yoğundur
+
+- Nesne kavramı yoktur
+
+### Prosedürel Programlamada Temel Mantık
+
+### Prosedürel programlamada önemli
+
+olan işin sırasıdır.
+
+- Değişkenler
+
+- Fonksiyonlar (def)
+
+- Döngüler (for, while)
+
+- Koşullar (if-else)
+
+### Prosedürel Programlamanın Temel Yapı Taşları
+
+NYP I dersi kapsamında Python’da gördüğünüz her şey prosedürel
+
+yapıdadır.
+
+İşlemler:
+
+- Öğrenci ekle
+
+- Öğrenci sil
+
+- Öğrenci güncelle
+
+Öğrenci İşlemleri Örneği (Kavramsal)
+
+### Prosedürel yaklaşımda:
+
+- Veri bir yerde durur (genelde
+
+### global değişken)
+
+- Fonksiyonlar o veriye müdahale
+
+eder
+
+- Veri ile işlemler/davranış fiziksel
+
+olarak ayrı yerlerdedir
+
+### Global verilere her fonksiyon
+
+erişebilir, yanlışlıkla
+
+değiştirilebilir, kontrol
+
+zorlaşır, büyük projelerde
+
+karmaşa çıkar
+
+### Fonksiyonlar var ama bir
+
+‘öğrenci’ kavramı (nesne)
+
+yok. Burada sadece bir liste.
+
+Öğrenci İşlemleri Örneği (Kavramsal)
+
+### Prosedürel Programlamanın Avantajları
+
+### Prosedürel programlama kötü değildir, aksine:
+
+- Öğrenmesi kolaydır
+
+- Küçük programlar için idealdir
+
+- Algoritma mantığını öğretir
+
+- Başlangıç seviyesi için uygundur
+
+- Kod tekrarları artar
+
+- Değişiklik yapmak zorlaşır
+
+- Veriye her yerden erişilebilir
+
+- Kod okunabilirliği azalır
+
+- Gerçek hayat modellemesi zayıftır
+
+### Prosedürel Programlamanın Dezavantajları
+
+Sorun prosedürel yaklaşım değil, projenin büyümesidir.
+
+Kod tekrarları artar
+
+### Prosedürel Programlamanın Dezavantajları
+
+Farklı veriler için
+
+aynı işlem
+
+Değişiklik yapmak zorlaşır
+
+### Prosedürel Programlamanın Dezavantajları
+
+Bu programa Final
+
+notu da eklemek
+
+istersek ilgili tüm
+
+### fonksiyonların da
+
+güncellenmesi
+
+gerekir.
+
+final_notlari = []
+
+Önce: not_ekle(ogrenci_index, yeni_not)
+
+Sonra: not_ekle(ogrenci_index, yeni_not, not_tipi)
+
+Neden? Hangi listeye ekleneceğini bilmeli
+
+### Prosedürel Programlamanın Dezavantajları
+
+Farklı fonksiyonlar da varsa;
+
+```python
+ortalama_hesapla() Fonksiyonu
+Önce: Tüm vize notlarını al, ortalamasını hesapla
+Sonra: "Vize ortalaması mı? Final ortalaması mı? Genel ortalama mı?"
+3 farklı hesaplama eklendi
+Değişiklik yapmak zorlaşır
+```
+
+### Prosedürel Programlamanın Dezavantajları
+
+```python
+en_yuksek_not() Fonksiyonu
+Önce: Vize notlarından en yükseği bul
+Sonra: "Vizelerden mi? Finallerden mi? Tüm notlardan mı?"
+3 seçenek eklendi
+Değişiklik yapmak zorlaşır
+Veriye her yerden erişilebilir
+```
+
+### Prosedürel Programlamanın Dezavantajları
+
+Veri güvenliği yok
+
+Kontrol yok
+
+Gerçek hayat modellemesi zayıftır
+
+### Prosedürel Programlamanın Dezavantajları
+
+Bu bir araba değil, dağınık bir veri
+
+Gerçek hayatta araba = BİR BÜTÜN
+
+Bu Kodda = 4 ayrı liste, veri ilişkisi
+
+zayıf
+
+km
+
+### Prosedürel Programlamanın Dezavantajları
+
+Yeni araba eklemek için kaç liste değişecek?
+
+2. arabanın km nasıl artırırız?
+
+2. araba silinirse ne olur?
+
+4
+
+km[1] += 10
+
+Tüm listelerden silmek gerek
+
+### Prosedürel programlama küçük işler için yeterlidir, ancak yazılım
+
+büyüdükçe daha düzenli bir yapıya ihtiyaç duyulur.
+
+Düzenli Yapı:
+
+-    Veriler dağınık olmasın
+
+- İlgili işlemler bir arada dursun
+
+- Her şeye her yerden erişilemesin
+
+- Değişiklik tek bir yerden yapılabilsin
+
+### Nesne Yönelimli Programlama İhtiyacı
+
+### Prosedürel vs Nesne Yönelimli
+
+### Prosedürel Nesne Yönelimli
+
+### Fonksiyon odaklı Nesne odaklı
+
+Veri ayrı, fonksiyon ayrı Veri + davranış birlikte
+
+Küçük projelerde basit Büyük projelerde daha düzenli
+
+Genelde global veri kullanılır Encapsulation vardır
+
+1960'lar-1970'ler: Simula dili (Norveç'te geliştirildi) ilk nesne ve sınıf
+
+kavramlarını tanıttı. Simülasyon programları için geliştirilmişti.
+
+1980'ler: Smalltalk dili OOP'yi popüler hale getirdi ve modern OOP
+
+kavramlarını şekillendirdi.
+
+1990'lar ve Sonrası: C++, Java, C#, Python, Ruby gibi dillerle OOP ana
+
+akım haline geldi.
+
+### Nesne Yönelimli Programlama Tarihi
+
+Gerçek dünyadaki varlıkları ve ilişkileri modellemek için kullanılan bir
+
+programlama paradigmasıdır.
+
+Temel Bileşenleri
+
+-> Sınıflar (Classes) - Nesne şablonu
+
+-> Nesneler (Objects) - Sınıftan üretilen örnek
+
+-> Özellikler (Attributes) - Nesnenin sahip olduğu özellikler
+
+-> Metotlar (Methods) - Nesnenin yapabileceği işlevler
+
+### Nesne Yönelimli Programlama (Object OrientedProgramming) Nedir?
+
+### Sınıf, nesnelerin özelliklerini ve işlevlerini (davranışlarını) tanımlamak için
+
+kullanılan bir taslaktır. Bu taslak aracılığıyla nesneler (objects)
+
+oluşturulmaktadır.
+
+### OOP Sınıf Kavramı
+
+Bu planla istediğimiz
+
+kadar araba üretebiliriz
+
+### OOP Sınıf Kavramı
+
+### Sınıf planından üretilmiş gerçek/somut varlıklardır. Planı kullanarak
+
+oluşturduğumuz nesne.
+
+### OOP Nesne Kavramı
+
+Hepsi AYNI plan, FARKLI
+
+ARABALAR!
+
+### OOP Nesne Kavramı
+
+Her biri AYNI planla üretildi ama her biri BELLEKTE FARKLI yerlerde
+
+### OOP Özellik Kavramı
+
+Nesnenin durumunu/sahip olduklarını tanımlar. "Neyi var?" sorusuna
+
+cevap verir.
+
+### OOP Özellik Kavramı
+
+### OOP Metot Kavramı
+
+Nesnenin yapabildiği işleri/fonksiyonları tanımlar. "Ne yapabilir?" sorusuna
+
+cevap verir.
+
+### OOP Metot Kavramı
+
+NYP'nin Temel Prensipleri
+
+### Miras Alma (Inheritance)
+
+Çok Biçimcilik (Polymorphism)
+
+### Kapsülleme (Encapsulation)
+
+### Soyutlama (Abstraction)
+
+Var olan
+
+### sınıfın özellikler
+
+ini yeni sınıflara
+
+aktarır.
+
+### Miras Alma (Inheritance)
+
+Kod tekrarını azaltır
+
+Ortak özellikler tek yerde toplanır
+
+Daha düzenli bir yapı oluşur
+
+### Miras Alma Ne Sağlar
+
+Car sınıfı, Vehicle’daki move() metodunu otomatik alır.
+
+Aynı isimli metodun farklı
+
+nesnelerde farklı
+
+davranması sağlanır.
+
+Her araba, move
+
+komutunu kendi yakıt
+
+tipine göre farklı şekilde
+
+yerine getirir.
+
+Çok Biçimcilik (Polymorphism)
+
+Çok Biçimcilik Ne Sağlar
+
+Esneklik ve dinamik davranış imkanı sağlar.
+
+Verilere doğrudan erişimi kısıtlar ve kontrollü bir arayüz sunar.
+
+### Kapsülleme (Encapsulation)
+
+### Kapsülleme Ne Sağlar
+
+- Veri güvenliği
+
+- Kontrollü erişim
+
+- Değişikliği lokal tutma
+
+Karmaşıklığı gizler, sade arayüz sunar.
+
+### Soyutlama (Abstraction)
+
+### Soyutlama Ne Sağlar
+
+- Karmaşıklığı azaltır
+
+- Kodun iç yapısı değişse
+
+bile, dış arayüz aynı kaldığı
+
+sürece diğer kodlar
+
+etkilenmez.
+
+Kontrol Listesi
+
+### Prosedürel Programlama Temelleri
+
+### Nesne Yönelimli Programlama Temelleri
+
+---
+
+## Hafta 2 — Sınıflar & Nesneler
+
+### 2. Hafta
+
+Öğr. Gör. Ecmel Albayrak
+
+### 2. Hafta
+
+1. Sınıflar (Classes)
+
+2. Örnek (Instance) Değişkenler
+
+3.  Nesne Oluşturma
+
+4. Örnek (Instance) Metotlar
+
+### Sınıf, nesnelerin nasıl oluşturulacağını tanımlayan bir şablondur.
+
+### Sınıf → Plan / Kalıp
+
+### Nesne → Üretilen ürün
+
+### Sınıf, sadece tarif eder. Nesne, bir sınıftan oluşturulan gerçek bir
+
+örnektir.
+
+### Sınıflar
+
+```python
+class anahtar kelimesi ile sınıf tanımlanır.
+```
+
+### Sınıf isimleri genellikle büyük harfle başlar (CamelCase).
+
+```python
+pass ifadesi, şimdilik sınıfın içini boş bırakmak için kullanılır.
+```
+
+### Sınıf Tanımlama
+
+### Sınıf adını parantezlerle çağırarak nesne oluşturulur.
+
+Nesneler aynı sınıftan üretilseler de bellekteki yerleri farklıdır. Dolayısıyla
+
+farklı nesnelerdir.
+
+“Sınıf tanımlar, nesne yaşar.”
+
+### Nesne Tanımlama
+
+### Nesne oluşturulduğu anda otomatik çalışan metottur.
+
+Nesnenin ilk özelliklerini (attributes) ayarlamak için kullanılır.
+
+### __init__ Metodu: Yapıcı Metot (Constructor)
+
+Biz çağırmasak bile
+
+### __init__ çalışır.
+
+Her nesneye ait olan ve nesnenin durumunu tutan değişkendir. Her
+
+nesnenin kendi verisi vardır.
+
+### Instance (Örnek) Değişken Nedir?
+
+Neden gerekli?
+
+Her nesne, sınıfın bir
+
+kopyasıdır, ancak kendi
+
+benzersiz özelliklerine
+
+sahip olabilir.
+
+self, o anki nesnenin kendisini temsil eder. “Bu nesne” demenin
+
+Python’daki karşılığı selftir.
+
+### self Parametresi Nedir?
+
+araba1 için self → araba1
+
+araba2 için self → araba2
+
+Aynı sınıf, farklı self
+
+### Self olmazsa, değişken nesneye ait olmaz.
+
+Eğer self olmasaydı;
+
+- marka ve renk değişkeni tüm sınıf için ortak olurdu.
+
+-Nesneler birbirinden farklı özelliklere sahip olamazdı.
+
+### self Parametresi Nedir?
+
+### self sayesinde:
+
+- araba1.marka, araba1.renk
+
+- araba2.marka, araba2.renk
+
+ayrı ayrı tutulur.
+
+### Instance (Örnek) Metotlar – Nesne Davranışı
+
+Bir sınıfa ait olan ve nesnenin ne yapabildiğini tanımlayan fonksiyondur.
+
+Bu metotlar nesneye bağlı çalışır. Her nesnenin kendi durumu (sahip
+
+olduğu değerler - state) olduğu için metotlar da o nesne üzerinde işlem
+
+yapar.
+
+Değer Döndüren (Getter/Query) Metotlar ve Kullanımı
+
+Nesnenin
+
+durumu
+
+hakkında bilgi
+
+verir, ama
+
+nesneyi
+
+değiştirmez.
+
+bilgi_goster
+
+metodunda
+
+olduğu gibi.
+
+### Metotların Kullanımı
+
+Python  yukarıdaki kodu aslında şöyle çalıştırır:
+
+Bu metot hangi nesne
+
+üzerinden çağrıldıysa onu
+
+bana ver.
+
+Özelliklerin Metotlar İçinden Kullanımı
+
+Eğer self kullanılmasaydı sadece marka, model, yil kullanılsaydı:
+
+- Python bunu lokal değişken sanırdı.
+
+- Nesneye ait olduğunu anlamaz.
+
+Diğer Dillerde self Var mı?
+
+Örneğin:
+
+- Java → this
+
+- C++ → this
+
+- Ruby → self
+
+Ama bu dillerde, this otomatik olarak arka planda var. Metot parametresi
+
+olarak yazılmaz.
+
+Python'da açıkça yazılması gerekir. Python felsefesi:
+
+“Explicit is better than implicit. ”
+
+(Açık olan örtük olandan iyidir.)
+
+### self Olmadan Hata
+
+Hata verir çünkü:
+
+- Python otomatik olarak t nesnesini
+
+ilk parametre olarak gönderir.
+
+- Ama metot parametre almıyor.
+
+Doğrusu:
+
+Nesnenin Durum (State) Tutması
+
+### Nesne durumu (state), bir nesnenin o
+
+anki özelliklerinin bütünüdür. Yani
+
+nesnenin içinde sakladığı tüm verilerin
+
+anlık değerleridir (Nesne hafızası).
+
+Eğer sayi instance değişkeni olduğu için
+
+her arttir() metodunda değeri artar
+
+(state korunur).
+
+Nesnenin Durum (State) Tutması
+
+Sayi değişkeni yandaki gibi lokal
+
+değişken olarak tanımlanırsa;
+
+- Metot çalışınca oluşturulur.
+
+- Metot bitince silinir.
+
+- Sonraki çağrıda tekrar 0’dan başlar.
+
+Burada aynı nesne kullanılıyor ama
+
+değişken nesneye ait değil.
+
+Durumu Değiştiren İnstance Metot
+
+Nesnenin içindeki
+
+verileri (özellikleri)
+
+günceller.
+
+Her çağrıldığında
+
+nesnenin durumu
+
+farklılaşır.
+
+Duruma Göre Davranan İnstance Metot
+
+Nesnenin o anki durumuna
+
+bakarak farklı sonuçlar üretir .
+
+- Aynı metot, farklı nesnelerde
+
+farklı sonuçlar verebilir
+
+- Nesnenin attribute
+
+değerlerine göre karar verir
+
+- Genellikle nesneyi
+
+değiştirmez, sadece okur ve
+
+karar verir
+
+Örnek 1 - Dikdörtgen Sınıfı
+
+Örnek 1 - Dikdörtgen Nesne Oluşturma
+
+Örnek 1 - Dikdörtgen Sınıfı Güncelleme
+
+Dikdortgen sınıfına is_square() adlı bir metot ekleyin. Genişlik ve yükseklik
+
+eşitse True döndürsün.
+
+Örnek 2 -  Banka Hesabı Sınıfı
+
+Örnek 2 -  Banka Hesabı Nesnesi Oluşturma
+
+Örnek 3 – Kitap Sınıfı
+
+Örnek 3 – Kitap Nesnesi Oluşturma
+
+### Sınıfa odunc_al ve
+
+metodunu ekleyelim.
+
+### Sınıfa kitap_oku
+
+metodunu ekleyelim.
+
+Kitabın ödünç
+
+alınmadan
+
+okunmamasını
+
+sağlayalım.
+
+### Sınıfa
+
+iade_et  metodunu
+
+ekleyelim. İade işlemi
+
+yapıldığında okuma
+
+sayfası sıfırlansın.
+
+sayfa_oku, odunc_al ve
+
+iade_et metotlarının
+
+### nesne üzerinde kullanımı
+
+Kontrol Listesi
+
+### Sınıf ve Nesne Oluşturma
+
+### Instance (Örnek) Metotları Kullanma
+
+---
+
+## Hafta 3 — Kapsülleme
+
+II
+
+### 3. Hafta
+
+Öğr. Gör. Ecmel Albayrak
+
+### 3. Hafta
+
+1. Kapsülleme (Encapsulation)
+
+### Kapsülleme, bir nesnenin iç verilerini doğrudan erişime kapatarak, bu
+
+verilere yalnızca tanımlı metotlar aracılığıyla kontrollü erişim
+
+sağlamaktır.
+
+Neleri Sağlar?
+
+-     Veri güvenliği
+
+- Hataların azalması
+
+- Değişikliğe dayanıklı kod
+
+### Kapsülleme
+
+### Kapsülleme
+
+### Kapsülleme yalnızca değişkenleri private veya protected yaparak dış
+
+erişimi engellemek değildir.
+
+Asıl amaç, bir nesnenin iç durumunu (state) ve bu durumu değiştiren
+
+davranışları (behavior) birlikte kontrol etmektir.
+
+“Nesneyi saklamak değil, onu yanlış kullanılamaz hale getirmektir . ”
+
+### Kapsülleme Gerçek Hayat Örneği
+
+ATM Makinesi içindeki paraya doğrudan ulaşamazsınız.
+
+Sadece kart+şifre ile kontrollü işlem yapabilirsiniz.
+
+### Kapsülleme Yoksa Ne Olur?
+
+Veriler Doğrudan Erişime Açık
+
+Eğer kapsülleme yoksa sınıfın
+
+değişkenleri public olur ve herkes
+
+tarafından doğrudan erişilebilir ve
+
+değiştirilebilir.
+
+- Sınıfın içindeki veriler tamamen dış dünyaya açıktır
+
+- Herhangi bir kontrol mekanizması yoktur
+
+- Nesnenin iç durumu kontrolsüz şekilde değiştirilebilir
+
+### Kapsülleme Yoksa Ne Olur?
+
+Geçersiz Değerler Atanabilir
+
+### Kapsülleme olmadığında
+
+geçersiz durumlar
+
+engellenemez.
+
+Bu durum:
+
+- veri tutarsızlığı
+
+- sistem hataları
+
+oluşturabilir.
+
+### Kapsülleme Yoksa Ne Olur?
+
+Güvenlik Riski (Şifre
+
+Görülebilir / Değiştirilebilir)
+
+Hassas bilgiler korunamaz
+
+Şifre gibi veriler herkes
+
+tarafından görülebilir veya
+
+değiştirilebilir
+
+Güvenlik riski oluşur
+
+### Kapsülleme Yoksa Ne Olur?
+
+Hiçbir Kural Uygulanamaz
+
+Banka hesabında:
+
+- negatif bakiye olamaz
+
+- para çekme bakiyeden fazla olamaz
+
+Kullanıcı doğrudan bakiyeyi değiştirirse:
+
+- Tanımlanan kurallar kolayca bypass edilir
+
+- Nesne tutarsız bir duruma girebilir
+
+### Sınıf üyelerine (özellikler ve metotlar) nereden erişilebileceğini kontrol
+
+etmemizi sağlar. Temelde üç ana erişim belirleyici vardır:
+
+Public (Herkese Açık): Sınıf içinden, sınıf dışından, hatta alt
+
+### sınıflardan bile erişilebilir. Her yerden erişime açık.
+
+Private (Gizli): Sadece sınıf içinden erişilebilir. Sınıf dışından ve alt
+
+### sınıflardan doğrudan erişilemez.
+
+Protected (Korumalı): Sadece sınıf içinden ve alt sınıflardan
+
+erişilebilir. Sınıf dışından doğrudan erişilemez.
+
+Erişim Belirleyiciler: Public, Protected, Private
+
+Python’da diğer bazı dillerdeki gibi public, protected, private anahtar
+
+kelimeleri yoktur. Ancak, isimlendirme kuralları ile bu kavramlar ifade edilir:
+
+Python'da Erişim Belirleyiciler
+
+Seviye Python Gösterimi Anlam
+
+Public degisken Her yerden erişilebilir
+
+Protected _degisken Sadece sınıf içi ve alt sınıflar için
+
+Private __degisken Sınıf içi kullanım
+
+Veriyi Gizleme (Private Yapma)
+
+__bakiye değişkeni private
+
+yapılmıştır.
+
+Amaç: bakiyeye doğrudan
+
+erişimi engellemek.
+
+Python bunu:
+
+_BankaHesabi__bakiye
+
+şeklinde değiştirir (name
+
+mangling).
+
+İşlem Metotları
+
+Bakiye değişebilir ancak kurallara göre; geçersiz değerlerin atanması
+
+engellenir.
+
+Veriye Nasıl Erişeceğiz?
+
+Bakiyeyi tamamen gizlemek
+
+de pratik değildir.
+
+Kullanıcı bazen bakiyeyi
+
+görmek ister.
+
+Bu yüzden bir getter metodu
+
+yazılır.
+
+Veriye Nasıl Erişeceğiz?
+
+Artık hesap.bakiye_goster() ile bakiye bilgisini görebiliyoruz.
+
+Ancak bu satır bir işlem yapıyormuş gibi görünür.
+
+Oysa bu sadece bir değer okuma işlemidir.
+
+Veriye Nasıl Erişeceğiz?
+
+Programcı açısından bakıldığında:
+
+- bakiye bir özelliktir ama biz onu metot gibi çağırıyoruz
+
+Pythonic Çözüm: property
+
+### Python’da özellik gibi erişip aslında metot çalıştırmak mümkündür.
+
+Bunu @property sağlar.
+
+- dışarıdan özellik gibi erişilir
+
+- içeride metot çalışır
+
+### property ile getter metot
+
+```python
+@property kullanılan metodun adı, dışarıdan erişilecek özellik adını
+belirler. Dolayısıyla örnek değişken adı ile aynı olmalıdır.
+@property ile belirtilen metot
+ayrıca bir getter (erişici)
+```
+
+### metotdur.  Getter metot veri
+
+okur, nesnenin durumunu
+
+değiştirmez.
+
+### property ile setter metot
+
+```python
+@property aynı zamanda kontrollü veri
+değiştirmeye de izin verir. Python’da bir
+setter (değiştirici) tanımlayabilmek için
+önce bu property’nin var olması
+gerekir.
+```
+
+```python
+@property Yanlış Kullanım Senaryosu
+```
+
+### Getter metot adı attribute ile aynı olmalı.
+
+Doğrusu
+
+```python
+@property Yanlış Kullanım Senaryosu
+```
+
+### Property ile davranış/metot yapılmaz. Property yalnızca veri içindir.
+
+Parametre alamaz, nesne değerleri değiştirilmez
+
+### Metot ile davranış sağlanmalı
+
+```python
+@property Yanlış Kullanım Senaryosu
+```
+
+### Property ve normal metot aynı isimde olamaz
+
+İsim çakışması olur – Python, hangi bakiye’yi çağıracağını karıştırır.
+
+### Kapsülleme ile İlgili Önemli Hususlar - Özet
+
+Veriye doğrudan erişim yerine, kontrollü yollar sunar
+
+__bakiye doğrudan
+
+değiştirilemez
+
+Okuma işlemi sadece
+
+izin verilen yoldan yapılır
+
+### Kapsülleme ile İlgili Önemli Hususlar - Özet
+
+Geçersiz durumların oluşması engellenir
+
+- Negatif para yatırma
+
+- Bakiyeden fazla para
+
+çekme
+
+- Nesne asla mantıksız
+
+duruma düşmez
+
+### Kapsülleme ile İlgili Önemli Hususlar - Özet
+
+Kurallar tek bir yerde toplanır ve tekrar etmez
+
+- Para çekme kuralı sadece burada
+
+- Dışarıda if bakiye >= ...
+
+yazılmaz
+
+- Değişiklik tek yerden yapılır
+
+Private Metotlar ile Davranış Kapsülleme
+
+Burada bir kullanıcı:
+
+doğrudan islem_kaydi() metodunu
+
+çağırabiliyor.
+
+Bu ise şu problemlere yol açar:
+
+- sistemin iç işleyişi dışarı açılmış
+
+olur
+
+- kullanıcı yanlış kullanım
+
+yapabilir
+
+- islem_kaydi() metodu sadece
+
+### sınıfın kendi içinde
+
+kullanılmalıdır.
+
+Private Metotlar ile Davranış Kapsülleme
+
+### Sınıfın iç işleyişinde kullanılan
+
+bazı metotların dışarıdan
+
+çağrılmasının engellenmesi
+
+amacıyla metot private yapılır.
+
+Artık direk nesne
+
+üzerinden islem_kaydi() metodu
+
+kullanılamaz.
+
+1. Örnek Kapsülleme Çalışması
+
+Bir Telefon sınıfı tasarlamanız istenmektedir.
+
+Bu sınıf, bir telefonun şarj durumunu takip etmeli ve şarjın nasıl
+
+azalıp arttığını kendi içinde kontrol etmelidir.
+
+Şarj bilgisine dışarıdan doğrudan
+
+müdahale edilmemeli, kullanıcı
+
+yalnızca telefonun sunduğu
+
+davranışları kullanarak telefonun
+
+şarjı artmalı veya azalmalı.
+
+1. Örnek Kapsülleme Çalışması
+
+Telefon sınıfı özellikleri:
+
+marka: String (örneğin "Samsung", "Huawei")
+
+model: String (örneğin "S25", "Mate 80 Pro")
+
+__sarj: Integer (0-100 arası, başlangıç değeri 50 olabilir)
+
+1. Örnek Kapsülleme Çalışması
+
+Şarj bilgisine @property ile erişim:
+
+```python
+@property kullanarak sarj adında bir property oluşturun.
+Bu property __sarj değerini döndürsün, sadece okunabilir olsun (setter
+olmasın)
+```
+
+1. Örnek Kapsülleme Çalışması
+
+Private yardımcı metotlar:
+
+__sarj_azalt adında private bir
+
+metod oluşturun, parametre
+
+olarak miktar alsın
+
+__sarj'dan miktar kadar azaltsın
+
+Şarj 0'ın altına düşerse 0 yapsın
+
+1. Örnek Kapsülleme Çalışması
+
+Private yardımcı metotlar:
+
+__sarj_artir adında private bir
+
+metod oluşturun, parametre
+
+olarak miktar alsın
+
+__sarj'a miktar kadar eklesin
+
+Şarj 100'ü geçerse 100 yapsın
+
+1. Örnek Kapsülleme Çalışması
+
+Telefon kullanma metodu:
+
+- kullan adında bir metod
+
+oluşturun, parametre olarak
+
+dakika alsın
+
+- Her dakika için %2 şarj
+
+azalsın (dakika * 2)
+
+- Şarj azalması için
+
+__sarj_azalt private
+
+metodunu çağırın
+
+- Kalan şarj bilgisini ekrana
+
+yazdırın
+
+1. Örnek Kapsülleme Çalışması
+
+Telefonu şarj etme metodu:
+
+- sarj_et adında bir metod
+
+oluşturun
+
+- Parametreolarak dakika alsın
+
+- Her dakika için %5 şarj artsın
+
+(dakika * 5)
+
+- Şarj artması
+
+için __sarj_artir private
+
+metodunu çağırın
+
+- Şarj bilgisini ekrana yazdırın
+
+1. Örnek Kullanım
+
+2. Örnek Kapsülleme Çalışması
+
+Firin sınıfı ile kapsülleme çalışması:
+
+Fırının iç sıcaklığı vardır ve bu sıcaklık dışarıdan doğrudan
+
+değiştirilememelidir.
+
+Kullanıcı sadece fırını ısıtma veya soğutma butonlarına basabilir.
+
+Sıcaklığın nasıl değişeceğine fırının kendi içindeki mekanizma karar verir.
+
+2. Örnek Kapsülleme Çalışması
+
+- Firin adında bir sınıf oluşturun.
+
+- __init__ metodunda:
+
+- marka ve model parametrelerini al ve public değişkenlere ata
+
+- baslangic_derece parametresini al (varsayılan 0 olsun) ve __derece
+
+private değişkenine ata
+
+2. Örnek Kapsülleme Çalışması
+
+- @property kullanarak derece adında bir property oluştur:
+
+- __derece değerini döndürsün
+
+- Sadece okunabilir olsun (setter olmasın)
+
+2. Örnek Kapsülleme Çalışması
+
+Private yardımcı metotları
+
+oluştur:
+
+- __derece_artir(mik
+
+tar): Sıcaklığa miktar
+
+ekle, 250'yi geçmesin
+
+- __derece_azalt(mik
+
+tar): Sıcaklıktan miktar
+
+çıkar, 0'ın altına
+
+düşmesin
+
+2. Örnek Kapsülleme Çalışması
+
+- isit adında bir metod oluşturun:
+
+- Parametre olarak dakika alsın
+
+- Her dakika için sıcaklık 10 derece artsın
+
+- Sıcaklık artışı için __derece_artir private metodunu çağır
+
+2. Örnek Kapsülleme Çalışması
+
+- sogut adında bir metod oluştur:
+
+- Parametre olarak dakika alsın
+
+- Her dakika için sıcaklık 5 derece azalsın
+
+- Sıcaklık azalması için __derece_azalt private metodunu çağır
+
+2. Örnek Kapsülleme Çalışması
+
+Fırına bir depisir metodu ekleyin. Bu metod:
+
+- Parametre olarakyemek (string) vehedef_derece (int) alsın
+
+- Fırının mevcut sıcaklığını kontrol etsin:
+
+- Eğer fırın sıcaklığı hedef dereceden düşükse: "Fırın yeterince
+
+sıcak değil, biraz daha ısıtın" uyarısı versin
+
+- Eğer fırın sıcaklığı hedef dereceden yüksekse: "Fırın çok sıcak,
+
+yemek yanabilir" uyarısı versin
+
+- Eğer fırın sıcaklığı hedef dereceye eşitse: "{yemek} pişiyor... "
+
+mesajı versin
+
+Bu metod da diğerleri gibi public olsun ama içerde private
+
+değişken olan__derece'yi kullansın.
+
+2. Örnek Kapsülleme Kullanımı
+
+2. Örnek Kapsülleme Kullanımı
+
+125
+
+2. Örnek Kapsülleme Kullanımı
+
+2. Örnek Kapsülleme Kullanımı
+
+Kontrol Listesi
+
+### Kapsülleme (Encapsulation) Çalışma
+
+### Prensibi
+
+```python
+@propert ile Getter ve Setter Metotlar
+Private Metotların Kullanımı
+```
+
+---
+
+## Hafta 4 — Kalıtım (Miras)
+
+### 4. Hafta
+
+Öğr . Gör. Ecmel Albayrak
+
+### 4. Hafta
+
+### Miras Alma (Inheritance)
+
+### Sınıflarda is-a ve has-a ilişkisi
+
+### Sınıf Özellikleri
+
+### Sınıf Metotları
+
+### Miraslama, bir sınıfın başka bir sınıfın özelliklerini (veri)
+
+ve davranışlarını (metotlar) devralmasıdır.
+
+Ortak özellik ve davranışların tekrar yazılmasını önlemek için kullanılır.
+
+### Miraslama
+
+### Miraslamaya Neden İhtiyaç Duyarız?
+
+Kod tekrarını önleme
+
+### Miraslamaya Neden İhtiyaç Duyarız?
+
+### Miraslama olmazsa, her sınıf
+
+için aynı özellikleri ve metotları
+
+defalarca yazmak zorunda
+
+kalırız.
+
+Değişiklik yapılması
+
+gerektiğinde tüm metotların
+
+güncellenmesi gerekir.
+
+### Miraslamaya Neden İhtiyaç Duyarız?
+
+### __init__ metodunu Kedi ve Kopek
+
+### sınıfı için 2 kere yazdık (isim, yas
+
+tanımlaması)
+
+```python
+ye() metodunu 2 kere yazdık
+(tamamen aynı kod!)
+uyu() metodunu 2 kere yazdık
+(tamamen aynı kod!)
+Eğer 10 farklı hayvan türü olsaydı, bu
+kodları 10 kere yazacaktık.
+```
+
+is-a ilişkisi bir alt sınıfın, üst sınıfın özel bir türü olmasıdır.
+
+Alt sınıf nesnesi, üst sınıf yerine rahatça kullanılabiliyorsa, aralarında is-a
+
+ilişkisi vardır.
+
+Kedi → Hayvandır
+
+Köpek → Hayvandır
+
+Pati → Hayvan değildir
+
+“IS-A ilişkisi yoksa miraslama yok.”
+
+IS-A İlişkisi
+
+Ortak Nokta – Ana Sınıf (Base Class)
+
+### Miraslama sayesinde gerçek dünyadaki "A, B'dir" ilişkisini kurabiliriz.
+
+Hiyerarşik yapı oluşturabiliriz. Kedi, köpek ve kuş birer hayvandır.
+
+Kedi, köpek ve kuş sınıflarının üst sınıfı olarak Hayvan sınıfı kullanılabilir.
+
+### Miraslama Nasıl Yapılır?
+
+Python’da miraslama
+
+parantezle yapılır.
+
+Kedi ve Kopek sınıfı Hayvan
+
+### sınıfından miras alır.
+
+### Miraslama Nasıl Yapılır?
+
+Kedi ve Kopek sınıfında
+
+```python
+ye() metodu yok ancak
+kedi ve kopek nesnesi
+üzerinde çalışır. Çünkü
+tüm özellik ve
+davranışlar Hayvan
+```
+
+### sınıfından miraslama
+
+yoluyla devralındı.
+
+Bu, Liskov Substitution Principle (Liskov’un yerine geçme ilkesi) olarak
+
+da bilinmektedir.
+
+Alt Sınıf Üst Sınıfın Beklenen Davranışını Bozmamalı
+
+- Hayvan sınıfı: “yürüyor”
+
+- Balık sınıfı: “yürüyemez”
+
+Alt sınıf üst sınıfın
+
+sözleşmesini ihlal etti
+
+Bir yazılım bileşeninde kullanılan
+
+bir alt sınıfın, üst sınıfın yerine
+
+geçerek sistemin doğru
+
+çalışmasını sürdürebilmesi
+
+gerektiğini ifade eder.
+
+### Miras alınan üst sınıfları ayırabiliriz: KaraHayvanları ve DenizHayvanları
+
+olarak. Bu sayede move() metodu kara ve deniz hayvan nesnelerinin
+
+ayrı ve doğru şekilde davranmasını sağlayacak.
+
+Alt Sınıf Üst Sınıfın Beklenen Davranışını Bozmamalı
+
+Bunlar çözüm değil:
+
+- if-else eklemek
+
+- metodu boş bırakmak
+
+- exception fırlatmak
+
+Alt Sınıf Üst Sınıfın Beklenen Davranışını Bozmamalı
+
+Alt sınıf üst sınıfın davranışlarını
+
+bozmadan farklı bir şekilde
+
+davranabilir. Bu çok biçimcilikle
+
+ilkesi ile sağlanır.
+
+Alt Sınıf Üst Sınıfın Beklenen Davranışını Bozmamalı
+
+Hayvan → “hareket
+
+eder” dedi
+
+Alt sınıflar → bu sözü
+
+bozmadı
+
+Kimse “yürümek
+
+zorunda” demedi
+
+Has-a (Composition) ilişkisi, X’in Y’si var mı?” sorusuna evet cevabı
+
+verdiğimizde vardır. Bir şey başka bir şeyi içerir/sahiptir diyebilmeliyiz.
+
+Hayvanın kalbi vardır
+
+Hayvanın tasması vardır
+
+Hayvanın sahibi vardır
+
+Is-a != Has-a (Composition)
+
+Sahip sınıfı kendi başına anlamlı, Hayvan sınıfı olmadan da var olabilir
+
+Has-a Örneği -1
+
+Hayvan → Sahip içerir
+
+Sahip → Hayvan değildir
+
+Has-a Örneği -1
+
+Önce Sahip, sonra Hayvan
+
+tanımlanıyor.
+
+Has-a Örneği - 1
+
+Hayvan sahibinin
+
+### metotlarını bilmiyor,
+
+### bağımlılık tek yönlü
+
+Hayvanın sahibi değişirse ne olur?
+
+Has-a Neden Güçlü?
+
+Hayvan aynı
+
+Sahip değişti
+
+Sistem bozulmadı
+
+HAS-A esnekliği sağlar
+
+```python
+sahibi_ara()
+```
+
+Has-a Örneği - 2
+
+Has-a Örneği - 2
+
+Has-a Örneği - 3
+
+Has-a Örneği - 3
+
+Has-a Örneği - 3
+
+Bazı bilgiler tek tek hayvanlara değil,  tüm hayvan sınıfına aittir.
+
+### Nesne özelliği: Her nesnede farklı (self.isim, self.yas)
+
+### Sınıf özelliği: Tüm nesnelerde ORTAK (Hayvan.tur)
+
+### Sınıf Özellikleri (Class Attribute)
+
+Python’da attribute arama sırası:
+
+- Önce nesnede (instance) var mı?
+
+- Yoksa → sınıfta (class) var mı?
+
+- Yoksa → üst sınıflara bak
+
+### Sınıf Özellikleri (Class Attribute)
+
+Ortak sınıf değişkeni
+
+kullanıldığında tüm alt sınıflar
+
+aynı sayacı paylaşır.
+
+Bu genellikle “toplam hayvan
+
+sayısı” için idealdir.
+
+### Sınıf metotları, bir nesneye değil, sınıfın kendisine ait davranışları
+
+tanımlar.
+
+Bir sınıf metodu, sınıfın genel durumunu ilgilendiren işlemleri yapar
+
+Bu metotlar ilk parametre olarak self değil, cls alır.
+
+### Sınıf Metotları (Class Methods)
+
+cls, o metodu çağıran sınıfı temsil eder.
+
+```python
+@classmethod ile sınıf metodu yapıldı.
+```
+
+### Sınıf özellikleri (class attributes) yönetiliyorsa
+
+Tüm nesneleri ilgilendiren bir kural varsa
+
+Nesneye özel veri kullanılmıyorsa
+
+Tek bir nesnenin durumunu değiştirmek
+
+### self üzerinden veri kullanmak
+
+### Nesne davranışlarını tanımlamak
+
+Ne Zaman Sınıf Metodu Kullanılır?
+
+### Sınıf Özelliği ve Sınıf Metot Kullanımı
+
+Senaryo:
+
+Hayvan sınıfından oluşturulan nesnelerin ücreti üzerinde ortak vergi
+
+oranı uygulanmak isteniyor.
+
+Bu bilgi:
+
+- Tek bir hayvana ait değildir
+
+- Tüm hayvanları kapsar
+
+### Sınıf özelliği gerekir
+
+### Sınıf Özelliği ve Sınıf Metot Kullanımı
+
+Hayvan satışında aynı
+
+oranda vergi
+
+uygulandığını düşünecek
+
+olursak bunun kontrolü
+
+direk sınıf üzerinden
+
+gerçekleştirilmesi
+
+gerekmektedir.
+
+### Sınıf Özelliği ve Sınıf Metot Kullanımı
+
+### Sınıf Özelliği ve Sınıf Metot Kullanımı
+
+Her alt sınıf kendi vergi oranını
+
+kullanabilir.
+
+### self → nesne
+
+ama vergi_orani → sınıftan geliyor
+
+ve hangi sınıfa aitse ona göre
+
+bulunuyor
+
+### Sınıf Özelliği ve Sınıf Metot Kullanımı
+
+Kontrol Listesi
+
+### Miras Alma
+
+Is-a ve has-a İlişkileri
+
+### Sınıf Özelliklerinin Kullanımı
+
+### Sınıf Metotlarının Kullanımı
+
+Slayt içerisindeki tüm örneklerin
+
+kodlanması
+
+---
+
+## Hafta 5 — super, Çoklu Miras, Statik Metot
+
+### 5. Hafta
+
+### 5. Hafta
+
+Alt Sınıflarda super() Kullanımı
+
+### Çoklu Miraslama
+
+Alt Sınıflarda Kapsüllenen Verilerin Kullanımı
+
+Statik Metotlar (@staticmethod)
+
+### Miraslama
+
+isim ve yas zaten üst sınıfta
+
+tanımlıydı ancak Kopek sınıfına
+
+yeni özellikler eklemek için alt
+
+### sınıfta tekrar yazmak zorunda
+
+kaldık
+
+Bu durum:
+
+- Kod tekrarına yol açar
+
+- Büyük sistemlerde hata riskini
+
+artırır
+
+- Üst sınıf değişirse alt sınıfları
+
+da tek tek güncellemek gerekir
+
+```python
+super() Kullanımı “isim ve yas işini sen hallet (üst
+```
+
+### sınıf), ben sadece cins ekliyorum”
+
+demenin yolu:
+
+- super() → üst sınıfı (Hayvan)
+
+temsil eder
+
+- super().__init__(...) → Hayvan
+
+### sınıfının constructor’ını çağırır
+
+### Metotlarda super() Kullanımı
+
+- Üst sınıfın davranışını
+
+koruduk
+
+- Üzerine ekleme yaptık
+
+```python
+super() Mantığı
+Üst sınıfın yaptığı işi tekrar yazmadan kullanılmasını sağlar.
+Kullanılması gereken durumlar:
+• Üst sınıfın __init__'inde önemli işler varsa
+• Ortak davranışı korumak istiyorsan
+• Kod tekrarını önlemek istiyorsan
+Gereksiz olduğu durum:
+• Üst sınıfta işine yarayan bir şey yoksa
+```
+
+### Çoklu Miraslama
+
+Bir sınıfın birden fazla üst sınıftan miras almasıdır.
+
+Basit kural: "Eğer 'C hem A'dır hem B'dir' diyebiliyorsanız, çoklu miras düşünülebilir."
+
+### Çoklu Miraslama
+
+Senaryo: Oyun Karakter Sistemi
+
+Karakterler:
+
+- Temel sınıf: Karakter
+
+- Diğer Karakterler:
+
+- Savasci (saldırı gücü)
+
+- Sifaci (mana gücü)
+
+Ve hibrit bir karakter:
+
+- Paladin (hem savaşçı hem sifaci)
+
+### Çoklu Miraslama – Base ve Alt Sınıflar
+
+### Çoklu Miraslama - MRO
+
+Her sınıf sıradaki sınıfı çağırıyor:
+
+```python
+super().__init__()
+Burada Python bir sıra belirler buna MRO
+(Method Resolution Order) denir.
+Paladin.mro()
+[<class '__main__.Paladin'>,
+<class '__main__.Savasci'>,
+<class '__main__. Sifaci'>,
+<class '__main__.Karakter'>,
+<class 'object'>]
+Sifaci
+```
+
+### super kullanmazsan ne olur? Aynı init iki kere çalışır.
+
+### super kullanmazsan ne olur?
+
+Eğer bir sınıf super() çağırmazsa
+
+zincir kırılır.
+
+Sonuç:
+
+- Karakter hiç çalışmaz
+
+- isim set edilmez
+
+- sistem bozulur
+
+```python
+super() = “parent çağır” değildir
+Aslında: “MRO’daki sıradaki sınıfı çağır”
+super() çoklu kalıtımda kaosu kontrol eden mekanizmadır (MRO ile birlikte)
+```
+
+### Çoklu Miraslamada Metot Kullanımı
+
+Alt sınıf (Paladin), tüm üst
+
+### sınıfların metotlarını
+
+kullanabilir.
+
+### Çoklu Miraslamada Metot Çakışması
+
+- Sifaci’nin metodu tamamen
+
+yok sayıldı
+
+- Python soldan sağa gider (MRO)
+
+### Çoklu Miraslamada Manuel Çözüm
+
+Her sınıfı tek tek çağırman
+
+gerekir
+
+Yeni sınıf eklenirse kod değişir
+
+### Çoklu Miraslamada super ile Zincir Yapısı
+
+### Çoklu Miraslamada super ile Zincir Yapısı
+
+### Çoklu Miraslamada super ile Zincir Yapısı
+
+```python
+super() sayesinde:
+•Metotlar zincir halinde çalışır
+•Her sınıf davranışa katkı sağlar
+•Hiçbiri ezilmez
+```
+
+Gerçek Hayat Örneği:  E-Ticaret – Protected Kullanımı
+
+Urun sınıfındaki fiyat özelliğine
+
+hem sınıfın içerisinden hem de
+
+alt sınıflardan erişilebilir.
+
+Eğer protected değil de private
+
+( __fiyat) olarak tanımlansaydı
+
+sadece sınıfın içerisinden
+
+erişilebilirlerdi.
+
+Gerçek Hayat Örneği:  E-Ticaret
+
+### Static Metot  (@staticmethod) Nedir?
+
+### Static metot, bir sınıfa ait olan ancak ne nesneye (self) ne de sınıfa
+
+(cls) ihtiyaç duymayan metotlardır.
+
+- Nesne durumu ile ilgilenmez
+
+- Sınıf durumunu değiştirmez
+
+- Sadece mantıksal bir işlem yapar
+
+Ne Zaman Kullanılır?
+
+- ️ Hesaplama
+
+Doğrulama
+
+Yardımcı işlemler
+
+"Bu sınıfla ilgili ama nesneye bağlı değil" denilen durumlar
+
+### Static Metot  (@staticmethod) Nedir?
+
+### Nesne oluşturmaya gerek yok, self yok, cls yok
+
+### Static metot sınıfa aittir, sınıf üzerinden çağrılması daha doğrudur.
+
+### Static Metot ile Nesne Metodu Karşılaştırma
+
+### Nesne metodu: self alır, nesneye bağlıdır, nesne durumu ile çalışır
+
+### Static Metot ile Nesne Metodu Karşılaştırma
+
+### Static metot nesne üzerinden çağrılabilir ama nesneyi kullanmaz,
+
+### self gönderilmez
+
+# False
+
+Kontrol Listesi
+
+### Miras Almada super() Kullanımı
+
+### Çoklu Miraslama
+
+### Static Metotlar
+
+Slayt içindeki tüm örneklerin kodlanması
+
+---
+
+## Hafta 6 — Polimorfizm & Soyut Sınıf
+
+II
+
+### 6. Hafta
+
+### 6. Hafta
+
+Çok Biçimcilik (Polymorphism)
+
+### Duck Typing
+
+Çok Biçimcilik ve Kompozisyon Birlikte Kullanımı
+
+Çok Biçimcilik (Polymorphism)
+
+"Polimorfizm, aynı arayüzün/metodun farklı nesnelerde farklı
+
+davranışlar sergilemesidir."
+
+"Poly" (çok) + "morph" (form) → "Çok biçimlilik"
+
+Bir TV kumandasının aç() tuşunun işlevi her TV'de
+
+aynıdır ancak her TV markası bu komutu kendi
+
+içinde farklı şekilde işler (farklı devreler, yazılımlar).
+
+Daire, Dikdörtgen ve Üçgen sınıflarının
+
+herbiri AlanHesapla() metodunu
+
+kendine özgü şekilde uygular;
+
+Daire -> πr²
+
+Dikdörtgen -> uzunluk x yükseklik
+
+Üçgen -> (taban x yükseklik) / 2
+
+### Polimorfizm Olmazsa Ne Olur?
+
+Senaryo: Üçgen, Dikdörtgen ve Daire Alan hesaplaması yapılacak
+
+3 sınıf oluşturulur.
+
+### Polimorfizm Olmazsa Ne Olur?
+
+Her şekil için ayrı alan hesabı yapan fonksiyon tanımlanır.
+
+### Polimorfizm Olmazsa Ne Olur?
+
+### Sınıf nesneleri oluşturulur ve her nesne için üretilen metotlar kullanılır.
+
+### Polimorfizm Olmazsa Ne Olur?
+
+Tek bir fonksiyon her şeyi yapmaya çalışıyor ve tip kontrolü şart.
+
+### Polimorfizm Olmazsa Ne Olur?
+
+Problemler:
+
+Her yeni şekilde alan_hesapla fonksiyonu değişir
+
+Sürekli if-elif eklenir
+
+Alan hesabı için yeni
+
+### sınıf eklediğimizde
+
+eski kodu değiştirmek
+
+zorunda kalıyoruz.
+
+### Polimorfizm ile Çözüm
+
+### Metot Ezme (Overriding): Kalıtım ilişkisinde, alt sınıfın üst sınıftaki bir metodu kendi
+
+ihtiyacına göre yeniden yazması.
+
+print  "Şekillerin alanı hesaplanıyor. "
+
+### Polimorfizm ile Çözüm
+
+yaricap ** 2
+
+### Polimorfizm ile Çözüm
+
+Aynı metot ile her nesne kendisine göre alan hesaplıyor.
+
+Aynı metot çağrısı, farklı
+
+nesnelerde farklı davranır.
+
+if-else zinciri yok.
+
+### Polimorfizm ile Çözüm
+
+Yeni bir şekil eklenmek istenirse tek yapılması gereken sınıfını oluşturmak.
+
+### SOLID – Open/Closed Principle
+
+Yeni sınıf ekle → eski kodu
+
+elleme
+
+(Genişlemeye açık, değişime
+
+kapalı)
+
+TEK arayüz: Tüm şekiller Sekil sınıfından türer
+
+TEK metod: Tüm şekillerde alan() metodu var
+
+```python
+if isinstance(): Tip kontrolü GEREKMEZ
+if-elif: Dallanma GEREKMEZ
+EXTENSIBLE: Yeni şekil eklemek için:
+• Yeni sınıf oluştur
+• Sekil'den türet
+• alan() metodunu yaz
+• Mevcut kod DEĞİŞMEZ
+```
+
+### Polimorfizm Çözümünün Özellikleri
+
+### Polimorfizm Faydaları
+
+### KODU GENİŞLETİLEBİLİR YAPAR (Open/Closed Prensibi)
+
+Yeni sınıf eklemek için mevcut kodu değiştirmeye gerek yok
+
+Sadece yeni sınıf ekleyerek sistem genişletilebilir
+
+Sistem kapalı (değişime kapalı) ama açık (genişlemeye açık)
+
+### KOD TEKRARINI ÖNLER (DRY Prensibi)
+
+Aynı işlemi yapan farklı fonksiyonlar yazmaya gerek kalmaz
+
+Ortak davranışları tek bir arayüzde toplar
+
+### Polimorfizm Faydaları
+
+OKUNABİLİRLİĞİ ARTIRIR
+
+if-elif-else zincirlerini ortadan kaldırır
+
+Kod daha temiz ve anlaşılır olur
+
+Mantık daha net görünür
+
+BAKIMI KOLAYLAŞTIRIR
+
+Değişiklikler yerel kalır, sistemi etkilemez
+
+Hata ayıklama daha kolaydır
+
+### Duck Typing Nedir?
+
+“Eğer bir şey ördek gibi yürüyor ve ördek
+
+gibi vaklıyorsa, o şey ördektir. ”
+
+Bir nesnenin türü değil, sergilediği
+
+davranış önemlidir.
+
+- Nesnenin hangi sınıftan türediği önemli
+
+değildir
+
+- Gerekli metotları sağlıyorsa
+
+kullanılabilir
+
+### Duck Typing Nedir?
+
+Temel fikir: "Ne olduğuna bakmam, ne yapabildiğine bakarım. "
+
+### Kalıtıma gerek yoktur.
+
+### Duck Typing Ne Zaman Kullanılmalı
+
+Durum Örnek
+
+"CAN-DO" (yapabilirlik) ilişkisi
+
+varsa
+
+Uçak, Kuş, Süpermen uçabilir →
+
+### Duck Typing
+
+Farklı hiyerarşilerden gelen
+
+nesneler aynı
+
+davranışı sergiliyorsa
+
+Bilgisayar, telefon, tablet şarj
+
+olabilir
+
+Durum (state) paylaşmaya gerek
+
+yoksa
+
+Sadece davranış önemli, iç veriler
+
+farklı
+
+### Duck Typing Örneği
+
+### Duck Typing Örneği
+
+Senaryo – Bildirim Sistemi:
+
+Bir kullanıcıya farklı kanallardan bildirim gönderebilen bir sistem
+
+### Polimorfizm ve Kompozisyon (has-a) Birlikte
+
+### Polimorfizm için ortak arayüz
+
+Aynı metot farklı
+
+davranışlar
+
+### Polimorfizm ve Kompozisyon Birlikte
+
+Kompozisyon: Bildirimi kullanan sınıf (Kullanici)
+
+### Polimorfizm ve Kompozisyon Birlikte
+
+):
+
+ad
+
+### Polimorfizm ve Kompozisyon Birlikte
+
+### Polimorfizm Çalışma Sorusu – 1
+
+- Taşıt adında bir temel sınıf ve bu sınıftan türeyen Araba, Bisiklet ve
+
+Uçak sınıfları tasarlayın.
+
+- Her taşıtın hareket_et adında bir metodu olsun ve bu metot her sınıfta
+
+farklı bir çıktı versin (örneğin, “Yolda gidiyor” , “Pedal çevriliyor” ,
+
+“Havada uçuyor”).
+
+- Bir liste oluşturun ve bu listeye farklı taşıt nesneleri ekleyin.
+
+- Listedeki her taşıtın hareket_et metodunu çağırarak polimorfizmi
+
+gösterin.
+
+### Polimorfizm Çalışma Sorusu – 1 (Örnek Çıktı)
+
+### Polimorfizm Çalışma Sorusu - 2
+
+Bir şirkette çalışanların maaş hesaplamasını yapan bir sistem geliştirilecektir.
+
+- Calisan sınıfını oluşturunuz
+
+- maas_hesapla() adında bir metot tanımlayınız, return 0 dönsün.
+
+Aşağıdaki sınıfları oluşturunuz:
+
+- Yazilimci
+
+- maas ve bonus bilgisi alsın
+
+- maaş = maas + bonus olara hesaplansın (maas_hesapla)
+
+- Stajyer
+
+- gunluk_ucret ve gun_sayisi alsın
+
+- maaş = gunluk_ucret * gun_sayisi (maas_hesapla)
+
+Tüm sınıflar Calisan sınıfından miras almalı ve maas_hesapla() metodunu kendine
+
+göre ezmelidir (override).
+
+### Polimorfizm Çalışma Sorusu - 2
+
+- toplam_maas(calisanlar) fonksiyonunu yazınız.
+
+- Parametre olarak bir çalışan listesi alsın
+
+- Tüm çalışanların maaşlarını hesaplayıp toplamını döndürsün
+
+Aşağıdaki çalışanları oluşturunuz ve bir liste içerisinde saklayınız:
+
+- Yazilimci(30000, 5000)
+
+- Stajyer(500, 20)
+
+Her bir çalışanın maaşını ayrı ayrı hesaplayarak ekrana yazdırınız.
+
+Daha sonra oluşturduğunuz listeyi toplam_maas fonksiyonuna göndererek toplam
+
+maaşı ekrana yazdırınız.
+
+### Polimorfizm Çalışma Sorusu - 2
+
+Kontrol Listesi
+
+### Polimorfizm nedir?
+
+### Polimorfizmin faydaları neler?
+
+### Duck typing nedir?
+
+### Polimorfizmin kompozisyon ile kullanımı
+
+---
+
+## Hafta 7 — Tasarım Desenleri Giriş
+
+II
+
+### 7. Hafta
+
+Öğr. Gör. Ecmel Albayrak
+
+### 7. Hafta
+
+### Soyutlama (Abstraction)
+
+### Soyutlama (Abstraction)
+
+### Soyutlama, bir nesnenin sadece gerekli özelliklerini sunup,
+
+gereksiz detaylarını gizleme işlemidir. Bu sayede karmaşıklık
+
+azaltılır ve sistem daha anlaşılır hale gelir.
+
+"Karmaşıklığı gizleyip, sadece gerekli olanı gösterme sanatıdır ."
+
+Ödeme yapmak:
+
+- Kredi kartı
+
+- Havale
+
+- QR
+
+Ortak olan ne?
+
+“Ödeme yapılır”
+
+Nasıl yapıldığı?
+
+Detay
+
+### Soyut Sınıf Fikri
+
+Bir sınıf yazalım ve metot içeriğini eksik bırakalım.
+
+Bu sınıf, ‘ne yapılacağını’ söylüyor ama ‘nasıl yapılacağını’ söylemiyor
+
+### Soyut Sınıf Fikri
+
+Alt sınıflar
+
+Üst Sınıf
+
+```python
+gonder() metodu üst sınıfta tanımlandı detay alt sınıflarda.
+```
+
+### Polimorfizm ve soyutlama fikri mevcut.
+
+### Soyut Sınıf Fikri
+
+Yeni bir alt sınıf
+
+Yukarıdaki nesne oluşturulur ve
+
+```python
+gonder() metodu çalışır ancak;
+• Hiçbir şey yapmaz
+• Hata yok
+• Uyarı yok
+"Soyutlama fikri var ama alt sınıflarda
+gonder() metodunun olması zorunlu
+değil"
+```
+
+NotImplemented ile Geçici Çözüm
+
+Bu durumda:
+
+- Nesne oluşturabilirsin
+
+- Ama metodu çağırınca hata
+
+alırsın
+
+Hata geç yakalanır (runtime)
+
+### Abstract Base Class (ABC) Nedir?
+
+### Soyut sınıflar tanımlamak için kullanılır.
+
+Alt sınıflara metot implementasyon zorunluluğu getirir (zorunlu
+
+sözleşme).
+
+Python’da abc modülü ile sağlanır.
+
+ABC sayesinde:
+
+- Soyutlama kuralları zorunlu olur
+
+- Eksik implementasyon erken tespit edilir
+
+- Daha güvenli ve sürdürülebilir kod yazılır
+
+abc Modül Kullanımı
+
+Bir sınıf, ABC sınıfından
+
+türemiş ve içinde en az bir
+
+```python
+@abstractmethod bulunan
+```
+
+### metot varsa, o sınıf soyut
+
+### sınıftır.
+
+- Soyut sınıflardan nesne üretilemez
+
+- Alt sınıflar için temel oluşturur
+
+- Ortak davranışları tanımlar
+
+- Nasıl yapılacağını alt sınıflara bırakır
+
+abc Modül Kullanımı
+
+İçinde @abstractmethod ile
+
+tanımlanan soyut metotların
+
+gövdesi (detayı) boş bırakılır.
+
+Bildirim sınıfı şunu diyor: "Benim türümden olan her şey mesaj
+
+göndermek zorunda (gonder metodu olmak zorunda)"
+
+abc Modül Kullanımı
+
+Alt sınıflarda soyut metot
+
+tanımlanmazsa nesne
+
+oluşturulurken hata alırız.
+
+### Soyut sınıf = kural
+
+koyucu
+
+Alt sınıf = uygulayıcı
+
+NotImplementedError → “Yanlış yaptığını nesne oluşturduktan sonra söyler”
+
+ABC → “Yanlış yapmana izin vermez”
+
+NotImplemented ve abc Modülü
+
+### Soyut sınıf sadece soyut metot
+
+içermez.
+
+### Soyut sınıf = kural + ortak altyapı
+
+- Soyut metotlar →
+
+(@abstractmethod) zorunlu kılar
+
+- Normal metotlar → hazır davranış
+
+sunar
+
+- Ortak özellikler (attributes) → tüm
+
+alt sınıflarda ortak veri
+
+### Soyut Sınıf
+
+### Soyutlama Örneği - 1
+
+Farklı geometrik şekiller için alan ve çevre hesaplamaları
+
+yapan bir sistem tasarlanacaktır.
+
+Tüm geometrik şekiller:
+
+Alan hesaplayabilir
+
+Çevre hesaplayabilir
+
+Ancak:
+
+Her şeklin alan ve çevre hesaplama yöntemi farklıdır
+
+Bu nedenle hesaplama detaylarını her sınıfın kendisi
+
+belirlemelidir
+
+### Soyutlama Örneği - 1
+
+Ortak davranışları tek bir yerde
+
+tanımlamak; hesaplama detaylarını alt
+
+### sınıflara bırakmak için soyutlama
+
+(abstraction) kullanılır.
+
+Bu amaçla:
+
+Sekil adlı bir soyut sınıf oluşturulur
+
+Bu sınıf, tüm şekillerin sahip olması
+
+gereken davranışları tanımlar
+
+Alan ve çevre hesaplama metotları soyut
+
+### metot olarak belirlenir
+
+### Soyutlama Örneği - 1
+
+Alt sınıflar: Kare, Dikdortgen, Ucgen
+
+Bu sınıflar:
+
+Sekil sınıfından türetilir
+
+Alan ve çevre hesaplama metotlarını zorunlu olarak kendileri uygular
+
+### Soyutlama Örneği - 1
+
+Sisteme yeni bir şekil
+
+eklendiğinde mevcut kodlar
+
+değiştirilmez
+
+Tüm şekiller tek bir tür (Sekil)
+
+üzerinden kullanılabilir
+
+Bu yapı: Soyutlama, Polimorfizm, Open/Closed Principle
+
+ilkelerine uygun bir tasarım sunar.
+
+### Soyutlama Örneği 1- Kullanım
+
+, 4)
+
+6
+
+### Kapsülleme ve Soyutlama Birlikte Kullanım Örneği
+
+Banka hesap yönetim sistemi: Sistemde farklı hesap türleri (vadesiz,
+
+yatırım vb.) bulunabilir, ancak tüm hesapların ortak bazı davranışları
+
+vardır:
+
+- Bakiye görüntüleme
+
+- Para yatırma (soyut metot)
+
+- Para çekme (soyut metot)
+
+### Kapsülleme ve Soyutlama Birlikte Kullanım Örneği
+
+Bu sistemi tasarlarken iki temel nesne yönelimli ilkeyi kullanacağız:
+
+- Kapsülleme (Encapsulation)
+
+Hesaba ait hassas bilgileri (bakiye, hesap numarası) doğrudan
+
+dışarıya açmayız.
+
+Bu bilgiler yalnızca kontrollü metotlar aracılığıyla değiştirilir.
+
+- Soyutlama (Abstraction)
+
+Tüm hesap türlerinin hangi işlemleri yapabileceğini soyut bir sınıfla
+
+tanımlarız.
+
+Böylece her hesap türü aynı davranışları garantili şekilde sunar.
+
+### Soyut Hesap Sınıfı
+
+Hesap → soyut sınıf
+
+para_yatir ve para_cek → soyut
+
+### metotlar, alt sınıflar bu
+
+### metotları yazmak zorundadır
+
+_bakiye ve _hesap_no →
+
+dışarıdan doğrudan
+
+erişilmemeli
+
+Alt Sınıf Tanımlaması
+
+VadesizHesap, Hesap soyut sınıfından türetilmiştir
+
+Tüm soyut metotlar uygulanmıştır
+
+Bakiye doğrudan değil, kurallar çerçevesinde değiştirilir
+
+Alt Sınıf Tanımlaması
+
+Aynı metot isimleri kullanılır
+
+Davranış hesap türüne göre değişir
+
+Bu durum polimorfizm örneğidir
+
+Hesapların Kullanımı
+
+```python
+VadesizHesap("123", 1000)
+1900
+```
+
+Oyun Sistemi Örneği
+
+Yandaki soyut sınıftan türeyen 3 karakter
+
+yazınız:
+
+- Savaşçı, Büyücü, Okçu
+
+Her biri saldir(rakip) metodunu farklı
+
+şekilde implemente etmelidir .
+
+Saldırınca:
+
+Savaşçı: rakibe 30 hasar verir.
+
+Büyücü: rakibe 20 hasar verir, kendi
+
+canında 5 gider
+
+Okçu: kritik=True ise 40 hasar verir,
+
+kritik=False ise15 hasar verir
+
+Oyun Sistemi Örneği
+
+Oyun Sistemi Örneği
+
+Oyun Sistemi Örneği
+
+Kontrol Listesi
+
+### Soyutlama Kavramı
+
+### Soyut Sınıf ve Metot Oluşturma
+
+### Kapsülleme ve Soyutlama Birlikte
+
+Kullanımı
+
+---
+
+## Hafta 8 — Tasarım Desenleri Devam
+
+### 8. Hafta
+
+Öğr. Gör. Ecmel Albayrak
+
+### 8. Hafta
+
+Özel (Magic - Dunder) Metotlar ve Operatörler
+
+Magic (Dunder – Double underscores) Metotlar
+
+- Python’da belirli operatörler ve yerleşik fonksiyonlar kullanıldığında
+
+otomatik olarak çağrılan, özel isimlendirilmiş sınıf metotlarıdır.
+
+- _ _ (çift alt çizgi) ile başlar ve biter
+
+- Python, belirli bir işlem yapıldığında ilgili metodu otomatik çağırır.
+
+- Python'un nesne davranışlarını özelleştirmemizi sağlar.
+
+### __init__ Metodu (Yapıcı Metot)
+
+- Nesne oluşturulurken çağrılır.
+
+- Nesnenin başlangıç durumunu ayarlar
+
+### __str__ Metodu (String Temsili)
+
+- print() veya str() kullanıldığında çağrılır
+
+- İnsanların okuyabileceği bir string döndürür
+
+__len__ Metodu
+
+- len() fonksiyonu çağrıldığında kullanılır
+
+- Nesnenin uzunluğunu tanımlar
+
+__getitem__, __setitem__, __delitem__ Metotları
+
+- Sınıfa dizi/dictionary gibi indekslenebilir davranış kazandırır
+
+- Köşeli parantez notasyonuyla ([ ]) erişim sağlar
+
+- __getitem__(self, key)
+
+obj[key] okuma işlemi
+
+- __setitem__(self, key, value)
+
+obj[key] = value atama
+
+- __delitem__(self, key)
+
+del obj[key] silme
+
+__getitem__, __setitem__, __delitem__ Metotları
+
+__getitem__, __setitem__, __delitem__ Metotları
+
+__getitem__, __setitem__, __delitem__ Metotları
+
+Temel Aritmetik Operatörler
+
+Operatör Metot İşlev
+
++ __add__ Toplama
+
+- __sub__ Çıkarma
+
+* __mul__ Çarpma
+
+/ __truediv__ Bölme
+
+// __floordiv__ Tam Bölme
+
+% __mod__ Mod Alma
+
+** __pow__ Üs Alma
+
+__add__, __sub__ Metotları
+
+__add__ Metodu
+
+- x bileşenleri toplanır
+
+- y bileşenleri toplanır
+
+- yeni bir Vektor nesnesi döner
+
+__sub__ Metodu
+
+- Bileşenler fark alınır
+
+- Yine yeni bir nesne üretilir
+
+__mul__ Metodu
+
+- Vektörün her bileşeni belirtilen
+
+değer ile çarpılır
+
+### Aritmetik Operatörler Alıştırması
+
+Yandaki çıktıları elde edebilecek
+
+toplama, çıkarma, çarpma,
+
+bölme ve üs alma metotlarını
+
+yazınız (dunder kullanarak).
+
+### Aritmetik Operatörler Alıştırması
+
+```python
+isinstance() Metodu
+Bir nesnenin belirli bir sınıftan olup olmadığını kontrol eder.
+İki argüman alır:
+• object: Tipi kontrol edilecek nesne.
+• classinfo: Sınıf, tip veya bunların bir demeti (tuple).
+Sonuç:
+• True: Nesne, belirtilen sınıf(lar)dan veya tip(ler)den birine aitse.
+• False: Aksi takdirde.
+```
+
+Neden type() Yerine isinstance()?
+
+### Kalıtım (Inheritance): isinstance(), alt sınıfları da doğru şekilde
+
+tanır. type() ise yalnızca nesnenin doğrudan oluşturulduğu sınıfı
+
+kontrol eder.
+
+Esneklik: Birden fazla sınıf veya tip aynı anda kontrol edilebilir.
+
+```python
+isinstance() Metodu
+```
+
+```python
+isinstance() ve type() Kullanımı
+```
+
+Karşılaştırma Operatörleri
+
+Operatör Metot İşlev
+
+== __eq__ Eşit
+
+!= __ne__ Eşit Değil
+
+< __lt__ Küçük
+
+<= __le__ Küçük veya Eşit
+
+> __gt_ Büyük
+
+>= __ge__ Büyük veya Eşit
+
+Karşılaştırma Operatörleri
+
+Her nesne farklı bir bellek
+
+konumunda saklanıyor, bu
+
+nedenle aynı değiller.
+
+```python
+print(ogr1)
+<__main__.Ogrenci object at
+0x7f310cef70a0
+print(ogr2
+<__main__.Ogrenci object at
+0x7f310ce518e0>
+```
+
+Karşılaştırma Operatörleri
+
+Karşılaştırma Operatörleri
+
+Karşılaştırma Operatörleri
+
+Karşılaştırma Operatörleri
+
+Ek Özel Metotlar
+
+__contains__
+
+__call__
+
+__iter__
+
+__next__
+
+__enter__
+
+__exit__
+
+__contains__
+
+in operatörü ile nesne üzerinden eleman varlığını kontrol eder
+
+__call__
+
+Nesneyi fonksiyon gibi çağrılabilir yapar.
+
+__iter__ ve __next__
+
+Bir sınıfa iterator (yineleyici)
+
+davranışı kazandırmak için
+
+kullanılır.
+
+- __iter__ → “döngüyü başlat”
+
+- __next__ → “bir sonraki değeri ver”
+
+- StopIteration → “bitti”
+
+__enter__ ve __exit__
+
+Buna dönüşür =>
+
+1. __enter__
+
+- with bloğuna girerken çalışır
+
+- genelde kaynak açar
+
+- return ettiği değer as ile alınır
+
+2. __exit__
+
+- with bloğu bitince çalışır
+
+- hata olsa da çalışır
+
+- kaynakları kapatır
+
+__enter__ ve __exit__
+
+with bloğu ile kaynak yönetimi sağlar.
+
+with bloğundan
+
+çıkarken Python sana
+
+diyor ki:
+
+“Bir hata olduysa sana
+
+3 bilgi veriyorum: türü,
+
+mesajı ve nerede
+
+olduğu
+
+Kullanmak zorunda
+
+değilsiniz.
+
+__enter__ ve __exit__
+
+with bloğu ile kaynak yönetimi sağlar.
+
+8. Haftanın Sonu
+
+İyi çalışmalar.
+
+---
+
+## Hafta 9 — SOLID Prensipleri
+
+### 9. Hafta
+
+Öğr. Gör. Ecmel Albayrak
+
+### 9. Hafta
+
+### SOLID Prensipleri
+
+### SOLID
+
+### Nesne Yönelimli Programlama (OOP) paradigmasını kullanarak
+
+geliştirilen yazılımların daha sürdürülebilir, esnek, anlaşılır ve bakımı
+
+kolay olmasını sağlayan 5 temel tasarım ilkesidir.
+
+- S → Single Responsibility
+
+- O → Open/Closed
+
+- L → Liskov Substitution
+
+- I → Interface Segregation
+
+- D → Dependency Inversion
+
+### Tek Sorumluluk (Single Responsibility) Prensibi
+
+Bir sınıf yalnızca tek bir sorumluluğa sahip olmalıdır.
+
+Farklı işlere hizmet eden davranışlar aynı sınıfta toplandığında, sistem
+
+kırılgan hale gelir.
+
+- Bir garson:
+
+- Servis yapıyor
+
+- Bulaşık yıkıyor!
+
+- Hesap alıyor!
+
+Tek kişi = çok sorumluluk = yüksek risk
+
+Özet: 1 sınıf = 1 iş
+
+### Tek Sorumluluk (Single Responsibility) Prensibi
+
+Bu sınıf 2 farklı sorumluluğu
+
+üstlenmiştir:
+
+- Veritabanı işlemleri
+
+(kullanici_kaydet)
+
+- Email gönderme işlemleri
+
+(email_gonder)
+
+### Tek Sorumluluk (Single Responsibility) Prensibi
+
+Problemler:
+
+- Bir özellikte yapılacak değişiklik
+
+diğerlerini etkileyebilir
+
+- Örneğin email gönderme şekli
+
+değişirse, tüm kullanıcı sınıfını
+
+değiştirmek gerekir
+
+- Test etmek zorlaşır (veritabanı,
+
+email, rapor hepsi bir arada)
+
+çünkü her metot değişikliğinde
+
+tüm kullanıcı işlemlerinin test
+
+edilmesi gerekir.
+
+### Tek Sorumluluk (Single Responsibility) Prensibi
+
+Neden iyi?
+
+- Her sınıfın tek bir sorumluluğu var
+
+- Email gönderme şekli değişse bile
+
+sadece EmailServis sınıfını
+
+değiştiririz
+
+- Her sınıf bağımsız olarak test
+
+edilebilir
+
+- Kod yeniden kullanılabilir
+
+(EmailServis başka yerlerde de
+
+kullanılabilir)
+
+### Tek Sorumluluk (Single Responsibility) Prensibi
+
+### Single Responsibility Prensibi Alıştırma
+
+Yandaki Siparis sınıfı SRP'yi ihlal
+
+etmektedir. Bu sınıfı SRP'ye uygun
+
+şekilde yeniden tasarlayın.
+
+Çözüm İpucu:
+
+- Siparis sınıfı sadece veri tutsun
+
+- SiparisKaydedici, StokYoneticisi
+
+gibi ayrı sınıflar oluşturun
+
+### Açık/Kapalı (Open/Closed) Presibi
+
+Yazılım bileşenleri geliştirmeye açık, ancak değiştirmeye kapalı olmalıdır.
+
+Yeni davranışlar eklemek için mevcut kodu değiştirmek yerine
+
+genişletmek gerekir. İyi tasarım, yeni özellik eklerken eski kodu kırmaz
+
+Gerçek Hayat Problemi:
+
+- Bir mağazada indirim sistemi var
+
+- Her yeni müşteri tipi geldiğinde:
+
+- Kasadaki yazılım güncelleniyor
+
+- Eski sistem değiştirilmek zorunda kalıyor
+
+- Küçük bir değişiklik tüm sistemi bozabiliyor
+
+Her yeni özellik = mevcut sistemi kurcalamak
+
+Özet: Değiştirme, genişlet
+
+### Açık/Kapalı (Open/Closed) Presibi
+
+Neden Kötü?
+
+- Her yeni müşteri tipinde if-else bloğunu değiştirmek zorundayız
+
+- Mevcut çalışan kodu değiştirmek risklidir (hata olasılığı artar)
+
+- Çok fazla koşul ifadesi kodu okunaksız yapar
+
+- Bir müşteri tipindeki değişiklik tüm metodu etkiler
+
+### Açık/Kapalı (Open/Closed) Presibi
+
+Neden İyi?
+
+- IndirimHesaplayici sınıfı asla
+
+değişmez (kapalı)
+
+- Yeni indirim tipleri eklemek için yeni
+
+### sınıflar oluştururuz (açık)
+
+- Mevcut kodu değiştirme riskimiz yok
+
+- Her strateji bağımsız olarak test
+
+edilebilir
+
+- Polimorfizm sayesinde esnek yapı
+
+### Açık/Kapalı (Open/Closed) Presibi
+
+### Açık/Kapalı (Open/Closed) Presibi Alıştırma
+
+Farklı şekillerin (daire, dikdörtgen, üçgen) alanlarını hesaplayan bir sistem. Yeni
+
+şekiller (örneğin elips, yamuk) eklendiğinde mevcut kodu değiştirmeden
+
+sisteme entegre edilebilmeli.
+
+https://gist.github.com/ecmelkytz/f3290c0269b51c66e79f2dc6529457e9
+
+### adresindeki kodu open/closed prensibine uygun hale getiriniz.
+
+Çözüm İpucu:
+
+### Soyut bir Sekil sınıfı oluşturun
+
+Her şekil için ayrı sınıflar türetin
+
+AlanHesaplayici sınıfı sekilden bağımsız hesaplama yapsın
+
+### Liskov Yerine Geçme (Liskov Substitution)Prensibi
+
+Alt sınıflar, türedikleri üst sınıfların yerine kullanılabilmelidir.
+
+Eğer bir alt sınıf, üst sınıfın sözünü bozuyorsa, o bir miras değil hatadır.
+
+Gerçek Hayat Problemi
+
+Şirkette tüm çalışanlara:
+
+- “Tam zamanlı çalış” deniyor
+
+- Ama bazı çalışanlar yarı zamanlı çalışıyor
+
+Sistem herkesi aynı varsaydığı için hatalar oluşuyor
+
+Herkesi aynı sanmak = yanlış modelleme
+
+Özet: Miras aldıysan kuralları bozma
+
+### Liskov Yerine Geçme (Liskov Substitution) Presibi
+
+Neden Kötü?
+
+- LSP ihlali: Alt sınıf (Radyo), üst
+
+### sınıfın (Kanal) davranışını
+
+değiştiriyor
+
+- Kanal sınıfı video oynatabildiğini
+
+söylüyor ama Radyo bunu
+
+yapamıyor
+
+- kanal_kontrol fonksiyonu Kanal
+
+ile çalışırken, Radyo
+
+verdiğimizde bozuluyor
+
+- Beklenmeyen hatalara yol açar
+
+### Liskov Substitution Presibi Uygulanması
+
+### Liskov Substitution Presibi Kullanımı
+
+Neden İyi?
+
+- Her alt sınıf kendi yeteneklerine
+
+göre tasarlanmış
+
+- Beklenmeyen hatalar oluşmaz
+
+- isinstance kontrolü ile güvenli
+
+kullanım
+
+### Liskov Substitution Presibi Alıştırma
+
+Dosya işleme sistemi:
+
+https://gist.github.com/ecmelkytz/49596f9fb8b61d0af0e64155edd2dacbadre
+
+### sindeki kodun liskov yerine geçme prensibine uygun hale getiriniz.
+
+- Yeteneklere göre küçük arayüzler oluşturun (Okunabilir, Yazılabilir, Silinebilir)
+
+- Her dosya tipi için sadece ihtiyacı olan arayüzleri kullanın
+
+```python
+NormalDosya(Okunabilir, Yazilabilir, Silinebilir),
+SaltOkunurDosya(Okunabilir), GeciciDosya(Okunabilir, Yazilabilir)
+```
+
+### Arayüz Ayrımı (Interface Segregation) Prensibi
+
+Genel ve büyük arayüzler yerine, küçük ve amaca özel arayüzler tercih
+
+edilmelidir.
+
+Büyük arayüzler bağımlılık yaratır, küçük arayüzler özgürlük sağlar.
+
+Gerçek Hayat Problemi:
+
+- Bir ofise büyük bir yazıcı alınıyor: Yazdırma, Tarama, Fax
+
+- Ama bazı departmanlar sadece yazdırma kullanıyor
+
+- Kullanmadıkları özellikler:
+
+- Karmaşıklık yaratıyor
+
+- Gereksiz maliyet oluşturuyor
+
+Herkese her özelliği vermek = gereksiz yük
+
+Özet: Kimse kullanmadığı metoda zorlanmasın
+
+### Arayüz Ayrımı (Interface Segregation) Presibi
+
+- Herkese büyük ve gereksiz özellikler
+
+veriliyor
+
+- Kullanılmayan özellikler karmaşa
+
+yaratıyor
+
+### Interface Segregation Presibi Refactor
+
+- Printable
+
+o Yazdırma yeteneğini tanımlar
+
+o  Tek sorumluluklu arayüz
+
+- Scannable
+
+o Tarama yeteneği
+
+- Faxable
+
+o Fax özelliği
+
+- SimplePrinter
+
+o Sadece yazdırma yapar
+
+o
+
+Gereksiz özellikleri almaz
+
+Özellikler parçalandı, Sınıf sadece ihtiyacını aldı
+
+### Interface Segregation Presibi Kullanımı
+
+### Sınıf sadece ihtiyacı olan metodu içerir
+
+### Interface Segregation Presibi Alıştırma
+
+Bir akıllı ev sistemi tasarlayın. Cihazlar: Ampul (kapat/aç), Termostat
+
+(sıcaklık ayarla), Güvenlik Kamerası (video kaydet, hareket algıla). ISP'yi
+
+ihlal etmeyen bir tasarım yapın.
+
+https://gist.github.com/ecmelkytz/ec49ef94dce542dd661544e3a618dca0
+
+A
+
+### Bağımlılıkların Tersine Çevrilmesi (Dependency Inversion) Presibi
+
+Üst seviye modüller, alt seviye modüllere değil, soyutlamalara bağımlı
+
+olmalıdır.
+
+Kodunuzu somutlara bağlarsanız, değişime dirençli hale getirirsiniz
+
+Gerçek Hayat Problemi:
+
+- Sistem tek bir veritabanına bağlı
+
+- Veritabanı değişince her şey bozuluyor
+
+Tek bir şeye bağımlılık = kırılgan sistem
+
+Özet: Somut sınıfa değil soyutlamaya bağlan
+
+### Dependency Inversion Presibi
+
+Neden Kötü?
+
+- DIP ihlali: Üst seviye Uygulama, alt
+
+seviye MySQLVeritabani'na
+
+doğrudan bağımlı
+
+- Veritabanını değiştirmek
+
+(PostgreSQL'e geçmek) Uygulama
+
+### sınıfını değiştirmeyi gerektirir
+
+- Test etmek zor: Gerçek MySQL
+
+bağlantısı olmadan test edemeyiz
+
+- Open/Closed Prensibine aykırı
+
+### Dependency Inversion Presibi
+
+### Dependency Inversion Kullanımı
+
+Neden İyi?
+
+- Üst seviye (Uygulama) alt seviyeye değil,
+
+### soyutlamaya bağımlı
+
+- Veritabanını değiştirmek için Uygulama'yı
+
+değiştirmeye gerek yok
+
+- Kod esnek; değiştirilebilir ve yeniden
+
+kullanılabilir
+
+- "Bağımlılıkların yönü" tersine çevrildi
+
+### Dependency Inversion Presibi Alıştırma
+
+Bir bildirim sistemi tasarlayın.
+
+Farklı bildirim kanalları (Email,
+
+SMS, Push Notification)
+
+desteklenmelidir. Ana iş
+
+mantığı bu kanallara
+
+doğrudan bağımlı
+
+olmamalıdır.
+
+https://gist.github.com/ecmel
+
+kytz/d12748bb40cb30421978
+
+119fabe9eda4 adresindeki
+
+kodu dependency inversion
+
+### prensibine uygun hale
+
+getiriniz.
+
+9. Haftanın Sonu
+
+### SOLID prensiplerini anlama
+
+Slayttaki tüm örnek kodları çözme
+
+---
+
+## Hafta 9 — SOLID Alıştırmaları (Çözümlü)
+
+Site bolumu **#oop-solid-alistirmalar** altinda 4 alistirmanin kotu/iyi kodu ve aciklamasi yer alir.
+
+| Ilke | Konu | Gist |
+|------|------|------|
+| OCP | AlanHesaplayici | Sekil soyut sinifi ile genislet |
+| LSP | Dosya sistemi | Okunabilir/Yazilabilir arayuzleri ayir |
+| ISP | Akilli ev cihazlari | Kucuk arayuzler (Acilabilir, Sicaklik...) |
+| DIP | Bildirim sistemi | BildirimKanali soyutlamasi |

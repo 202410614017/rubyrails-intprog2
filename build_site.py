@@ -26,9 +26,12 @@ from solid_principles import SOLID, STUDENT_HEADER
 from lsp_solo_leveling import (
     LSP_INTRO, BAD_CODE, BAD_WHY, GOOD_CODE, GOOD_WHY, LSP_FIVE_RULES, CREDIT,
 )
+from oop_content import OOP_META, OOP_MUST_KNOW, OOP_TOPICS, OOP_PDF_PLACEHOLDER
+from oop_week9_exercises import WEEK9_EXERCISES
 
 BASE = Path(__file__).parent
 MD_FILE = BASE / "CALISMA_REHBERI.md"
+OOP_MD_FILE = BASE / "OOP_CALISMA.md"
 HTML_FILE = BASE / "index.html"
 PDF_FILE = BASE / "CALISMA_REHBERI.pdf"
 
@@ -134,6 +137,54 @@ WEEK_META = {
     },
 }
 
+OOP_WEEK_META = {
+    "hafta-1-oop-giris-prosedurel-programlama": {
+        "num": 1, "tag": "Giris",
+        "summary": "Prosedurel vs OOP, ders kurallari, OOP tarihi ve temel prensipler.",
+        "simple": ["Prosedurel = fonksiyon + global veri", "OOP = nesne (veri + davranis)", "Python'da class ile baslariz"],
+    },
+    "hafta-2-siniflar-nesneler": {
+        "num": 2, "tag": "Sinif & Nesne",
+        "summary": "class, __init__, self, instance variable ve instance metotlar.",
+        "simple": ["class = kalip, nesne = ornek", "self = bu nesne", "__init__ otomatik calisir"],
+    },
+    "hafta-3-kapsulleme": {
+        "num": 3, "tag": "Kapsulleme",
+        "summary": "Veriyi gizleme, getter/setter, @property, private convention.",
+        "simple": ["_ veya __ ile gizle", "@property ile kontrollu erisim", "Encapsulation = guvenli veri"],
+    },
+    "hafta-4-kalitim-miras": {
+        "num": 4, "tag": "Kalitim",
+        "summary": "class Child(Parent), method overriding, isinstance.",
+        "simple": ["Kalitim = kod tekrarini azaltir", "Override = ust metodu yeniden yaz", "super() ile ust cagir"],
+    },
+    "hafta-5-super-coklu-miras-statik-metot": {
+        "num": 5, "tag": "super & MRO",
+        "summary": "super(), coklu miras, MRO sirasi, @staticmethod.",
+        "simple": ["super().__init__() ust constructor", "MRO = metot arama sirasi", "@staticmethod nesne gerektirmez"],
+    },
+    "hafta-6-polimorfizm-soyut-sinif": {
+        "num": 6, "tag": "Polimorfizm",
+        "summary": "Polimorfizm, duck typing, ABC ve @abstractmethod.",
+        "simple": ["Ayni metod farkli davranis", "ABC'den dogrudan nesne yok", "Duck typing = ne yaptigina bak"],
+    },
+    "hafta-7-tasarim-desenleri-giris": {
+        "num": 7, "tag": "Design Patterns",
+        "summary": "Tasarim desenleri giris: Singleton, Factory vb.",
+        "simple": ["Desen = tekrar eden cozum sablonu", "Singleton tek nesne", "Factory nesne uretimi"],
+    },
+    "hafta-8-tasarim-desenleri-devam": {
+        "num": 8, "tag": "Patterns Devam",
+        "summary": "Observer, Decorator ve diger desenler.",
+        "simple": ["Observer olay dinler", "Decorator davranis ekler", "Desenler SOLID ile uyumlu olmali"],
+    },
+    "hafta-9-solid-prensipleri": {
+        "num": 9, "tag": "SOLID",
+        "summary": "S-O-L-I-D ilkeleri slayt anlatimi. Alistirmalar ayri bolumde.",
+        "simple": ["SRP tek is", "OCP genislet degistirme", "LSP yerine koy", "ISP kucuk arayuz", "DIP soyut bagimlilik"],
+    },
+}
+
 PANEL_PRIORITY = {
     "ruby": 1, "temel": 1, "metot": 2, "degisken": 3, "sinif": 4, "modul": 5,
     "blok": 6, "kosul": 7, "rails blog": 8, "kurulum": 8, "dizin": 9, "mvc": 10,
@@ -159,7 +210,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Internet Programciligi II | Ders Notu Arsivi</title>
+  <title>Sinav Calisma Merkezi | Int Prog II + OOP</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
@@ -186,7 +237,10 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       --shadow: 0 1px 3px rgba(16,24,40,.06), 0 1px 2px rgba(16,24,40,.04);
       --shadow-lg: 0 8px 24px rgba(16,24,40,.08);
       --sidebar-w: 260px;
-      --radius: 12px;
+      --oop-accent: #6d28d9;
+      --oop-soft: #f5f3ff;
+      --oop-border: #ddd6fe;
+      --oop-text: #5b21b6;
     }}
     * {{ box-sizing: border-box; margin: 0; padding: 0; }}
     html {{ scroll-behavior: smooth; }}
@@ -509,6 +563,50 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     }}
     .solid-extra-link:hover {{ background: #ddd6fe; }}
 
+    .course-hub {{
+      display: grid; gap: 1rem; margin-bottom: 1.75rem;
+    }}
+    @media (min-width: 640px) {{ .course-hub {{ grid-template-columns: 1fr 1fr; }} }}
+    .course-card {{
+      border: 1px solid var(--line); border-radius: var(--radius); padding: 1.35rem 1.5rem;
+      background: var(--paper); box-shadow: var(--shadow); text-decoration: none; color: inherit;
+      transition: .15s; display: block;
+    }}
+    .course-card:hover {{ box-shadow: var(--shadow-lg); transform: translateY(-2px); }}
+    .course-card.intprog {{ border-top: 4px solid var(--accent); }}
+    .course-card.oop {{ border-top: 4px solid var(--oop-accent); }}
+    .course-card-kicker {{ font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }}
+    .course-card.intprog .course-card-kicker {{ color: var(--accent); }}
+    .course-card.oop .course-card-kicker {{ color: var(--oop-accent); }}
+    .course-card h3 {{ font-size: 1.05rem; margin: .35rem 0; }}
+    .course-card p {{ font-size: .84rem; color: var(--text-soft); line-height: 1.5; }}
+
+    .course-wrap {{ margin-bottom: 2.5rem; scroll-margin-top: 1rem; }}
+    .course-banner {{
+      border-radius: var(--radius); padding: 1.35rem 1.5rem; margin-bottom: 1.25rem;
+      color: white; box-shadow: var(--shadow-lg);
+    }}
+    .course-banner-intprog {{ background: linear-gradient(135deg, #991b1b, #dc2626); }}
+    .course-banner-oop {{ background: linear-gradient(135deg, #5b21b6, #7c3aed); }}
+    .course-banner h2 {{ font-size: 1.35rem; margin-bottom: .35rem; }}
+    .course-banner p {{ font-size: .88rem; opacity: .92; max-width: 620px; }}
+    .course-banner-actions {{ display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .85rem; }}
+    .course-banner .btn {{ background: rgba(255,255,255,.15); color: white; border-color: rgba(255,255,255,.35); }}
+    .course-banner .btn:hover {{ background: rgba(255,255,255,.25); }}
+
+    .nav-oop .w-num {{ background: var(--oop-soft); color: var(--oop-text); }}
+    .sidebar nav a.nav-oop-link:hover, .sidebar nav a.nav-oop-link.active {{
+      background: var(--oop-soft); border-left-color: var(--oop-accent);
+    }}
+    .sidebar nav a.nav-oop-link.active .w-num {{ background: var(--oop-accent); color: white; }}
+
+    .oop-panel .panel {{ border-color: var(--oop-border); }}
+    .oop-panel .panel[open] summary {{ background: var(--oop-soft); }}
+    .week-block.oop-week .week-badge {{ background: var(--oop-accent); }}
+    .week-block.oop-week {{ border-color: var(--oop-border); }}
+    .week-block.oop-week .week-summary {{ background: var(--oop-soft); border-color: var(--oop-border); color: #4c1d95; }}
+    .week-block.oop-week .chip {{ background: var(--oop-soft); color: var(--oop-text); border-color: var(--oop-border); }}
+
     .quiz-toolbar {{
       display: flex; flex-wrap: wrap; gap: .5rem; align-items: center;
       margin: .75rem 0 1rem;
@@ -644,37 +742,20 @@ HTML_TEMPLATE = """<!DOCTYPE html>
   <div class="layout">
     <aside class="sidebar" id="sidebar">
       <div class="brand">
-        <div class="brand-kicker">Ders Notu Arsivi</div>
-        <h1>Internet Programciligi II</h1>
-        <p>Hafta 2-10 | Tum PDF icerigi</p>
+        <div class="brand-kicker">Sinav Calisma Merkezi</div>
+        <h1>Int Prog II + OOP</h1>
+        <p>Iki ders, tek site</p>
       </div>
       <nav>{toc}</nav>
     </aside>
     <main class="main">
-      <div class="topbar">
-        <h2>Eksiksiz Ders Notu Arsivi</h2>
-        <p>Tum PDF slaytlarindan cikarilmis haftalik notlar — kapsulleme, kalitim, migration, Devise dahil hicbir konu atlanmadi. 7 gunluk plan ve ezber listesi ile sinava hazirlan.</p>
-        <div class="topbar-actions">
-          <a class="btn btn-red" href="#7-gunluk-plan">7 Gunluk Plan</a>
-          <a class="btn btn-ghost" href="#konu-indeksi">Konu Indeksi</a>
-          <a class="btn btn-ghost" href="#internet-kaynaklari">Internet Kaynaklari</a>
-          <a class="btn btn-ghost" href="#solid-ilkeleri">SOLID</a>
-          <a class="btn btn-ghost" href="#sinav-ezber-listesi">Ezber Listesi</a>
-          <button class="btn btn-ghost" onclick="window.print()">PDF Indir</button>
-        </div>
-        <div class="archive-toolbar">
-          <input type="search" class="archive-search" id="panelSearch" placeholder="Konu ara: kapsulleme, kalitim, migration, devise...">
-          <button type="button" class="btn btn-ghost" id="expandAll">Tum panelleri ac</button>
-          <button type="button" class="btn btn-ghost" id="collapseAll">Tum panelleri kapat</button>
-        </div>
-      </div>
       {content}
     </main>
   </div>
   <button class="mobile-toggle" id="menuBtn" aria-label="Menu">&#9776;</button>
   <script>
     const links = document.querySelectorAll('.sidebar nav a');
-    const sections = [...document.querySelectorAll('.week-block, .special-block, .plan-hero')];
+    const sections = [...document.querySelectorAll('.week-block, .special-block, .plan-hero, .course-banner, .course-hub')];
     window.addEventListener('scroll', () => {{
       let cur = '';
       sections.forEach(s => {{ if (window.scrollY >= s.offsetTop - 100) cur = s.id; }});
@@ -707,6 +788,10 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       document.querySelectorAll('.enrich-card').forEach(card => {{
         if (!q) {{ card.classList.remove('hidden'); return; }}
         card.classList.toggle('hidden', !card.textContent.toLowerCase().includes(q));
+      }});
+      document.querySelectorAll('#oop-course .panel').forEach(panel => {{
+        if (!q) {{ panel.style.display = ''; return; }}
+        panel.style.display = panel.textContent.toLowerCase().includes(q) ? '' : 'none';
       }});
     }});
 
@@ -984,6 +1069,194 @@ def build_week_block(title: str, sid: str, body: str) -> str:
         """)
 
     return head + video_html + week_enrich_html + simple_html + "".join(panels) + "</div></section>"
+
+
+def build_oop_week_block(title: str, sid: str, body: str) -> str:
+    meta = OOP_WEEK_META.get(sid, {})
+    num = meta.get("num", "")
+    tag = meta.get("tag", "")
+    summary = meta.get("summary", "")
+    simple = meta.get("simple", [])
+
+    chips = "".join(f'<span class="chip">{html.escape(s)}</span>' for s in simple) if simple else ""
+    head = f"""
+    <section class="week-block oop-week" id="{sid}">
+      <div class="week-head">
+        <div class="week-head-top">
+          {"<span class='week-badge'>Hafta " + str(num) + "</span>" if num else ""}
+          {"<span class='week-tag'>" + html.escape(tag) + "</span>" if tag else ""}
+        </div>
+        <h2>{html.escape(title)}</h2>
+        {"<div class='week-summary'><strong>Bu haftada ne ogreniyorsun?</strong> " + html.escape(summary) + "</div>" if summary else ""}
+        {"<div class='focus-chips'>" + chips + "</div>" if chips else ""}
+      </div>
+      <div class="week-body">
+    """
+
+    simple_html = ""
+    if simple:
+        items = "".join(f"<li>{html.escape(s)}</li>" for s in simple)
+        simple_html = f"""
+        <div class="simple-box">
+          <h3>Basit Anlatim</h3>
+          <ul>{items}</ul>
+        </div>
+        """
+
+    panels = []
+    for h3_title, h3_body in split_h3_sections(body):
+        inner = enhance_inner_html(md_to_html_fragment(h3_body))
+        panels.append(f"""
+        <details class="panel">
+          <summary>{html.escape(h3_title)}</summary>
+          <div class="panel-inner">{inner}</div>
+        </details>
+        """)
+
+    return head + simple_html + "".join(panels) + "</div></section>"
+
+
+def build_course_hub() -> str:
+    return """
+    <section class="course-hub" id="course-hub">
+      <a class="course-card intprog" href="#intprog-course">
+        <div class="course-card-kicker">Ders 1</div>
+        <h3>Internet Programciligi II</h3>
+        <p>Ruby on Rails, Hafta 2-10 PDF arsivi, videolar, 7 gunluk plan, 39 soruluk quiz.</p>
+      </a>
+      <a class="course-card oop" href="#oop-course">
+        <div class="course-card-kicker">Ders 2</div>
+        <h3>Nesne Yonelimli Programlama</h3>
+        <p>Hafta 1-9 PDF arsivi, SOLID alistirmalari (OCP, LSP, ISP, DIP) cozumlu.</p>
+      </a>
+    </section>
+    """
+
+
+def build_intprog_banner() -> str:
+    return """
+    <div class="course-banner course-banner-intprog" id="intprog-course">
+      <h2>Internet Programciligi II</h2>
+      <p>Ruby on Rails — Hafta 2-10 PDF arsivi, kapsulleme, migration, Devise. 7 gunluk sinav plani ve interaktif quiz.</p>
+      <div class="course-banner-actions">
+        <a class="btn" href="#7-gunluk-plan">7 Gunluk Plan</a>
+        <a class="btn" href="#konu-indeksi">Konu Indeksi</a>
+        <a class="btn" href="#internet-kaynaklari">Internet Kaynaklari</a>
+        <a class="btn" href="#sinav-sorulari-kendini-test-et">Quiz</a>
+        <button class="btn" onclick="window.print()">PDF Indir</button>
+      </div>
+      <div class="archive-toolbar" style="margin-top:.85rem">
+        <input type="search" class="archive-search" id="panelSearch" placeholder="Int Prog ara: migration, devise, enum...">
+        <button type="button" class="btn" id="expandAll">Panelleri ac</button>
+        <button type="button" class="btn" id="collapseAll">Panelleri kapat</button>
+      </div>
+    </div>
+    """
+
+
+def build_oop_banner() -> str:
+    return f"""
+    <div class="course-banner course-banner-oop" id="oop-course">
+      <h2>{html.escape(OOP_META['title'])}</h2>
+      <p>NYP II — Hafta 1-9 PDF arsivi, SOLID alistirmalari cozumlu, LSP Solo Leveling bonus.</p>
+      <div class="course-banner-actions">
+        <a class="btn" href="#oop-konu-indeksi">Konu Indeksi</a>
+        <a class="btn" href="#oop-solid-alistirmalar">Hafta 9 Alistirmalar</a>
+        <a class="btn" href="#solid-ilkeleri">SOLID Ilkeleri</a>
+        <a class="btn" href="#lsp-solo-leveling">LSP Ornegi</a>
+        <a class="btn" href="#oop-ezber">OOP Ezber</a>
+      </div>
+    </div>
+    """
+
+
+def build_oop_must_know_section() -> str:
+    items = "".join(
+        f'<div class="must-know-item"><strong>{html.escape(k)}</strong><span>{html.escape(v)}</span></div>'
+        for k, v in OOP_MUST_KNOW
+    )
+    return f"""
+    <section class="special-block oop-must-know" id="oop-ezber">
+      <div class="special-head"><h2>OOP Sinav Ezber Listesi</h2></div>
+      <div class="special-body">
+        <div class="callout callout-web">Nesne Yonelimli Programlama sinavindan once bu 9 maddeyi iki kez oku.</div>
+        <div class="must-know-grid">{items}</div>
+      </div>
+    </section>
+    """
+
+
+def build_week9_exercises_section() -> str:
+    cards = []
+    for ex in WEEK9_EXERCISES:
+        gist = ""
+        if ex.get("gist"):
+            gist = f'<div class="enrich-sources"><a href="{html.escape(ex["gist"])}" target="_blank" rel="noopener">PDF Gist cozumu</a></div>'
+        cards.append(f"""
+        <article class="solid-principle" id="oop-ex-{html.escape(ex['id'])}">
+          <div class="solid-principle-head">
+            <div class="solid-letter">{html.escape(ex['principle'])}</div>
+            <div>
+              <h3>{html.escape(ex['title'])}</h3>
+              <span>SOLID — Hafta 9 Alistirma</span>
+            </div>
+          </div>
+          <div class="solid-body">
+            <div class="solid-row">
+              <div class="solid-row-label">Problem</div>
+              <p>{html.escape(ex['problem'])}</p>
+            </div>
+            <div class="solid-code-grid">
+              <div class="solid-code-box bad">
+                <div class="solid-code-box-head">Ilkeye aykiri (kotu) kod</div>
+                <pre><code>{html.escape(ex['bad_code'])}</code></pre>
+                <div class="solid-why"><strong>Neden kotu?</strong> {html.escape(ex['bad_why'])}</div>
+              </div>
+              <div class="solid-code-box good">
+                <div class="solid-code-box-head">Ilkeye uygun (iyi) kod</div>
+                <pre><code>{html.escape(ex['good_code'])}</code></pre>
+                <div class="solid-why"><strong>Neden iyi?</strong> {html.escape(ex['good_why'])}</div>
+              </div>
+            </div>
+            {gist}
+          </div>
+        </article>
+        """)
+    return f"""
+    <section class="special-block" id="oop-solid-alistirmalar">
+      <div class="special-head"><h2>Hafta 9 — SOLID Alistirmalari (Cozumlu)</h2></div>
+      <div class="special-body">
+        <div class="callout callout-exam">
+          PDF 9. hafta odevleri: AlanHesaplayici (OCP), Dosya (LSP), Cihaz (ISP), Bildirim (DIP).
+          Asagida kotu/iyi kod ve aciklama var.
+        </div>
+        {"".join(cards)}
+      </div>
+    </section>
+    """
+
+
+def build_oop_course(oop_sections) -> str:
+    blocks = [build_oop_banner(), build_oop_must_know_section()]
+    for title, sid, body in oop_sections:
+        if "konu-indeksi" in sid:
+            inner = enhance_inner_html(md_to_html_fragment(body))
+            blocks.append(f"""
+            <section class="special-block" id="oop-konu-indeksi">
+              <div class="special-head"><h2>OOP Konu Indeksi</h2></div>
+              <div class="special-body">{inner}</div>
+            </section>
+            """)
+            break
+    for title, sid, body in oop_sections:
+        if "konu-indeksi" in sid or "solid-alistirma" in sid:
+            continue
+        if title.lower().startswith("hafta"):
+            blocks.append(build_oop_week_block(title, sid, body))
+    blocks.append(build_week9_exercises_section())
+    blocks.append(build_solid_section())
+    blocks.append(build_lsp_detail_section())
+    return "".join(blocks)
 
 
 def build_study_plan_section() -> str:
@@ -1296,16 +1569,17 @@ def build_commands_section(body: str) -> str:
     """
 
 
-def build_toc(sections) -> str:
+def build_toc(sections, oop_sections=None) -> str:
     lines = [
-        '<div class="nav-label">Basla</div>',
+        '<div class="nav-label">Ana Sayfa</div>',
+        '<a href="#course-hub"><span class="w-num">*</span>Ders Secimi</a>',
+        '<div class="nav-label">Internet Prog II</div>',
+        '<a href="#intprog-course"><span class="w-num">IP</span>Int Prog Giris</a>',
         '<a href="#7-gunluk-plan"><span class="w-num">7</span>7 Gunluk Plan</a>',
         '<a href="#konu-indeksi"><span class="w-num">A</span>Konu Indeksi</a>',
         '<a href="#internet-kaynaklari"><span class="w-num">W</span>Internet Kaynaklari</a>',
-        '<a href="#solid-ilkeleri"><span class="w-num">S</span>SOLID Ilkeleri</a>',
-        '<a href="#lsp-solo-leveling"><span class="w-num">L</span>LSP Solo Leveling</a>',
         '<a href="#sinav-ezber-listesi"><span class="w-num">!</span>Ezber Listesi</a>',
-        '<div class="nav-label">Haftalar</div>',
+        '<div class="nav-label">Haftalar (Int Prog)</div>',
     ]
     for title, sid, _ in sections:
         if "konu-indeksi" in sid or "sinav" in sid or "komut" in sid or "cevap" in sid:
@@ -1316,34 +1590,60 @@ def build_toc(sections) -> str:
         lines.append(
             f'<a href="#{sid}"><span class="w-num">{num}</span>{html.escape(short)}</a>'
         )
-    lines.append('<div class="nav-label">Sinav</div>')
+    lines.append('<div class="nav-label">Int Prog Sinav</div>')
     lines.append('<a href="#komut-hizli-referans"><span class="w-num">#</span>Komutlar</a>')
     lines.append(
         '<a href="#sinav-sorulari-kendini-test-et"><span class="w-num">?</span>Test Sorulari</a>'
     )
+    lines.append('<div class="nav-label nav-oop">Nesne Yonelimli Prog</div>')
+    oop_links = [
+        ("#oop-course", "O", "OOP Giris"),
+        ("#oop-konu-indeksi", "A", "Konu Indeksi"),
+        ("#oop-ezber", "!", "OOP Ezber"),
+        ("#oop-solid-alistirmalar", "9", "Hafta 9 Odev"),
+        ("#solid-ilkeleri", "S", "SOLID Ilkeleri"),
+        ("#lsp-solo-leveling", "L", "LSP Ornegi"),
+    ]
+    for href, num, label in oop_links:
+        lines.append(
+            f'<a class="nav-oop-link" href="{href}"><span class="w-num">{num}</span>{html.escape(label)}</a>'
+        )
+    if oop_sections:
+        lines.append('<div class="nav-label nav-oop">OOP Haftalar</div>')
+        for title, sid, _ in oop_sections:
+            if "konu-indeksi" in sid or "solid-alistirma" in sid:
+                continue
+            if not title.lower().startswith("hafta"):
+                continue
+            meta = OOP_WEEK_META.get(sid, {})
+            num = meta.get("num", "?")
+            short = title.split("—")[-1].strip() if "—" in title else title
+            lines.append(
+                f'<a class="nav-oop-link" href="#{sid}"><span class="w-num">{num}</span>{html.escape(short)}</a>'
+            )
     return "\n".join(lines)
 
 
-def build_content(sections) -> str:
-    blocks = [build_study_plan_section()]
+def build_content(sections, oop_sections=None) -> str:
+    intprog_blocks = [build_intprog_banner(), build_study_plan_section()]
     for title, sid, body in sections:
         if "konu-indeksi" in sid:
-            blocks.append(build_topic_index_section(body))
+            intprog_blocks.append(build_topic_index_section(body))
             break
-    blocks.append(build_must_know_section())
-    blocks.append(build_web_enrichment_section())
-    blocks.append(build_solid_section())
-    blocks.append(build_lsp_detail_section())
+    intprog_blocks.append(build_must_know_section())
+    intprog_blocks.append(build_web_enrichment_section())
     for title, sid, body in sections:
         if "cevap" in sid.lower() or "konu-indeksi" in sid:
             continue
         if "sinav-sorular" in sid:
-            blocks.append(build_quiz_section())
+            intprog_blocks.append(build_quiz_section())
         elif "komut-hizli" in sid:
-            blocks.append(build_commands_section(body))
+            intprog_blocks.append(build_commands_section(body))
         elif title.lower().startswith("hafta"):
-            blocks.append(build_week_block(title, sid, body))
-    return "\n".join(blocks)
+            intprog_blocks.append(build_week_block(title, sid, body))
+
+    oop_part = build_oop_course(oop_sections or [])
+    return build_course_hub() + "".join(intprog_blocks) + oop_part
 
 
 def generate_pdf():
@@ -1377,8 +1677,11 @@ def generate_pdf():
 def main():
     md_text = MD_FILE.read_text(encoding="utf-8")
     sections = split_sections(md_text)
-    toc = build_toc(sections)
-    content = build_content(sections)
+    oop_sections = []
+    if OOP_MD_FILE.exists():
+        oop_sections = split_sections(OOP_MD_FILE.read_text(encoding="utf-8"))
+    toc = build_toc(sections, oop_sections)
+    content = build_content(sections, oop_sections)
     page = HTML_TEMPLATE.format(toc=toc, content=content)
     HTML_FILE.write_text(page, encoding="utf-8")
     print(f"OK Website: {HTML_FILE}")
