@@ -22,6 +22,7 @@ except ImportError:
 from quiz_data import QUIZ
 from study_plan import STUDY_PLAN, MUST_KNOW
 from web_enrichment import TOPICS, match_panel_topics, topics_for_week
+from solid_principles import SOLID, STUDENT_HEADER
 
 BASE = Path(__file__).parent
 MD_FILE = BASE / "CALISMA_REHBERI.md"
@@ -435,6 +436,51 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       border: 1px solid var(--blue-border); overflow-x: auto; font-size: .76rem;
     }}
 
+    .solid-header {{
+      border: 2px dashed var(--line); border-radius: var(--radius); padding: 1.25rem 1.5rem;
+      margin-bottom: 1.25rem; background: #fafbfc;
+    }}
+    .solid-header h3 {{ font-size: 1.1rem; margin-bottom: .75rem; }}
+    .solid-header .field {{ font-size: .9rem; margin: .45rem 0; color: var(--text-soft); border-bottom: 1px dotted #cbd5e1; padding-bottom: .25rem; }}
+    .solid-principle {{
+      border: 1px solid var(--line); border-radius: var(--radius); margin-bottom: 1.25rem;
+      overflow: hidden; background: white; box-shadow: var(--shadow);
+    }}
+    .solid-principle-head {{
+      padding: 1rem 1.25rem; background: linear-gradient(180deg, #fff 0%, #fafbfc 100%);
+      border-bottom: 1px solid var(--line); display: flex; align-items: center; gap: .75rem;
+    }}
+    .solid-letter {{
+      width: 2.5rem; height: 2.5rem; border-radius: 10px; background: var(--accent); color: white;
+      display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem; flex-shrink: 0;
+    }}
+    .solid-principle-head h3 {{ font-size: 1rem; margin: 0; }}
+    .solid-principle-head span {{ font-size: .78rem; color: var(--text-soft); display: block; margin-top: .15rem; }}
+    .solid-body {{ padding: 1rem 1.25rem 1.25rem; }}
+    .solid-row {{ margin-bottom: .85rem; }}
+    .solid-row-label {{
+      font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em;
+      color: var(--accent); margin-bottom: .3rem;
+    }}
+    .solid-row p {{ font-size: .88rem; color: var(--text-soft); line-height: 1.55; margin: 0; }}
+    .solid-code-grid {{ display: grid; gap: .75rem; margin-top: .75rem; }}
+    @media (min-width: 768px) {{ .solid-code-grid {{ grid-template-columns: 1fr 1fr; }} }}
+    .solid-code-box {{ border-radius: 8px; overflow: hidden; border: 1px solid var(--line); }}
+    .solid-code-box.bad {{ border-color: #fecaca; }}
+    .solid-code-box.good {{ border-color: #bbf7d0; }}
+    .solid-code-box-head {{
+      padding: .45rem .75rem; font-size: .72rem; font-weight: 700; text-transform: uppercase;
+    }}
+    .solid-code-box.bad .solid-code-box-head {{ background: var(--accent-soft); color: var(--accent); }}
+    .solid-code-box.good .solid-code-box-head {{ background: var(--green-soft); color: var(--green-text); }}
+    .solid-code-box pre {{
+      margin: 0; padding: .65rem .75rem; font-size: .74rem; line-height: 1.5;
+      background: var(--code-bg); overflow-x: auto;
+    }}
+    .solid-why {{ padding: .55rem .75rem; font-size: .82rem; line-height: 1.5; border-top: 1px solid var(--line); }}
+    .solid-code-box.bad .solid-why {{ background: #fff5f5; color: #991b1b; }}
+    .solid-code-box.good .solid-why {{ background: #f0fdf4; color: #14532d; }}
+
     .quiz-toolbar {{
       display: flex; flex-wrap: wrap; gap: .5rem; align-items: center;
       margin: .75rem 0 1rem;
@@ -584,6 +630,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
           <a class="btn btn-red" href="#7-gunluk-plan">7 Gunluk Plan</a>
           <a class="btn btn-ghost" href="#konu-indeksi">Konu Indeksi</a>
           <a class="btn btn-ghost" href="#internet-kaynaklari">Internet Kaynaklari</a>
+          <a class="btn btn-ghost" href="#solid-ilkeleri">SOLID</a>
           <a class="btn btn-ghost" href="#sinav-ezber-listesi">Ezber Listesi</a>
           <button class="btn btn-ghost" onclick="window.print()">PDF Indir</button>
         </div>
@@ -1046,6 +1093,63 @@ def build_web_enrichment_section() -> str:
     """
 
 
+def build_solid_section() -> str:
+    fields = "".join(f'<div class="field">{html.escape(f)}</div>' for f in STUDENT_HEADER["fields"])
+    principles = []
+    for p in SOLID:
+        principles.append(f"""
+        <article class="solid-principle" id="solid-{p['letter'].lower()}">
+          <div class="solid-principle-head">
+            <div class="solid-letter">{html.escape(p['letter'])}</div>
+            <div>
+              <h3>{html.escape(p['name'])}</h3>
+              <span>{html.escape(p['name_tr'])}</span>
+            </div>
+          </div>
+          <div class="solid-body">
+            <div class="solid-row">
+              <div class="solid-row-label">Ilke tanimi</div>
+              <p>{html.escape(p['definition'])}</p>
+            </div>
+            <div class="solid-row">
+              <div class="solid-row-label">Amaci / cozmeye calistigi problem</div>
+              <p>{html.escape(p['purpose'])}</p>
+              <p style="margin-top:.35rem"><em>Problem:</em> {html.escape(p['problem'])}</p>
+            </div>
+            <div class="solid-code-grid">
+              <div class="solid-code-box bad">
+                <div class="solid-code-box-head">Ilkeye aykiri (kotu) kod</div>
+                <pre><code>{html.escape(p['bad_code'])}</code></pre>
+                <div class="solid-why"><strong>Neden kotu?</strong> {html.escape(p['bad_why'])}</div>
+              </div>
+              <div class="solid-code-box good">
+                <div class="solid-code-box-head">Ilkeye uygun (iyi) kod</div>
+                <pre><code>{html.escape(p['good_code'])}</code></pre>
+                <div class="solid-why"><strong>Neden iyi?</strong> {html.escape(p['good_why'])}</div>
+              </div>
+            </div>
+          </div>
+        </article>
+        """)
+    return f"""
+    <section class="special-block" id="solid-ilkeleri">
+      <div class="special-head"><h2>SOLID Ilkeleri — Odev / Sinav Formati</h2></div>
+      <div class="special-body">
+        <div class="solid-header">
+          <h3>{html.escape(STUDENT_HEADER['title'])}</h3>
+          <p style="font-size:.85rem;color:var(--text-soft);margin-bottom:.75rem">{html.escape(STUDENT_HEADER['subtitle'])}</p>
+          {fields}
+        </div>
+        <div class="callout callout-exam">
+          Asagida her SOLID ilkesi icin: <strong>ilke adi, tanimi, amaci, kotu/iyi Ruby kod ornegi</strong> ve aciklamalari yer alir.
+          Yazdir butonu ile PDF olarak da alabilirsin.
+        </div>
+        {"".join(principles)}
+      </div>
+    </section>
+    """
+
+
 def build_must_know_section() -> str:
     items = "".join(
         f'<div class="must-know-item"><strong>{html.escape(k)}</strong><span>{html.escape(v)}</span></div>'
@@ -1125,6 +1229,7 @@ def build_toc(sections) -> str:
         '<a href="#7-gunluk-plan"><span class="w-num">7</span>7 Gunluk Plan</a>',
         '<a href="#konu-indeksi"><span class="w-num">A</span>Konu Indeksi</a>',
         '<a href="#internet-kaynaklari"><span class="w-num">W</span>Internet Kaynaklari</a>',
+        '<a href="#solid-ilkeleri"><span class="w-num">S</span>SOLID Ilkeleri</a>',
         '<a href="#sinav-ezber-listesi"><span class="w-num">!</span>Ezber Listesi</a>',
         '<div class="nav-label">Haftalar</div>',
     ]
@@ -1153,6 +1258,7 @@ def build_content(sections) -> str:
             break
     blocks.append(build_must_know_section())
     blocks.append(build_web_enrichment_section())
+    blocks.append(build_solid_section())
     for title, sid, body in sections:
         if "cevap" in sid.lower() or "konu-indeksi" in sid:
             continue

@@ -283,6 +283,51 @@
       border: 1px solid var(--blue-border); overflow-x: auto; font-size: .76rem;
     }
 
+    .solid-header {
+      border: 2px dashed var(--line); border-radius: var(--radius); padding: 1.25rem 1.5rem;
+      margin-bottom: 1.25rem; background: #fafbfc;
+    }
+    .solid-header h3 { font-size: 1.1rem; margin-bottom: .75rem; }
+    .solid-header .field { font-size: .9rem; margin: .45rem 0; color: var(--text-soft); border-bottom: 1px dotted #cbd5e1; padding-bottom: .25rem; }
+    .solid-principle {
+      border: 1px solid var(--line); border-radius: var(--radius); margin-bottom: 1.25rem;
+      overflow: hidden; background: white; box-shadow: var(--shadow);
+    }
+    .solid-principle-head {
+      padding: 1rem 1.25rem; background: linear-gradient(180deg, #fff 0%, #fafbfc 100%);
+      border-bottom: 1px solid var(--line); display: flex; align-items: center; gap: .75rem;
+    }
+    .solid-letter {
+      width: 2.5rem; height: 2.5rem; border-radius: 10px; background: var(--accent); color: white;
+      display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem; flex-shrink: 0;
+    }
+    .solid-principle-head h3 { font-size: 1rem; margin: 0; }
+    .solid-principle-head span { font-size: .78rem; color: var(--text-soft); display: block; margin-top: .15rem; }
+    .solid-body { padding: 1rem 1.25rem 1.25rem; }
+    .solid-row { margin-bottom: .85rem; }
+    .solid-row-label {
+      font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em;
+      color: var(--accent); margin-bottom: .3rem;
+    }
+    .solid-row p { font-size: .88rem; color: var(--text-soft); line-height: 1.55; margin: 0; }
+    .solid-code-grid { display: grid; gap: .75rem; margin-top: .75rem; }
+    @media (min-width: 768px) { .solid-code-grid { grid-template-columns: 1fr 1fr; } }
+    .solid-code-box { border-radius: 8px; overflow: hidden; border: 1px solid var(--line); }
+    .solid-code-box.bad { border-color: #fecaca; }
+    .solid-code-box.good { border-color: #bbf7d0; }
+    .solid-code-box-head {
+      padding: .45rem .75rem; font-size: .72rem; font-weight: 700; text-transform: uppercase;
+    }
+    .solid-code-box.bad .solid-code-box-head { background: var(--accent-soft); color: var(--accent); }
+    .solid-code-box.good .solid-code-box-head { background: var(--green-soft); color: var(--green-text); }
+    .solid-code-box pre {
+      margin: 0; padding: .65rem .75rem; font-size: .74rem; line-height: 1.5;
+      background: var(--code-bg); overflow-x: auto;
+    }
+    .solid-why { padding: .55rem .75rem; font-size: .82rem; line-height: 1.5; border-top: 1px solid var(--line); }
+    .solid-code-box.bad .solid-why { background: #fff5f5; color: #991b1b; }
+    .solid-code-box.good .solid-why { background: #f0fdf4; color: #14532d; }
+
     .quiz-toolbar {
       display: flex; flex-wrap: wrap; gap: .5rem; align-items: center;
       margin: .75rem 0 1rem;
@@ -426,6 +471,7 @@
 <a href="#7-gunluk-plan"><span class="w-num">7</span>7 Gunluk Plan</a>
 <a href="#konu-indeksi"><span class="w-num">A</span>Konu Indeksi</a>
 <a href="#internet-kaynaklari"><span class="w-num">W</span>Internet Kaynaklari</a>
+<a href="#solid-ilkeleri"><span class="w-num">S</span>SOLID Ilkeleri</a>
 <a href="#sinav-ezber-listesi"><span class="w-num">!</span>Ezber Listesi</a>
 <div class="nav-label">Haftalar</div>
 <a href="#hafta-2-ruby-rails-giris"><span class="w-num">2</span>Ruby &amp; Rails Giriş</a>
@@ -449,6 +495,7 @@
           <a class="btn btn-red" href="#7-gunluk-plan">7 Gunluk Plan</a>
           <a class="btn btn-ghost" href="#konu-indeksi">Konu Indeksi</a>
           <a class="btn btn-ghost" href="#internet-kaynaklari">Internet Kaynaklari</a>
+          <a class="btn btn-ghost" href="#solid-ilkeleri">SOLID</a>
           <a class="btn btn-ghost" href="#sinav-ezber-listesi">Ezber Listesi</a>
           <button class="btn btn-ghost" onclick="window.print()">PDF Indir</button>
         </div>
@@ -1584,6 +1631,364 @@ my_lambda = -&gt;(a, b) { a + b }
       </div>
     </div>
     </div>
+      </div>
+    </section>
+    
+
+    <section class="special-block" id="solid-ilkeleri">
+      <div class="special-head"><h2>SOLID Ilkeleri — Odev / Sinav Formati</h2></div>
+      <div class="special-body">
+        <div class="solid-header">
+          <h3>SOLID Ilkeleri</h3>
+          <p style="font-size:.85rem;color:var(--text-soft);margin-bottom:.75rem">Internet Programciligi II — Nesne Yonelimli Tasarim</p>
+          <div class="field">Ad Soyad: ___________________________</div><div class="field">Ogrenci No: _________________________</div><div class="field">Tarih: ______________________________</div>
+        </div>
+        <div class="callout callout-exam">
+          Asagida her SOLID ilkesi icin: <strong>ilke adi, tanimi, amaci, kotu/iyi Ruby kod ornegi</strong> ve aciklamalari yer alir.
+          Yazdir butonu ile PDF olarak da alabilirsin.
+        </div>
+        
+        <article class="solid-principle" id="solid-s">
+          <div class="solid-principle-head">
+            <div class="solid-letter">S</div>
+            <div>
+              <h3>Single Responsibility Principle (SRP)</h3>
+              <span>Tek Sorumluluk Ilkesi</span>
+            </div>
+          </div>
+          <div class="solid-body">
+            <div class="solid-row">
+              <div class="solid-row-label">Ilke tanimi</div>
+              <p>Bir sinif yalnizca tek bir sorumluluga sahip olmalidir; yani sinifi degistirmek icin yalnizca tek bir nedeni olmalidir.</p>
+            </div>
+            <div class="solid-row">
+              <div class="solid-row-label">Amaci / cozmeye calistigi problem</div>
+              <p>Buyuyen siniflarda kodun karismasini, bakim zorlugunu ve hata riskini azaltmak. Her modul tek bir isi yapsin; degisiklikler izole kalsin.</p>
+              <p style="margin-top:.35rem"><em>Problem:</em> Bir sinif hem is mantigi hem dosya kaydi hem e-posta gonderimi yaparsa her yeni gereksinimde tum sinif kirilganlasir.</p>
+            </div>
+            <div class="solid-code-grid">
+              <div class="solid-code-box bad">
+                <div class="solid-code-box-head">Ilkeye aykiri (kotu) kod</div>
+                <pre><code>class Post
+  def publish
+    save_to_database
+    send_email_to_subscribers
+    write_to_log_file
+  end
+
+  def save_to_database
+    # veritabani islemi
+  end
+
+  def send_email_to_subscribers
+    # e-posta gonderimi
+  end
+
+  def write_to_log_file
+    # log yazma
+  end
+end</code></pre>
+                <div class="solid-why"><strong>Neden kotu?</strong> Post sinifi ayni anda veritabani, e-posta ve loglama sorumluluklarini tasiyor. E-posta servisi degisirse Post sinifi degismek zorunda kalir. Test etmek zorlasir; tek bir degisiklik birden fazla nedenden dolayi sinifi etkiler — SRP ihlali.</div>
+              </div>
+              <div class="solid-code-box good">
+                <div class="solid-code-box-head">Ilkeye uygun (iyi) kod</div>
+                <pre><code>class Post
+  def publish(publisher:, notifier:, logger:)
+    publisher.save(self)
+    notifier.notify_subscribers(self)
+    logger.info(&quot;Post yayinlandi: \#{title}&quot;)
+  end
+end
+
+class PostPublisher
+  def save(post)
+    # sadece veritabani
+  end
+end
+
+class EmailNotifier
+  def notify_subscribers(post)
+    # sadece e-posta
+  end
+end
+
+class FileLogger
+  def info(message)
+    # sadece log
+  end
+end</code></pre>
+                <div class="solid-why"><strong>Neden iyi?</strong> Her sinifin tek gorevi var: Post yayinlama kararini verir, diger isleri uzman siniflara devreder. E-posta mantigi degistiginde yalnizca EmailNotifier guncellenir. Siniflar kucuk, test edilebilir ve bakimi kolay — SRP&#x27;ye uygun.</div>
+              </div>
+            </div>
+          </div>
+        </article>
+        
+        <article class="solid-principle" id="solid-o">
+          <div class="solid-principle-head">
+            <div class="solid-letter">O</div>
+            <div>
+              <h3>Open/Closed Principle (OCP)</h3>
+              <span>Acik/Kapali Ilke</span>
+            </div>
+          </div>
+          <div class="solid-body">
+            <div class="solid-row">
+              <div class="solid-row-label">Ilke tanimi</div>
+              <p>Yazilim varliklari (siniflar, moduller) genislemeye acik, degisiklige kapali olmalidir. Mevcut kodu degistirmeden yeni davranis eklenebilmelidir.</p>
+            </div>
+            <div class="solid-row">
+              <div class="solid-row-label">Amaci / cozmeye calistigi problem</div>
+              <p>Calisan kodu bozmadan yeni ozellik eklemek. if/elsif zincirleri yerine genisleme (kalitim, modul, polymorphism) ile yeni davranislar eklenir.</p>
+              <p style="margin-top:.35rem"><em>Problem:</em> Her yeni odeme tipi icin mevcut sinifa if/elsif eklenirse kod surekli degisir ve regression riski artar.</p>
+            </div>
+            <div class="solid-code-grid">
+              <div class="solid-code-box bad">
+                <div class="solid-code-box-head">Ilkeye aykiri (kotu) kod</div>
+                <pre><code>class PaymentProcessor
+  def pay(method, amount)
+    if method == :credit_card
+      # kredi karti odeme
+    elsif method == :paypal
+      # paypal odeme
+    elsif method == :bank_transfer
+      # havale — her yeni tip icin buraya ekleme yapilir
+    end
+  end
+end</code></pre>
+                <div class="solid-why"><strong>Neden kotu?</strong> Yeni bir odeme yontemi (ornegin :crypto) eklendiginde PaymentProcessor sinifinin icindeki pay metodu degistirilmek zorunda. Acik/kapali ilkeye gore sinif genislemeye kapali degil, her ekleme mevcut kodu kirar — OCP ihlali.</div>
+              </div>
+              <div class="solid-code-box good">
+                <div class="solid-code-box-head">Ilkeye uygun (iyi) kod</div>
+                <pre><code>class PaymentProcessor
+  def pay(gateway, amount)
+    gateway.charge(amount)
+  end
+end
+
+class CreditCardGateway
+  def charge(amount)
+    # kredi karti
+  end
+end
+
+class PaypalGateway
+  def charge(amount)
+    # paypal
+  end
+end
+
+# Yeni tip: mevcut kodu degistirmeden ekle
+class CryptoGateway
+  def charge(amount)
+    # kripto odeme
+  end
+end</code></pre>
+                <div class="solid-why"><strong>Neden iyi?</strong> PaymentProcessor artik hangi odeme tipi oldugunu bilmez; charge metoduna sahip her gateway calisir. CryptoGateway eklemek icin PaymentProcessor&#x27;a dokunulmaz. Mevcut kod kapali (degismez), yeni davranis genislemeyle acik — OCP&#x27;ye uygun.</div>
+              </div>
+            </div>
+          </div>
+        </article>
+        
+        <article class="solid-principle" id="solid-l">
+          <div class="solid-principle-head">
+            <div class="solid-letter">L</div>
+            <div>
+              <h3>Liskov Substitution Principle (LSP)</h3>
+              <span>Liskov Yerine Koyma Ilkesi</span>
+            </div>
+          </div>
+          <div class="solid-body">
+            <div class="solid-row">
+              <div class="solid-row-label">Ilke tanimi</div>
+              <p>Alt sinif nesneleri, ust sinif nesnelerinin yerine kullanilabilmeli; programin davranisi bozulmamali.</p>
+            </div>
+            <div class="solid-row">
+              <div class="solid-row-label">Amaci / cozmeye calistigi problem</div>
+              <p>Kalitim hiyerarsisinde alt sinifin ust sinifin sozlesmesini (contract) bozmamasini saglamak. Polimorfizm guvenli calissin.</p>
+              <p style="margin-top:.35rem"><em>Problem:</em> Alt sinif ust sinifin bekledigi davranisi degistirirse (ornegin fly metodu hata firlatirsa) polimorfizm kirilir.</p>
+            </div>
+            <div class="solid-code-grid">
+              <div class="solid-code-box bad">
+                <div class="solid-code-box-head">Ilkeye aykiri (kotu) kod</div>
+                <pre><code>class Bird
+  def fly
+    &quot;Ucuyor&quot;
+  end
+end
+
+class Penguin &lt; Bird
+  def fly
+    raise &quot;Penguen ucamaz!&quot;  # ust sinifin sozlesmesini bozar
+  end
+end
+
+birds = [Bird.new, Penguin.new]
+birds.each { |b| b.fly }  # Penguin&#x27;de patlar</code></pre>
+                <div class="solid-why"><strong>Neden kotu?</strong> Penguin, Bird&#x27;in yerine konuldugunda fly cagrisi programi kirar. Ust sinif &#x27;her kus ucabilir&#x27; beklentisi vardir; alt sinif bunu ihlal eder. LSP: alt sinif ust sinifin yerine guvenle kullanilamiyor.</div>
+              </div>
+              <div class="solid-code-box good">
+                <div class="solid-code-box-head">Ilkeye uygun (iyi) kod</div>
+                <pre><code>class Bird
+  def move
+    raise NotImplementedError
+  end
+end
+
+class Sparrow &lt; Bird
+  def move
+    &quot;Ucuyor&quot;
+  end
+end
+
+class Penguin &lt; Bird
+  def move
+    &quot;Yuzuyor&quot;
+  end
+end
+
+birds = [Sparrow.new, Penguin.new]
+birds.each { |b| puts b.move }  # ikisi de calisir</code></pre>
+                <div class="solid-why"><strong>Neden iyi?</strong> Ortak sozlesme move metodudur; her alt sinif kendi gercegini uygular. Penguin Bird yerine konuldugunda program bozulmaz. Alt sinif ust sinifin bekledigi arayuzu korur — LSP&#x27;ye uygun.</div>
+              </div>
+            </div>
+          </div>
+        </article>
+        
+        <article class="solid-principle" id="solid-i">
+          <div class="solid-principle-head">
+            <div class="solid-letter">I</div>
+            <div>
+              <h3>Interface Segregation Principle (ISP)</h3>
+              <span>Arayuz Ayirimi Ilkesi</span>
+            </div>
+          </div>
+          <div class="solid-body">
+            <div class="solid-row">
+              <div class="solid-row-label">Ilke tanimi</div>
+              <p>Istemciler kullanmadiklari arayuzlere bagimli olmamali. Buyuk, siskin arayuzler yerine kucuk, ozellestirilmis arayuzler tercih edilmeli.</p>
+            </div>
+            <div class="solid-row">
+              <div class="solid-row-label">Amaci / cozmeye calistigi problem</div>
+              <p>Siniflari zorunlu ama bos/kullanilmayan metot implementasyonlarindan kurtarmak. Modul ve mixin&#x27;lerde sadece gereken davranislar sunulur.</p>
+              <p style="margin-top:.35rem"><em>Problem:</em> Tek dev modul hem yazdir hem taray hem faks metotlari icerirse bazı siniflar bos metot birakmak zorunda kalir.</p>
+            </div>
+            <div class="solid-code-grid">
+              <div class="solid-code-box bad">
+                <div class="solid-code-box-head">Ilkeye aykiri (kotu) kod</div>
+                <pre><code>module Worker
+  def work; end
+  def eat; end
+  def sleep; end
+  def attend_meeting; end  # her worker icin gerekli degil
+end
+
+class Robot
+  include Worker
+
+  def work
+    &quot;Calisiyor&quot;
+  end
+
+  def eat
+    # robot yemek yemez — bos veya anlamsiz
+  end
+
+  def sleep
+    # robot uyumaz
+  end
+
+  def attend_meeting
+    # anlamsiz
+  end
+end</code></pre>
+                <div class="solid-why"><strong>Neden kotu?</strong> Robot, kullanmadigi eat/sleep/attend_meeting metotlarini da implement etmek zorunda. Buyuk arayuz istemciyi gereksiz bagimliliklara zorlar. ISP: kullanilmayan metotlar arayuze dahil edilmemeli.</div>
+              </div>
+              <div class="solid-code-box good">
+                <div class="solid-code-box-head">Ilkeye uygun (iyi) kod</div>
+                <pre><code>module Workable
+  def work; end
+end
+
+module Eatable
+  def eat; end
+end
+
+class Human
+  include Workable
+  include Eatable
+
+  def work; &quot;Calisiyor&quot;; end
+  def eat; &quot;Yemek yiyor&quot;; end
+end
+
+class Robot
+  include Workable
+
+  def work; &quot;Calisiyor&quot;; end
+  # sadece ihtiyaci olan modul
+end</code></pre>
+                <div class="solid-why"><strong>Neden iyi?</strong> Arayuzler role gore ayrildi: Workable, Eatable. Robot yalnizca Workable alir; bos eat/sleep yazmak zorunda kalmaz. Her sinif sadece ihtiyaci olan davranisa bagimli — ISP&#x27;ye uygun.</div>
+              </div>
+            </div>
+          </div>
+        </article>
+        
+        <article class="solid-principle" id="solid-d">
+          <div class="solid-principle-head">
+            <div class="solid-letter">D</div>
+            <div>
+              <h3>Dependency Inversion Principle (DIP)</h3>
+              <span>Bagimlilik Tersine Cevirme Ilkesi</span>
+            </div>
+          </div>
+          <div class="solid-body">
+            <div class="solid-row">
+              <div class="solid-row-label">Ilke tanimi</div>
+              <p>Ust seviye moduller alt seviye modullere bagimli olmamali; her ikisi de soyutlamalara (abstraction) bagimli olmalidir.</p>
+            </div>
+            <div class="solid-row">
+              <div class="solid-row-label">Amaci / cozmeye calistigi problem</div>
+              <p>Siki bagimliliklari (concrete class) gevsetmek; test, degistirme ve genisletmeyi kolaylastirmak. Dependency Injection ile somut sinif yerine arayuz/soyut bagimlilik kullanilir.</p>
+              <p style="margin-top:.35rem"><em>Problem:</em> Controller dogrudan PostgreSQL sinifina bagliysa MySQL&#x27;e gecis tum controller&#x27;i degistirir.</p>
+            </div>
+            <div class="solid-code-grid">
+              <div class="solid-code-box bad">
+                <div class="solid-code-box-head">Ilkeye aykiri (kotu) kod</div>
+                <pre><code>class PostsController
+  def create
+    db = PostgreSQLConnection.new  # somut sinifa dogrudan bagimli
+    db.insert(params[:post])
+  end
+end</code></pre>
+                <div class="solid-why"><strong>Neden kotu?</strong> PostsController dogrudan PostgreSQLConnection somut sinifina bagimli. Veritabani degisirse controller degismek zorunda. Ust seviye (controller) alt seviyeye (PostgreSQL) bagimli — DIP ihlali.</div>
+              </div>
+              <div class="solid-code-box good">
+                <div class="solid-code-box-head">Ilkeye uygun (iyi) kod</div>
+                <pre><code>class PostsController
+  def initialize(repository:)
+    @repository = repository  # soyut bagimlilik enjekte edilir
+  end
+
+  def create(params)
+    @repository.insert(params)
+  end
+end
+
+class PostRepository
+  def insert(data)
+    # PostgreSQL veya baska implementasyon
+  end
+end
+
+# Rails&#x27;de benzeri:
+# @post = Post.new(post_params)  → ActiveRecord soyutlamasi
+PostsController.new(repository: PostRepository.new)</code></pre>
+                <div class="solid-why"><strong>Neden iyi?</strong> Controller somut veritabani sinifini bilmez; repository arayuzune bagimlidir. Testte sahte (mock) repository enjekte edilebilir. Ust ve alt seviye soyutlamaya bagimli — DIP&#x27;ye uygun. Rails&#x27;de ActiveRecord da bu soyutlamadir.</div>
+              </div>
+            </div>
+          </div>
+        </article>
+        
       </div>
     </section>
     
