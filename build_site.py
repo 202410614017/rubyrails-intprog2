@@ -30,6 +30,7 @@ from lsp_solo_leveling import (
 from oop_content import OOP_META, OOP_MUST_KNOW, OOP_TOPICS, OOP_PDF_PLACEHOLDER
 from oop_week9_exercises import WEEK9_EXERCISES
 from term_glossary import ALL_GLOSSARY, INTPROG_GLOSSARY, OOP_GLOSSARY
+from weekly_paths import INTPROG_WEEKLY_PATH, OOP_WEEKLY_PATH
 
 BASE = Path(__file__).parent
 MD_FILE = BASE / "CALISMA_REHBERI.md"
@@ -43,6 +44,8 @@ PYTHON_ICON_SVG = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 12
 
 RUBY_ICON_SM = RUBY_ICON_SVG.replace('class="course-icon-svg"', 'class="course-icon-svg course-icon-sm"')
 PYTHON_ICON_SM = PYTHON_ICON_SVG.replace('class="course-icon-svg"', 'class="course-icon-svg course-icon-sm"')
+RUBY_ICON_HERO = RUBY_ICON_SVG.replace('class="course-icon-svg"', 'class="hero-icon hero-icon-ruby"')
+PYTHON_ICON_HERO = PYTHON_ICON_SVG.replace('class="course-icon-svg"', 'class="hero-icon hero-icon-python"')
 
 WEEK_META = {
     "hafta-2-ruby-rails-giris": {
@@ -255,7 +258,8 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       --code-bg: #f4f6f8;
       --shadow: 0 1px 3px rgba(16,24,40,.06), 0 1px 2px rgba(16,24,40,.04);
       --shadow-lg: 0 8px 24px rgba(16,24,40,.08);
-      --sidebar-w: 520px;
+      --sidebar-w: 272px;
+      --topbar-h: 58px;
       --nav-strip-h: min(38vh, 320px);
       --pane-divider: #e2e8f0;
       --oop-accent: #6d28d9;
@@ -272,7 +276,44 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       line-height: 1.65;
       font-size: 15px;
     }}
-    .layout {{ display: flex; flex-direction: column; height: 100vh; overflow: hidden; }}
+    body:not(.in-course) {{ overflow: hidden; }}
+    body.in-course {{ overflow: hidden; }}
+    .layout {{ display: flex; flex-direction: column; min-height: 100vh; }}
+    body.in-course .layout {{ height: 100vh; overflow: hidden; }}
+
+    .course-topbar {{
+      flex-shrink: 0; height: var(--topbar-h); background: var(--paper);
+      border-bottom: 2px solid var(--line); box-shadow: var(--shadow);
+      z-index: 250; display: flex; align-items: center;
+      padding: 0 1rem; gap: .75rem;
+    }}
+    .course-topbar .site-nav-brand-inner {{ display: flex; align-items: center; gap: .75rem; flex: 1; min-width: 0; }}
+    .course-topbar .brand {{ padding: 0; border: none; margin: 0; flex: 1; min-width: 0; }}
+    .course-topbar .brand h1 {{ font-size: .92rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }}
+    .course-topbar .brand p {{ display: none; }}
+    .course-topbar .mobile-toggle {{
+      display: none; flex-shrink: 0;
+      background: var(--accent); color: white; border: none; border-radius: 8px;
+      width: 38px; height: 38px; font-size: 1.05rem; cursor: pointer;
+    }}
+
+    .course-body {{
+      display: flex; flex: 1; min-height: 0; overflow: hidden;
+    }}
+    .course-aside {{
+      width: var(--sidebar-w); flex-shrink: 0;
+      overflow-y: auto; overflow-x: hidden;
+      border-right: 2px solid var(--line);
+      background: var(--paper);
+      -webkit-overflow-scrolling: touch;
+    }}
+    .course-main {{
+      flex: 1; min-width: 0;
+      overflow-y: auto; overflow-x: hidden;
+      padding: 1rem 1.25rem 2.5rem;
+      background: var(--bg);
+      -webkit-overflow-scrolling: touch;
+    }}
 
     .site-nav {{
       flex-shrink: 0; background: var(--paper);
@@ -287,12 +328,9 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     .brand-kicker {{ font-size: .65rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }}
     .site-nav-brand .brand h1 {{ font-size: .95rem; font-weight: 700; margin-top: .2rem; line-height: 1.3; }}
     .site-nav-brand .brand p {{ font-size: .72rem; color: var(--text-soft); margin-top: .2rem; }}
-    .site-nav-dual {{
-      display: grid; grid-template-columns: 1fr 1fr;
-      max-height: var(--nav-strip-h);
-    }}
+    .site-nav-dual {{ display: none; }}
     .nav-col {{
-      overflow-y: auto; padding-bottom: .75rem; min-width: 0;
+      overflow-y: visible; padding-bottom: 1rem; min-width: 0; width: 100%;
     }}
     .nav-col-intprog {{
       border-right: 2px solid var(--accent-border);
@@ -327,24 +365,147 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     .nav-col-oop a.active .w-num {{ background: var(--oop-accent); color: white; }}
     .nav-label {{ padding: .65rem 1rem .25rem; font-size: .65rem; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: #9ca3af; }}
 
-    .main {{
-      flex: 1; min-height: 0; padding: 0; max-width: none; overflow: hidden;
-      display: flex; flex-direction: column;
+    .main {{ display: none; }}
+    .courses-split {{ display: block; }}
+    .landing-screen {{
+      position: fixed; inset: 0; z-index: 3000;
+      display: grid; grid-template-columns: 1fr 1fr; overflow: hidden;
     }}
-    .course-picker {{
-      flex-shrink: 0; display: grid; grid-template-columns: 1fr 1fr; gap: .75rem;
-      padding: .75rem 1rem; background: var(--paper);
-      border-bottom: 1px solid var(--line); box-shadow: var(--shadow);
+    .landing-screen.hidden {{
+      display: none !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
     }}
-    .course-picker-label {{
-      grid-column: 1 / -1; font-size: .72rem; font-weight: 700; text-transform: uppercase;
-      letter-spacing: .07em; color: var(--text-soft); margin-bottom: -.25rem;
+    .landing-card {{
+      position: relative; border: none; cursor: pointer;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 1.1rem; padding: 2rem 1.5rem; text-align: center;
+      color: #fff; font-family: inherit;
+      transition: transform .2s ease, filter .2s ease;
+      overflow: hidden;
     }}
+    .landing-card::before {{
+      content: ''; position: absolute; inset: 0; opacity: 0; transition: opacity .25s;
+      background: radial-gradient(circle at 50% 45%, rgba(255,255,255,.2) 0%, transparent 65%);
+    }}
+    .landing-card:hover::before {{ opacity: 1; }}
+    .landing-card:hover {{ transform: scale(1.015); z-index: 1; }}
+    .landing-card:focus-visible {{ outline: 3px solid rgba(255,255,255,.85); outline-offset: -8px; }}
+    .landing-intprog {{
+      background: linear-gradient(165deg, #120404 0%, #991b1b 38%, #450a0a 100%);
+      border-right: 1px solid rgba(255,255,255,.1);
+    }}
+    .landing-oop {{
+      background: linear-gradient(165deg, #0a1628 0%, #2563eb 42%, #1e3a5f 100%);
+    }}
+    .landing-icon-wrap {{ position: relative; z-index: 1; }}
+    .hero-icon {{
+      width: min(30vw, 220px); height: min(30vw, 220px);
+      display: block; filter: drop-shadow(0 16px 48px rgba(0,0,0,.5));
+      transition: transform .25s ease;
+    }}
+    .landing-card:hover .hero-icon {{ transform: scale(1.12) translateY(-6px); }}
+    .landing-title {{
+      position: relative; z-index: 1;
+      font-size: clamp(1.1rem, 2.4vw, 1.65rem); font-weight: 700;
+      letter-spacing: -.02em; line-height: 1.25; max-width: 20ch;
+    }}
+    .landing-sub {{
+      position: relative; z-index: 1;
+      font-size: clamp(.76rem, 1.3vw, .9rem); opacity: .78; max-width: 28ch;
+    }}
+    .landing-cta {{
+      position: relative; z-index: 1; margin-top: .35rem;
+      font-size: .8rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase;
+      padding: .5rem 1rem; border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.4); background: rgba(255,255,255,.12);
+      opacity: .85; transition: opacity .2s, transform .2s;
+    }}
+    .landing-card:hover .landing-cta {{ opacity: 1; transform: translateY(-2px); }}
+
+    .app-shell {{
+      display: flex; flex-direction: column; height: 100vh; overflow: hidden;
+    }}
+    .app-shell.hidden {{ display: none !important; pointer-events: none !important; }}
+    .app-shell .layout {{ flex: 1; min-height: 0; display: flex; flex-direction: column; height: 100%; }}
+
+    .app-shell.view-intprog {{
+      --theme-accent: #b91c1c;
+      --theme-accent-soft: #fef2f2;
+      --theme-accent-border: #fecaca;
+      --theme-accent-dark: #991b1b;
+      --theme-hero: linear-gradient(135deg, #7f1d1d 0%, #b91c1c 50%, #dc2626 100%);
+    }}
+    .app-shell.view-oop {{
+      --theme-accent: #6d28d9;
+      --theme-accent-soft: #f5f3ff;
+      --theme-accent-border: #ddd6fe;
+      --theme-accent-dark: #5b21b6;
+      --theme-hero: linear-gradient(135deg, #4c1d95 0%, #6d28d9 45%, #2563eb 100%);
+    }}
+    .app-shell.view-intprog .brand-kicker,
+    .app-shell.view-intprog .must-know-item strong {{ color: var(--theme-accent); }}
+    .app-shell.view-oop .brand-kicker,
+    .app-shell.view-oop .must-know-item strong {{ color: var(--theme-accent); }}
+    .app-shell.view-intprog .course-topbar {{ border-bottom-color: var(--theme-accent-border); }}
+    .app-shell.view-oop .course-topbar {{ border-bottom-color: var(--theme-accent-border); }}
+    .app-shell.view-intprog .nav-col-intprog {{ border-right-color: var(--theme-accent-border); background: var(--theme-accent-soft); }}
+    .app-shell.view-oop .nav-col-oop {{ background: var(--theme-accent-soft); }}
+    .app-shell.view-intprog .nav-col-title-intprog {{ background: var(--theme-accent-soft); color: var(--theme-accent-dark); border-bottom-color: var(--theme-accent-border); }}
+    .app-shell.view-oop .nav-col-title-oop {{ background: var(--theme-accent-soft); color: var(--theme-accent-dark); border-bottom-color: var(--theme-accent-border); }}
+    .app-shell.view-intprog .week-badge,
+    .app-shell.view-intprog .plan-day-num,
+    .app-shell.view-intprog .course-topbar .mobile-toggle {{ background: var(--theme-accent); }}
+    .app-shell.view-oop .week-badge,
+    .app-shell.view-oop .plan-day-num,
+    .app-shell.view-oop .course-topbar .mobile-toggle {{ background: var(--theme-accent); }}
+    .app-shell.view-intprog .nav-col-intprog a:hover,
+    .app-shell.view-intprog .nav-col-intprog a.active {{ background: var(--theme-accent-soft); border-left-color: var(--theme-accent); }}
+    .app-shell.view-intprog .nav-col-intprog a.active .w-num {{ background: var(--theme-accent); }}
+    .app-shell.view-oop .nav-col-oop a:hover,
+    .app-shell.view-oop .nav-col-oop a.active {{ background: var(--theme-accent-soft); border-left-color: var(--theme-accent); }}
+    .app-shell.view-oop .nav-col-oop a.active .w-num {{ background: var(--theme-accent); }}
+    .app-shell.view-intprog .btn-red,
+    .app-shell.view-intprog .course-banner-intprog {{ border-color: var(--theme-accent-border); }}
+    .app-shell.view-intprog .course-banner-intprog {{ background: linear-gradient(135deg, #fffbfb 0%, #fff 100%); border-top: 4px solid var(--theme-accent); }}
+    .app-shell.view-oop .course-banner-oop {{ background: linear-gradient(135deg, #fdfcff 0%, #fff 100%); border-top: 4px solid var(--theme-accent); }}
+    .app-shell.view-intprog .panel-inner li::marker {{ color: var(--theme-accent); }}
+    .app-shell.view-oop .panel-inner li::marker {{ color: var(--theme-accent); }}
+    .app-shell.view-intprog .quiz-q .q-n {{ background: var(--theme-accent-soft); color: var(--theme-accent); }}
+    .app-shell.view-oop .quiz-q .q-n {{ background: var(--theme-accent-soft); color: var(--theme-accent); }}
+    .app-shell.view-intprog .study-path-hero,
+    .app-shell.view-intprog .plan-hero {{ background: var(--theme-hero); }}
+    .app-shell.view-oop .study-path-hero {{ background: var(--theme-hero); }}
+    .app-shell.view-intprog .plan-tasks input[type=checkbox] {{ accent-color: var(--theme-accent); }}
+    .app-shell.view-oop .plan-tasks input[type=checkbox] {{ accent-color: var(--theme-accent); }}
+    body.in-course .week-block,
+    body.in-course .special-block,
+    body.in-course .course-banner {{ scroll-margin-top: .75rem; }}
+    .app-shell.view-intprog .nav-col-oop,
+    .app-shell.view-intprog .course-pane-oop {{ display: none !important; }}
+    .app-shell.view-oop .nav-col-intprog,
+    .app-shell.view-oop .course-pane-intprog {{ display: none !important; }}
+    .app-shell.view-intprog .course-aside {{ border-right-color: var(--theme-accent-border); }}
+    .app-shell.view-oop .course-aside {{ border-right-color: var(--theme-accent-border); }}
+    .app-shell.view-intprog .course-main {{ background: #fffcfc; }}
+    .app-shell.view-oop .course-main {{ background: #fcfbff; }}
+    .course-pane {{ overflow: visible; height: auto; border: none; padding: 0; }}
+
+    .back-home-btn {{
+      display: inline-flex; align-items: center; gap: .35rem;
+      padding: .42rem .8rem; border-radius: 8px; font-size: .76rem; font-weight: 600;
+      border: 1px solid var(--line); background: white; color: var(--text-soft);
+      cursor: pointer; font-family: inherit; flex-shrink: 0;
+    }}
+    .back-home-btn:hover {{ border-color: #cbd5e1; color: var(--text); }}
+    .app-shell.view-intprog .back-home-btn:hover {{ border-color: var(--accent-border); color: var(--accent); }}
+    .app-shell.view-oop .back-home-btn:hover {{ border-color: var(--oop-border); color: var(--oop-accent); }}
+
     .courses-split {{
-      display: grid; grid-template-columns: 1fr 1fr; flex: 1; min-height: 0;
+      display: block; flex: none;
     }}
-    .course-pane {{
-      overflow-y: auto; height: 100%; scroll-behavior: smooth;
+    .course-pane-old-scroll {{
+      scroll-behavior: smooth;
       padding: 1rem 1rem 2.5rem; min-width: 0;
       border-right: 1px solid var(--pane-divider);
     }}
@@ -377,29 +538,10 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     .panel-inner td {{ position: relative; vertical-align: top; }}
     .nav-col-oop a.active .w-num {{ background: var(--oop-accent); color: white; }}
 
-    .course-hub {{
-      display: contents;
-    }}
-    @media (min-width: 640px) {{ .course-hub {{ display: contents; }} }}
-
-    .course-card {{
-      display: flex; align-items: center; gap: .85rem;
-      border: 1px solid var(--line); border-radius: var(--radius); padding: 1rem 1.15rem;
-      background: var(--paper); box-shadow: var(--shadow); text-decoration: none; color: inherit;
-      transition: .15s;
-    }}
-    .course-card:hover {{ box-shadow: var(--shadow-lg); transform: translateY(-1px); }}
-    .course-card.intprog {{ border-top: 4px solid var(--accent); background: linear-gradient(180deg, #fffbfb 0%, #fff 100%); }}
-    .course-card.oop {{ border-top: 4px solid var(--oop-accent); background: linear-gradient(180deg, #fdfcff 0%, #fff 100%); }}
     .course-icon-svg {{ width: 52px; height: 52px; flex-shrink: 0; display: block; }}
     .course-icon-sm {{ width: 18px; height: 18px; }}
-    .course-card-body {{ flex: 1; min-width: 0; }}
-    .course-card-kicker {{ font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }}
-    .course-card.intprog .course-card-kicker {{ color: var(--accent); }}
-    .course-card.oop .course-card-kicker {{ color: var(--oop-accent); }}
-    .course-card h3 {{ font-size: 1.02rem; margin: .25rem 0; }}
-    .course-card p {{ font-size: .82rem; color: var(--text-soft); line-height: 1.45; margin: 0; }}
     .nav-col-title {{ display: flex; align-items: center; gap: .45rem; }}
+    .site-nav-brand-inner {{ display: flex; align-items: center; gap: .75rem; flex: 1; min-width: 0; }}
 
     .topbar {{
       background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
@@ -787,14 +929,14 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       display: none;
     }}
 
-    /* 7-day plan */
-    .plan-hero {{
+    /* Haftalik calisma yolu + 7 gunluk plan */
+    .study-path-hero, .plan-hero {{
       background: linear-gradient(135deg, #991b1b 0%, #b91c1c 50%, #dc2626 100%);
       color: white; border-radius: var(--radius); padding: 1.5rem 1.75rem;
       margin-bottom: 1.5rem; box-shadow: var(--shadow-lg);
     }}
-    .plan-hero h2 {{ font-size: 1.35rem; font-weight: 700; margin-bottom: .4rem; }}
-    .plan-hero p {{ opacity: .92; font-size: .9rem; max-width: 560px; }}
+    .study-path-hero h2, .plan-hero h2 {{ font-size: 1.35rem; font-weight: 700; margin-bottom: .4rem; }}
+    .study-path-hero p, .plan-hero p {{ opacity: .92; font-size: .9rem; max-width: 560px; }}
     .plan-progress {{
       margin-top: 1rem; background: rgba(255,255,255,.2); border-radius: 999px; height: 8px; overflow: hidden;
     }}
@@ -850,30 +992,37 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     @media (max-width: 600px) {{ .must-know-item {{ grid-template-columns: 1fr; }} }}
 
     @media (max-width: 1100px) {{
-      :root {{ --nav-strip-h: min(32vh, 260px); }}
-      .site-nav-dual {{ grid-template-columns: 1fr; max-height: none; }}
-      .nav-col-intprog {{ border-right: none; border-bottom: 2px solid var(--accent-border); max-height: 28vh; }}
-      .nav-col-oop {{ max-height: 28vh; }}
-      .course-picker {{ grid-template-columns: 1fr; }}
-      .courses-split {{ grid-template-columns: 1fr; }}
-      .course-pane {{ height: auto; min-height: 45vh; border-right: none; border-bottom: 1px solid var(--pane-divider); }}
-      .main {{ overflow: visible; }}
-      .layout {{ height: auto; overflow: visible; }}
+      :root {{ --sidebar-w: 248px; }}
+      .landing-screen {{ grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; }}
+      .landing-intprog {{ border-right: none; border-bottom: 1px solid rgba(255,255,255,.1); }}
+      .hero-icon {{ width: min(36vw, 150px); height: min(36vw, 150px); }}
     }}
 
     @media (max-width: 768px) {{
-      .site-nav {{ position: relative; }}
-      .site-nav-dual {{ display: none; }}
-      .site-nav.nav-open .site-nav-dual {{ display: grid; }}
-      .site-nav-brand .mobile-toggle {{ display: flex; align-items: center; justify-content: center; }}
+      :root {{ --sidebar-w: min(85vw, 300px); }}
+      .course-aside {{
+        position: fixed; left: 0; top: var(--topbar-h); bottom: 0; z-index: 400;
+        transform: translateX(-105%); transition: transform .22s ease;
+        box-shadow: 8px 0 32px rgba(0,0,0,.15);
+      }}
+      .course-topbar.nav-open ~ .course-body .course-aside {{ transform: translateX(0); }}
+      .course-topbar .mobile-toggle {{ display: flex; align-items: center; justify-content: center; }}
+      .aside-backdrop {{
+        display: none; position: fixed; inset: var(--topbar-h) 0 0 0;
+        background: rgba(15,23,42,.35); z-index: 350;
+      }}
+      .course-topbar.nav-open ~ .course-body .aside-backdrop {{ display: block; }}
       .quiz-toolbar {{ flex-direction: column; align-items: stretch; }}
     }}
 
     @media print {{
-      .site-nav, .mobile-toggle, .topbar-actions, .quiz-toolbar, .quiz-btn, .term-tip-btn {{ display: none !important; }}
-      .main {{ max-width: 100%; padding: .5rem; height: auto; overflow: visible; }}
+      .landing-screen, .back-home-btn, .mobile-toggle {{ display: none !important; }}
+      .app-shell.hidden {{ display: block !important; height: auto; overflow: visible; }}
+      .app-shell .course-pane-intprog, .app-shell .course-pane-oop {{ display: block !important; height: auto; overflow: visible; }}
+      .course-topbar, .course-aside, .aside-backdrop {{ display: none !important; }}
+      .course-main {{ overflow: visible; height: auto; padding: .5rem; }}
+      .topbar-actions, .quiz-toolbar, .quiz-btn, .term-tip-btn {{ display: none !important; }}
       .layout {{ height: auto; }}
-      .courses-split {{ grid-template-columns: 1fr; height: auto; }}
       .course-pane {{ height: auto; overflow: visible; page-break-before: auto; }}
       .week-block, .special-block {{ break-inside: avoid; box-shadow: none; }}
       .panel {{ break-inside: avoid; }}
@@ -881,20 +1030,127 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       .quiz-a {{ display: block !important; }}
       .quiz-card.hidden {{ display: block !important; }}
     }}
+
+    .jumpscare {{
+      position: fixed; inset: 0; z-index: 99999;
+      display: none; align-items: center; justify-content: center;
+      background: #000; pointer-events: none; overflow: hidden;
+    }}
+    .jumpscare.is-active {{
+      display: flex;
+      animation: js-screen-shake 0.62s cubic-bezier(.36,.07,.19,.97) both;
+    }}
+    .jumpscare-flash {{
+      position: absolute; inset: 0; background: #fff;
+      opacity: 0; pointer-events: none; z-index: 4;
+    }}
+    .jumpscare-red {{
+      position: absolute; inset: 0; background: #dc2626;
+      opacity: 0; pointer-events: none; z-index: 3; mix-blend-mode: screen;
+    }}
+    .jumpscare-vignette {{
+      position: absolute; inset: 0; z-index: 2; pointer-events: none;
+      background: radial-gradient(circle at center, transparent 35%, rgba(0,0,0,.55) 100%);
+      opacity: 0;
+    }}
+    .jumpscare.is-active .jumpscare-flash {{
+      animation: js-white-flash 0.75s ease-out forwards;
+    }}
+    .jumpscare.is-active .jumpscare-red {{
+      animation: js-red-flash 0.75s ease-out forwards;
+    }}
+    .jumpscare.is-active .jumpscare-vignette {{
+      animation: js-vignette 0.75s ease-out forwards;
+    }}
+    .jumpscare-frame {{
+      position: relative; z-index: 1;
+      width: 100%; height: 100%; overflow: hidden;
+    }}
+    .jumpscare-photo {{
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      filter: contrast(1.45) saturate(1.3) brightness(1.05);
+      will-change: transform, opacity, filter;
+    }}
+    .jumpscare-photo--intprog {{
+      object-position: 50% 19%;
+      transform-origin: 50% 19%;
+    }}
+    .jumpscare-photo--oop {{
+      object-position: 50% 27%;
+      transform-origin: 50% 27%;
+    }}
+    .jumpscare.is-active .jumpscare-photo--intprog {{
+      animation: js-face-intprog 0.78s cubic-bezier(.15,.85,.25,1) forwards;
+    }}
+    .jumpscare.is-active .jumpscare-photo--oop {{
+      animation: js-face-oop 0.78s cubic-bezier(.15,.85,.25,1) forwards;
+    }}
+    @keyframes js-screen-shake {{
+      0%, 100% {{ transform: translate(0, 0); }}
+      8% {{ transform: translate(-14px, 8px) rotate(-0.8deg); }}
+      16% {{ transform: translate(12px, -10px) rotate(0.9deg); }}
+      24% {{ transform: translate(-10px, -6px) rotate(-0.5deg); }}
+      32% {{ transform: translate(8px, 6px) rotate(0.4deg); }}
+      40% {{ transform: translate(-4px, 2px); }}
+      50% {{ transform: translate(0, 0); }}
+    }}
+    @keyframes js-white-flash {{
+      0% {{ opacity: 0; }}
+      4% {{ opacity: 1; }}
+      10% {{ opacity: 0; }}
+      16% {{ opacity: .95; }}
+      22% {{ opacity: 0; }}
+      100% {{ opacity: 0; }}
+    }}
+    @keyframes js-red-flash {{
+      0%, 12% {{ opacity: 0; }}
+      18% {{ opacity: .75; }}
+      26% {{ opacity: 0; }}
+      34% {{ opacity: .45; }}
+      42% {{ opacity: 0; }}
+      100% {{ opacity: 0; }}
+    }}
+    @keyframes js-vignette {{
+      0% {{ opacity: 0; }}
+      8% {{ opacity: 1; }}
+      70% {{ opacity: .85; }}
+      100% {{ opacity: 0; }}
+    }}
+    @keyframes js-face-intprog {{
+      0% {{ opacity: 0; transform: scale(0.45); filter: invert(1) contrast(2) brightness(1.4); }}
+      5% {{ opacity: 1; transform: scale(0.96); filter: contrast(1.7) saturate(1.5) brightness(1.15); }}
+      12% {{ opacity: 1; transform: scale(0.92); filter: contrast(1.5) saturate(1.35) brightness(1.08); }}
+      68% {{ opacity: 1; transform: scale(0.9); }}
+      100% {{ opacity: 0; transform: scale(0.94); }}
+    }}
+    @keyframes js-face-oop {{
+      0% {{ opacity: 0; transform: scale(0.45); filter: invert(1) contrast(2) brightness(1.4); }}
+      5% {{ opacity: 1; transform: scale(0.94); filter: contrast(1.7) saturate(1.5) brightness(1.15); }}
+      12% {{ opacity: 1; transform: scale(0.9); filter: contrast(1.5) saturate(1.35) brightness(1.08); }}
+      68% {{ opacity: 1; transform: scale(0.88); }}
+      100% {{ opacity: 0; transform: scale(0.92); }}
+    }}
+    @media print {{ .jumpscare {{ display: none !important; }} }}
   </style>
 </head>
 <body>
+  {landing_screen}
+  <div class="app-shell hidden" id="app-shell">
   <div class="layout">
-    <header class="site-nav" id="siteNav">
-      <div class="site-nav-brand">
-        <div class="brand">
-          <div class="brand-kicker">Sinav Calisma Merkezi</div>
-          <h1>Internet Prog II + Nesne Yonelimli Prog</h1>
-          <p>Ustte iki ders menusu — altta yan yana icerik</p>
-        </div>
-        <button class="mobile-toggle" id="menuBtn" aria-label="Menu">&#9776;</button>
+    <header class="course-topbar" id="siteNav">
+      <button type="button" class="back-home-btn" data-action="back-home" aria-label="Ders secimine don">&#8592; Ders Secimi</button>
+      <div class="brand">
+        <div class="brand-kicker">Sinav Calisma Merkezi</div>
+        <h1 id="courseTitle">Internet Prog II + Nesne Yonelimli Prog</h1>
+        <p id="courseSubtitle">Ders menusu ve icerik</p>
       </div>
-      <div class="site-nav-dual">
+      <button class="mobile-toggle" id="menuBtn" aria-label="Menu">&#9776;</button>
+    </header>
+    <div class="course-body">
+      <aside class="course-aside" id="courseAside" aria-label="Ders menusu">
         <nav class="nav-col nav-col-intprog nav-intprog" aria-label="Internet Programciligi II">
           <div class="nav-col-title nav-col-title-intprog">{ruby_icon_sm} Internet Programciligi II</div>
           {toc_intprog}
@@ -903,61 +1159,269 @@ HTML_TEMPLATE = """<!DOCTYPE html>
           <div class="nav-col-title nav-col-title-oop">{python_icon_sm} Nesne Yonelimli Programlama</div>
           {toc_oop}
         </nav>
-      </div>
-    </header>
-    <main class="main">
-      {course_picker}
-      <div class="courses-split">
-        <div class="course-pane course-pane-intprog" id="pane-intprog">
-          {content_intprog}
+      </aside>
+      <div class="aside-backdrop" id="asideBackdrop" aria-hidden="true"></div>
+      <main class="course-main" id="courseMain">
+        <div class="courses-split">
+          <div class="course-pane course-pane-intprog" id="pane-intprog">
+            {content_intprog}
+          </div>
+          <div class="course-pane course-pane-oop" id="pane-oop">
+            {content_oop}
+          </div>
         </div>
-        <div class="course-pane course-pane-oop" id="pane-oop">
-          {content_oop}
-        </div>
-      </div>
-    </main>
+      </main>
+    </div>
+  </div>
+  </div>
+  <div id="jumpscare" class="jumpscare" hidden aria-hidden="true">
+    <div class="jumpscare-flash"></div>
+    <div class="jumpscare-red"></div>
+    <div class="jumpscare-vignette"></div>
+    <div class="jumpscare-frame">
+      <img id="jumpscareImg" class="jumpscare-photo" src="" alt="">
+    </div>
   </div>
   <script>
+    const JUMPSCARE_SRC = {{
+      intprog: 'assets/jumpscare-intprog.png',
+      oop: 'assets/jumpscare-oop.png',
+    }};
+    Object.values(JUMPSCARE_SRC).forEach(src => {{ const p = new Image(); p.src = src; }});
+
+    let jumpscareTimer = null;
+    let jumpscareAudio = null;
+    function getJumpscareAudio() {{
+      if (!jumpscareAudio) {{
+        jumpscareAudio = new (window.AudioContext || window.webkitAudioContext)();
+      }}
+      return jumpscareAudio;
+    }}
+    function playJumpscareSound() {{
+      try {{
+        const ctx = getJumpscareAudio();
+        if (ctx.state === 'suspended') ctx.resume();
+        const t = ctx.currentTime;
+        const dur = 0.28;
+        const bufLen = Math.floor(ctx.sampleRate * dur);
+        const buf = ctx.createBuffer(1, bufLen, ctx.sampleRate);
+        const ch = buf.getChannelData(0);
+        for (let i = 0; i < bufLen; i++) {{
+          ch[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bufLen * 0.07));
+        }}
+        const noise = ctx.createBufferSource();
+        noise.buffer = buf;
+        const nGain = ctx.createGain();
+        nGain.gain.setValueAtTime(0.85, t);
+        nGain.gain.exponentialRampToValueAtTime(0.001, t + dur);
+        const hp = ctx.createBiquadFilter();
+        hp.type = 'highpass';
+        hp.frequency.value = 700;
+        noise.connect(hp);
+        hp.connect(nGain);
+        nGain.connect(ctx.destination);
+        noise.start(t);
+        noise.stop(t + dur + 0.05);
+        const boom = ctx.createOscillator();
+        boom.type = 'sawtooth';
+        boom.frequency.setValueAtTime(160, t);
+        boom.frequency.exponentialRampToValueAtTime(38, t + 0.18);
+        const bGain = ctx.createGain();
+        bGain.gain.setValueAtTime(0.75, t);
+        bGain.gain.exponentialRampToValueAtTime(0.001, t + 0.42);
+        boom.connect(bGain);
+        bGain.connect(ctx.destination);
+        boom.start(t);
+        boom.stop(t + 0.45);
+        const screech = ctx.createOscillator();
+        screech.type = 'square';
+        screech.frequency.setValueAtTime(820, t + 0.02);
+        screech.frequency.exponentialRampToValueAtTime(2400, t + 0.07);
+        screech.frequency.exponentialRampToValueAtTime(320, t + 0.24);
+        const sGain = ctx.createGain();
+        sGain.gain.setValueAtTime(0.0001, t);
+        sGain.gain.exponentialRampToValueAtTime(0.42, t + 0.03);
+        sGain.gain.exponentialRampToValueAtTime(0.001, t + 0.26);
+        screech.connect(sGain);
+        sGain.connect(ctx.destination);
+        screech.start(t + 0.02);
+        screech.stop(t + 0.28);
+      }} catch (e) {{}}
+    }}
+    function triggerJumpscare(course) {{
+      const box = document.getElementById('jumpscare');
+      const img = document.getElementById('jumpscareImg');
+      if (!box || !img) return;
+      if (jumpscareTimer) clearTimeout(jumpscareTimer);
+      img.className = 'jumpscare-photo jumpscare-photo--' + course;
+      img.src = JUMPSCARE_SRC[course] || JUMPSCARE_SRC.intprog;
+      box.classList.remove('is-active', 'jumpscare--intprog', 'jumpscare--oop');
+      box.classList.add('jumpscare--' + course);
+      box.removeAttribute('hidden');
+      box.setAttribute('aria-hidden', 'false');
+      void box.offsetWidth;
+      box.classList.add('is-active');
+      playJumpscareSound();
+      jumpscareTimer = setTimeout(() => {{
+        box.classList.remove('is-active', 'jumpscare--intprog', 'jumpscare--oop');
+        box.setAttribute('hidden', '');
+        box.setAttribute('aria-hidden', 'true');
+        img.className = 'jumpscare-photo';
+        img.removeAttribute('src');
+      }}, 780);
+    }}
+    function scrollToSection(id) {{
+      const el = document.getElementById(id);
+      const main = document.getElementById('courseMain');
+      if (!el) return;
+      if (main && document.body.classList.contains('in-course')) {{
+        const top = el.getBoundingClientRect().top - main.getBoundingClientRect().top + main.scrollTop - 12;
+        main.scrollTo({{ top: Math.max(0, top), behavior: 'smooth' }});
+        document.getElementById('siteNav')?.classList.remove('nav-open');
+      }} else {{
+        el.scrollIntoView({{ behavior: 'smooth', block: 'start' }});
+      }}
+    }}
+
     function scrollPaneToId(pane, id) {{
+      if (document.body.classList.contains('in-course')) {{
+        scrollToSection(id);
+        return;
+      }}
       const el = document.getElementById(id);
       if (!el || !pane) return;
       const top = el.getBoundingClientRect().top - pane.getBoundingClientRect().top + pane.scrollTop - 12;
       pane.scrollTo({{ top: Math.max(0, top), behavior: 'smooth' }});
     }}
 
-    document.querySelectorAll('.site-nav a[href^="#"], .course-picker a[href^="#"]').forEach(a => {{
+    document.querySelectorAll('.course-aside a[href^="#"]').forEach(a => {{
       a.addEventListener('click', e => {{
-        const id = a.getAttribute('href').slice(1);
+        const href = a.getAttribute('href');
+        if (href === '#landing' || a.dataset.action === 'back-home') {{
+          e.preventDefault();
+          showLanding();
+          return;
+        }}
+        const id = href.slice(1);
+        if (!id) return;
         const el = document.getElementById(id);
         if (!el) return;
-        const pane = el.closest('.course-pane');
-        if (pane) {{
-          e.preventDefault();
-          scrollPaneToId(pane, id);
-          document.getElementById('siteNav').classList.remove('nav-open');
-        }}
+        e.preventDefault();
+        scrollToSection(id);
+        document.getElementById('siteNav')?.classList.remove('nav-open');
       }});
     }});
 
-    function setupPaneSpy(paneId, navSelector) {{
+    const landingEl = document.getElementById('landing-screen');
+    const appShell = document.getElementById('app-shell');
+    const courseTitle = document.getElementById('courseTitle');
+    const courseSubtitle = document.getElementById('courseSubtitle');
+    const COURSE_META = {{
+      intprog: {{
+        title: 'Internet Programciligi II',
+        subtitle: 'Ruby on Rails — Hafta 2-10, quiz ve 7 gunluk plan',
+      }},
+      oop: {{
+        title: 'Nesne Yonelimli Programlama',
+        subtitle: 'Python OOP — Hafta 1-10, SOLID calismalari',
+      }},
+    }};
+
+    function showLanding() {{
+      landingEl?.classList.remove('hidden');
+      appShell?.classList.add('hidden');
+      appShell?.classList.remove('view-intprog', 'view-oop');
+      document.body.classList.remove('in-course', 'theme-intprog', 'theme-oop');
+      if (courseTitle) courseTitle.textContent = 'Internet Prog II + Nesne Yonelimli Prog';
+      if (courseSubtitle) courseSubtitle.textContent = 'Ders sec — hangi derse calisacaksin?';
+      window.scrollTo({{ top: 0 }});
+      if (history.replaceState) history.replaceState(null, '', window.location.pathname + window.location.search);
+    }}
+
+    function showCourse(course, scrollId, withJumpscare) {{
+      landingEl?.classList.add('hidden');
+      appShell?.classList.remove('hidden');
+      appShell?.classList.remove('view-intprog', 'view-oop');
+      appShell?.classList.add('view-' + course);
+      document.body.classList.add('in-course');
+      document.body.classList.remove('theme-intprog', 'theme-oop');
+      document.body.classList.add(course === 'intprog' ? 'theme-intprog' : 'theme-oop');
+      const meta = COURSE_META[course];
+      if (courseTitle && meta) courseTitle.textContent = meta.title;
+      if (courseSubtitle && meta) courseSubtitle.textContent = meta.subtitle;
+      const bannerId = course === 'intprog' ? 'intprog-course' : 'oop-course';
+      const defaultTarget = scrollId || (course === 'intprog' ? 'haftalik-calisma-yolu' : 'oop-haftalik-calisma-yolu');
+      if (withJumpscare) triggerJumpscare(course);
+      requestAnimationFrame(() => {{
+        const main = document.getElementById('courseMain');
+        if (main) main.scrollTop = 0;
+        scrollToSection(document.getElementById(defaultTarget) ? defaultTarget : bannerId);
+      }});
+    }}
+
+    document.querySelectorAll('.landing-card').forEach(btn => {{
+      btn.addEventListener('click', () => showCourse(btn.dataset.course, null, true));
+    }});
+    document.querySelectorAll('[data-action="back-home"]').forEach(el => {{
+      el.addEventListener('click', e => {{ e.preventDefault(); showLanding(); }});
+    }});
+
+    function initFromHash() {{
+      const h = window.location.hash.slice(1);
+      if (!h || h === 'landing') {{ showLanding(); return; }}
+      const target = document.getElementById(h);
+      if (target?.closest('#pane-intprog') || h === 'intprog' || h === 'intprog-course') {{
+        showCourse('intprog', (h === 'intprog' || h === 'intprog-course') ? null : h);
+        return;
+      }}
+      if (target?.closest('#pane-oop') || h === 'oop' || h === 'oop-course') {{
+        showCourse('oop', (h === 'oop' || h === 'oop-course') ? null : h);
+        return;
+      }}
+      showLanding();
+    }}
+    initFromHash();
+    window.addEventListener('hashchange', initFromHash);
+
+    document.querySelectorAll('.course-pane a[href^="#"]').forEach(a => {{
+      a.addEventListener('click', e => {{
+        const id = a.getAttribute('href').slice(1);
+        if (!id || id === 'landing') return;
+        const el = document.getElementById(id);
+        if (!el) return;
+        e.preventDefault();
+        scrollToSection(id);
+      }});
+    }});
+
+    function setupScrollSpy(paneId, navSelector) {{
       const pane = document.getElementById(paneId);
-      if (!pane) return;
+      const main = document.getElementById('courseMain');
+      if (!pane || !main) return;
       const links = document.querySelectorAll(navSelector + ' a[href^="#"]');
-      const sections = [...pane.querySelectorAll('.week-block, .special-block, .plan-hero, .course-banner')];
-      pane.addEventListener('scroll', () => {{
-        const paneTop = pane.getBoundingClientRect().top;
+      const sections = [...pane.querySelectorAll('.week-block, .special-block, .study-path-hero, .plan-hero, .course-banner')];
+      function onScroll() {{
+        if (!appShell || appShell.classList.contains('hidden')) return;
+        const courseClass = paneId === 'pane-intprog' ? 'view-intprog' : 'view-oop';
+        if (!appShell.classList.contains(courseClass)) return;
+        const mainTop = main.getBoundingClientRect().top;
         let cur = '';
         sections.forEach(s => {{
           const rect = s.getBoundingClientRect();
-          if (rect.top - paneTop <= 90) cur = s.id;
+          if (rect.top - mainTop <= 72) cur = s.id;
         }});
         links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
-      }}, {{ passive: true }});
+      }}
+      main.addEventListener('scroll', onScroll, {{ passive: true }});
+      onScroll();
     }}
-    setupPaneSpy('pane-intprog', '.nav-intprog');
-    setupPaneSpy('pane-oop', '.nav-oop');
+    setupScrollSpy('pane-intprog', '.nav-intprog');
+    setupScrollSpy('pane-oop', '.nav-oop');
 
     document.getElementById('menuBtn').onclick = () => document.getElementById('siteNav').classList.toggle('nav-open');
+    document.getElementById('asideBackdrop')?.addEventListener('click', () => {{
+      document.getElementById('siteNav')?.classList.remove('nav-open');
+    }});
 
     document.querySelectorAll('.term-tip-btn').forEach(btn => {{
       btn.addEventListener('click', e => {{
@@ -1074,7 +1538,9 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     }}
     function savePlan(data) {{ localStorage.setItem(PLAN_KEY, JSON.stringify(data)); }}
     function updateProgress() {{
-      const boxes = document.querySelectorAll('.plan-tasks input[type=checkbox]');
+      const section = document.getElementById('7-gunluk-plan');
+      if (!section) return;
+      const boxes = section.querySelectorAll('.plan-tasks input[type=checkbox]');
       const done = [...boxes].filter(b => b.checked).length;
       const total = boxes.length;
       const pct = total ? Math.round(done / total * 100) : 0;
@@ -1082,14 +1548,14 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       const txt = document.getElementById('planProgressText');
       if (bar) bar.style.width = pct + '%';
       if (txt) txt.textContent = done + ' / ' + total + ' gorev tamamlandi (' + pct + '%)';
-      document.querySelectorAll('.plan-day').forEach(day => {{
+      section.querySelectorAll('.plan-day').forEach(day => {{
         const dboxes = day.querySelectorAll('.plan-tasks input[type=checkbox]');
         const ddone = [...dboxes].filter(b => b.checked).length;
         day.classList.toggle('done', dboxes.length > 0 && ddone === dboxes.length);
       }});
     }}
     const saved = loadPlan();
-    document.querySelectorAll('.plan-tasks input[type=checkbox]').forEach(box => {{
+    document.querySelectorAll('#7-gunluk-plan .plan-tasks input[type=checkbox]').forEach(box => {{
       const id = box.dataset.taskId;
       if (saved[id]) box.checked = true;
       const label = box.closest('li')?.querySelector('label');
@@ -1101,24 +1567,77 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         updateProgress();
       }});
     }});
-    document.querySelectorAll('.plan-day-head').forEach(head => {{
+    document.querySelectorAll('#7-gunluk-plan .plan-day-head').forEach(head => {{
       head.addEventListener('click', e => {{
         if (e.target.tagName === 'INPUT' || e.target.tagName === 'A' || e.target.tagName === 'LABEL') return;
         head.closest('.plan-day').classList.toggle('open');
       }});
     }});
     document.getElementById('openToday')?.addEventListener('click', () => {{
-      document.querySelectorAll('.plan-day').forEach(d => d.classList.remove('open'));
-      const first = document.querySelector('.plan-day:not(.done)');
+      document.querySelectorAll('#7-gunluk-plan .plan-day').forEach(d => d.classList.remove('open'));
+      const first = document.querySelector('#7-gunluk-plan .plan-day:not(.done)');
       if (first) {{
         first.classList.add('open');
-        const pane = document.getElementById('pane-intprog');
-        if (pane && first.id) scrollPaneToId(pane, first.id);
-        else first.scrollIntoView({{ behavior: 'smooth', block: 'start' }});
+        scrollToSection(first.id || '7-gunluk-plan');
       }}
     }});
     updateProgress();
-    document.querySelector('.plan-day')?.classList.add('open');
+    document.querySelector('#7-gunluk-plan .plan-day')?.classList.add('open');
+
+    function setupPathProgress(sectionId, storageKey, barId, textId, openBtnId) {{
+      const section = document.getElementById(sectionId);
+      if (!section) return;
+      function load() {{
+        try {{ return JSON.parse(localStorage.getItem(storageKey) || '{{}}'); }} catch(e) {{ return {{}}; }}
+      }}
+      function save(data) {{ localStorage.setItem(storageKey, JSON.stringify(data)); }}
+      function update() {{
+        const boxes = section.querySelectorAll('.plan-tasks input[type=checkbox]');
+        const done = [...boxes].filter(b => b.checked).length;
+        const total = boxes.length;
+        const pct = total ? Math.round(done / total * 100) : 0;
+        const bar = document.getElementById(barId);
+        const txt = document.getElementById(textId);
+        if (bar) bar.style.width = pct + '%';
+        if (txt) txt.textContent = done + ' / ' + total + ' adim tamamlandi (' + pct + '%)';
+        section.querySelectorAll('.plan-day').forEach(day => {{
+          const dboxes = day.querySelectorAll('.plan-tasks input[type=checkbox]');
+          const ddone = [...dboxes].filter(b => b.checked).length;
+          day.classList.toggle('done', dboxes.length > 0 && ddone === dboxes.length);
+        }});
+      }}
+      const saved = load();
+      section.querySelectorAll('.plan-tasks input[type=checkbox]').forEach(box => {{
+        const id = box.dataset.taskId;
+        if (saved[id]) box.checked = true;
+        const label = box.closest('li')?.querySelector('label');
+        if (label && box.checked) label.classList.add('done');
+        box.addEventListener('change', () => {{
+          saved[id] = box.checked;
+          save(saved);
+          if (label) label.classList.toggle('done', box.checked);
+          update();
+        }});
+      }});
+      section.querySelectorAll('.plan-day-head').forEach(head => {{
+        head.addEventListener('click', e => {{
+          if (e.target.tagName === 'INPUT' || e.target.tagName === 'A' || e.target.tagName === 'LABEL') return;
+          head.closest('.plan-day').classList.toggle('open');
+        }});
+      }});
+      document.getElementById(openBtnId)?.addEventListener('click', () => {{
+        section.querySelectorAll('.plan-day').forEach(d => d.classList.remove('open'));
+        const first = section.querySelector('.plan-day:not(.done)');
+        if (first) {{
+          first.classList.add('open');
+          scrollToSection(first.id || sectionId);
+        }}
+      }});
+      section.querySelector('.plan-day')?.classList.add('open');
+      update();
+    }}
+    setupPathProgress('haftalik-calisma-yolu', 'intprog-weekly-v1', 'weeklyProgressBar-intprog', 'weeklyProgressText-intprog', 'openWeeklyIntprog');
+    setupPathProgress('oop-haftalik-calisma-yolu', 'oop-weekly-v1', 'weeklyProgressBar-oop', 'weeklyProgressText-oop', 'openWeeklyOop');
   </script>
 </body>
 </html>"""
@@ -1414,28 +1933,21 @@ def build_oop_week_block(title: str, sid: str, body: str) -> str:
     return head + simple_html + "".join(panels) + "</div></section>"
 
 
-def build_course_picker() -> str:
+def build_landing_screen() -> str:
     return f"""
-    <div class="course-picker" id="course-hub">
-      <div class="course-picker-label">Ders sec — hangi derse calisacaksin?</div>
-      <section class="course-hub">
-        <a class="course-card intprog" href="#intprog-course">
-          {RUBY_ICON_SVG}
-          <div class="course-card-body">
-            <div class="course-card-kicker">Ders 1 · Ruby</div>
-            <h3>Internet Programciligi II</h3>
-            <p>Rails, migration, Devise — Hafta 2-10, quiz ve 7 gunluk plan.</p>
-          </div>
-        </a>
-        <a class="course-card oop" href="#oop-course">
-          {PYTHON_ICON_SVG}
-          <div class="course-card-body">
-            <div class="course-card-kicker">Ders 2 · Python</div>
-            <h3>Nesne Yonelimli Programlama</h3>
-            <p>OOP, SOLID, kalitim — Hafta 1-10 PDF ve cozumlu alistirmalar.</p>
-          </div>
-        </a>
-      </section>
+    <div class="landing-screen" id="landing-screen">
+      <button type="button" class="landing-card landing-intprog" data-course="intprog" aria-label="Internet Programciligi II">
+        <div class="landing-icon-wrap">{RUBY_ICON_HERO}</div>
+        <h2 class="landing-title">Internet Programciligi II</h2>
+        <p class="landing-sub">Ruby on Rails · Hafta 2-10 · Quiz · 7 gunluk plan</p>
+        <span class="landing-cta">Dersi sec</span>
+      </button>
+      <button type="button" class="landing-card landing-oop" data-course="oop" aria-label="Nesne Yonelimli Programlama">
+        <div class="landing-icon-wrap">{PYTHON_ICON_HERO}</div>
+        <h2 class="landing-title">Nesne Yonelimli Programlama</h2>
+        <p class="landing-sub">Python OOP · Hafta 1-10 · SOLID calismalari</p>
+        <span class="landing-cta">Dersi sec</span>
+      </button>
     </div>
     """
 
@@ -1448,6 +1960,7 @@ def build_intprog_banner() -> str:
       <h2>Internet Programciligi II</h2>
       <p>Ruby on Rails — Hafta 2-10 PDF arsivi, kapsulleme, migration, Devise. 7 gunluk sinav plani ve interaktif quiz.</p>
       <div class="course-banner-actions">
+        <a class="btn" href="#haftalik-calisma-yolu">Haftalik Yol</a>
         <a class="btn" href="#7-gunluk-plan">7 Gunluk Plan</a>
         <a class="btn" href="#konu-indeksi">Konu Indeksi</a>
         <a class="btn" href="#internet-kaynaklari">Internet Kaynaklari</a>
@@ -1472,6 +1985,7 @@ def build_oop_banner() -> str:
       <h2>{html.escape(OOP_META['title'])}</h2>
       <p>NYP II — Hafta 1-9 PDF arsivi. Hafta 10: SOLID calismalari ve cozumlu alistirmalar.</p>
       <div class="course-banner-actions">
+        <a class="btn" href="#oop-haftalik-calisma-yolu">Haftalik Yol</a>
         <a class="btn" href="#oop-konu-indeksi">Konu Indeksi</a>
         <a class="btn" href="#hafta-10-solid-calisma-odev-cozumleri">Hafta 10 SOLID</a>
         <a class="btn" href="#oop-ezber">OOP Ezber</a>
@@ -1717,7 +2231,18 @@ def build_oop_week10_block() -> str:
 
 
 def build_oop_course(oop_sections) -> str:
-    blocks = [build_oop_banner(), build_oop_must_know_section()]
+    blocks = [
+        build_oop_banner(),
+        build_weekly_path_section(
+            OOP_WEEKLY_PATH,
+            "oop-haftalik-calisma-yolu",
+            "Haftalik Calisma Yolu — Python OOP",
+            "Hafta 1'den 10'a kadar adim adim ilerle. Her haftayi ac, gorevleri tikla, konulara gec.",
+            "oop",
+            "openWeeklyOop",
+        ),
+        build_oop_must_know_section(),
+    ]
     for title, sid, body in oop_sections:
         if "konu-indeksi" in sid:
             inner = enhance_inner_html(md_to_html_fragment(body), OOP_GLOSSARY)
@@ -1738,6 +2263,78 @@ def build_oop_course(oop_sections) -> str:
             blocks.append(build_oop_week_block(title, sid, body))
     blocks.append(build_oop_week10_block())
     return "".join(blocks)
+
+
+def build_weekly_path_section(
+    path: list,
+    section_id: str,
+    hero_title: str,
+    hero_desc: str,
+    storage_key: str,
+    open_btn_id: str,
+) -> str:
+    weeks_html = []
+    task_id = 0
+    for week in path:
+        tasks_li = []
+        for step in week["steps"]:
+            task_id += 1
+            tid = f"{storage_key}-w{week['week']}-t{task_id}"
+            link = (
+                f'<a href="{html.escape(step["link"])}">Adima git →</a>'
+                if step.get("link")
+                else ""
+            )
+            tasks_li.append(f"""
+            <li>
+              <input type="checkbox" id="{tid}" data-task-id="{tid}">
+              <label for="{tid}">{html.escape(step["text"])}{link}</label>
+            </li>
+            """)
+        remember_li = "".join(f"<li>{html.escape(r)}</li>" for r in week.get("remember", []))
+        remember_block = ""
+        if remember_li:
+            remember_block = f"""
+            <div class="plan-remember">
+              <strong>Bu hafta sonunda bilmen gerekenler:</strong>
+              <ul>{remember_li}</ul>
+            </div>
+            """
+        weeks_html.append(f"""
+        <div class="plan-day path-week" data-week="{week['week']}" id="path-week-{week['week']}">
+          <div class="plan-day-head">
+            <div class="plan-day-num">{week['week']}</div>
+            <div>
+              <div class="plan-day-title">Hafta {week['week']}: {html.escape(week['title'])}</div>
+              <div class="plan-day-meta">{html.escape(week['time'])}</div>
+              <div class="plan-day-goal">{html.escape(week['goal'])}</div>
+            </div>
+            <span class="plan-day-toggle">+</span>
+          </div>
+          <div class="plan-day-body">
+            <ul class="plan-tasks">{"".join(tasks_li)}</ul>
+            {remember_block}
+          </div>
+        </div>
+        """)
+
+    return f"""
+    <section class="special-block study-path-block" id="{section_id}">
+      <div class="study-path-hero">
+        <h2>{html.escape(hero_title)}</h2>
+        <p>{html.escape(hero_desc)}</p>
+        <div class="plan-progress"><div class="plan-progress-bar" id="weeklyProgressBar-{storage_key}"></div></div>
+        <div class="plan-progress-text" id="weeklyProgressText-{storage_key}">0 / 0 adim tamamlandi</div>
+        <div style="margin-top:.85rem">
+          <button type="button" class="btn btn-ghost" id="{open_btn_id}" style="background:rgba(255,255,255,.15);color:white;border-color:rgba(255,255,255,.3)">Siradaki haftaya git</button>
+        </div>
+      </div>
+      <div class="special-body" style="padding-top:0">
+        <div class="callout callout-tip" style="margin-bottom:1rem">Sifirdan basliyorsan haftalari sirayla takip et. Her adimi tikla, sonra <strong>Adima git</strong> ile ilgili konuya gec.</div>
+        {"".join(weeks_html)}
+      </div>
+    </section>
+    """
 
 
 def build_study_plan_section() -> str:
@@ -1977,8 +2574,9 @@ def build_commands_section(body: str) -> str:
 
 def build_toc_intprog(sections) -> str:
     lines = [
-        '<a href="#course-hub"><span class="w-num">*</span>Ders Secimi</a>',
+        '<a href="#landing" data-action="back-home"><span class="w-num">*</span>Ders Secimi</a>',
         '<a href="#intprog-course"><span class="w-num">IP</span>Giris</a>',
+        '<a href="#haftalik-calisma-yolu"><span class="w-num">Y</span>Haftalik Yol</a>',
         '<a href="#7-gunluk-plan"><span class="w-num">7</span>7 Gunluk Plan</a>',
         '<a href="#konu-indeksi"><span class="w-num">A</span>Konu Indeksi</a>',
         '<a href="#internet-kaynaklari"><span class="w-num">W</span>Internet Kaynaklari</a>',
@@ -2004,8 +2602,9 @@ def build_toc_intprog(sections) -> str:
 
 def build_toc_oop(oop_sections=None) -> str:
     lines = [
-        '<a href="#course-hub"><span class="w-num">*</span>Ders Secimi</a>',
+        '<a href="#landing" data-action="back-home"><span class="w-num">*</span>Ders Secimi</a>',
         '<a href="#oop-course"><span class="w-num">O</span>Giris</a>',
+        '<a href="#oop-haftalik-calisma-yolu"><span class="w-num">Y</span>Haftalik Yol</a>',
         '<a href="#oop-konu-indeksi"><span class="w-num">A</span>Konu Indeksi</a>',
         '<a href="#oop-ezber"><span class="w-num">!</span>OOP Ezber</a>',
         '<div class="nav-label">Haftalar</div>',
@@ -2032,7 +2631,18 @@ def build_toc_oop(oop_sections=None) -> str:
 
 
 def build_intprog_content(sections) -> str:
-    intprog_blocks = [build_intprog_banner(), build_study_plan_section()]
+    intprog_blocks = [
+        build_intprog_banner(),
+        build_weekly_path_section(
+            INTPROG_WEEKLY_PATH,
+            "haftalik-calisma-yolu",
+            "Haftalik Calisma Yolu — Ruby on Rails",
+            "Hafta 2'den 10'a kadar adim adim ilerle. Bilmiyorsan buradan basla; her adim seni dogru konuya goturur.",
+            "intprog",
+            "openWeeklyIntprog",
+        ),
+        build_study_plan_section(),
+    ]
     for title, sid, body in sections:
         if "konu-indeksi" in sid:
             intprog_blocks.append(build_topic_index_section(body))
@@ -2093,7 +2703,7 @@ def main():
     page = HTML_TEMPLATE.format(
         toc_intprog=toc_intprog,
         toc_oop=toc_oop,
-        course_picker=build_course_picker(),
+        landing_screen=build_landing_screen(),
         ruby_icon_sm=RUBY_ICON_SM,
         python_icon_sm=PYTHON_ICON_SM,
         content_intprog=content_intprog,
