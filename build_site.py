@@ -29,12 +29,20 @@ from lsp_solo_leveling import (
 )
 from oop_content import OOP_META, OOP_MUST_KNOW, OOP_TOPICS, OOP_PDF_PLACEHOLDER
 from oop_week9_exercises import WEEK9_EXERCISES
+from term_glossary import ALL_GLOSSARY, INTPROG_GLOSSARY, OOP_GLOSSARY
 
 BASE = Path(__file__).parent
 MD_FILE = BASE / "CALISMA_REHBERI.md"
 OOP_MD_FILE = BASE / "OOP_CALISMA.md"
 HTML_FILE = BASE / "index.html"
 PDF_FILE = BASE / "CALISMA_REHBERI.pdf"
+
+RUBY_ICON_SVG = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" class="course-icon-svg" aria-hidden="true"><path fill="#CC342D" d="M64 10 118 36v56L64 118 10 92V36z"/><path fill="#9B111E" d="M64 10v108L10 92V36z" opacity=".45"/><path fill="#fff" d="M64 10l54 26-54 26L10 36z" opacity=".22"/><path fill="#fff" d="M64 62 118 36v28L64 92 10 64V36z" opacity=".12"/></svg>"""
+
+PYTHON_ICON_SVG = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" class="course-icon-svg" aria-hidden="true"><path fill="#3776AB" d="M63.9 10.5c-30.5 0-28.6 13.2-28.6 13.2v13.6h29.1v2H18.3S10 37.8 10 63.9c0 26.1 7.9 25.2 7.9 25.2h9.4v-12.2s-.4-7.9 7.8-7.9h29.1s7.6.1 7.6-7.3V23.7s1.2-13.2-28.6-13.2zM47.9 18.1a4.9 4.9 0 1 1 0 9.8 4.9 4.9 0 0 1 0-9.8z"/><path fill="#FFD43B" d="M64.1 117.5c30.5 0 28.6-13.2 28.6-13.2V90.7H63.6v-2h46.1s8.3 1.5 8.3-24.6c0-26.1-7.9-25.2-7.9-25.2h-9.4v12.2s.4 7.9-7.8 7.9H63.6s-7.6-.1-7.6 7.3v19.4s-1.2 13.2 28.5 13.2zm16.2-7.6a4.9 4.9 0 1 1 0-9.8 4.9 4.9 0 0 1 0 9.8z"/></svg>"""
+
+RUBY_ICON_SM = RUBY_ICON_SVG.replace('class="course-icon-svg"', 'class="course-icon-svg course-icon-sm"')
+PYTHON_ICON_SM = PYTHON_ICON_SVG.replace('class="course-icon-svg"', 'class="course-icon-svg course-icon-sm"')
 
 WEEK_META = {
     "hafta-2-ruby-rails-giris": {
@@ -247,7 +255,9 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       --code-bg: #f4f6f8;
       --shadow: 0 1px 3px rgba(16,24,40,.06), 0 1px 2px rgba(16,24,40,.04);
       --shadow-lg: 0 8px 24px rgba(16,24,40,.08);
-      --sidebar-w: 260px;
+      --sidebar-w: 520px;
+      --nav-strip-h: min(38vh, 320px);
+      --pane-divider: #e2e8f0;
       --oop-accent: #6d28d9;
       --oop-soft: #f5f3ff;
       --oop-border: #ddd6fe;
@@ -262,37 +272,134 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       line-height: 1.65;
       font-size: 15px;
     }}
-    .layout {{ display: flex; min-height: 100vh; }}
+    .layout {{ display: flex; flex-direction: column; height: 100vh; overflow: hidden; }}
 
-    .sidebar {{
-      width: var(--sidebar-w);
-      background: var(--sidebar);
-      border-right: 1px solid var(--line);
-      position: fixed; inset: 0 auto 0 0;
-      overflow-y: auto; z-index: 100;
-      padding: 1.25rem 0 2rem;
+    .site-nav {{
+      flex-shrink: 0; background: var(--paper);
+      border-bottom: 2px solid var(--line); box-shadow: var(--shadow);
+      z-index: 200;
     }}
-    .brand {{ padding: 0 1.25rem 1.25rem; border-bottom: 1px solid var(--line); margin-bottom: .75rem; }}
-    .brand-kicker {{ font-size: .68rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }}
-    .brand h1 {{ font-size: 1rem; font-weight: 700; margin-top: .35rem; line-height: 1.35; }}
-    .brand p {{ font-size: .78rem; color: var(--text-soft); margin-top: .35rem; }}
-    .nav-label {{ padding: .85rem 1.25rem .35rem; font-size: .68rem; font-weight: 600; text-transform: uppercase; letter-spacing: .07em; color: #9ca3af; }}
-    .sidebar nav a {{
-      display: flex; align-items: center; gap: .55rem;
-      padding: .5rem 1.25rem; color: var(--text-soft); text-decoration: none;
-      font-size: .84rem; border-left: 3px solid transparent; transition: .15s;
+    .site-nav-brand {{
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+      padding: .65rem 1.25rem; border-bottom: 1px solid var(--line);
     }}
-    .sidebar nav a .w-num {{
-      width: 1.35rem; height: 1.35rem; border-radius: 6px; background: var(--bg);
+    .site-nav-brand .brand {{ padding: 0; border: none; margin: 0; flex: 1; }}
+    .brand-kicker {{ font-size: .65rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }}
+    .site-nav-brand .brand h1 {{ font-size: .95rem; font-weight: 700; margin-top: .2rem; line-height: 1.3; }}
+    .site-nav-brand .brand p {{ font-size: .72rem; color: var(--text-soft); margin-top: .2rem; }}
+    .site-nav-dual {{
+      display: grid; grid-template-columns: 1fr 1fr;
+      max-height: var(--nav-strip-h);
+    }}
+    .nav-col {{
+      overflow-y: auto; padding-bottom: .75rem; min-width: 0;
+    }}
+    .nav-col-intprog {{
+      border-right: 2px solid var(--accent-border);
+      background: linear-gradient(180deg, #fffbfb 0%, #fff 100%);
+    }}
+    .nav-col-oop {{
+      background: linear-gradient(180deg, #fdfcff 0%, #fff 100%);
+    }}
+    .nav-col-title {{
+      padding: .55rem 1rem .4rem; font-size: .68rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .06em; position: sticky; top: 0; z-index: 2;
+    }}
+    .nav-col-title-intprog {{ background: #fef2f2; color: var(--accent); border-bottom: 1px solid var(--accent-border); }}
+    .nav-col-title-oop {{ background: var(--oop-soft); color: var(--oop-text); border-bottom: 1px solid var(--oop-border); }}
+    .nav-col a {{
+      display: flex; align-items: center; gap: .5rem;
+      padding: .42rem 1rem; color: var(--text-soft); text-decoration: none;
+      font-size: .8rem; border-left: 3px solid transparent; transition: .12s;
+    }}
+    .nav-col a .w-num {{
+      width: 1.25rem; height: 1.25rem; border-radius: 5px; background: var(--bg);
       display: inline-flex; align-items: center; justify-content: center;
-      font-size: .68rem; font-weight: 700; color: var(--text-soft); flex-shrink: 0;
+      font-size: .65rem; font-weight: 700; color: var(--text-soft); flex-shrink: 0;
     }}
-    .sidebar nav a:hover, .sidebar nav a.active {{
+    .nav-col-intprog a:hover, .nav-col-intprog a.active {{
       color: var(--text); background: var(--accent-soft); border-left-color: var(--accent);
     }}
-    .sidebar nav a.active .w-num {{ background: var(--accent); color: white; }}
+    .nav-col-intprog a.active .w-num {{ background: var(--accent); color: white; }}
+    .nav-col-oop a:hover, .nav-col-oop a.active {{
+      color: var(--text); background: var(--oop-soft); border-left-color: var(--oop-accent);
+    }}
+    .nav-col-oop a.active .w-num {{ background: var(--oop-accent); color: white; }}
+    .nav-label {{ padding: .65rem 1rem .25rem; font-size: .65rem; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: #9ca3af; }}
 
-    .main {{ margin-left: var(--sidebar-w); flex: 1; padding: 2rem 2.5rem 4rem; max-width: 820px; }}
+    .main {{
+      flex: 1; min-height: 0; padding: 0; max-width: none; overflow: hidden;
+      display: flex; flex-direction: column;
+    }}
+    .course-picker {{
+      flex-shrink: 0; display: grid; grid-template-columns: 1fr 1fr; gap: .75rem;
+      padding: .75rem 1rem; background: var(--paper);
+      border-bottom: 1px solid var(--line); box-shadow: var(--shadow);
+    }}
+    .course-picker-label {{
+      grid-column: 1 / -1; font-size: .72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .07em; color: var(--text-soft); margin-bottom: -.25rem;
+    }}
+    .courses-split {{
+      display: grid; grid-template-columns: 1fr 1fr; flex: 1; min-height: 0;
+    }}
+    .course-pane {{
+      overflow-y: auto; height: 100%; scroll-behavior: smooth;
+      padding: 1rem 1rem 2.5rem; min-width: 0;
+      border-right: 1px solid var(--pane-divider);
+    }}
+    .course-pane:last-child {{ border-right: none; }}
+    .course-pane-intprog {{ background: #ffffff; }}
+    .course-pane-oop {{ background: #fafafa; }}
+
+    .term-tip {{ position: relative; display: inline-flex; align-items: center; vertical-align: middle; }}
+    .term-tip-btn {{
+      width: 1.15rem; height: 1.15rem; margin-left: .25rem; padding: 0;
+      border-radius: 50%; border: 1px solid var(--blue-border); background: var(--blue-soft);
+      color: var(--blue-text); font-size: .62rem; font-weight: 800; font-family: inherit;
+      cursor: pointer; line-height: 1; flex-shrink: 0;
+    }}
+    .term-tip-btn:hover {{ background: #dbeafe; }}
+    .term-tip-pop {{
+      display: none; position: absolute; left: 0; top: calc(100% + 6px); z-index: 500;
+      width: min(280px, 85vw); padding: .65rem .75rem; border-radius: 10px;
+      background: #1e293b; color: #f1f5f9; font-size: .78rem; line-height: 1.5;
+      box-shadow: 0 12px 28px rgba(0,0,0,.25); text-align: left;
+    }}
+    .term-tip-pop.open {{ display: block; }}
+    .term-tip-pop strong {{ display: block; color: #fff; font-size: .82rem; margin-bottom: .35rem; }}
+    .term-tip-pop p {{ margin: .3rem 0; color: #cbd5e1; }}
+    .term-tip-pop em {{ color: #94a3b8; font-style: normal; font-weight: 600; }}
+    .term-tip-code {{
+      margin: .45rem 0 0; padding: .45rem .55rem; background: #0f172a; border-radius: 6px;
+      font-size: .68rem; line-height: 1.45; overflow-x: auto; white-space: pre-wrap;
+    }}
+    .panel-inner td {{ position: relative; vertical-align: top; }}
+    .nav-col-oop a.active .w-num {{ background: var(--oop-accent); color: white; }}
+
+    .course-hub {{
+      display: contents;
+    }}
+    @media (min-width: 640px) {{ .course-hub {{ display: contents; }} }}
+
+    .course-card {{
+      display: flex; align-items: center; gap: .85rem;
+      border: 1px solid var(--line); border-radius: var(--radius); padding: 1rem 1.15rem;
+      background: var(--paper); box-shadow: var(--shadow); text-decoration: none; color: inherit;
+      transition: .15s;
+    }}
+    .course-card:hover {{ box-shadow: var(--shadow-lg); transform: translateY(-1px); }}
+    .course-card.intprog {{ border-top: 4px solid var(--accent); background: linear-gradient(180deg, #fffbfb 0%, #fff 100%); }}
+    .course-card.oop {{ border-top: 4px solid var(--oop-accent); background: linear-gradient(180deg, #fdfcff 0%, #fff 100%); }}
+    .course-icon-svg {{ width: 52px; height: 52px; flex-shrink: 0; display: block; }}
+    .course-icon-sm {{ width: 18px; height: 18px; }}
+    .course-card-body {{ flex: 1; min-width: 0; }}
+    .course-card-kicker {{ font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }}
+    .course-card.intprog .course-card-kicker {{ color: var(--accent); }}
+    .course-card.oop .course-card-kicker {{ color: var(--oop-accent); }}
+    .course-card h3 {{ font-size: 1.02rem; margin: .25rem 0; }}
+    .course-card p {{ font-size: .82rem; color: var(--text-soft); line-height: 1.45; margin: 0; }}
+    .nav-col-title {{ display: flex; align-items: center; gap: .45rem; }}
 
     .topbar {{
       background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
@@ -602,29 +709,13 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     }}
     .solid-extra-link:hover {{ background: #ddd6fe; }}
 
-    .course-hub {{
-      display: grid; gap: 1rem; margin-bottom: 1.75rem;
-    }}
-    @media (min-width: 640px) {{ .course-hub {{ grid-template-columns: 1fr 1fr; }} }}
-    .course-card {{
-      border: 1px solid var(--line); border-radius: var(--radius); padding: 1.35rem 1.5rem;
-      background: var(--paper); box-shadow: var(--shadow); text-decoration: none; color: inherit;
-      transition: .15s; display: block;
-    }}
-    .course-card:hover {{ box-shadow: var(--shadow-lg); transform: translateY(-2px); }}
-    .course-card.intprog {{ border-top: 4px solid var(--accent); }}
-    .course-card.oop {{ border-top: 4px solid var(--oop-accent); }}
-    .course-card-kicker {{ font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }}
-    .course-card.intprog .course-card-kicker {{ color: var(--accent); }}
-    .course-card.oop .course-card-kicker {{ color: var(--oop-accent); }}
-    .course-card h3 {{ font-size: 1.05rem; margin: .35rem 0; }}
-    .course-card p {{ font-size: .84rem; color: var(--text-soft); line-height: 1.5; }}
-
-    .course-wrap {{ margin-bottom: 2.5rem; scroll-margin-top: 1rem; }}
     .course-banner {{
-      border-radius: var(--radius); padding: 1.35rem 1.5rem; margin-bottom: 1.25rem;
+      border-radius: var(--radius); padding: 1.25rem 1.35rem; margin-bottom: 1.25rem;
       color: white; box-shadow: var(--shadow-lg);
+      display: flex; gap: 1rem; align-items: flex-start;
     }}
+    .course-banner-icon .course-icon-svg {{ width: 56px; height: 56px; filter: drop-shadow(0 2px 4px rgba(0,0,0,.2)); }}
+    .course-banner-text {{ flex: 1; min-width: 0; }}
     .course-banner-intprog {{ background: linear-gradient(135deg, #991b1b, #dc2626); }}
     .course-banner-oop {{ background: linear-gradient(135deg, #5b21b6, #7c3aed); }}
     .course-banner h2 {{ font-size: 1.35rem; margin-bottom: .35rem; }}
@@ -634,10 +725,6 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     .course-banner .btn:hover {{ background: rgba(255,255,255,.25); }}
 
     .nav-oop .w-num {{ background: var(--oop-soft); color: var(--oop-text); }}
-    .sidebar nav a.nav-oop-link:hover, .sidebar nav a.nav-oop-link.active {{
-      background: var(--oop-soft); border-left-color: var(--oop-accent);
-    }}
-    .sidebar nav a.nav-oop-link.active .w-num {{ background: var(--oop-accent); color: white; }}
 
     .oop-panel .panel {{ border-color: var(--oop-border); }}
     .oop-panel .panel[open] summary {{ background: var(--oop-soft); }}
@@ -690,10 +777,14 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     }}
     .quiz-a.visible {{ display: block; }}
 
+    .site-nav-brand .mobile-toggle {{
+      display: none; flex-shrink: 0;
+      background: var(--accent); color: white; border: none; border-radius: 8px;
+      width: 40px; height: 40px; font-size: 1.1rem; cursor: pointer;
+    }}
+
     .mobile-toggle {{
-      display: none; position: fixed; bottom: 1.25rem; right: 1.25rem; z-index: 200;
-      background: var(--accent); color: white; border: none; border-radius: 50%;
-      width: 48px; height: 48px; font-size: 1.2rem; cursor: pointer; box-shadow: var(--shadow-lg);
+      display: none;
     }}
 
     /* 7-day plan */
@@ -758,17 +849,32 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     .must-know-item span {{ color: var(--text-soft); }}
     @media (max-width: 600px) {{ .must-know-item {{ grid-template-columns: 1fr; }} }}
 
+    @media (max-width: 1100px) {{
+      :root {{ --nav-strip-h: min(32vh, 260px); }}
+      .site-nav-dual {{ grid-template-columns: 1fr; max-height: none; }}
+      .nav-col-intprog {{ border-right: none; border-bottom: 2px solid var(--accent-border); max-height: 28vh; }}
+      .nav-col-oop {{ max-height: 28vh; }}
+      .course-picker {{ grid-template-columns: 1fr; }}
+      .courses-split {{ grid-template-columns: 1fr; }}
+      .course-pane {{ height: auto; min-height: 45vh; border-right: none; border-bottom: 1px solid var(--pane-divider); }}
+      .main {{ overflow: visible; }}
+      .layout {{ height: auto; overflow: visible; }}
+    }}
+
     @media (max-width: 768px) {{
-      .sidebar {{ transform: translateX(-100%); transition: transform .25s; }}
-      .sidebar.open {{ transform: translateX(0); box-shadow: var(--shadow-lg); }}
-      .main {{ margin-left: 0; padding: 1rem; }}
-      .mobile-toggle {{ display: flex; align-items: center; justify-content: center; }}
+      .site-nav {{ position: relative; }}
+      .site-nav-dual {{ display: none; }}
+      .site-nav.nav-open .site-nav-dual {{ display: grid; }}
+      .site-nav-brand .mobile-toggle {{ display: flex; align-items: center; justify-content: center; }}
       .quiz-toolbar {{ flex-direction: column; align-items: stretch; }}
     }}
 
     @media print {{
-      .sidebar, .mobile-toggle, .topbar-actions, .quiz-toolbar, .quiz-btn {{ display: none !important; }}
-      .main {{ margin-left: 0; max-width: 100%; padding: .5rem; }}
+      .site-nav, .mobile-toggle, .topbar-actions, .quiz-toolbar, .quiz-btn, .term-tip-btn {{ display: none !important; }}
+      .main {{ max-width: 100%; padding: .5rem; height: auto; overflow: visible; }}
+      .layout {{ height: auto; }}
+      .courses-split {{ grid-template-columns: 1fr; height: auto; }}
+      .course-pane {{ height: auto; overflow: visible; page-break-before: auto; }}
       .week-block, .special-block {{ break-inside: avoid; box-shadow: none; }}
       .panel {{ break-inside: avoid; }}
       .panel[open] summary {{ border-bottom: 1px solid #ddd; }}
@@ -779,43 +885,104 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 </head>
 <body>
   <div class="layout">
-    <aside class="sidebar" id="sidebar">
-      <div class="brand">
-        <div class="brand-kicker">Sinav Calisma Merkezi</div>
-        <h1>Int Prog II + OOP</h1>
-        <p>Iki ders, tek site</p>
+    <header class="site-nav" id="siteNav">
+      <div class="site-nav-brand">
+        <div class="brand">
+          <div class="brand-kicker">Sinav Calisma Merkezi</div>
+          <h1>Internet Prog II + Nesne Yonelimli Prog</h1>
+          <p>Ustte iki ders menusu — altta yan yana icerik</p>
+        </div>
+        <button class="mobile-toggle" id="menuBtn" aria-label="Menu">&#9776;</button>
       </div>
-      <nav>{toc}</nav>
-    </aside>
+      <div class="site-nav-dual">
+        <nav class="nav-col nav-col-intprog nav-intprog" aria-label="Internet Programciligi II">
+          <div class="nav-col-title nav-col-title-intprog">{ruby_icon_sm} Internet Programciligi II</div>
+          {toc_intprog}
+        </nav>
+        <nav class="nav-col nav-col-oop nav-oop" aria-label="Nesne Yonelimli Programlama">
+          <div class="nav-col-title nav-col-title-oop">{python_icon_sm} Nesne Yonelimli Programlama</div>
+          {toc_oop}
+        </nav>
+      </div>
+    </header>
     <main class="main">
-      {content}
+      {course_picker}
+      <div class="courses-split">
+        <div class="course-pane course-pane-intprog" id="pane-intprog">
+          {content_intprog}
+        </div>
+        <div class="course-pane course-pane-oop" id="pane-oop">
+          {content_oop}
+        </div>
+      </div>
     </main>
   </div>
-  <button class="mobile-toggle" id="menuBtn" aria-label="Menu">&#9776;</button>
   <script>
-    const links = document.querySelectorAll('.sidebar nav a');
-    const sections = [...document.querySelectorAll('.week-block, .special-block, .plan-hero, .course-banner, .course-hub')];
-    window.addEventListener('scroll', () => {{
-      let cur = '';
-      sections.forEach(s => {{ if (window.scrollY >= s.offsetTop - 100) cur = s.id; }});
-      links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
+    function scrollPaneToId(pane, id) {{
+      const el = document.getElementById(id);
+      if (!el || !pane) return;
+      const top = el.getBoundingClientRect().top - pane.getBoundingClientRect().top + pane.scrollTop - 12;
+      pane.scrollTo({{ top: Math.max(0, top), behavior: 'smooth' }});
+    }}
+
+    document.querySelectorAll('.site-nav a[href^="#"], .course-picker a[href^="#"]').forEach(a => {{
+      a.addEventListener('click', e => {{
+        const id = a.getAttribute('href').slice(1);
+        const el = document.getElementById(id);
+        if (!el) return;
+        const pane = el.closest('.course-pane');
+        if (pane) {{
+          e.preventDefault();
+          scrollPaneToId(pane, id);
+          document.getElementById('siteNav').classList.remove('nav-open');
+        }}
+      }});
     }});
-    document.getElementById('menuBtn').onclick = () => document.getElementById('sidebar').classList.toggle('open');
-    links.forEach(a => a.onclick = () => document.getElementById('sidebar').classList.remove('open'));
-    document.querySelectorAll('.week-block').forEach(week => {{
+
+    function setupPaneSpy(paneId, navSelector) {{
+      const pane = document.getElementById(paneId);
+      if (!pane) return;
+      const links = document.querySelectorAll(navSelector + ' a[href^="#"]');
+      const sections = [...pane.querySelectorAll('.week-block, .special-block, .plan-hero, .course-banner')];
+      pane.addEventListener('scroll', () => {{
+        const paneTop = pane.getBoundingClientRect().top;
+        let cur = '';
+        sections.forEach(s => {{
+          const rect = s.getBoundingClientRect();
+          if (rect.top - paneTop <= 90) cur = s.id;
+        }});
+        links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
+      }}, {{ passive: true }});
+    }}
+    setupPaneSpy('pane-intprog', '.nav-intprog');
+    setupPaneSpy('pane-oop', '.nav-oop');
+
+    document.getElementById('menuBtn').onclick = () => document.getElementById('siteNav').classList.toggle('nav-open');
+
+    document.querySelectorAll('.term-tip-btn').forEach(btn => {{
+      btn.addEventListener('click', e => {{
+        e.stopPropagation();
+        const pop = btn.nextElementSibling;
+        const wasOpen = pop.classList.contains('open');
+        document.querySelectorAll('.term-tip-pop.open').forEach(p => p.classList.remove('open'));
+        if (!wasOpen) pop.classList.add('open');
+      }});
+    }});
+    document.addEventListener('click', () => {{
+      document.querySelectorAll('.term-tip-pop.open').forEach(p => p.classList.remove('open'));
+    }});
+    document.querySelectorAll('.term-tip-pop').forEach(pop => {{
+      pop.addEventListener('click', e => e.stopPropagation());
+    }});
+
+    document.querySelectorAll('.course-pane .week-block').forEach(week => {{
       const first = week.querySelector('.panel');
       if (first) first.open = true;
     }});
 
-    document.getElementById('expandAll')?.addEventListener('click', () => {{
-      document.querySelectorAll('.week-block .panel').forEach(p => {{ p.open = true; }});
-    }});
-    document.getElementById('collapseAll')?.addEventListener('click', () => {{
-      document.querySelectorAll('.week-block .panel').forEach(p => {{ p.open = false; }});
-    }});
-    document.getElementById('panelSearch')?.addEventListener('input', e => {{
-      const q = e.target.value.trim().toLowerCase();
-      document.querySelectorAll('.week-block').forEach(week => {{
+    function filterPanelsInPane(pane, q) {{
+      if (!pane) return;
+      pane.querySelectorAll('.week-block').forEach(week => {{
         let any = !q;
         week.querySelectorAll('.panel').forEach(panel => {{
           const match = !q || panel.textContent.toLowerCase().includes(q);
@@ -824,14 +991,31 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         }});
         week.style.display = any ? '' : 'none';
       }});
-      document.querySelectorAll('.enrich-card').forEach(card => {{
-        if (!q) {{ card.classList.remove('hidden'); return; }}
-        card.classList.toggle('hidden', !card.textContent.toLowerCase().includes(q));
-      }});
-      document.querySelectorAll('#oop-course .panel').forEach(panel => {{
-        if (!q) {{ panel.style.display = ''; return; }}
-        panel.style.display = panel.textContent.toLowerCase().includes(q) ? '' : 'none';
-      }});
+      if (pane.id === 'pane-intprog') {{
+        pane.querySelectorAll('.enrich-card').forEach(card => {{
+          if (!q) {{ card.classList.remove('hidden'); return; }}
+          card.classList.toggle('hidden', !card.textContent.toLowerCase().includes(q));
+        }});
+      }}
+      if (pane.id === 'pane-oop') {{
+        pane.querySelectorAll('.panel').forEach(panel => {{
+          if (!q) {{ panel.style.display = ''; return; }}
+          panel.style.display = panel.textContent.toLowerCase().includes(q) ? '' : 'none';
+        }});
+      }}
+    }}
+
+    document.getElementById('expandAll')?.addEventListener('click', () => {{
+      document.querySelectorAll('#pane-intprog .week-block .panel').forEach(p => {{ p.open = true; }});
+    }});
+    document.getElementById('collapseAll')?.addEventListener('click', () => {{
+      document.querySelectorAll('#pane-intprog .week-block .panel').forEach(p => {{ p.open = false; }});
+    }});
+    document.getElementById('panelSearch')?.addEventListener('input', e => {{
+      filterPanelsInPane(document.getElementById('pane-intprog'), e.target.value.trim().toLowerCase());
+    }});
+    document.getElementById('oopPanelSearch')?.addEventListener('input', e => {{
+      filterPanelsInPane(document.getElementById('pane-oop'), e.target.value.trim().toLowerCase());
     }});
 
     document.querySelectorAll('.enrich-tab').forEach(tab => {{
@@ -926,7 +1110,12 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     document.getElementById('openToday')?.addEventListener('click', () => {{
       document.querySelectorAll('.plan-day').forEach(d => d.classList.remove('open'));
       const first = document.querySelector('.plan-day:not(.done)');
-      if (first) {{ first.classList.add('open'); first.scrollIntoView({{ behavior: 'smooth', block: 'start' }}); }}
+      if (first) {{
+        first.classList.add('open');
+        const pane = document.getElementById('pane-intprog');
+        if (pane && first.id) scrollPaneToId(pane, first.id);
+        else first.scrollIntoView({{ behavior: 'smooth', block: 'start' }});
+      }}
     }});
     updateProgress();
     document.querySelector('.plan-day')?.classList.add('open');
@@ -994,7 +1183,75 @@ def split_h3_sections(body: str):
     return result
 
 
-def enhance_inner_html(fragment: str) -> str:
+def inject_term_tips(fragment: str, glossary: dict) -> str:
+    if not glossary or "<table" not in fragment:
+        return fragment
+    keys = sorted(glossary.keys(), key=len, reverse=True)
+
+    def tip_markup(key: str) -> str:
+        g = glossary[key]
+        code = ""
+        if g.get("code"):
+            code = f'<pre class="term-tip-code">{html.escape(g["code"])}</pre>'
+        return (
+            f'<span class="term-tip">'
+            f'<button type="button" class="term-tip-btn" aria-label="{html.escape(g["title"])} — nasil kullanilir?">i</button>'
+            f'<span class="term-tip-pop" role="tooltip">'
+            f'<strong>{html.escape(g["title"])}</strong>'
+            f'<p><em>Ne?</em> {html.escape(g["what"])}</p>'
+            f'<p><em>Nasil?</em> {html.escape(g["how"])}</p>'
+            f"{code}"
+            f"</span></span>"
+        )
+
+    def inject_in_text(text: str) -> str:
+        result = text
+        plain = re.sub(r"<[^>]+>", "", text)
+        for key in keys:
+            if key.lower() not in plain.lower():
+                continue
+            pattern = re.compile(re.escape(key), re.IGNORECASE)
+            parts: list[str] = []
+            last = 0
+            changed = False
+            for match in pattern.finditer(result):
+                if "term-tip" in result[max(0, match.start() - 30) : match.end() + 30]:
+                    parts.append(result[last : match.end()])
+                    last = match.end()
+                    continue
+                parts.append(result[last : match.end()])
+                parts.append(tip_markup(key))
+                last = match.end()
+                changed = True
+            if changed:
+                parts.append(result[last:])
+                result = "".join(parts)
+        return result
+
+    def process_row(match: re.Match) -> str:
+        row = match.group(0)
+        if "<th>" in row:
+            return row
+        cell_pattern = re.compile(r"(<td>)(.*?)(</td>)", re.DOTALL)
+        cells = list(cell_pattern.finditer(row))
+        if not cells:
+            return row
+        out: list[str] = []
+        pos = 0
+        for i, cm in enumerate(cells):
+            out.append(row[pos : cm.start()])
+            content = cm.group(2)
+            if i == 0 or i == len(cells) - 1:
+                content = inject_in_text(content)
+            out.append(cm.group(1) + content + cm.group(3))
+            pos = cm.end()
+        out.append(row[pos:])
+        return "".join(out)
+
+    return re.sub(r"<tr>.*?</tr>", process_row, fragment, flags=re.DOTALL)
+
+
+def enhance_inner_html(fragment: str, glossary: dict | None = None) -> str:
     fragment = re.sub(
         r'<pre><code(?: class="language-(\w+)")?>(.*?)</code></pre>',
         lambda m: (
@@ -1005,6 +1262,8 @@ def enhance_inner_html(fragment: str) -> str:
         flags=re.DOTALL,
     )
     fragment = re.sub(r"<hr\s*/?>", "", fragment)
+    if glossary:
+        fragment = inject_term_tips(fragment, glossary)
     return fragment
 
 
@@ -1155,26 +1414,37 @@ def build_oop_week_block(title: str, sid: str, body: str) -> str:
     return head + simple_html + "".join(panels) + "</div></section>"
 
 
-def build_course_hub() -> str:
-    return """
-    <section class="course-hub" id="course-hub">
-      <a class="course-card intprog" href="#intprog-course">
-        <div class="course-card-kicker">Ders 1</div>
-        <h3>Internet Programciligi II</h3>
-        <p>Ruby on Rails, Hafta 2-10 PDF arsivi, videolar, 7 gunluk plan, 39 soruluk quiz.</p>
-      </a>
-      <a class="course-card oop" href="#oop-course">
-        <div class="course-card-kicker">Ders 2</div>
-        <h3>Nesne Yonelimli Programlama</h3>
-        <p>Hafta 1-9 PDF arsivi + Hafta 10 SOLID calisma ve odev cozumleri.</p>
-      </a>
-    </section>
+def build_course_picker() -> str:
+    return f"""
+    <div class="course-picker" id="course-hub">
+      <div class="course-picker-label">Ders sec — hangi derse calisacaksin?</div>
+      <section class="course-hub">
+        <a class="course-card intprog" href="#intprog-course">
+          {RUBY_ICON_SVG}
+          <div class="course-card-body">
+            <div class="course-card-kicker">Ders 1 · Ruby</div>
+            <h3>Internet Programciligi II</h3>
+            <p>Rails, migration, Devise — Hafta 2-10, quiz ve 7 gunluk plan.</p>
+          </div>
+        </a>
+        <a class="course-card oop" href="#oop-course">
+          {PYTHON_ICON_SVG}
+          <div class="course-card-body">
+            <div class="course-card-kicker">Ders 2 · Python</div>
+            <h3>Nesne Yonelimli Programlama</h3>
+            <p>OOP, SOLID, kalitim — Hafta 1-10 PDF ve cozumlu alistirmalar.</p>
+          </div>
+        </a>
+      </section>
+    </div>
     """
 
 
 def build_intprog_banner() -> str:
-    return """
+    return f"""
     <div class="course-banner course-banner-intprog" id="intprog-course">
+      <div class="course-banner-icon">{RUBY_ICON_SVG}</div>
+      <div class="course-banner-text">
       <h2>Internet Programciligi II</h2>
       <p>Ruby on Rails — Hafta 2-10 PDF arsivi, kapsulleme, migration, Devise. 7 gunluk sinav plani ve interaktif quiz.</p>
       <div class="course-banner-actions">
@@ -1189,6 +1459,7 @@ def build_intprog_banner() -> str:
         <button type="button" class="btn" id="expandAll">Panelleri ac</button>
         <button type="button" class="btn" id="collapseAll">Panelleri kapat</button>
       </div>
+      </div>
     </div>
     """
 
@@ -1196,12 +1467,18 @@ def build_intprog_banner() -> str:
 def build_oop_banner() -> str:
     return f"""
     <div class="course-banner course-banner-oop" id="oop-course">
+      <div class="course-banner-icon">{PYTHON_ICON_SVG}</div>
+      <div class="course-banner-text">
       <h2>{html.escape(OOP_META['title'])}</h2>
       <p>NYP II — Hafta 1-9 PDF arsivi. Hafta 10: SOLID calismalari ve cozumlu alistirmalar.</p>
       <div class="course-banner-actions">
         <a class="btn" href="#oop-konu-indeksi">Konu Indeksi</a>
         <a class="btn" href="#hafta-10-solid-calisma-odev-cozumleri">Hafta 10 SOLID</a>
         <a class="btn" href="#oop-ezber">OOP Ezber</a>
+      </div>
+      <div class="archive-toolbar" style="margin-top:.85rem">
+        <input type="search" class="archive-search" id="oopPanelSearch" placeholder="OOP ara: solid, kalitim, kapsulleme...">
+      </div>
       </div>
     </div>
     """
@@ -1443,11 +1720,14 @@ def build_oop_course(oop_sections) -> str:
     blocks = [build_oop_banner(), build_oop_must_know_section()]
     for title, sid, body in oop_sections:
         if "konu-indeksi" in sid:
-            inner = enhance_inner_html(md_to_html_fragment(body))
+            inner = enhance_inner_html(md_to_html_fragment(body), OOP_GLOSSARY)
             blocks.append(f"""
             <section class="special-block" id="oop-konu-indeksi">
               <div class="special-head"><h2>OOP Konu Indeksi</h2></div>
-              <div class="special-body">{inner}</div>
+              <div class="special-body">
+                <div class="callout callout-tip">Tablodaki <strong>i</strong> butonuna tikla: terimin ne oldugu, nasil kullanildigi ve ornek kod acilir.</div>
+                {inner}
+              </div>
             </section>
             """)
             break
@@ -1511,12 +1791,12 @@ def build_study_plan_section() -> str:
 
 
 def build_topic_index_section(body: str) -> str:
-    inner = enhance_inner_html(md_to_html_fragment(body))
+    inner = enhance_inner_html(md_to_html_fragment(body), INTPROG_GLOSSARY)
     return f"""
     <section class="special-block" id="konu-indeksi">
       <div class="special-head"><h2>Konu Indeksi — Alfabetik</h2></div>
       <div class="special-body">
-        <div class="callout callout-tip">Tum PDF slaytlarindan cikarilmis konu listesi. <strong>Kapsulleme</strong>, <strong>kalitim (miras)</strong>, <strong>polimorfizm</strong> ve diger OOP kavramlari asagida tabloda vurgulanmistir.</div>
+        <div class="callout callout-tip">Tablodaki <strong>i</strong> butonuna tikla: terimin mantigi ve kullanimi acilir. <strong>Kapsulleme</strong>, <strong>kalitim</strong>, <strong>polimorfizm</strong> vurgulanmistir.</div>
         {inner}
       </div>
     </section>
@@ -1695,17 +1975,15 @@ def build_commands_section(body: str) -> str:
     """
 
 
-def build_toc(sections, oop_sections=None) -> str:
+def build_toc_intprog(sections) -> str:
     lines = [
-        '<div class="nav-label">Ana Sayfa</div>',
         '<a href="#course-hub"><span class="w-num">*</span>Ders Secimi</a>',
-        '<div class="nav-label">Internet Prog II</div>',
-        '<a href="#intprog-course"><span class="w-num">IP</span>Int Prog Giris</a>',
+        '<a href="#intprog-course"><span class="w-num">IP</span>Giris</a>',
         '<a href="#7-gunluk-plan"><span class="w-num">7</span>7 Gunluk Plan</a>',
         '<a href="#konu-indeksi"><span class="w-num">A</span>Konu Indeksi</a>',
         '<a href="#internet-kaynaklari"><span class="w-num">W</span>Internet Kaynaklari</a>',
         '<a href="#sinav-ezber-listesi"><span class="w-num">!</span>Ezber Listesi</a>',
-        '<div class="nav-label">Haftalar (Int Prog)</div>',
+        '<div class="nav-label">Haftalar</div>',
     ]
     for title, sid, _ in sections:
         if "konu-indeksi" in sid or "sinav" in sid or "komut" in sid or "cevap" in sid:
@@ -1716,23 +1994,23 @@ def build_toc(sections, oop_sections=None) -> str:
         lines.append(
             f'<a href="#{sid}"><span class="w-num">{num}</span>{html.escape(short)}</a>'
         )
-    lines.append('<div class="nav-label">Int Prog Sinav</div>')
+    lines.append('<div class="nav-label">Sinav</div>')
     lines.append('<a href="#komut-hizli-referans"><span class="w-num">#</span>Komutlar</a>')
     lines.append(
         '<a href="#sinav-sorulari-kendini-test-et"><span class="w-num">?</span>Test Sorulari</a>'
     )
-    lines.append('<div class="nav-label nav-oop">Nesne Yonelimli Prog</div>')
-    oop_links = [
-        ("#oop-course", "O", "OOP Giris"),
-        ("#oop-konu-indeksi", "A", "Konu Indeksi"),
-        ("#oop-ezber", "!", "OOP Ezber"),
+    return "\n".join(lines)
+
+
+def build_toc_oop(oop_sections=None) -> str:
+    lines = [
+        '<a href="#course-hub"><span class="w-num">*</span>Ders Secimi</a>',
+        '<a href="#oop-course"><span class="w-num">O</span>Giris</a>',
+        '<a href="#oop-konu-indeksi"><span class="w-num">A</span>Konu Indeksi</a>',
+        '<a href="#oop-ezber"><span class="w-num">!</span>OOP Ezber</a>',
+        '<div class="nav-label">Haftalar</div>',
     ]
-    for href, num, label in oop_links:
-        lines.append(
-            f'<a class="nav-oop-link" href="{href}"><span class="w-num">{num}</span>{html.escape(label)}</a>'
-        )
     if oop_sections:
-        lines.append('<div class="nav-label nav-oop">OOP Haftalar</div>')
         for title, sid, _ in oop_sections:
             if "konu-indeksi" in sid or "solid-alistirma" in sid:
                 continue
@@ -1742,18 +2020,18 @@ def build_toc(sections, oop_sections=None) -> str:
             num = meta.get("num", "?")
             short = title.split("—")[-1].strip() if "—" in title else title
             lines.append(
-                f'<a class="nav-oop-link" href="#{sid}"><span class="w-num">{num}</span>{html.escape(short)}</a>'
+                f'<a href="#{sid}"><span class="w-num">{num}</span>{html.escape(short)}</a>'
             )
         h10 = OOP_WEEK_META["hafta-10-solid-calisma-odev-cozumleri"]
         if not any(sid == "hafta-10-solid-calisma-odev-cozumleri" for _, sid, _ in oop_sections):
             lines.append(
-                f'<a class="nav-oop-link" href="#hafta-10-solid-calisma-odev-cozumleri">'
-                f'<span class="w-num">{h10["num"]}</span>SOLID Calisma & Odev</a>'
+                f'<a href="#hafta-10-solid-calisma-odev-cozumleri">'
+                f'<span class="w-num">{h10["num"]}</span>SOLID Calisma</a>'
             )
     return "\n".join(lines)
 
 
-def build_content(sections, oop_sections=None) -> str:
+def build_intprog_content(sections) -> str:
     intprog_blocks = [build_intprog_banner(), build_study_plan_section()]
     for title, sid, body in sections:
         if "konu-indeksi" in sid:
@@ -1771,8 +2049,7 @@ def build_content(sections, oop_sections=None) -> str:
         elif title.lower().startswith("hafta"):
             intprog_blocks.append(build_week_block(title, sid, body))
 
-    oop_part = build_oop_course(oop_sections or [])
-    return build_course_hub() + "".join(intprog_blocks) + oop_part
+    return "".join(intprog_blocks)
 
 
 def generate_pdf():
@@ -1809,9 +2086,19 @@ def main():
     oop_sections = []
     if OOP_MD_FILE.exists():
         oop_sections = split_sections(OOP_MD_FILE.read_text(encoding="utf-8"))
-    toc = build_toc(sections, oop_sections)
-    content = build_content(sections, oop_sections)
-    page = HTML_TEMPLATE.format(toc=toc, content=content)
+    toc_intprog = build_toc_intprog(sections)
+    toc_oop = build_toc_oop(oop_sections)
+    content_intprog = build_intprog_content(sections)
+    content_oop = build_oop_course(oop_sections)
+    page = HTML_TEMPLATE.format(
+        toc_intprog=toc_intprog,
+        toc_oop=toc_oop,
+        course_picker=build_course_picker(),
+        ruby_icon_sm=RUBY_ICON_SM,
+        python_icon_sm=PYTHON_ICON_SM,
+        content_intprog=content_intprog,
+        content_oop=content_oop,
+    )
     HTML_FILE.write_text(page, encoding="utf-8")
     print(f"OK Website: {HTML_FILE}")
     if generate_pdf():

@@ -29,7 +29,9 @@
       --code-bg: #f4f6f8;
       --shadow: 0 1px 3px rgba(16,24,40,.06), 0 1px 2px rgba(16,24,40,.04);
       --shadow-lg: 0 8px 24px rgba(16,24,40,.08);
-      --sidebar-w: 260px;
+      --sidebar-w: 520px;
+      --nav-strip-h: min(38vh, 320px);
+      --pane-divider: #e2e8f0;
       --oop-accent: #6d28d9;
       --oop-soft: #f5f3ff;
       --oop-border: #ddd6fe;
@@ -44,37 +46,134 @@
       line-height: 1.65;
       font-size: 15px;
     }
-    .layout { display: flex; min-height: 100vh; }
+    .layout { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
 
-    .sidebar {
-      width: var(--sidebar-w);
-      background: var(--sidebar);
-      border-right: 1px solid var(--line);
-      position: fixed; inset: 0 auto 0 0;
-      overflow-y: auto; z-index: 100;
-      padding: 1.25rem 0 2rem;
+    .site-nav {
+      flex-shrink: 0; background: var(--paper);
+      border-bottom: 2px solid var(--line); box-shadow: var(--shadow);
+      z-index: 200;
     }
-    .brand { padding: 0 1.25rem 1.25rem; border-bottom: 1px solid var(--line); margin-bottom: .75rem; }
-    .brand-kicker { font-size: .68rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
-    .brand h1 { font-size: 1rem; font-weight: 700; margin-top: .35rem; line-height: 1.35; }
-    .brand p { font-size: .78rem; color: var(--text-soft); margin-top: .35rem; }
-    .nav-label { padding: .85rem 1.25rem .35rem; font-size: .68rem; font-weight: 600; text-transform: uppercase; letter-spacing: .07em; color: #9ca3af; }
-    .sidebar nav a {
-      display: flex; align-items: center; gap: .55rem;
-      padding: .5rem 1.25rem; color: var(--text-soft); text-decoration: none;
-      font-size: .84rem; border-left: 3px solid transparent; transition: .15s;
+    .site-nav-brand {
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+      padding: .65rem 1.25rem; border-bottom: 1px solid var(--line);
     }
-    .sidebar nav a .w-num {
-      width: 1.35rem; height: 1.35rem; border-radius: 6px; background: var(--bg);
+    .site-nav-brand .brand { padding: 0; border: none; margin: 0; flex: 1; }
+    .brand-kicker { font-size: .65rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+    .site-nav-brand .brand h1 { font-size: .95rem; font-weight: 700; margin-top: .2rem; line-height: 1.3; }
+    .site-nav-brand .brand p { font-size: .72rem; color: var(--text-soft); margin-top: .2rem; }
+    .site-nav-dual {
+      display: grid; grid-template-columns: 1fr 1fr;
+      max-height: var(--nav-strip-h);
+    }
+    .nav-col {
+      overflow-y: auto; padding-bottom: .75rem; min-width: 0;
+    }
+    .nav-col-intprog {
+      border-right: 2px solid var(--accent-border);
+      background: linear-gradient(180deg, #fffbfb 0%, #fff 100%);
+    }
+    .nav-col-oop {
+      background: linear-gradient(180deg, #fdfcff 0%, #fff 100%);
+    }
+    .nav-col-title {
+      padding: .55rem 1rem .4rem; font-size: .68rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .06em; position: sticky; top: 0; z-index: 2;
+    }
+    .nav-col-title-intprog { background: #fef2f2; color: var(--accent); border-bottom: 1px solid var(--accent-border); }
+    .nav-col-title-oop { background: var(--oop-soft); color: var(--oop-text); border-bottom: 1px solid var(--oop-border); }
+    .nav-col a {
+      display: flex; align-items: center; gap: .5rem;
+      padding: .42rem 1rem; color: var(--text-soft); text-decoration: none;
+      font-size: .8rem; border-left: 3px solid transparent; transition: .12s;
+    }
+    .nav-col a .w-num {
+      width: 1.25rem; height: 1.25rem; border-radius: 5px; background: var(--bg);
       display: inline-flex; align-items: center; justify-content: center;
-      font-size: .68rem; font-weight: 700; color: var(--text-soft); flex-shrink: 0;
+      font-size: .65rem; font-weight: 700; color: var(--text-soft); flex-shrink: 0;
     }
-    .sidebar nav a:hover, .sidebar nav a.active {
+    .nav-col-intprog a:hover, .nav-col-intprog a.active {
       color: var(--text); background: var(--accent-soft); border-left-color: var(--accent);
     }
-    .sidebar nav a.active .w-num { background: var(--accent); color: white; }
+    .nav-col-intprog a.active .w-num { background: var(--accent); color: white; }
+    .nav-col-oop a:hover, .nav-col-oop a.active {
+      color: var(--text); background: var(--oop-soft); border-left-color: var(--oop-accent);
+    }
+    .nav-col-oop a.active .w-num { background: var(--oop-accent); color: white; }
+    .nav-label { padding: .65rem 1rem .25rem; font-size: .65rem; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: #9ca3af; }
 
-    .main { margin-left: var(--sidebar-w); flex: 1; padding: 2rem 2.5rem 4rem; max-width: 820px; }
+    .main {
+      flex: 1; min-height: 0; padding: 0; max-width: none; overflow: hidden;
+      display: flex; flex-direction: column;
+    }
+    .course-picker {
+      flex-shrink: 0; display: grid; grid-template-columns: 1fr 1fr; gap: .75rem;
+      padding: .75rem 1rem; background: var(--paper);
+      border-bottom: 1px solid var(--line); box-shadow: var(--shadow);
+    }
+    .course-picker-label {
+      grid-column: 1 / -1; font-size: .72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .07em; color: var(--text-soft); margin-bottom: -.25rem;
+    }
+    .courses-split {
+      display: grid; grid-template-columns: 1fr 1fr; flex: 1; min-height: 0;
+    }
+    .course-pane {
+      overflow-y: auto; height: 100%; scroll-behavior: smooth;
+      padding: 1rem 1rem 2.5rem; min-width: 0;
+      border-right: 1px solid var(--pane-divider);
+    }
+    .course-pane:last-child { border-right: none; }
+    .course-pane-intprog { background: #ffffff; }
+    .course-pane-oop { background: #fafafa; }
+
+    .term-tip { position: relative; display: inline-flex; align-items: center; vertical-align: middle; }
+    .term-tip-btn {
+      width: 1.15rem; height: 1.15rem; margin-left: .25rem; padding: 0;
+      border-radius: 50%; border: 1px solid var(--blue-border); background: var(--blue-soft);
+      color: var(--blue-text); font-size: .62rem; font-weight: 800; font-family: inherit;
+      cursor: pointer; line-height: 1; flex-shrink: 0;
+    }
+    .term-tip-btn:hover { background: #dbeafe; }
+    .term-tip-pop {
+      display: none; position: absolute; left: 0; top: calc(100% + 6px); z-index: 500;
+      width: min(280px, 85vw); padding: .65rem .75rem; border-radius: 10px;
+      background: #1e293b; color: #f1f5f9; font-size: .78rem; line-height: 1.5;
+      box-shadow: 0 12px 28px rgba(0,0,0,.25); text-align: left;
+    }
+    .term-tip-pop.open { display: block; }
+    .term-tip-pop strong { display: block; color: #fff; font-size: .82rem; margin-bottom: .35rem; }
+    .term-tip-pop p { margin: .3rem 0; color: #cbd5e1; }
+    .term-tip-pop em { color: #94a3b8; font-style: normal; font-weight: 600; }
+    .term-tip-code {
+      margin: .45rem 0 0; padding: .45rem .55rem; background: #0f172a; border-radius: 6px;
+      font-size: .68rem; line-height: 1.45; overflow-x: auto; white-space: pre-wrap;
+    }
+    .panel-inner td { position: relative; vertical-align: top; }
+    .nav-col-oop a.active .w-num { background: var(--oop-accent); color: white; }
+
+    .course-hub {
+      display: contents;
+    }
+    @media (min-width: 640px) { .course-hub { display: contents; } }
+
+    .course-card {
+      display: flex; align-items: center; gap: .85rem;
+      border: 1px solid var(--line); border-radius: var(--radius); padding: 1rem 1.15rem;
+      background: var(--paper); box-shadow: var(--shadow); text-decoration: none; color: inherit;
+      transition: .15s;
+    }
+    .course-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-1px); }
+    .course-card.intprog { border-top: 4px solid var(--accent); background: linear-gradient(180deg, #fffbfb 0%, #fff 100%); }
+    .course-card.oop { border-top: 4px solid var(--oop-accent); background: linear-gradient(180deg, #fdfcff 0%, #fff 100%); }
+    .course-icon-svg { width: 52px; height: 52px; flex-shrink: 0; display: block; }
+    .course-icon-sm { width: 18px; height: 18px; }
+    .course-card-body { flex: 1; min-width: 0; }
+    .course-card-kicker { font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
+    .course-card.intprog .course-card-kicker { color: var(--accent); }
+    .course-card.oop .course-card-kicker { color: var(--oop-accent); }
+    .course-card h3 { font-size: 1.02rem; margin: .25rem 0; }
+    .course-card p { font-size: .82rem; color: var(--text-soft); line-height: 1.45; margin: 0; }
+    .nav-col-title { display: flex; align-items: center; gap: .45rem; }
 
     .topbar {
       background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
@@ -302,11 +401,6 @@
     .ruby-faq-link:hover { text-decoration: underline; }
     .panel-enrich .ruby-faq-box { margin-top: .55rem; }
 
-    .solid-extra-link {
-      display: inline-block; margin-top: .65rem; font-size: .82rem; font-weight: 600;
-      color: var(--oop-accent, #7c3aed); text-decoration: none;
-    }
-    .solid-extra-link:hover { text-decoration: underline; }
     .solid-class-example {
       margin-top: 1rem; padding: .85rem 1rem; border-radius: 8px;
       border: 1px dashed #c4b5fd; background: #faf5ff;
@@ -389,29 +483,13 @@
     }
     .solid-extra-link:hover { background: #ddd6fe; }
 
-    .course-hub {
-      display: grid; gap: 1rem; margin-bottom: 1.75rem;
-    }
-    @media (min-width: 640px) { .course-hub { grid-template-columns: 1fr 1fr; } }
-    .course-card {
-      border: 1px solid var(--line); border-radius: var(--radius); padding: 1.35rem 1.5rem;
-      background: var(--paper); box-shadow: var(--shadow); text-decoration: none; color: inherit;
-      transition: .15s; display: block;
-    }
-    .course-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
-    .course-card.intprog { border-top: 4px solid var(--accent); }
-    .course-card.oop { border-top: 4px solid var(--oop-accent); }
-    .course-card-kicker { font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
-    .course-card.intprog .course-card-kicker { color: var(--accent); }
-    .course-card.oop .course-card-kicker { color: var(--oop-accent); }
-    .course-card h3 { font-size: 1.05rem; margin: .35rem 0; }
-    .course-card p { font-size: .84rem; color: var(--text-soft); line-height: 1.5; }
-
-    .course-wrap { margin-bottom: 2.5rem; scroll-margin-top: 1rem; }
     .course-banner {
-      border-radius: var(--radius); padding: 1.35rem 1.5rem; margin-bottom: 1.25rem;
+      border-radius: var(--radius); padding: 1.25rem 1.35rem; margin-bottom: 1.25rem;
       color: white; box-shadow: var(--shadow-lg);
+      display: flex; gap: 1rem; align-items: flex-start;
     }
+    .course-banner-icon .course-icon-svg { width: 56px; height: 56px; filter: drop-shadow(0 2px 4px rgba(0,0,0,.2)); }
+    .course-banner-text { flex: 1; min-width: 0; }
     .course-banner-intprog { background: linear-gradient(135deg, #991b1b, #dc2626); }
     .course-banner-oop { background: linear-gradient(135deg, #5b21b6, #7c3aed); }
     .course-banner h2 { font-size: 1.35rem; margin-bottom: .35rem; }
@@ -421,10 +499,6 @@
     .course-banner .btn:hover { background: rgba(255,255,255,.25); }
 
     .nav-oop .w-num { background: var(--oop-soft); color: var(--oop-text); }
-    .sidebar nav a.nav-oop-link:hover, .sidebar nav a.nav-oop-link.active {
-      background: var(--oop-soft); border-left-color: var(--oop-accent);
-    }
-    .sidebar nav a.nav-oop-link.active .w-num { background: var(--oop-accent); color: white; }
 
     .oop-panel .panel { border-color: var(--oop-border); }
     .oop-panel .panel[open] summary { background: var(--oop-soft); }
@@ -477,10 +551,14 @@
     }
     .quiz-a.visible { display: block; }
 
+    .site-nav-brand .mobile-toggle {
+      display: none; flex-shrink: 0;
+      background: var(--accent); color: white; border: none; border-radius: 8px;
+      width: 40px; height: 40px; font-size: 1.1rem; cursor: pointer;
+    }
+
     .mobile-toggle {
-      display: none; position: fixed; bottom: 1.25rem; right: 1.25rem; z-index: 200;
-      background: var(--accent); color: white; border: none; border-radius: 50%;
-      width: 48px; height: 48px; font-size: 1.2rem; cursor: pointer; box-shadow: var(--shadow-lg);
+      display: none;
     }
 
     /* 7-day plan */
@@ -545,17 +623,32 @@
     .must-know-item span { color: var(--text-soft); }
     @media (max-width: 600px) { .must-know-item { grid-template-columns: 1fr; } }
 
+    @media (max-width: 1100px) {
+      :root { --nav-strip-h: min(32vh, 260px); }
+      .site-nav-dual { grid-template-columns: 1fr; max-height: none; }
+      .nav-col-intprog { border-right: none; border-bottom: 2px solid var(--accent-border); max-height: 28vh; }
+      .nav-col-oop { max-height: 28vh; }
+      .course-picker { grid-template-columns: 1fr; }
+      .courses-split { grid-template-columns: 1fr; }
+      .course-pane { height: auto; min-height: 45vh; border-right: none; border-bottom: 1px solid var(--pane-divider); }
+      .main { overflow: visible; }
+      .layout { height: auto; overflow: visible; }
+    }
+
     @media (max-width: 768px) {
-      .sidebar { transform: translateX(-100%); transition: transform .25s; }
-      .sidebar.open { transform: translateX(0); box-shadow: var(--shadow-lg); }
-      .main { margin-left: 0; padding: 1rem; }
-      .mobile-toggle { display: flex; align-items: center; justify-content: center; }
+      .site-nav { position: relative; }
+      .site-nav-dual { display: none; }
+      .site-nav.nav-open .site-nav-dual { display: grid; }
+      .site-nav-brand .mobile-toggle { display: flex; align-items: center; justify-content: center; }
       .quiz-toolbar { flex-direction: column; align-items: stretch; }
     }
 
     @media print {
-      .sidebar, .mobile-toggle, .topbar-actions, .quiz-toolbar, .quiz-btn { display: none !important; }
-      .main { margin-left: 0; max-width: 100%; padding: .5rem; }
+      .site-nav, .mobile-toggle, .topbar-actions, .quiz-toolbar, .quiz-btn, .term-tip-btn { display: none !important; }
+      .main { max-width: 100%; padding: .5rem; height: auto; overflow: visible; }
+      .layout { height: auto; }
+      .courses-split { grid-template-columns: 1fr; height: auto; }
+      .course-pane { height: auto; overflow: visible; page-break-before: auto; }
       .week-block, .special-block { break-inside: avoid; box-shadow: none; }
       .panel { break-inside: avoid; }
       .panel[open] summary { border-bottom: 1px solid #ddd; }
@@ -566,21 +659,25 @@
 </head>
 <body>
   <div class="layout">
-    <aside class="sidebar" id="sidebar">
-      <div class="brand">
-        <div class="brand-kicker">Sinav Calisma Merkezi</div>
-        <h1>Int Prog II + OOP</h1>
-        <p>Iki ders, tek site</p>
+    <header class="site-nav" id="siteNav">
+      <div class="site-nav-brand">
+        <div class="brand">
+          <div class="brand-kicker">Sinav Calisma Merkezi</div>
+          <h1>Internet Prog II + Nesne Yonelimli Prog</h1>
+          <p>Ustte iki ders menusu — altta yan yana icerik</p>
+        </div>
+        <button class="mobile-toggle" id="menuBtn" aria-label="Menu">&#9776;</button>
       </div>
-      <nav><div class="nav-label">Ana Sayfa</div>
-<a href="#course-hub"><span class="w-num">*</span>Ders Secimi</a>
-<div class="nav-label">Internet Prog II</div>
-<a href="#intprog-course"><span class="w-num">IP</span>Int Prog Giris</a>
+      <div class="site-nav-dual">
+        <nav class="nav-col nav-col-intprog nav-intprog" aria-label="Internet Programciligi II">
+          <div class="nav-col-title nav-col-title-intprog"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" class="course-icon-svg course-icon-sm" aria-hidden="true"><path fill="#CC342D" d="M64 10 118 36v56L64 118 10 92V36z"/><path fill="#9B111E" d="M64 10v108L10 92V36z" opacity=".45"/><path fill="#fff" d="M64 10l54 26-54 26L10 36z" opacity=".22"/><path fill="#fff" d="M64 62 118 36v28L64 92 10 64V36z" opacity=".12"/></svg> Internet Programciligi II</div>
+          <a href="#course-hub"><span class="w-num">*</span>Ders Secimi</a>
+<a href="#intprog-course"><span class="w-num">IP</span>Giris</a>
 <a href="#7-gunluk-plan"><span class="w-num">7</span>7 Gunluk Plan</a>
 <a href="#konu-indeksi"><span class="w-num">A</span>Konu Indeksi</a>
 <a href="#internet-kaynaklari"><span class="w-num">W</span>Internet Kaynaklari</a>
 <a href="#sinav-ezber-listesi"><span class="w-num">!</span>Ezber Listesi</a>
-<div class="nav-label">Haftalar (Int Prog)</div>
+<div class="nav-label">Haftalar</div>
 <a href="#hafta-2-ruby-rails-giris"><span class="w-num">2</span>Ruby &amp; Rails Giriş</a>
 <a href="#hafta-3-orm-active-record"><span class="w-num">3</span>ORM &amp; Active Record</a>
 <a href="#hafta-4-enum-routes-controllers"><span class="w-num">4</span>Enum, Routes, Controllers</a>
@@ -590,41 +687,60 @@
 <a href="#hafta-8-validation-active-storage"><span class="w-num">8</span>Validation &amp; Active Storage</a>
 <a href="#hafta-9-i18n-friendlyid-action-text"><span class="w-num">9</span>I18n, FriendlyId, Action Text</a>
 <a href="#hafta-10-devise-authorization"><span class="w-num">10</span>Devise &amp; Authorization</a>
-<div class="nav-label">Int Prog Sinav</div>
+<div class="nav-label">Sinav</div>
 <a href="#komut-hizli-referans"><span class="w-num">#</span>Komutlar</a>
 <a href="#sinav-sorulari-kendini-test-et"><span class="w-num">?</span>Test Sorulari</a>
-<div class="nav-label nav-oop">Nesne Yonelimli Prog</div>
-<a class="nav-oop-link" href="#oop-course"><span class="w-num">O</span>OOP Giris</a>
-<a class="nav-oop-link" href="#oop-konu-indeksi"><span class="w-num">A</span>Konu Indeksi</a>
-<a class="nav-oop-link" href="#oop-ezber"><span class="w-num">!</span>OOP Ezber</a>
-<div class="nav-label nav-oop">OOP Haftalar</div>
-<a class="nav-oop-link" href="#hafta-1-oop-giris-prosedurel-programlama"><span class="w-num">1</span>OOP Giriş &amp; Prosedürel Programlama</a>
-<a class="nav-oop-link" href="#hafta-2-siniflar-nesneler"><span class="w-num">2</span>Sınıflar &amp; Nesneler</a>
-<a class="nav-oop-link" href="#hafta-3-kapsulleme"><span class="w-num">3</span>Kapsülleme</a>
-<a class="nav-oop-link" href="#hafta-4-kalitim-miras"><span class="w-num">4</span>Kalıtım (Miras)</a>
-<a class="nav-oop-link" href="#hafta-5-super-coklu-miras-statik-metot"><span class="w-num">5</span>super, Çoklu Miras, Statik Metot</a>
-<a class="nav-oop-link" href="#hafta-6-polimorfizm-soyut-sinif"><span class="w-num">6</span>Polimorfizm &amp; Soyut Sınıf</a>
-<a class="nav-oop-link" href="#hafta-7-tasarim-desenleri-giris"><span class="w-num">7</span>Tasarım Desenleri Giriş</a>
-<a class="nav-oop-link" href="#hafta-8-tasarim-desenleri-devam"><span class="w-num">8</span>Tasarım Desenleri Devam</a>
-<a class="nav-oop-link" href="#hafta-9-solid-prensipleri"><span class="w-num">9</span>SOLID Prensipleri</a>
-<a class="nav-oop-link" href="#hafta-10-solid-calisma-odev-cozumleri"><span class="w-num">10</span>SOLID Calisma & Odev</a></nav>
-    </aside>
+        </nav>
+        <nav class="nav-col nav-col-oop nav-oop" aria-label="Nesne Yonelimli Programlama">
+          <div class="nav-col-title nav-col-title-oop"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" class="course-icon-svg course-icon-sm" aria-hidden="true"><path fill="#3776AB" d="M63.9 10.5c-30.5 0-28.6 13.2-28.6 13.2v13.6h29.1v2H18.3S10 37.8 10 63.9c0 26.1 7.9 25.2 7.9 25.2h9.4v-12.2s-.4-7.9 7.8-7.9h29.1s7.6.1 7.6-7.3V23.7s1.2-13.2-28.6-13.2zM47.9 18.1a4.9 4.9 0 1 1 0 9.8 4.9 4.9 0 0 1 0-9.8z"/><path fill="#FFD43B" d="M64.1 117.5c30.5 0 28.6-13.2 28.6-13.2V90.7H63.6v-2h46.1s8.3 1.5 8.3-24.6c0-26.1-7.9-25.2-7.9-25.2h-9.4v12.2s.4 7.9-7.8 7.9H63.6s-7.6-.1-7.6 7.3v19.4s-1.2 13.2 28.5 13.2zm16.2-7.6a4.9 4.9 0 1 1 0-9.8 4.9 4.9 0 0 1 0 9.8z"/></svg> Nesne Yonelimli Programlama</div>
+          <a href="#course-hub"><span class="w-num">*</span>Ders Secimi</a>
+<a href="#oop-course"><span class="w-num">O</span>Giris</a>
+<a href="#oop-konu-indeksi"><span class="w-num">A</span>Konu Indeksi</a>
+<a href="#oop-ezber"><span class="w-num">!</span>OOP Ezber</a>
+<div class="nav-label">Haftalar</div>
+<a href="#hafta-1-oop-giris-prosedurel-programlama"><span class="w-num">1</span>OOP Giriş &amp; Prosedürel Programlama</a>
+<a href="#hafta-2-siniflar-nesneler"><span class="w-num">2</span>Sınıflar &amp; Nesneler</a>
+<a href="#hafta-3-kapsulleme"><span class="w-num">3</span>Kapsülleme</a>
+<a href="#hafta-4-kalitim-miras"><span class="w-num">4</span>Kalıtım (Miras)</a>
+<a href="#hafta-5-super-coklu-miras-statik-metot"><span class="w-num">5</span>super, Çoklu Miras, Statik Metot</a>
+<a href="#hafta-6-polimorfizm-soyut-sinif"><span class="w-num">6</span>Polimorfizm &amp; Soyut Sınıf</a>
+<a href="#hafta-7-tasarim-desenleri-giris"><span class="w-num">7</span>Tasarım Desenleri Giriş</a>
+<a href="#hafta-8-tasarim-desenleri-devam"><span class="w-num">8</span>Tasarım Desenleri Devam</a>
+<a href="#hafta-9-solid-prensipleri"><span class="w-num">9</span>SOLID Prensipleri</a>
+<a href="#hafta-10-solid-calisma-odev-cozumleri"><span class="w-num">10</span>SOLID Calisma</a>
+        </nav>
+      </div>
+    </header>
     <main class="main">
       
-    <section class="course-hub" id="course-hub">
-      <a class="course-card intprog" href="#intprog-course">
-        <div class="course-card-kicker">Ders 1</div>
-        <h3>Internet Programciligi II</h3>
-        <p>Ruby on Rails, Hafta 2-10 PDF arsivi, videolar, 7 gunluk plan, 39 soruluk quiz.</p>
-      </a>
-      <a class="course-card oop" href="#oop-course">
-        <div class="course-card-kicker">Ders 2</div>
-        <h3>Nesne Yonelimli Programlama</h3>
-        <p>Hafta 1-9 PDF arsivi + Hafta 10 SOLID calisma ve odev cozumleri.</p>
-      </a>
-    </section>
+    <div class="course-picker" id="course-hub">
+      <div class="course-picker-label">Ders sec — hangi derse calisacaksin?</div>
+      <section class="course-hub">
+        <a class="course-card intprog" href="#intprog-course">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" class="course-icon-svg" aria-hidden="true"><path fill="#CC342D" d="M64 10 118 36v56L64 118 10 92V36z"/><path fill="#9B111E" d="M64 10v108L10 92V36z" opacity=".45"/><path fill="#fff" d="M64 10l54 26-54 26L10 36z" opacity=".22"/><path fill="#fff" d="M64 62 118 36v28L64 92 10 64V36z" opacity=".12"/></svg>
+          <div class="course-card-body">
+            <div class="course-card-kicker">Ders 1 · Ruby</div>
+            <h3>Internet Programciligi II</h3>
+            <p>Rails, migration, Devise — Hafta 2-10, quiz ve 7 gunluk plan.</p>
+          </div>
+        </a>
+        <a class="course-card oop" href="#oop-course">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" class="course-icon-svg" aria-hidden="true"><path fill="#3776AB" d="M63.9 10.5c-30.5 0-28.6 13.2-28.6 13.2v13.6h29.1v2H18.3S10 37.8 10 63.9c0 26.1 7.9 25.2 7.9 25.2h9.4v-12.2s-.4-7.9 7.8-7.9h29.1s7.6.1 7.6-7.3V23.7s1.2-13.2-28.6-13.2zM47.9 18.1a4.9 4.9 0 1 1 0 9.8 4.9 4.9 0 0 1 0-9.8z"/><path fill="#FFD43B" d="M64.1 117.5c30.5 0 28.6-13.2 28.6-13.2V90.7H63.6v-2h46.1s8.3 1.5 8.3-24.6c0-26.1-7.9-25.2-7.9-25.2h-9.4v12.2s.4 7.9-7.8 7.9H63.6s-7.6-.1-7.6 7.3v19.4s-1.2 13.2 28.5 13.2zm16.2-7.6a4.9 4.9 0 1 1 0-9.8 4.9 4.9 0 0 1 0 9.8z"/></svg>
+          <div class="course-card-body">
+            <div class="course-card-kicker">Ders 2 · Python</div>
+            <h3>Nesne Yonelimli Programlama</h3>
+            <p>OOP, SOLID, kalitim — Hafta 1-10 PDF ve cozumlu alistirmalar.</p>
+          </div>
+        </a>
+      </section>
+    </div>
     
+      <div class="courses-split">
+        <div class="course-pane course-pane-intprog" id="pane-intprog">
+          
     <div class="course-banner course-banner-intprog" id="intprog-course">
+      <div class="course-banner-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" class="course-icon-svg" aria-hidden="true"><path fill="#CC342D" d="M64 10 118 36v56L64 118 10 92V36z"/><path fill="#9B111E" d="M64 10v108L10 92V36z" opacity=".45"/><path fill="#fff" d="M64 10l54 26-54 26L10 36z" opacity=".22"/><path fill="#fff" d="M64 62 118 36v28L64 92 10 64V36z" opacity=".12"/></svg></div>
+      <div class="course-banner-text">
       <h2>Internet Programciligi II</h2>
       <p>Ruby on Rails — Hafta 2-10 PDF arsivi, kapsulleme, migration, Devise. 7 gunluk sinav plani ve interaktif quiz.</p>
       <div class="course-banner-actions">
@@ -638,6 +754,7 @@
         <input type="search" class="archive-search" id="panelSearch" placeholder="Int Prog ara: migration, devise, enum...">
         <button type="button" class="btn" id="expandAll">Panelleri ac</button>
         <button type="button" class="btn" id="collapseAll">Panelleri kapat</button>
+      </div>
       </div>
     </div>
     
@@ -964,7 +1081,7 @@
     <section class="special-block" id="konu-indeksi">
       <div class="special-head"><h2>Konu Indeksi — Alfabetik</h2></div>
       <div class="special-body">
-        <div class="callout callout-tip">Tum PDF slaytlarindan cikarilmis konu listesi. <strong>Kapsulleme</strong>, <strong>kalitim (miras)</strong>, <strong>polimorfizm</strong> ve diger OOP kavramlari asagida tabloda vurgulanmistir.</div>
+        <div class="callout callout-tip">Tablodaki <strong>i</strong> butonuna tikla: terimin mantigi ve kullanimi acilir. <strong>Kapsulleme</strong>, <strong>kalitim</strong>, <strong>polimorfizm</strong> vurgulanmistir.</div>
         <table>
 <thead>
 <tr>
@@ -975,12 +1092,13 @@
 </thead>
 <tbody>
 <tr>
-<td>Active Record</td>
+<td>Active Record<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="Active Record — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>Active Record</strong><p><em>Ne?</em> Rails ORM; tablo = model.</p><p><em>Nasil?</em> Post.create, Post.all</p><pre class="term-tip-code">class Post &lt; ApplicationRecord
+end</pre></span></span></td>
 <td>3</td>
-<td>ORM kütüphanesi, model katmanı</td>
+<td>ORM<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="ORM — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>ORM</strong><p><em>Ne?</em> Tablo ↔ Ruby sinifi eslemesi.</p><p><em>Nasil?</em> SQL yazmadan CRUD.</p><pre class="term-tip-code">Post.all</pre></span></span> kütüphanesi, model katmanı</td>
 </tr>
 <tr>
-<td>Active Storage</td>
+<td>Active Storage<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="Active Storage — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>Active Storage</strong><p><em>Ne?</em> Dosya yukleme.</p><p><em>Nasil?</em> has_one_attached :image</p><pre class="term-tip-code">file_field :image</pre></span></span></td>
 <td>8</td>
 <td>Dosya/resim yükleme</td>
 </tr>
@@ -990,44 +1108,48 @@
 <td>Ruby veri türü, metotları</td>
 </tr>
 <tr>
-<td>attr_accessor / reader / writer</td>
+<td>attr_accessor<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="attr_accessor — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>attr_accessor</strong><p><em>Ne?</em> Getter + setter otomatik.</p><p><em>Nasil?</em> attr_reader, attr_writer, attr_accessor</p><pre class="term-tip-code">attr_accessor :name</pre></span></span> / reader / writer<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="attr_accessor / reader / writer — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>attr_accessor<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="attr_accessor — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>attr_accessor</strong><p><em>Ne?</em> Getter + setter otomatik.</p><p><em>Nasil?</em> attr_reader, attr_writer, attr_accessor</p><pre class="term-tip-code">attr_accessor :name</pre></span></span> / reader / writer</strong><p><em>Ne?</em> Instance variable (@) icin otomatik erisim metotlari uretir.</p><p><em>Nasil?</em> reader=oku, writer=yaz, accessor=ikisi. Kapsulleme icin kullan.</p><pre class="term-tip-code">class User
+  attr_accessor :name
+end
+u = User.new
+u.name = &#x27;Ali&#x27;</pre></span></span></td>
 <td>2</td>
-<td><strong>Kapsülleme</strong> — getter/setter</td>
+<td><strong>Kapsülleme<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="Kapsulleme — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>Kapsulleme</strong><p><em>Ne?</em> @ + attr_* ile gizleme.</p><p><em>Nasil?</em> attr_reader :name</p><pre class="term-tip-code">@name gizli kalir</pre></span></span></strong> — getter/setter</td>
 </tr>
 <tr>
-<td>Authentication</td>
+<td>Authentication<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="Authentication — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>Authentication</strong><p><em>Ne?</em> Kimlik dogrulama.</p><p><em>Nasil?</em> Devise sign_in</p><pre class="term-tip-code">user_signed_in?</pre></span></span></td>
 <td>10</td>
-<td>Kimlik doğrulama (Devise)</td>
+<td>Kimlik doğrulama (Devise<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="Devise — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>Devise</strong><p><em>Ne?</em> Authentication gem.</p><p><em>Nasil?</em> authenticate_user! ve current_user</p><pre class="term-tip-code">devise_for :users</pre></span></span>)</td>
 </tr>
 <tr>
-<td>Authorization</td>
+<td>Authorization<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="Authorization — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>Authorization</strong><p><em>Ne?</em> Yetkilendirme.</p><p><em>Nasil?</em> admin? rol kontrolu</p><pre class="term-tip-code">current_user.admin?</pre></span></span></td>
 <td>10</td>
 <td>Yetkilendirme (admin?, roller)</td>
 </tr>
 <tr>
-<td>before_action</td>
+<td>before_action<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="before_action — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>before_action</strong><p><em>Ne?</em> Controller callback.</p><p><em>Nasil?</em> Tekrar eden kodu toplar</p><pre class="term-tip-code">before_action :set_post</pre></span></span></td>
 <td>5</td>
 <td>Controller callback (DRY)</td>
 </tr>
 <tr>
-<td>belongs_to</td>
+<td>belongs_to<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="belongs_to — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>belongs_to</strong><p><em>Ne?</em> FK bu tabloda.</p><p><em>Nasil?</em> belongs_to :category</p><pre class="term-tip-code">belongs_to :user</pre></span></span></td>
 <td>7</td>
 <td>Model ilişkisi, FK bu tabloda</td>
 </tr>
 <tr>
-<td>Bloklar (each, map, yield)</td>
+<td>Bloklar<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="Bloklar — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>Bloklar</strong><p><em>Ne?</em> do/end veya { } ile kod blogu.</p><p><em>Nasil?</em> each, map, yield</p><pre class="term-tip-code">[1,2].each { |n| puts n }</pre></span></span> (each, map, yield)</td>
 <td>2</td>
 <td>Ruby blok yapısı</td>
 </tr>
 <tr>
-<td>Bootstrap Grid</td>
+<td>Bootstrap Grid<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="Bootstrap Grid — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>Bootstrap Grid</strong><p><em>Ne?</em> 12 sutun responsive.</p><p><em>Nasil?</em> container, row, col-md-6</p><pre class="term-tip-code">&lt;div class=&quot;col-md-6&quot;&gt;</pre></span></span></td>
 <td>6</td>
 <td>12 sütun responsive layout</td>
 </tr>
 <tr>
 <td>button_to</td>
 <td>5</td>
-<td>DELETE form butonu</td>
+<td>DELETE form<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="ORM — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>ORM</strong><p><em>Ne?</em> Tablo ↔ Ruby sinifi eslemesi.</p><p><em>Nasil?</em> SQL yazmadan CRUD.</p><pre class="term-tip-code">Post.all</pre></span></span> butonu</td>
 </tr>
 <tr>
 <td>Constants (Sabitler)</td>
@@ -1035,27 +1157,27 @@
 <td>PI = 3.14, büyük harf</td>
 </tr>
 <tr>
-<td>CRUD</td>
+<td>CRUD<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="CRUD — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>CRUD</strong><p><em>Ne?</em> Create Read Update Delete.</p><p><em>Nasil?</em> HTTP metotlari ile</p><pre class="term-tip-code">GET POST PATCH DELETE</pre></span></span></td>
 <td>4</td>
 <td>Create Read Update Delete</td>
 </tr>
 <tr>
 <td>CSRF / authenticity_token</td>
 <td>5</td>
-<td>Form güvenlik tokeni</td>
+<td>Form<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="ORM — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>ORM</strong><p><em>Ne?</em> Tablo ↔ Ruby sinifi eslemesi.</p><p><em>Nasil?</em> SQL yazmadan CRUD.</p><pre class="term-tip-code">Post.all</pre></span></span> güvenlik tokeni</td>
 </tr>
 <tr>
-<td>Enum</td>
+<td>Enum<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="Enum — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>Enum</strong><p><em>Ne?</em> Integer&#x27;a isim baglar.</p><p><em>Nasil?</em> enum status: { draft: 0 }</p><pre class="term-tip-code">post.draft?</pre></span></span></td>
 <td>4</td>
 <td>Sayısal sabitlere isim (draft: 0)</td>
 </tr>
 <tr>
-<td>ERB</td>
+<td>ERB<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="ERB — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>ERB</strong><p><em>Ne?</em> View&#x27;da Ruby.</p><p><em>Nasil?</em> &lt;% %&gt; kod, &lt;%= %&gt; cikti</p><pre class="term-tip-code">&lt;%= @post.title %&gt;</pre></span></span></td>
 <td>4</td>
 <td>Embedded Ruby, &lt;% %&gt; &lt;%= %&gt;</td>
 </tr>
 <tr>
-<td>FriendlyId</td>
+<td>FriendlyId<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="FriendlyId — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>FriendlyId</strong><p><em>Ne?</em> Slug URL.</p><p><em>Nasil?</em> /posts/baslik-slug</p><pre class="term-tip-code">friendly_id :title</pre></span></span></td>
 <td>9</td>
 <td>SEO slug URL</td>
 </tr>
@@ -1070,12 +1192,12 @@
 <td>Key-value Ruby yapısı</td>
 </tr>
 <tr>
-<td>has_many</td>
+<td>has_many<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="has_many — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>has_many</strong><p><em>Ne?</em> Karsi tarafta cok kayit.</p><p><em>Nasil?</em> has_many :posts</p><pre class="term-tip-code">category.posts</pre></span></span></td>
 <td>7</td>
 <td>Model ilişkisi</td>
 </tr>
 <tr>
-<td>has_many :through</td>
+<td>has_many<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="has_many — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>has_many</strong><p><em>Ne?</em> Karsi tarafta cok kayit.</p><p><em>Nasil?</em> has_many :posts</p><pre class="term-tip-code">category.posts</pre></span></span> :through</td>
 <td>7</td>
 <td>Ara tablo ile ilişki</td>
 </tr>
@@ -1085,17 +1207,17 @@
 <td>Bire-bir ilişki</td>
 </tr>
 <tr>
-<td>HABTM</td>
+<td>HABTM<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="HABTM — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>HABTM</strong><p><em>Ne?</em> Coktan coga join tablo.</p><p><em>Nasil?</em> has_and_belongs_to_many</p><pre class="term-tip-code">has_and_belongs_to_many :tags</pre></span></span></td>
 <td>7</td>
 <td>Çoktan çoğa, join table</td>
 </tr>
 <tr>
-<td>HTTP Metotları</td>
+<td>HTTP Metotları<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="HTTP Metotlari — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>HTTP Metotlari</strong><p><em>Ne?</em> GET oku, POST olustur, PATCH guncelle, DELETE sil.</p><p><em>Nasil?</em> RESTful routes</p><pre class="term-tip-code">GET /posts</pre></span></span></td>
 <td>4</td>
 <td>GET POST PUT PATCH DELETE</td>
 </tr>
 <tr>
-<td>I18n</td>
+<td>I18n<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="I18n — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>I18n</strong><p><em>Ne?</em> Coklu dil.</p><p><em>Nasil?</em> t() ve locales/*.yml</p><pre class="term-tip-code">t(&#x27;posts.title&#x27;)</pre></span></span></td>
 <td>9</td>
 <td>Çoklu dil (t, l, locale)</td>
 </tr>
@@ -1105,12 +1227,12 @@
 <td>Nesneye ait değişken</td>
 </tr>
 <tr>
-<td><strong>Kalıtım (Miras)</strong></td>
+<td><strong>Kalıtım<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="Kalitim — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>Kalitim</strong><p><em>Ne?</em> class Child &lt; Parent</p><p><em>Nasil?</em> super ile ust cagir</p><pre class="term-tip-code">class Dog &lt; Animal; end</pre></span></span> (Miras)</strong></td>
 <td>2</td>
 <td>class Dog &lt; Animal, super</td>
 </tr>
 <tr>
-<td><strong>Kapsülleme</strong></td>
+<td><strong>Kapsülleme<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="Kapsulleme — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>Kapsulleme</strong><p><em>Ne?</em> @ + attr_* ile gizleme.</p><p><em>Nasil?</em> attr_reader :name</p><pre class="term-tip-code">@name gizli kalir</pre></span></span></strong></td>
 <td>2</td>
 <td>@name, getter/setter, attr_*</td>
 </tr>
@@ -1120,7 +1242,7 @@
 <td>Argüman toleransı farkı</td>
 </tr>
 <tr>
-<td>Migration</td>
+<td>Migration<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="Migration — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>Migration</strong><p><em>Ne?</em> DB semasini versiyonlu degistirir.</p><p><em>Nasil?</em> rails db:migrate</p><pre class="term-tip-code">add_column :posts, :status, :integer</pre></span></span></td>
 <td>3</td>
 <td>Veritabanı şema değişikliği</td>
 </tr>
@@ -1130,27 +1252,27 @@
 <td>include, namespacing</td>
 </tr>
 <tr>
-<td>MVC</td>
+<td>MVC<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="MVC — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>MVC</strong><p><em>Ne?</em> Model View Controller.</p><p><em>Nasil?</em> Routes → Controller → Model → View</p><pre class="term-tip-code">@post = Post.find(1)</pre></span></span></td>
 <td>2</td>
 <td>Model View Controller</td>
 </tr>
 <tr>
-<td>Normalization</td>
+<td>Norm<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="ORM — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>ORM</strong><p><em>Ne?</em> Tablo ↔ Ruby sinifi eslemesi.</p><p><em>Nasil?</em> SQL yazmadan CRUD.</p><pre class="term-tip-code">Post.all</pre></span></span>alization</td>
 <td>8</td>
 <td>Veriyi kaydetmeden düzenleme</td>
 </tr>
 <tr>
-<td>ORM</td>
+<td>ORM<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="ORM — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>ORM</strong><p><em>Ne?</em> Tablo ↔ Ruby sinifi eslemesi.</p><p><em>Nasil?</em> SQL yazmadan CRUD.</p><pre class="term-tip-code">Post.all</pre></span></span></td>
 <td>3</td>
 <td>Tablo ↔ Sınıf eşlemesi</td>
 </tr>
 <tr>
-<td>Partial</td>
+<td>Partial<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="Partial — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>Partial</strong><p><em>Ne?</em> Tekrar eden view parcasi.</p><p><em>Nasil?</em> _form.html.erb, render &#x27;form&#x27;</p><pre class="term-tip-code">render &#x27;form&#x27;</pre></span></span></td>
 <td>5</td>
-<td>_form.html.erb yeniden kullanım</td>
+<td>_form<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="ORM — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>ORM</strong><p><em>Ne?</em> Tablo ↔ Ruby sinifi eslemesi.</p><p><em>Nasil?</em> SQL yazmadan CRUD.</p><pre class="term-tip-code">Post.all</pre></span></span>.html.erb<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="ERB — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>ERB</strong><p><em>Ne?</em> View&#x27;da Ruby.</p><p><em>Nasil?</em> &lt;% %&gt; kod, &lt;%= %&gt; cikti</p><pre class="term-tip-code">&lt;%= @post.title %&gt;</pre></span></span> yeniden kullanım</td>
 </tr>
 <tr>
-<td>Polimorfizm</td>
+<td>Polimorfizm<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="Polimorfizm — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>Polimorfizm</strong><p><em>Ne?</em> Ayni metot farkli davranis.</p><p><em>Nasil?</em> Override in Ruby</p><pre class="term-tip-code">def speak; &#x27;Hav&#x27;; end</pre></span></span></td>
 <td>2</td>
 <td>speak metodunu override etme</td>
 </tr>
@@ -1160,19 +1282,19 @@
 <td>Erişim kontrolü</td>
 </tr>
 <tr>
-<td>Strong Parameters</td>
+<td>Strong Parameters<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="Strong Parameters — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>Strong Parameters</strong><p><em>Ne?</em> Izinli params alanlari.</p><p><em>Nasil?</em> require().permit()</p><pre class="term-tip-code">params.require(:post).permit(:title)</pre></span></span></td>
 <td>5</td>
 <td>params.require.permit</td>
 </tr>
 <tr>
-<td>Symbol</td>
+<td>Symbol<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="Symbol — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>Symbol</strong><p><em>Ne?</em> :name tekil nesne.</p><p><em>Nasil?</em> Hash key&#x27;lerde :draft</p><pre class="term-tip-code">{ status: :published }</pre></span></span></td>
 <td>2</td>
 <td>:user tekil nesne</td>
 </tr>
 <tr>
 <td>Validation</td>
 <td>8</td>
-<td>validates kuralları</td>
+<td>validates<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="validates — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>validates</strong><p><em>Ne?</em> Model dogrulama.</p><p><em>Nasil?</em> presence, uniqueness, length</p><pre class="term-tip-code">validates :title, presence: true</pre></span></span> kuralları</td>
 </tr>
 <tr>
 <td>Class variable (@@)</td>
@@ -1192,17 +1314,17 @@
 </thead>
 <tbody>
 <tr>
-<td><strong>Kapsülleme</strong></td>
+<td><strong>Kapsülleme<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="Kapsulleme — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>Kapsulleme</strong><p><em>Ne?</em> @ + attr_* ile gizleme.</p><p><em>Nasil?</em> attr_reader :name</p><pre class="term-tip-code">@name gizli kalir</pre></span></span></strong></td>
 <td>Instance variable @ ile gizle, getter/setter ile eriş</td>
-<td><code>@name</code>, <code>attr_accessor :name</code></td>
+<td><code>@name</code>, <code>attr_accessor<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="attr_accessor — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>attr_accessor</strong><p><em>Ne?</em> Getter + setter otomatik.</p><p><em>Nasil?</em> attr_reader, attr_writer, attr_accessor</p><pre class="term-tip-code">attr_accessor :name</pre></span></span> :name</code></td>
 </tr>
 <tr>
-<td><strong>Kalıtım (Miras)</strong></td>
+<td><strong>Kalıtım<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="Kalitim — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>Kalitim</strong><p><em>Ne?</em> class Child &lt; Parent</p><p><em>Nasil?</em> super ile ust cagir</p><pre class="term-tip-code">class Dog &lt; Animal; end</pre></span></span> (Miras)</strong></td>
 <td>Alt sınıf üst sınıftan türetilir</td>
 <td><code>class Dog &lt; Animal</code></td>
 </tr>
 <tr>
-<td><strong>Polimorfizm</strong></td>
+<td><strong>Polimorfizm<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="Polimorfizm — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>Polimorfizm</strong><p><em>Ne?</em> Ayni metot farkli davranis.</p><p><em>Nasil?</em> Override in Ruby</p><pre class="term-tip-code">def speak; &#x27;Hav&#x27;; end</pre></span></span></strong></td>
 <td>Alt sınıf metodu override eder</td>
 <td><code>def speak; "I'm a dog"; end</code></td>
 </tr>
@@ -7781,13 +7903,22 @@ git add . &amp;&amp; git commit -m &quot;mesaj&quot; &amp;&amp; git push
       </div>
     </section>
     
+        </div>
+        <div class="course-pane course-pane-oop" id="pane-oop">
+          
     <div class="course-banner course-banner-oop" id="oop-course">
+      <div class="course-banner-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" class="course-icon-svg" aria-hidden="true"><path fill="#3776AB" d="M63.9 10.5c-30.5 0-28.6 13.2-28.6 13.2v13.6h29.1v2H18.3S10 37.8 10 63.9c0 26.1 7.9 25.2 7.9 25.2h9.4v-12.2s-.4-7.9 7.8-7.9h29.1s7.6.1 7.6-7.3V23.7s1.2-13.2-28.6-13.2zM47.9 18.1a4.9 4.9 0 1 1 0 9.8 4.9 4.9 0 0 1 0-9.8z"/><path fill="#FFD43B" d="M64.1 117.5c30.5 0 28.6-13.2 28.6-13.2V90.7H63.6v-2h46.1s8.3 1.5 8.3-24.6c0-26.1-7.9-25.2-7.9-25.2h-9.4v12.2s.4 7.9-7.8 7.9H63.6s-7.6-.1-7.6 7.3v19.4s-1.2 13.2 28.5 13.2zm16.2-7.6a4.9 4.9 0 1 1 0-9.8 4.9 4.9 0 0 1 0 9.8z"/></svg></div>
+      <div class="course-banner-text">
       <h2>Nesne Yonelimli Programlama</h2>
       <p>NYP II — Hafta 1-9 PDF arsivi. Hafta 10: SOLID calismalari ve cozumlu alistirmalar.</p>
       <div class="course-banner-actions">
         <a class="btn" href="#oop-konu-indeksi">Konu Indeksi</a>
         <a class="btn" href="#hafta-10-solid-calisma-odev-cozumleri">Hafta 10 SOLID</a>
         <a class="btn" href="#oop-ezber">OOP Ezber</a>
+      </div>
+      <div class="archive-toolbar" style="margin-top:.85rem">
+        <input type="search" class="archive-search" id="oopPanelSearch" placeholder="OOP ara: solid, kalitim, kapsulleme...">
+      </div>
       </div>
     </div>
     
@@ -7801,7 +7932,9 @@ git add . &amp;&amp; git commit -m &quot;mesaj&quot; &amp;&amp; git push
     
             <section class="special-block" id="oop-konu-indeksi">
               <div class="special-head"><h2>OOP Konu Indeksi</h2></div>
-              <div class="special-body"><table>
+              <div class="special-body">
+                <div class="callout callout-tip">Tablodaki <strong>i</strong> butonuna tikla: terimin ne oldugu, nasil kullanildigi ve ornek kod acilir.</div>
+                <table>
 <thead>
 <tr>
 <th>Konu</th>
@@ -7811,7 +7944,9 @@ git add . &amp;&amp; git commit -m &quot;mesaj&quot; &amp;&amp; git push
 </thead>
 <tbody>
 <tr>
-<td>Prosedürel vs OOP</td>
+<td>Prosedürel vs OOP<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="Prosedurel vs OOP — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>Prosedurel vs OOP</strong><p><em>Ne?</em> Prosedurel: veri + fonksiyonlar ayri. OOP: veri ve davranis nesne icinde birlesir.</p><p><em>Nasil?</em> Prosedurel: toplam(a,b). OOP: hesap.topla() — islem nesnenin uzerinde yapilir.</p><pre class="term-tip-code">class Hesap:
+    def topla(self, a, b):
+        return a + b</pre></span></span></td>
 <td>1</td>
 <td>Fonksiyon merkezli vs nesne merkezli</td>
 </tr>
@@ -7821,17 +7956,22 @@ git add . &amp;&amp; git commit -m &quot;mesaj&quot; &amp;&amp; git push
 <td>class, <strong>init</strong>, self, instance variable</td>
 </tr>
 <tr>
-<td>Kapsülleme</td>
+<td>Kapsülleme<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="Kapsulleme — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>Kapsulleme</strong><p><em>Ne?</em> Nesnenin ic verisini gizler; disaridan sadece izin verilen yollarla erisilir.</p><p><em>Nasil?</em> Python: _veri veya __veri. Ruby: @veri + attr_reader.</p><pre class="term-tip-code">class Hesap:
+    def __init__(self):
+        self.__bakiye = 0</pre></span></span></td>
 <td>3</td>
 <td>private, getter/setter, @property</td>
 </tr>
 <tr>
-<td>Kalıtım</td>
+<td>Kalıtım<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="Kalitim (Miras) — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>Kalitim (Miras)</strong><p><em>Ne?</em> Alt sinif ust sinifin ozelliklerini ve metotlarini otomatik alir.</p><p><em>Nasil?</em> class Cocuk(Ebeveyn): — IS-A iliskisi.</p><pre class="term-tip-code">class Hayvan: pass
+class Kopek(Hayvan): pass</pre></span></span></td>
 <td>4</td>
 <td>class Child(Parent), override</td>
 </tr>
 <tr>
-<td>super()</td>
+<td>super()<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="super() — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>super()</strong><p><em>Ne?</em> Ust sinifin ayni isimli metodunu veya __init__ metodunu cagirir.</p><p><em>Nasil?</em> Alt sinifta override ederken once ust davranisi calistirmak icin kullan.</p><pre class="term-tip-code">class Cocuk(Ebeveyn):
+    def __init__(self, ad):
+        super().__init__(ad)</pre></span></span></td>
 <td>5</td>
 <td>Üst sınıf constructor/metot çağrısı</td>
 </tr>
@@ -7841,57 +7981,66 @@ git add . &amp;&amp; git commit -m &quot;mesaj&quot; &amp;&amp; git push
 <td>Birden fazla üst sınıf</td>
 </tr>
 <tr>
-<td>@staticmethod</td>
+<td>@staticmethod<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="@staticmethod — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>@staticmethod</strong><p><em>Ne?</em> Nesneye bagli olmayan; self almayan yardimci metot.</p><p><em>Nasil?</em> Sinif adiyla cagrilir: Matematik.topla(1, 2).</p><pre class="term-tip-code">@staticmethod
+    def topla(a, b):
+        return a + b</pre></span></span></td>
 <td>5</td>
 <td>Nesneye bağlı olmayan metot</td>
 </tr>
 <tr>
-<td>Polimorfizm</td>
+<td>Polimorfizm<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="Polimorfizm — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>Polimorfizm</strong><p><em>Ne?</em> Ayni metot adi farkli siniflarda farkli davranis gosterir.</p><p><em>Nasil?</em> Override ile ust metot yeniden yazilir.</p><pre class="term-tip-code">def ses(h):
+    print(h.speak())</pre></span></span></td>
 <td>6</td>
 <td>Aynı arayüz, farklı davranış</td>
 </tr>
 <tr>
-<td>Soyut sınıf (ABC)</td>
+<td>Soyut sınıf (ABC)<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="Soyut sinif (ABC) — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>Soyut sinif (ABC)</strong><p><em>Ne?</em> Dogrudan nesne uretilemeyen sablon sinif.</p><p><em>Nasil?</em> from abc import ABC. Alt sinif tum soyut metotlari yazmali.</p><pre class="term-tip-code">class Sekil(ABC):
+    @abstractmethod
+    def alan(self): pass</pre></span></span></td>
 <td>6</td>
-<td>@abstractmethod</td>
+<td>@abstractmethod<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="@abstractmethod — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>@abstractmethod</strong><p><em>Ne?</em> Alt sinifin MUTLAKA yazmasi gereken metodu isaretler.</p><p><em>Nasil?</em> Soyut sinifta tanimla, alt sinifta gercek kodu yaz.</p><pre class="term-tip-code">@abstractmethod
+    def hesapla(self):
+        pass</pre></span></span></td>
 </tr>
 <tr>
-<td>Tasarım desenleri</td>
+<td>Tasarım desenleri<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="Tasarim desenleri — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>Tasarim desenleri</strong><p><em>Ne?</em> Tekrar eden tasarim problemlerine kanitlanmis cozum sablonlari.</p><p><em>Nasil?</em> Singleton, Factory, Observer en sik ornekler.</p><pre class="term-tip-code"># Singleton, Factory, Observer...</pre></span></span></td>
 <td>7–8</td>
 <td>Singleton, Factory, Observer vb.</td>
 </tr>
 <tr>
-<td><strong>SOLID</strong></td>
+<td><strong>SOLID<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="SOLID — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>SOLID</strong><p><em>Ne?</em> Bes tasarim ilkesi: S, O, L, I, D.</p><p><em>Nasil?</em> Sinavda tanim + kotu/iyi kod beklenir.</p><pre class="term-tip-code"># SRP OCP LSP ISP DIP</pre></span></span></strong></td>
 <td>9</td>
 <td>S, O, L, I, D ilkeleri</td>
 </tr>
 <tr>
-<td>SRP</td>
+<td>SRP<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="SRP — Tek Sorumluluk — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>SRP — Tek Sorumluluk</strong><p><em>Ne?</em> Bir sinif yalnizca tek bir degisim nedeni olmali.</p><p><em>Nasil?</em> Her sinif tek is yapar.</p><pre class="term-tip-code"># MakyajHizmeti, FinansYonetimi ayri</pre></span></span></td>
 <td>9</td>
 <td>Tek sorumluluk</td>
 </tr>
 <tr>
-<td>OCP</td>
+<td>OCP<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="OCP — Acik/Kapali — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>OCP — Acik/Kapali</strong><p><em>Ne?</em> Genislemeye acik, degisiklige kapali.</p><p><em>Nasil?</em> Yeni tip icin yeni sinif ekle, if/elif degistirme.</p><pre class="term-tip-code">class Daire(AlanHesaplayici): ...</pre></span></span></td>
 <td>9</td>
 <td>Açık/kapalı — AlanHesaplayici alıştırması</td>
 </tr>
 <tr>
-<td>LSP</td>
+<td>LSP<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="LSP — Liskov — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>LSP — Liskov</strong><p><em>Ne?</em> Alt sinif ust sinifin yerine konulunca program bozulmamali.</p><p><em>Nasil?</em> Dosya.read() her zaman str donmeli.</p><pre class="term-tip-code">def oku(f: Dosya):
+    return f.read()</pre></span></span></td>
 <td>9</td>
 <td>Dosya sistemi alıştırması</td>
 </tr>
 <tr>
-<td>ISP</td>
+<td>ISP<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="ISP — Arayuz Ayirimi — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>ISP — Arayuz Ayirimi</strong><p><em>Ne?</em> Kullanilmayan metotlari implement etmek zorunda kalma.</p><p><em>Nasil?</em> Eatable, Flyable gibi kucuk arayuzler.</p><pre class="term-tip-code">class Kedi(Eatable): ...</pre></span></span></td>
 <td>9</td>
 <td>Akıllı ev cihazları alıştırması</td>
 </tr>
 <tr>
-<td>DIP</td>
+<td>DIP<span class="term-tip"><button type="button" class="term-tip-btn" aria-label="DIP — Bagimlilik Tersine Cevirme — nasil kullanilir?">i</button><span class="term-tip-pop" role="tooltip"><strong>DIP — Bagimlilik Tersine Cevirme</strong><p><em>Ne?</em> Somut sinif yerine soyutlamaya bagimli ol.</p><p><em>Nasil?</em> NotificationManager → Sender arayuzu.</p><pre class="term-tip-code">def __init__(self, sender: Sender): ...</pre></span></span></td>
 <td>9</td>
 <td>Bildirim sistemi alıştırması</td>
 </tr>
 </tbody>
-</table></div>
+</table>
+              </div>
             </section>
             
     <section class="week-block oop-week" id="hafta-1-oop-giris-prosedurel-programlama">
@@ -12631,33 +12780,76 @@ baskani_hazirla(SungJinwoo(), 10)</code></pre>
       </div>
     </section>
     
+        </div>
+      </div>
     </main>
   </div>
-  <button class="mobile-toggle" id="menuBtn" aria-label="Menu">&#9776;</button>
   <script>
-    const links = document.querySelectorAll('.sidebar nav a');
-    const sections = [...document.querySelectorAll('.week-block, .special-block, .plan-hero, .course-banner, .course-hub')];
-    window.addEventListener('scroll', () => {
-      let cur = '';
-      sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) cur = s.id; });
-      links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
+    function scrollPaneToId(pane, id) {
+      const el = document.getElementById(id);
+      if (!el || !pane) return;
+      const top = el.getBoundingClientRect().top - pane.getBoundingClientRect().top + pane.scrollTop - 12;
+      pane.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+    }
+
+    document.querySelectorAll('.site-nav a[href^="#"], .course-picker a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const id = a.getAttribute('href').slice(1);
+        const el = document.getElementById(id);
+        if (!el) return;
+        const pane = el.closest('.course-pane');
+        if (pane) {
+          e.preventDefault();
+          scrollPaneToId(pane, id);
+          document.getElementById('siteNav').classList.remove('nav-open');
+        }
+      });
     });
-    document.getElementById('menuBtn').onclick = () => document.getElementById('sidebar').classList.toggle('open');
-    links.forEach(a => a.onclick = () => document.getElementById('sidebar').classList.remove('open'));
-    document.querySelectorAll('.week-block').forEach(week => {
+
+    function setupPaneSpy(paneId, navSelector) {
+      const pane = document.getElementById(paneId);
+      if (!pane) return;
+      const links = document.querySelectorAll(navSelector + ' a[href^="#"]');
+      const sections = [...pane.querySelectorAll('.week-block, .special-block, .plan-hero, .course-banner')];
+      pane.addEventListener('scroll', () => {
+        const paneTop = pane.getBoundingClientRect().top;
+        let cur = '';
+        sections.forEach(s => {
+          const rect = s.getBoundingClientRect();
+          if (rect.top - paneTop <= 90) cur = s.id;
+        });
+        links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
+      }, { passive: true });
+    }
+    setupPaneSpy('pane-intprog', '.nav-intprog');
+    setupPaneSpy('pane-oop', '.nav-oop');
+
+    document.getElementById('menuBtn').onclick = () => document.getElementById('siteNav').classList.toggle('nav-open');
+
+    document.querySelectorAll('.term-tip-btn').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        const pop = btn.nextElementSibling;
+        const wasOpen = pop.classList.contains('open');
+        document.querySelectorAll('.term-tip-pop.open').forEach(p => p.classList.remove('open'));
+        if (!wasOpen) pop.classList.add('open');
+      });
+    });
+    document.addEventListener('click', () => {
+      document.querySelectorAll('.term-tip-pop.open').forEach(p => p.classList.remove('open'));
+    });
+    document.querySelectorAll('.term-tip-pop').forEach(pop => {
+      pop.addEventListener('click', e => e.stopPropagation());
+    });
+
+    document.querySelectorAll('.course-pane .week-block').forEach(week => {
       const first = week.querySelector('.panel');
       if (first) first.open = true;
     });
 
-    document.getElementById('expandAll')?.addEventListener('click', () => {
-      document.querySelectorAll('.week-block .panel').forEach(p => { p.open = true; });
-    });
-    document.getElementById('collapseAll')?.addEventListener('click', () => {
-      document.querySelectorAll('.week-block .panel').forEach(p => { p.open = false; });
-    });
-    document.getElementById('panelSearch')?.addEventListener('input', e => {
-      const q = e.target.value.trim().toLowerCase();
-      document.querySelectorAll('.week-block').forEach(week => {
+    function filterPanelsInPane(pane, q) {
+      if (!pane) return;
+      pane.querySelectorAll('.week-block').forEach(week => {
         let any = !q;
         week.querySelectorAll('.panel').forEach(panel => {
           const match = !q || panel.textContent.toLowerCase().includes(q);
@@ -12666,14 +12858,31 @@ baskani_hazirla(SungJinwoo(), 10)</code></pre>
         });
         week.style.display = any ? '' : 'none';
       });
-      document.querySelectorAll('.enrich-card').forEach(card => {
-        if (!q) { card.classList.remove('hidden'); return; }
-        card.classList.toggle('hidden', !card.textContent.toLowerCase().includes(q));
-      });
-      document.querySelectorAll('#oop-course .panel').forEach(panel => {
-        if (!q) { panel.style.display = ''; return; }
-        panel.style.display = panel.textContent.toLowerCase().includes(q) ? '' : 'none';
-      });
+      if (pane.id === 'pane-intprog') {
+        pane.querySelectorAll('.enrich-card').forEach(card => {
+          if (!q) { card.classList.remove('hidden'); return; }
+          card.classList.toggle('hidden', !card.textContent.toLowerCase().includes(q));
+        });
+      }
+      if (pane.id === 'pane-oop') {
+        pane.querySelectorAll('.panel').forEach(panel => {
+          if (!q) { panel.style.display = ''; return; }
+          panel.style.display = panel.textContent.toLowerCase().includes(q) ? '' : 'none';
+        });
+      }
+    }
+
+    document.getElementById('expandAll')?.addEventListener('click', () => {
+      document.querySelectorAll('#pane-intprog .week-block .panel').forEach(p => { p.open = true; });
+    });
+    document.getElementById('collapseAll')?.addEventListener('click', () => {
+      document.querySelectorAll('#pane-intprog .week-block .panel').forEach(p => { p.open = false; });
+    });
+    document.getElementById('panelSearch')?.addEventListener('input', e => {
+      filterPanelsInPane(document.getElementById('pane-intprog'), e.target.value.trim().toLowerCase());
+    });
+    document.getElementById('oopPanelSearch')?.addEventListener('input', e => {
+      filterPanelsInPane(document.getElementById('pane-oop'), e.target.value.trim().toLowerCase());
     });
 
     document.querySelectorAll('.enrich-tab').forEach(tab => {
@@ -12768,7 +12977,12 @@ baskani_hazirla(SungJinwoo(), 10)</code></pre>
     document.getElementById('openToday')?.addEventListener('click', () => {
       document.querySelectorAll('.plan-day').forEach(d => d.classList.remove('open'));
       const first = document.querySelector('.plan-day:not(.done)');
-      if (first) { first.classList.add('open'); first.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+      if (first) {
+        first.classList.add('open');
+        const pane = document.getElementById('pane-intprog');
+        if (pane && first.id) scrollPaneToId(pane, first.id);
+        else first.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     });
     updateProgress();
     document.querySelector('.plan-day')?.classList.add('open');
