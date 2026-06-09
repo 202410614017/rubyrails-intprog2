@@ -962,11 +962,14 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       border: 1px solid var(--line); border-radius: var(--radius); margin-bottom: .85rem;
       background: var(--paper); overflow: hidden; box-shadow: var(--shadow);
     }}
-    .plan-day-head {{
+    details.plan-day > summary.plan-day-head {{
       padding: 1rem 1.15rem; cursor: pointer; display: flex; align-items: flex-start; gap: .85rem;
-      background: #fafbfc; border-bottom: 1px solid transparent;
+      background: #fafbfc; border-bottom: 1px solid transparent; list-style: none;
+      user-select: none; -webkit-tap-highlight-color: transparent;
     }}
-    .plan-day.open .plan-day-head {{ border-bottom-color: var(--line); }}
+    details.plan-day > summary.plan-day-head::-webkit-details-marker {{ display: none; }}
+    details.plan-day[open] > summary.plan-day-head {{ border-bottom-color: var(--line); }}
+    .plan-day-head-main {{ flex: 1; min-width: 0; }}
     .plan-day-num {{
       width: 2.2rem; height: 2.2rem; border-radius: 10px; background: var(--accent); color: white;
       display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .95rem; flex-shrink: 0;
@@ -975,10 +978,16 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     .plan-day-title {{ font-weight: 700; font-size: .95rem; }}
     .plan-day-meta {{ font-size: .78rem; color: var(--text-soft); margin-top: .2rem; }}
     .plan-day-goal {{ font-size: .84rem; color: var(--text-soft); margin-top: .35rem; }}
-    .plan-day-toggle {{ margin-left: auto; color: var(--text-soft); font-size: 1.1rem; flex-shrink: 0; }}
+    .plan-day-chevron {{
+      margin-left: auto; color: var(--text-soft); font-size: 1.35rem; line-height: 1;
+      flex-shrink: 0; min-width: 44px; min-height: 44px;
+      display: inline-flex; align-items: center; justify-content: center;
+      pointer-events: none;
+    }}
+    details.plan-day[open] .plan-day-chevron {{ color: var(--text); transform: rotate(45deg); }}
 
-    .plan-day-body {{ display: none; padding: 1rem 1.15rem 1.15rem; }}
-    .plan-day.open .plan-day-body {{ display: block; }}
+    .plan-day-body {{ padding: 1rem 1.15rem 1.15rem; }}
+    .plan-task-text {{ flex: 1; min-width: 0; }}
     .plan-tasks {{ list-style: none; margin: 0; padding: 0; }}
     .plan-tasks li {{
       display: flex; align-items: flex-start; gap: .6rem; padding: .55rem 0;
@@ -988,7 +997,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     .plan-tasks input[type=checkbox] {{ margin-top: .25rem; width: 16px; height: 16px; accent-color: var(--accent); cursor: pointer; flex-shrink: 0; }}
     .plan-tasks label {{ cursor: pointer; flex: 1; }}
     .plan-tasks label.done {{ text-decoration: line-through; color: var(--text-soft); opacity: .7; }}
-    .plan-tasks a {{ color: var(--blue-text); text-decoration: none; font-size: .78rem; display: block; margin-top: .2rem; }}
+    .plan-tasks a {{ color: var(--blue-text); text-decoration: none; font-size: .78rem; display: inline-block; margin-top: .35rem; padding: .2rem 0; }}
     .plan-tasks a:hover {{ text-decoration: underline; }}
     .plan-remember {{
       margin-top: .85rem; padding: .75rem .9rem; background: var(--amber-soft);
@@ -1080,7 +1089,6 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       .landing-title {{ font-size: 1rem; }}
       .landing-sub {{ font-size: .72rem; }}
       .hero-icon {{ width: min(42vw, 120px); height: min(42vw, 120px); }}
-      .jumpscare.is-active {{ animation-duration: 0.45s; }}
     }}
 
     @media (max-width: 480px) {{
@@ -1115,111 +1123,60 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       .panel[open] summary {{ border-bottom: 1px solid #ddd; }}
       .quiz-a {{ display: block !important; }}
       .quiz-card.hidden {{ display: block !important; }}
+      .dvd-sprite {{ display: none !important; }}
     }}
 
-    .jumpscare {{
-      position: fixed; inset: 0; z-index: 99999;
-      display: none; align-items: center; justify-content: center;
-      background: #000; pointer-events: none; overflow: hidden;
+    .dvd-sprite {{
+      position: fixed; top: 0; left: 0;
+      width: 72px; height: 72px;
+      z-index: 9999;
+      pointer-events: auto;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 6px 22px rgba(0,0,0,.35);
+      border: 2px solid rgba(255,255,255,.92);
+      will-change: transform;
+      touch-action: none;
+      cursor: pointer;
+      backface-visibility: hidden;
     }}
-    .jumpscare.is-active {{
-      display: flex;
-      animation: js-screen-shake 0.62s cubic-bezier(.36,.07,.19,.97) both;
+    .dvd-sprite.is-fleeing {{
+      box-shadow: 0 0 18px rgba(220,38,38,.55), 0 6px 22px rgba(0,0,0,.35);
+      border-color: #fecaca;
     }}
-    .jumpscare-flash {{
-      position: absolute; inset: 0; background: #fff;
-      opacity: 0; pointer-events: none; z-index: 4;
-    }}
-    .jumpscare-red {{
-      position: absolute; inset: 0; background: #dc2626;
-      opacity: 0; pointer-events: none; z-index: 3; mix-blend-mode: screen;
-    }}
-    .jumpscare-vignette {{
-      position: absolute; inset: 0; z-index: 2; pointer-events: none;
-      background: radial-gradient(circle at center, transparent 35%, rgba(0,0,0,.55) 100%);
-      opacity: 0;
-    }}
-    .jumpscare.is-active .jumpscare-flash {{
-      animation: js-white-flash 0.75s ease-out forwards;
-    }}
-    .jumpscare.is-active .jumpscare-red {{
-      animation: js-red-flash 0.75s ease-out forwards;
-    }}
-    .jumpscare.is-active .jumpscare-vignette {{
-      animation: js-vignette 0.75s ease-out forwards;
-    }}
-    .jumpscare-frame {{
-      position: relative; z-index: 1;
-      width: 100%; height: 100%; overflow: hidden;
-    }}
-    .jumpscare-photo {{
-      position: absolute; inset: 0;
+    .dvd-sprite img {{
       width: 100%; height: 100%;
       object-fit: cover;
+      pointer-events: none;
+      user-select: none;
+      -webkit-user-drag: none;
+    }}
+    .dvd-sprite--intprog img {{ object-position: 50% 19%; }}
+    .dvd-sprite--oop img {{ object-position: 50% 27%; }}
+    .dvd-sprite.is-caught {{
+      left: 50%; top: 50%;
+      width: min(88vw, 480px);
+      height: min(78vh, 640px);
+      transform: translate(-50%, -50%);
+      transition:
+        width 0.45s cubic-bezier(.2,.8,.2,1),
+        height 0.45s cubic-bezier(.2,.8,.2,1),
+        opacity 0.5s ease,
+        transform 0.45s cubic-bezier(.2,.8,.2,1);
+      border-radius: 14px;
+      cursor: default;
+      pointer-events: none;
+      z-index: 100000;
+    }}
+    .dvd-sprite.is-caught img {{
+      object-fit: contain;
+      object-position: center center;
+    }}
+    .dvd-sprite.is-closing {{
       opacity: 0;
-      filter: contrast(1.45) saturate(1.3) brightness(1.05);
-      will-change: transform, opacity, filter;
+      transform: translate(-50%, -50%) scale(0.88);
     }}
-    .jumpscare-photo--intprog {{
-      object-position: 50% 19%;
-      transform-origin: 50% 19%;
-    }}
-    .jumpscare-photo--oop {{
-      object-position: 50% 27%;
-      transform-origin: 50% 27%;
-    }}
-    .jumpscare.is-active .jumpscare-photo--intprog {{
-      animation: js-face-intprog 0.78s cubic-bezier(.15,.85,.25,1) forwards;
-    }}
-    .jumpscare.is-active .jumpscare-photo--oop {{
-      animation: js-face-oop 0.78s cubic-bezier(.15,.85,.25,1) forwards;
-    }}
-    @keyframes js-screen-shake {{
-      0%, 100% {{ transform: translate(0, 0); }}
-      8% {{ transform: translate(-14px, 8px) rotate(-0.8deg); }}
-      16% {{ transform: translate(12px, -10px) rotate(0.9deg); }}
-      24% {{ transform: translate(-10px, -6px) rotate(-0.5deg); }}
-      32% {{ transform: translate(8px, 6px) rotate(0.4deg); }}
-      40% {{ transform: translate(-4px, 2px); }}
-      50% {{ transform: translate(0, 0); }}
-    }}
-    @keyframes js-white-flash {{
-      0% {{ opacity: 0; }}
-      4% {{ opacity: 1; }}
-      10% {{ opacity: 0; }}
-      16% {{ opacity: .95; }}
-      22% {{ opacity: 0; }}
-      100% {{ opacity: 0; }}
-    }}
-    @keyframes js-red-flash {{
-      0%, 12% {{ opacity: 0; }}
-      18% {{ opacity: .75; }}
-      26% {{ opacity: 0; }}
-      34% {{ opacity: .45; }}
-      42% {{ opacity: 0; }}
-      100% {{ opacity: 0; }}
-    }}
-    @keyframes js-vignette {{
-      0% {{ opacity: 0; }}
-      8% {{ opacity: 1; }}
-      70% {{ opacity: .85; }}
-      100% {{ opacity: 0; }}
-    }}
-    @keyframes js-face-intprog {{
-      0% {{ opacity: 0; transform: scale(0.45); filter: invert(1) contrast(2) brightness(1.4); }}
-      5% {{ opacity: 1; transform: scale(0.96); filter: contrast(1.7) saturate(1.5) brightness(1.15); }}
-      12% {{ opacity: 1; transform: scale(0.92); filter: contrast(1.5) saturate(1.35) brightness(1.08); }}
-      68% {{ opacity: 1; transform: scale(0.9); }}
-      100% {{ opacity: 0; transform: scale(0.94); }}
-    }}
-    @keyframes js-face-oop {{
-      0% {{ opacity: 0; transform: scale(0.45); filter: invert(1) contrast(2) brightness(1.4); }}
-      5% {{ opacity: 1; transform: scale(0.94); filter: contrast(1.7) saturate(1.5) brightness(1.15); }}
-      12% {{ opacity: 1; transform: scale(0.9); filter: contrast(1.5) saturate(1.35) brightness(1.08); }}
-      68% {{ opacity: 1; transform: scale(0.88); }}
-      100% {{ opacity: 0; transform: scale(0.92); }}
-    }}
-    @media print {{ .jumpscare {{ display: none !important; }} }}
+
   </style>
 </head>
 <body>
@@ -1260,102 +1217,202 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     </div>
   </div>
   </div>
-  <div id="jumpscare" class="jumpscare" hidden aria-hidden="true">
-    <div class="jumpscare-flash"></div>
-    <div class="jumpscare-red"></div>
-    <div class="jumpscare-vignette"></div>
-    <div class="jumpscare-frame">
-      <img id="jumpscareImg" class="jumpscare-photo" src="" alt="">
-    </div>
+  <div id="dvdSprite" class="dvd-sprite" hidden aria-hidden="true">
+    <img id="dvdSpriteImg" src="" alt="">
   </div>
   <script>
-    const JUMPSCARE_SRC = {{
+    const DVD_SPRITE_SRC = {{
       intprog: 'assets/jumpscare-intprog.png',
       oop: 'assets/jumpscare-oop.png',
     }};
-    Object.values(JUMPSCARE_SRC).forEach(src => {{ const p = new Image(); p.src = src; }});
+    Object.values(DVD_SPRITE_SRC).forEach(src => {{ const p = new Image(); p.src = src; }});
 
-    let jumpscareTimer = null;
-    let jumpscareAudio = null;
-    function getJumpscareAudio() {{
-      if (!jumpscareAudio) {{
-        jumpscareAudio = new (window.AudioContext || window.webkitAudioContext)();
+    const DVD_SIZE = 72;
+    const DVD_BASE_SPEED = 1.45;
+    const DVD_HOVER_SPEED = 4;
+    let dvdAnimId = null;
+    let dvdLastTs = 0;
+    let dvdX = 0;
+    let dvdY = 0;
+    let dvdVx = 0;
+    let dvdVy = 0;
+    let dvdPointerX = -9999;
+    let dvdPointerY = -9999;
+    let dvdPointerHot = false;
+    let dvdCaughtBusy = false;
+    let dvdCloseTimer = null;
+
+    function dvdBox() {{ return document.getElementById('dvdSprite'); }}
+
+    function dvdSetPointer(x, y, hot) {{
+      dvdPointerX = x;
+      dvdPointerY = y;
+      if (typeof hot === 'boolean') dvdPointerHot = hot;
+    }}
+
+    function dvdFleeFrom(px, py, speed) {{
+      const cx = dvdX + DVD_SIZE / 2;
+      const cy = dvdY + DVD_SIZE / 2;
+      let dx = cx - px;
+      let dy = cy - py;
+      let len = Math.hypot(dx, dy);
+      if (len < 1) {{
+        const a = Math.random() * Math.PI * 2;
+        dvdVx = Math.cos(a) * speed;
+        dvdVy = Math.sin(a) * speed;
+        return;
       }}
-      return jumpscareAudio;
+      const targetVx = (dx / len) * speed;
+      const targetVy = (dy / len) * speed;
+      dvdVx = dvdVx * 0.55 + targetVx * 0.45;
+      dvdVy = dvdVy * 0.55 + targetVy * 0.45;
     }}
-    function playJumpscareSound() {{
-      try {{
-        const ctx = getJumpscareAudio();
-        if (ctx.state === 'suspended') ctx.resume();
-        const t = ctx.currentTime;
-        const dur = 0.28;
-        const bufLen = Math.floor(ctx.sampleRate * dur);
-        const buf = ctx.createBuffer(1, bufLen, ctx.sampleRate);
-        const ch = buf.getChannelData(0);
-        for (let i = 0; i < bufLen; i++) {{
-          ch[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bufLen * 0.07));
-        }}
-        const noise = ctx.createBufferSource();
-        noise.buffer = buf;
-        const nGain = ctx.createGain();
-        nGain.gain.setValueAtTime(0.85, t);
-        nGain.gain.exponentialRampToValueAtTime(0.001, t + dur);
-        const hp = ctx.createBiquadFilter();
-        hp.type = 'highpass';
-        hp.frequency.value = 700;
-        noise.connect(hp);
-        hp.connect(nGain);
-        nGain.connect(ctx.destination);
-        noise.start(t);
-        noise.stop(t + dur + 0.05);
-        const boom = ctx.createOscillator();
-        boom.type = 'sawtooth';
-        boom.frequency.setValueAtTime(160, t);
-        boom.frequency.exponentialRampToValueAtTime(38, t + 0.18);
-        const bGain = ctx.createGain();
-        bGain.gain.setValueAtTime(0.75, t);
-        bGain.gain.exponentialRampToValueAtTime(0.001, t + 0.42);
-        boom.connect(bGain);
-        bGain.connect(ctx.destination);
-        boom.start(t);
-        boom.stop(t + 0.45);
-        const screech = ctx.createOscillator();
-        screech.type = 'square';
-        screech.frequency.setValueAtTime(820, t + 0.02);
-        screech.frequency.exponentialRampToValueAtTime(2400, t + 0.07);
-        screech.frequency.exponentialRampToValueAtTime(320, t + 0.24);
-        const sGain = ctx.createGain();
-        sGain.gain.setValueAtTime(0.0001, t);
-        sGain.gain.exponentialRampToValueAtTime(0.42, t + 0.03);
-        sGain.gain.exponentialRampToValueAtTime(0.001, t + 0.26);
-        screech.connect(sGain);
-        sGain.connect(ctx.destination);
-        screech.start(t + 0.02);
-        screech.stop(t + 0.28);
-      }} catch (e) {{}}
+
+    function dvdNormalizeSpeed(speed) {{
+      const mag = Math.hypot(dvdVx, dvdVy);
+      if (mag < 0.001) {{
+        const a = Math.random() * Math.PI * 2;
+        dvdVx = Math.cos(a) * speed;
+        dvdVy = Math.sin(a) * speed;
+        return;
+      }}
+      dvdVx = (dvdVx / mag) * speed;
+      dvdVy = (dvdVy / mag) * speed;
     }}
-    function triggerJumpscare(course) {{
-      const box = document.getElementById('jumpscare');
-      const img = document.getElementById('jumpscareImg');
+
+    function dvdClampPosition() {{
+      const maxX = Math.max(0, window.innerWidth - DVD_SIZE);
+      const maxY = Math.max(0, window.innerHeight - DVD_SIZE);
+      dvdX = Math.min(maxX, Math.max(0, dvdX));
+      dvdY = Math.min(maxY, Math.max(0, dvdY));
+    }}
+
+    function dvdTick(ts) {{
+      const box = dvdBox();
+      if (!box || box.hasAttribute('hidden')) return;
+      if (box.classList.contains('is-caught') || box.classList.contains('is-closing')) return;
+
+      if (!dvdLastTs) dvdLastTs = ts;
+      const dt = Math.min((ts - dvdLastTs) / 16.667, 2.5);
+      dvdLastTs = ts;
+
+      if (dvdPointerHot) {{
+        dvdFleeFrom(dvdPointerX, dvdPointerY, DVD_HOVER_SPEED);
+        box.classList.add('is-fleeing');
+      }} else {{
+        box.classList.remove('is-fleeing');
+      }}
+
+      dvdX += dvdVx * dt;
+      dvdY += dvdVy * dt;
+
+      const maxX = Math.max(0, window.innerWidth - DVD_SIZE);
+      const maxY = Math.max(0, window.innerHeight - DVD_SIZE);
+
+      if (dvdX <= 0) {{
+        dvdX = 0;
+        dvdVx = Math.abs(dvdVx);
+      }} else if (dvdX >= maxX) {{
+        dvdX = maxX;
+        dvdVx = -Math.abs(dvdVx);
+      }}
+      if (dvdY <= 0) {{
+        dvdY = 0;
+        dvdVy = Math.abs(dvdVy);
+      }} else if (dvdY >= maxY) {{
+        dvdY = maxY;
+        dvdVy = -Math.abs(dvdVy);
+      }}
+
+      box.style.transform = 'translate3d(' + dvdX.toFixed(2) + 'px,' + dvdY.toFixed(2) + 'px,0)';
+      dvdAnimId = requestAnimationFrame(dvdTick);
+    }}
+
+    function stopDvdSprite() {{
+      if (dvdAnimId) cancelAnimationFrame(dvdAnimId);
+      dvdAnimId = null;
+      dvdLastTs = 0;
+      if (dvdCloseTimer) {{ clearTimeout(dvdCloseTimer); dvdCloseTimer = null; }}
+      dvdCaughtBusy = false;
+      const box = dvdBox();
+      if (!box) return;
+      box.setAttribute('hidden', '');
+      box.setAttribute('aria-hidden', 'true');
+      box.classList.remove('is-fleeing', 'is-caught', 'is-closing', 'dvd-sprite--intprog', 'dvd-sprite--oop');
+      box.style.transform = '';
+      dvdSetPointer(-9999, -9999, false);
+    }}
+
+    function catchDvdSprite(e) {{
+      const box = dvdBox();
+      if (!box || box.hasAttribute('hidden') || dvdCaughtBusy) return;
+      if (box.classList.contains('is-caught') || box.classList.contains('is-closing')) return;
+      if (e && e.pointerType === 'mouse' && e.button !== 0) return;
+      e?.preventDefault();
+      e?.stopPropagation();
+      dvdCaughtBusy = true;
+      if (dvdAnimId) cancelAnimationFrame(dvdAnimId);
+      dvdAnimId = null;
+      dvdPointerHot = false;
+      box.classList.remove('is-fleeing');
+      box.style.transform = '';
+      box.classList.add('is-caught');
+      dvdCloseTimer = setTimeout(() => {{
+        box.classList.add('is-closing');
+        dvdCloseTimer = setTimeout(() => stopDvdSprite(), 520);
+      }}, 950);
+    }}
+
+    function startDvdSprite(course) {{
+      const box = dvdBox();
+      const img = document.getElementById('dvdSpriteImg');
       if (!box || !img) return;
-      if (jumpscareTimer) clearTimeout(jumpscareTimer);
-      img.className = 'jumpscare-photo jumpscare-photo--' + course;
-      img.src = JUMPSCARE_SRC[course] || JUMPSCARE_SRC.intprog;
-      box.classList.remove('is-active', 'jumpscare--intprog', 'jumpscare--oop');
-      box.classList.add('jumpscare--' + course);
+      stopDvdSprite();
+      img.src = DVD_SPRITE_SRC[course] || DVD_SPRITE_SRC.intprog;
+      box.classList.add('dvd-sprite--' + course);
       box.removeAttribute('hidden');
       box.setAttribute('aria-hidden', 'false');
-      void box.offsetWidth;
-      box.classList.add('is-active');
-      playJumpscareSound();
-      jumpscareTimer = setTimeout(() => {{
-        box.classList.remove('is-active', 'jumpscare--intprog', 'jumpscare--oop');
-        box.setAttribute('hidden', '');
-        box.setAttribute('aria-hidden', 'true');
-        img.className = 'jumpscare-photo';
-        img.removeAttribute('src');
-      }}, 780);
+      const maxX = Math.max(0, window.innerWidth - DVD_SIZE);
+      const maxY = Math.max(0, window.innerHeight - DVD_SIZE);
+      dvdX = Math.random() * maxX;
+      dvdY = Math.random() * maxY;
+      const angle = Math.random() * Math.PI * 2;
+      dvdVx = Math.cos(angle) * DVD_BASE_SPEED;
+      dvdVy = Math.sin(angle) * DVD_BASE_SPEED;
+      dvdLastTs = 0;
+      dvdClampPosition();
+      box.style.transform = 'translate3d(' + dvdX + 'px,' + dvdY + 'px,0)';
+      dvdAnimId = requestAnimationFrame(dvdTick);
     }}
+
+    window.addEventListener('resize', () => {{
+      if (dvdBox()?.hasAttribute('hidden')) return;
+      dvdClampPosition();
+    }});
+    dvdBox()?.addEventListener('mouseenter', e => {{
+      if (dvdCaughtBusy) return;
+      dvdSetPointer(e.clientX, e.clientY, true);
+      dvdFleeFrom(e.clientX, e.clientY, DVD_HOVER_SPEED);
+    }});
+    dvdBox()?.addEventListener('mousemove', e => {{
+      if (dvdCaughtBusy) return;
+      dvdSetPointer(e.clientX, e.clientY, true);
+    }});
+    dvdBox()?.addEventListener('mouseleave', () => {{
+      if (dvdCaughtBusy) return;
+      dvdPointerHot = false;
+      dvdNormalizeSpeed(DVD_BASE_SPEED);
+    }});
+    dvdBox()?.addEventListener('pointerdown', e => catchDvdSprite(e));
+    dvdBox()?.addEventListener('touchstart', e => {{
+      if (dvdCaughtBusy) return;
+      const t = e.touches[0];
+      if (!t) return;
+      dvdSetPointer(t.clientX, t.clientY, true);
+      dvdFleeFrom(t.clientX, t.clientY, DVD_HOVER_SPEED);
+    }}, {{ passive: true }});
+    dvdBox()?.addEventListener('touchend', () => {{ if (!dvdCaughtBusy) dvdPointerHot = false; }});
+
     function scrollToSection(id) {{
       const el = document.getElementById(id);
       const main = document.getElementById('courseMain');
@@ -1423,11 +1480,12 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       document.getElementById('siteNav')?.classList.remove('nav-open');
       if (courseTitle) courseTitle.textContent = 'Internet Prog II + Nesne Yonelimli Prog';
       if (courseSubtitle) courseSubtitle.textContent = 'Ders sec — hangi derse calisacaksin?';
+      stopDvdSprite();
       window.scrollTo({{ top: 0 }});
       if (history.replaceState) history.replaceState(null, '', window.location.pathname + window.location.search);
     }}
 
-    function showCourse(course, scrollId, withJumpscare) {{
+    function showCourse(course, scrollId) {{
       landingEl?.classList.add('hidden');
       appShell?.classList.remove('hidden');
       appShell?.classList.remove('view-intprog', 'view-oop');
@@ -1440,7 +1498,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       if (courseSubtitle && meta) courseSubtitle.textContent = meta.subtitle;
       const bannerId = course === 'intprog' ? 'intprog-course' : 'oop-course';
       const defaultTarget = scrollId || (course === 'intprog' ? 'haftalik-calisma-yolu' : 'oop-haftalik-calisma-yolu');
-      if (withJumpscare) triggerJumpscare(course);
+      startDvdSprite(course);
       requestAnimationFrame(() => {{
         const main = document.getElementById('courseMain');
         if (main) main.scrollTop = 0;
@@ -1449,7 +1507,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     }}
 
     document.querySelectorAll('.landing-card').forEach(btn => {{
-      btn.addEventListener('click', () => showCourse(btn.dataset.course, null, true));
+      btn.addEventListener('click', () => showCourse(btn.dataset.course));
     }});
     document.querySelectorAll('[data-action="back-home"]').forEach(el => {{
       el.addEventListener('click', e => {{ e.preventDefault(); showLanding(); }});
@@ -1472,15 +1530,17 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     initFromHash();
     window.addEventListener('hashchange', initFromHash);
 
-    document.querySelectorAll('.course-pane a[href^="#"]').forEach(a => {{
-      a.addEventListener('click', e => {{
-        const id = a.getAttribute('href').slice(1);
-        if (!id || id === 'landing') return;
-        const el = document.getElementById(id);
-        if (!el) return;
-        e.preventDefault();
-        scrollToSection(id);
-      }});
+    document.getElementById('courseMain')?.addEventListener('click', e => {{
+      const link = e.target.closest('a[href^="#"]');
+      if (!link) return;
+      const href = link.getAttribute('href');
+      if (!href || href === '#landing') return;
+      const id = href.slice(1);
+      const el = document.getElementById(id);
+      if (!el) return;
+      e.preventDefault();
+      e.stopPropagation();
+      scrollToSection(id);
     }});
 
     function setupScrollSpy(paneId, navSelector) {{
@@ -1661,22 +1721,15 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         updateProgress();
       }});
     }});
-    document.querySelectorAll('#7-gunluk-plan .plan-day-head').forEach(head => {{
-      head.addEventListener('click', e => {{
-        if (e.target.tagName === 'INPUT' || e.target.tagName === 'A' || e.target.tagName === 'LABEL') return;
-        head.closest('.plan-day').classList.toggle('open');
-      }});
-    }});
     document.getElementById('openToday')?.addEventListener('click', () => {{
-      document.querySelectorAll('#7-gunluk-plan .plan-day').forEach(d => d.classList.remove('open'));
-      const first = document.querySelector('#7-gunluk-plan .plan-day:not(.done)');
+      document.querySelectorAll('#7-gunluk-plan details.plan-day').forEach(d => d.removeAttribute('open'));
+      const first = document.querySelector('#7-gunluk-plan details.plan-day:not(.done)');
       if (first) {{
-        first.classList.add('open');
+        first.setAttribute('open', '');
         scrollToSection(first.id || '7-gunluk-plan');
       }}
     }});
     updateProgress();
-    document.querySelector('#7-gunluk-plan .plan-day')?.classList.add('open');
 
     function setupPathProgress(sectionId, storageKey, barId, textId, openBtnId) {{
       const section = document.getElementById(sectionId);
@@ -1700,34 +1753,27 @@ HTML_TEMPLATE = """<!DOCTYPE html>
           day.classList.toggle('done', dboxes.length > 0 && ddone === dboxes.length);
         }});
       }}
-      const saved = load();
+      const pathSaved = load();
       section.querySelectorAll('.plan-tasks input[type=checkbox]').forEach(box => {{
         const id = box.dataset.taskId;
-        if (saved[id]) box.checked = true;
+        if (pathSaved[id]) box.checked = true;
         const label = box.closest('li')?.querySelector('label');
         if (label && box.checked) label.classList.add('done');
         box.addEventListener('change', () => {{
-          saved[id] = box.checked;
-          save(saved);
+          pathSaved[id] = box.checked;
+          save(pathSaved);
           if (label) label.classList.toggle('done', box.checked);
           update();
         }});
       }});
-      section.querySelectorAll('.plan-day-head').forEach(head => {{
-        head.addEventListener('click', e => {{
-          if (e.target.tagName === 'INPUT' || e.target.tagName === 'A' || e.target.tagName === 'LABEL') return;
-          head.closest('.plan-day').classList.toggle('open');
-        }});
-      }});
       document.getElementById(openBtnId)?.addEventListener('click', () => {{
-        section.querySelectorAll('.plan-day').forEach(d => d.classList.remove('open'));
-        const first = section.querySelector('.plan-day:not(.done)');
+        section.querySelectorAll('details.plan-day').forEach(d => d.removeAttribute('open'));
+        const first = section.querySelector('details.plan-day:not(.done)');
         if (first) {{
-          first.classList.add('open');
+          first.setAttribute('open', '');
           scrollToSection(first.id || sectionId);
         }}
       }});
-      section.querySelector('.plan-day')?.classList.add('open');
       update();
     }}
     setupPathProgress('haftalik-calisma-yolu', 'intprog-weekly-v1', 'weeklyProgressBar-intprog', 'weeklyProgressText-intprog', 'openWeeklyIntprog');
@@ -2359,6 +2405,23 @@ def build_oop_course(oop_sections) -> str:
     return "".join(blocks)
 
 
+def plan_task_li(task_id: str, text: str, link: str = "", link_label: str = "Konuya git →") -> str:
+    link_html = (
+        f'<a class="plan-task-link" href="{html.escape(link)}">{html.escape(link_label)}</a>'
+        if link
+        else ""
+    )
+    return f"""
+            <li>
+              <input type="checkbox" id="{task_id}" data-task-id="{task_id}">
+              <div class="plan-task-text">
+                <label for="{task_id}">{html.escape(text)}</label>
+                {link_html}
+              </div>
+            </li>
+            """
+
+
 def build_weekly_path_section(
     path: list,
     section_id: str,
@@ -2374,17 +2437,7 @@ def build_weekly_path_section(
         for step in week["steps"]:
             task_id += 1
             tid = f"{storage_key}-w{week['week']}-t{task_id}"
-            link = (
-                f'<a href="{html.escape(step["link"])}">Adima git →</a>'
-                if step.get("link")
-                else ""
-            )
-            tasks_li.append(f"""
-            <li>
-              <input type="checkbox" id="{tid}" data-task-id="{tid}">
-              <label for="{tid}">{html.escape(step["text"])}{link}</label>
-            </li>
-            """)
+            tasks_li.append(plan_task_li(tid, step["text"], step.get("link", ""), "Adima git →"))
         remember_li = "".join(f"<li>{html.escape(r)}</li>" for r in week.get("remember", []))
         remember_block = ""
         if remember_li:
@@ -2394,22 +2447,23 @@ def build_weekly_path_section(
               <ul>{remember_li}</ul>
             </div>
             """
+        open_attr = " open" if week["week"] == path[0]["week"] else ""
         weeks_html.append(f"""
-        <div class="plan-day path-week" data-week="{week['week']}" id="path-week-{week['week']}">
-          <div class="plan-day-head">
+        <details class="plan-day path-week" data-week="{week['week']}" id="path-week-{week['week']}"{open_attr}>
+          <summary class="plan-day-head">
             <div class="plan-day-num">{week['week']}</div>
-            <div>
+            <div class="plan-day-head-main">
               <div class="plan-day-title">Hafta {week['week']}: {html.escape(week['title'])}</div>
               <div class="plan-day-meta">{html.escape(week['time'])}</div>
               <div class="plan-day-goal">{html.escape(week['goal'])}</div>
             </div>
-            <span class="plan-day-toggle">+</span>
-          </div>
+            <span class="plan-day-chevron" aria-hidden="true">+</span>
+          </summary>
           <div class="plan-day-body">
             <ul class="plan-tasks">{"".join(tasks_li)}</ul>
             {remember_block}
           </div>
-        </div>
+        </details>
         """)
 
     return f"""
@@ -2439,30 +2493,25 @@ def build_study_plan_section() -> str:
         for task in day["tasks"]:
             task_id += 1
             tid = f"d{day['day']}-t{task_id}"
-            link = f'<a href="{html.escape(task["link"])}">Konuya git →</a>' if task.get("link") else ""
-            tasks_li.append(f"""
-            <li>
-              <input type="checkbox" id="{tid}" data-task-id="{tid}">
-              <label for="{tid}">{html.escape(task["text"])}{link}</label>
-            </li>
-            """)
+            tasks_li.append(plan_task_li(tid, task["text"], task.get("link", "")))
         remember_li = "".join(f"<li>{html.escape(r)}</li>" for r in day["remember"])
+        open_attr = " open" if day["day"] == 1 else ""
         days_html.append(f"""
-        <div class="plan-day" data-day="{day['day']}">
-          <div class="plan-day-head">
+        <details class="plan-day" data-day="{day['day']}" id="plan-gun-{day['day']}"{open_attr}>
+          <summary class="plan-day-head">
             <div class="plan-day-num">{day['day']}</div>
-            <div>
+            <div class="plan-day-head-main">
               <div class="plan-day-title">Gun {day['day']}: {html.escape(day['title'])}</div>
               <div class="plan-day-meta">{html.escape(day['time'])}</div>
               <div class="plan-day-goal">{html.escape(day['goal'])}</div>
             </div>
-            <span class="plan-day-toggle">+</span>
-          </div>
+            <span class="plan-day-chevron" aria-hidden="true">+</span>
+          </summary>
           <div class="plan-day-body">
             <ul class="plan-tasks">{"".join(tasks_li)}</ul>
             <div class="plan-remember"><strong>Bu gunun sonunda bilmen gerekenler:</strong><ul>{remember_li}</ul></div>
           </div>
-        </div>
+        </details>
         """)
 
     return f"""

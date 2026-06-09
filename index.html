@@ -733,11 +733,14 @@
       border: 1px solid var(--line); border-radius: var(--radius); margin-bottom: .85rem;
       background: var(--paper); overflow: hidden; box-shadow: var(--shadow);
     }
-    .plan-day-head {
+    details.plan-day > summary.plan-day-head {
       padding: 1rem 1.15rem; cursor: pointer; display: flex; align-items: flex-start; gap: .85rem;
-      background: #fafbfc; border-bottom: 1px solid transparent;
+      background: #fafbfc; border-bottom: 1px solid transparent; list-style: none;
+      user-select: none; -webkit-tap-highlight-color: transparent;
     }
-    .plan-day.open .plan-day-head { border-bottom-color: var(--line); }
+    details.plan-day > summary.plan-day-head::-webkit-details-marker { display: none; }
+    details.plan-day[open] > summary.plan-day-head { border-bottom-color: var(--line); }
+    .plan-day-head-main { flex: 1; min-width: 0; }
     .plan-day-num {
       width: 2.2rem; height: 2.2rem; border-radius: 10px; background: var(--accent); color: white;
       display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .95rem; flex-shrink: 0;
@@ -746,10 +749,16 @@
     .plan-day-title { font-weight: 700; font-size: .95rem; }
     .plan-day-meta { font-size: .78rem; color: var(--text-soft); margin-top: .2rem; }
     .plan-day-goal { font-size: .84rem; color: var(--text-soft); margin-top: .35rem; }
-    .plan-day-toggle { margin-left: auto; color: var(--text-soft); font-size: 1.1rem; flex-shrink: 0; }
+    .plan-day-chevron {
+      margin-left: auto; color: var(--text-soft); font-size: 1.35rem; line-height: 1;
+      flex-shrink: 0; min-width: 44px; min-height: 44px;
+      display: inline-flex; align-items: center; justify-content: center;
+      pointer-events: none;
+    }
+    details.plan-day[open] .plan-day-chevron { color: var(--text); transform: rotate(45deg); }
 
-    .plan-day-body { display: none; padding: 1rem 1.15rem 1.15rem; }
-    .plan-day.open .plan-day-body { display: block; }
+    .plan-day-body { padding: 1rem 1.15rem 1.15rem; }
+    .plan-task-text { flex: 1; min-width: 0; }
     .plan-tasks { list-style: none; margin: 0; padding: 0; }
     .plan-tasks li {
       display: flex; align-items: flex-start; gap: .6rem; padding: .55rem 0;
@@ -759,7 +768,7 @@
     .plan-tasks input[type=checkbox] { margin-top: .25rem; width: 16px; height: 16px; accent-color: var(--accent); cursor: pointer; flex-shrink: 0; }
     .plan-tasks label { cursor: pointer; flex: 1; }
     .plan-tasks label.done { text-decoration: line-through; color: var(--text-soft); opacity: .7; }
-    .plan-tasks a { color: var(--blue-text); text-decoration: none; font-size: .78rem; display: block; margin-top: .2rem; }
+    .plan-tasks a { color: var(--blue-text); text-decoration: none; font-size: .78rem; display: inline-block; margin-top: .35rem; padding: .2rem 0; }
     .plan-tasks a:hover { text-decoration: underline; }
     .plan-remember {
       margin-top: .85rem; padding: .75rem .9rem; background: var(--amber-soft);
@@ -851,7 +860,6 @@
       .landing-title { font-size: 1rem; }
       .landing-sub { font-size: .72rem; }
       .hero-icon { width: min(42vw, 120px); height: min(42vw, 120px); }
-      .jumpscare.is-active { animation-duration: 0.45s; }
     }
 
     @media (max-width: 480px) {
@@ -886,111 +894,60 @@
       .panel[open] summary { border-bottom: 1px solid #ddd; }
       .quiz-a { display: block !important; }
       .quiz-card.hidden { display: block !important; }
+      .dvd-sprite { display: none !important; }
     }
 
-    .jumpscare {
-      position: fixed; inset: 0; z-index: 99999;
-      display: none; align-items: center; justify-content: center;
-      background: #000; pointer-events: none; overflow: hidden;
+    .dvd-sprite {
+      position: fixed; top: 0; left: 0;
+      width: 72px; height: 72px;
+      z-index: 9999;
+      pointer-events: auto;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 6px 22px rgba(0,0,0,.35);
+      border: 2px solid rgba(255,255,255,.92);
+      will-change: transform;
+      touch-action: none;
+      cursor: pointer;
+      backface-visibility: hidden;
     }
-    .jumpscare.is-active {
-      display: flex;
-      animation: js-screen-shake 0.62s cubic-bezier(.36,.07,.19,.97) both;
+    .dvd-sprite.is-fleeing {
+      box-shadow: 0 0 18px rgba(220,38,38,.55), 0 6px 22px rgba(0,0,0,.35);
+      border-color: #fecaca;
     }
-    .jumpscare-flash {
-      position: absolute; inset: 0; background: #fff;
-      opacity: 0; pointer-events: none; z-index: 4;
-    }
-    .jumpscare-red {
-      position: absolute; inset: 0; background: #dc2626;
-      opacity: 0; pointer-events: none; z-index: 3; mix-blend-mode: screen;
-    }
-    .jumpscare-vignette {
-      position: absolute; inset: 0; z-index: 2; pointer-events: none;
-      background: radial-gradient(circle at center, transparent 35%, rgba(0,0,0,.55) 100%);
-      opacity: 0;
-    }
-    .jumpscare.is-active .jumpscare-flash {
-      animation: js-white-flash 0.75s ease-out forwards;
-    }
-    .jumpscare.is-active .jumpscare-red {
-      animation: js-red-flash 0.75s ease-out forwards;
-    }
-    .jumpscare.is-active .jumpscare-vignette {
-      animation: js-vignette 0.75s ease-out forwards;
-    }
-    .jumpscare-frame {
-      position: relative; z-index: 1;
-      width: 100%; height: 100%; overflow: hidden;
-    }
-    .jumpscare-photo {
-      position: absolute; inset: 0;
+    .dvd-sprite img {
       width: 100%; height: 100%;
       object-fit: cover;
+      pointer-events: none;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+    .dvd-sprite--intprog img { object-position: 50% 19%; }
+    .dvd-sprite--oop img { object-position: 50% 27%; }
+    .dvd-sprite.is-caught {
+      left: 50%; top: 50%;
+      width: min(88vw, 480px);
+      height: min(78vh, 640px);
+      transform: translate(-50%, -50%);
+      transition:
+        width 0.45s cubic-bezier(.2,.8,.2,1),
+        height 0.45s cubic-bezier(.2,.8,.2,1),
+        opacity 0.5s ease,
+        transform 0.45s cubic-bezier(.2,.8,.2,1);
+      border-radius: 14px;
+      cursor: default;
+      pointer-events: none;
+      z-index: 100000;
+    }
+    .dvd-sprite.is-caught img {
+      object-fit: contain;
+      object-position: center center;
+    }
+    .dvd-sprite.is-closing {
       opacity: 0;
-      filter: contrast(1.45) saturate(1.3) brightness(1.05);
-      will-change: transform, opacity, filter;
+      transform: translate(-50%, -50%) scale(0.88);
     }
-    .jumpscare-photo--intprog {
-      object-position: 50% 19%;
-      transform-origin: 50% 19%;
-    }
-    .jumpscare-photo--oop {
-      object-position: 50% 27%;
-      transform-origin: 50% 27%;
-    }
-    .jumpscare.is-active .jumpscare-photo--intprog {
-      animation: js-face-intprog 0.78s cubic-bezier(.15,.85,.25,1) forwards;
-    }
-    .jumpscare.is-active .jumpscare-photo--oop {
-      animation: js-face-oop 0.78s cubic-bezier(.15,.85,.25,1) forwards;
-    }
-    @keyframes js-screen-shake {
-      0%, 100% { transform: translate(0, 0); }
-      8% { transform: translate(-14px, 8px) rotate(-0.8deg); }
-      16% { transform: translate(12px, -10px) rotate(0.9deg); }
-      24% { transform: translate(-10px, -6px) rotate(-0.5deg); }
-      32% { transform: translate(8px, 6px) rotate(0.4deg); }
-      40% { transform: translate(-4px, 2px); }
-      50% { transform: translate(0, 0); }
-    }
-    @keyframes js-white-flash {
-      0% { opacity: 0; }
-      4% { opacity: 1; }
-      10% { opacity: 0; }
-      16% { opacity: .95; }
-      22% { opacity: 0; }
-      100% { opacity: 0; }
-    }
-    @keyframes js-red-flash {
-      0%, 12% { opacity: 0; }
-      18% { opacity: .75; }
-      26% { opacity: 0; }
-      34% { opacity: .45; }
-      42% { opacity: 0; }
-      100% { opacity: 0; }
-    }
-    @keyframes js-vignette {
-      0% { opacity: 0; }
-      8% { opacity: 1; }
-      70% { opacity: .85; }
-      100% { opacity: 0; }
-    }
-    @keyframes js-face-intprog {
-      0% { opacity: 0; transform: scale(0.45); filter: invert(1) contrast(2) brightness(1.4); }
-      5% { opacity: 1; transform: scale(0.96); filter: contrast(1.7) saturate(1.5) brightness(1.15); }
-      12% { opacity: 1; transform: scale(0.92); filter: contrast(1.5) saturate(1.35) brightness(1.08); }
-      68% { opacity: 1; transform: scale(0.9); }
-      100% { opacity: 0; transform: scale(0.94); }
-    }
-    @keyframes js-face-oop {
-      0% { opacity: 0; transform: scale(0.45); filter: invert(1) contrast(2) brightness(1.4); }
-      5% { opacity: 1; transform: scale(0.94); filter: contrast(1.7) saturate(1.5) brightness(1.15); }
-      12% { opacity: 1; transform: scale(0.9); filter: contrast(1.5) saturate(1.35) brightness(1.08); }
-      68% { opacity: 1; transform: scale(0.88); }
-      100% { opacity: 0; transform: scale(0.92); }
-    }
-    @media print { .jumpscare { display: none !important; } }
+
   </style>
 </head>
 <body>
@@ -1105,41 +1062,56 @@
       <div class="special-body" style="padding-top:0">
         <div class="callout callout-tip" style="margin-bottom:1rem">Sifirdan basliyorsan haftalari sirayla takip et. Her adimi tikla, sonra <strong>Adima git</strong> ile ilgili konuya gec.</div>
         
-        <div class="plan-day path-week" data-week="2" id="path-week-2">
-          <div class="plan-day-head">
+        <details class="plan-day path-week" data-week="2" id="path-week-2" open>
+          <summary class="plan-day-head">
             <div class="plan-day-num">2</div>
-            <div>
+            <div class="plan-day-head-main">
               <div class="plan-day-title">Hafta 2: Ruby &amp; Rails Giris</div>
               <div class="plan-day-meta">2-3 saat</div>
               <div class="plan-day-goal">Ruby dil mantigini ve MVC yapisini anla; proje nasil calisir ogren.</div>
             </div>
-            <span class="plan-day-toggle">+</span>
-          </div>
+            <span class="plan-day-chevron" aria-hidden="true">+</span>
+          </summary>
           <div class="plan-day-body">
             <ul class="plan-tasks">
             <li>
               <input type="checkbox" id="intprog-w2-t1" data-task-id="intprog-w2-t1">
-              <label for="intprog-w2-t1">Basit Anlatim kutusunu bastan sona oku<a href="#hafta-2-ruby-rails-giris">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="intprog-w2-t1">Basit Anlatim kutusunu bastan sona oku</label>
+                <a class="plan-task-link" href="#hafta-2-ruby-rails-giris">Adima git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="intprog-w2-t2" data-task-id="intprog-w2-t2">
-              <label for="intprog-w2-t2">Ruby Temelleri panelini ac (Integer, String, Symbol)<a href="#hafta-2-ruby-rails-giris">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="intprog-w2-t2">Ruby Temelleri panelini ac (Integer, String, Symbol)</label>
+                <a class="plan-task-link" href="#hafta-2-ruby-rails-giris">Adima git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="intprog-w2-t3" data-task-id="intprog-w2-t3">
-              <label for="intprog-w2-t3">MVC akisini ciz: routes → controller → model → view<a href="#hafta-2-ruby-rails-giris">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="intprog-w2-t3">MVC akisini ciz: routes → controller → model → view</label>
+                <a class="plan-task-link" href="#hafta-2-ruby-rails-giris">Adima git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="intprog-w2-t4" data-task-id="intprog-w2-t4">
-              <label for="intprog-w2-t4">Rails dizin yapisini incele (app/, config/, db/)<a href="#hafta-2-ruby-rails-giris">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="intprog-w2-t4">Rails dizin yapisini incele (app/, config/, db/)</label>
+                <a class="plan-task-link" href="#hafta-2-ruby-rails-giris">Adima git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="intprog-w2-t5" data-task-id="intprog-w2-t5">
-              <label for="intprog-w2-t5">Varsa hafta videosunu izle<a href="#hafta-2-ruby-rails-giris">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="intprog-w2-t5">Varsa hafta videosunu izle</label>
+                <a class="plan-task-link" href="#hafta-2-ruby-rails-giris">Adima git →</a>
+              </div>
             </li>
             </ul>
             
@@ -1149,38 +1121,50 @@
             </div>
             
           </div>
-        </div>
+        </details>
         
-        <div class="plan-day path-week" data-week="3" id="path-week-3">
-          <div class="plan-day-head">
+        <details class="plan-day path-week" data-week="3" id="path-week-3">
+          <summary class="plan-day-head">
             <div class="plan-day-num">3</div>
-            <div>
+            <div class="plan-day-head-main">
               <div class="plan-day-title">Hafta 3: ORM &amp; Active Record</div>
               <div class="plan-day-meta">2-3 saat</div>
               <div class="plan-day-goal">SQL yazmadan veritabani islemi yap; find, find_by, where farkini bil.</div>
             </div>
-            <span class="plan-day-toggle">+</span>
-          </div>
+            <span class="plan-day-chevron" aria-hidden="true">+</span>
+          </summary>
           <div class="plan-day-body">
             <ul class="plan-tasks">
             <li>
               <input type="checkbox" id="intprog-w3-t6" data-task-id="intprog-w3-t6">
-              <label for="intprog-w3-t6">Basit Anlatim: ORM = tablo ↔ Ruby sinifi<a href="#hafta-3-orm-active-record">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="intprog-w3-t6">Basit Anlatim: ORM = tablo ↔ Ruby sinifi</label>
+                <a class="plan-task-link" href="#hafta-3-orm-active-record">Adima git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="intprog-w3-t7" data-task-id="intprog-w3-t7">
-              <label for="intprog-w3-t7">find vs find_by vs where tablosunu ezberle<a href="#hafta-3-orm-active-record">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="intprog-w3-t7">find vs find_by vs where tablosunu ezberle</label>
+                <a class="plan-task-link" href="#hafta-3-orm-active-record">Adima git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="intprog-w3-t8" data-task-id="intprog-w3-t8">
-              <label for="intprog-w3-t8">Migration panelini oku; db:migrate ne yapar?<a href="#hafta-3-orm-active-record">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="intprog-w3-t8">Migration panelini oku; db:migrate ne yapar?</label>
+                <a class="plan-task-link" href="#hafta-3-orm-active-record">Adima git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="intprog-w3-t9" data-task-id="intprog-w3-t9">
-              <label for="intprog-w3-t9">Komut referansindan db:* komutlarina bak<a href="#komut-hizli-referans">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="intprog-w3-t9">Komut referansindan db:* komutlarina bak</label>
+                <a class="plan-task-link" href="#komut-hizli-referans">Adima git →</a>
+              </div>
             </li>
             </ul>
             
@@ -1190,38 +1174,50 @@
             </div>
             
           </div>
-        </div>
+        </details>
         
-        <div class="plan-day path-week" data-week="4" id="path-week-4">
-          <div class="plan-day-head">
+        <details class="plan-day path-week" data-week="4" id="path-week-4">
+          <summary class="plan-day-head">
             <div class="plan-day-num">4</div>
-            <div>
+            <div class="plan-day-head-main">
               <div class="plan-day-title">Hafta 4: Enum, Routes &amp; Controllers</div>
               <div class="plan-day-meta">2-3 saat</div>
               <div class="plan-day-goal">HTTP metotlarini ve 7 CRUD route&#x27;unu ogren.</div>
             </div>
-            <span class="plan-day-toggle">+</span>
-          </div>
+            <span class="plan-day-chevron" aria-hidden="true">+</span>
+          </summary>
           <div class="plan-day-body">
             <ul class="plan-tasks">
             <li>
               <input type="checkbox" id="intprog-w4-t10" data-task-id="intprog-w4-t10">
-              <label for="intprog-w4-t10">GET/POST/PUT/PATCH/DELETE ne zaman kullanilir?<a href="#hafta-4-enum-routes-controllers">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="intprog-w4-t10">GET/POST/PUT/PATCH/DELETE ne zaman kullanilir?</label>
+                <a class="plan-task-link" href="#hafta-4-enum-routes-controllers">Adima git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="intprog-w4-t11" data-task-id="intprog-w4-t11">
-              <label for="intprog-w4-t11">resources :posts = 7 route mantigini anla<a href="#hafta-4-enum-routes-controllers">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="intprog-w4-t11">resources :posts = 7 route mantigini anla</label>
+                <a class="plan-task-link" href="#hafta-4-enum-routes-controllers">Adima git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="intprog-w4-t12" data-task-id="intprog-w4-t12">
-              <label for="intprog-w4-t12">Enum panelini oku (draft: 0 ne demek?)<a href="#hafta-4-enum-routes-controllers">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="intprog-w4-t12">Enum panelini oku (draft: 0 ne demek?)</label>
+                <a class="plan-task-link" href="#hafta-4-enum-routes-controllers">Adima git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="intprog-w4-t13" data-task-id="intprog-w4-t13">
-              <label for="intprog-w4-t13">posts_path vs posts_url farkini not al<a href="#hafta-4-enum-routes-controllers">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="intprog-w4-t13">posts_path vs posts_url farkini not al</label>
+                <a class="plan-task-link" href="#hafta-4-enum-routes-controllers">Adima git →</a>
+              </div>
             </li>
             </ul>
             
@@ -1231,33 +1227,42 @@
             </div>
             
           </div>
-        </div>
+        </details>
         
-        <div class="plan-day path-week" data-week="5" id="path-week-5">
-          <div class="plan-day-head">
+        <details class="plan-day path-week" data-week="5" id="path-week-5">
+          <summary class="plan-day-head">
             <div class="plan-day-num">5</div>
-            <div>
+            <div class="plan-day-head-main">
               <div class="plan-day-title">Hafta 5: Form &amp; Strong Parameters</div>
               <div class="plan-day-meta">2 saat</div>
               <div class="plan-day-goal">Form ile veri al; guvenli kaydetme mantigini anla.</div>
             </div>
-            <span class="plan-day-toggle">+</span>
-          </div>
+            <span class="plan-day-chevron" aria-hidden="true">+</span>
+          </summary>
           <div class="plan-day-body">
             <ul class="plan-tasks">
             <li>
               <input type="checkbox" id="intprog-w5-t14" data-task-id="intprog-w5-t14">
-              <label for="intprog-w5-t14">form_with model: @post ornegini incele<a href="#hafta-5-form-helpers-strong-parameters">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="intprog-w5-t14">form_with model: @post ornegini incele</label>
+                <a class="plan-task-link" href="#hafta-5-form-helpers-strong-parameters">Adima git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="intprog-w5-t15" data-task-id="intprog-w5-t15">
-              <label for="intprog-w5-t15">Strong Parameters (post_params) panelini oku<a href="#hafta-5-form-helpers-strong-parameters">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="intprog-w5-t15">Strong Parameters (post_params) panelini oku</label>
+                <a class="plan-task-link" href="#hafta-5-form-helpers-strong-parameters">Adima git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="intprog-w5-t16" data-task-id="intprog-w5-t16">
-              <label for="intprog-w5-t16">Partial (_form) ve before_action mantigi<a href="#hafta-5-form-helpers-strong-parameters">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="intprog-w5-t16">Partial (_form) ve before_action mantigi</label>
+                <a class="plan-task-link" href="#hafta-5-form-helpers-strong-parameters">Adima git →</a>
+              </div>
             </li>
             </ul>
             
@@ -1267,33 +1272,42 @@
             </div>
             
           </div>
-        </div>
+        </details>
         
-        <div class="plan-day path-week" data-week="6" id="path-week-6">
-          <div class="plan-day-head">
+        <details class="plan-day path-week" data-week="6" id="path-week-6">
+          <summary class="plan-day-head">
             <div class="plan-day-num">6</div>
-            <div>
+            <div class="plan-day-head-main">
               <div class="plan-day-title">Hafta 6: Bootstrap Frontend</div>
               <div class="plan-day-meta">2 saat</div>
               <div class="plan-day-goal">12 sutun grid ve navbar/footer yapısını ogren.</div>
             </div>
-            <span class="plan-day-toggle">+</span>
-          </div>
+            <span class="plan-day-chevron" aria-hidden="true">+</span>
+          </summary>
           <div class="plan-day-body">
             <ul class="plan-tasks">
             <li>
               <input type="checkbox" id="intprog-w6-t17" data-task-id="intprog-w6-t17">
-              <label for="intprog-w6-t17">Grid sistemi: col-md-6 = yarim genislik<a href="#hafta-6-bootstrap-frontend">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="intprog-w6-t17">Grid sistemi: col-md-6 = yarim genislik</label>
+                <a class="plan-task-link" href="#hafta-6-bootstrap-frontend">Adima git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="intprog-w6-t18" data-task-id="intprog-w6-t18">
-              <label for="intprog-w6-t18">container vs container-fluid farki<a href="#hafta-6-bootstrap-frontend">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="intprog-w6-t18">container vs container-fluid farki</label>
+                <a class="plan-task-link" href="#hafta-6-bootstrap-frontend">Adima git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="intprog-w6-t19" data-task-id="intprog-w6-t19">
-              <label for="intprog-w6-t19">Navbar ve footer partial orneklerini incele<a href="#hafta-6-bootstrap-frontend">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="intprog-w6-t19">Navbar ve footer partial orneklerini incele</label>
+                <a class="plan-task-link" href="#hafta-6-bootstrap-frontend">Adima git →</a>
+              </div>
             </li>
             </ul>
             
@@ -1303,33 +1317,42 @@
             </div>
             
           </div>
-        </div>
+        </details>
         
-        <div class="plan-day path-week" data-week="7" id="path-week-7">
-          <div class="plan-day-head">
+        <details class="plan-day path-week" data-week="7" id="path-week-7">
+          <summary class="plan-day-head">
             <div class="plan-day-num">7</div>
-            <div>
+            <div class="plan-day-head-main">
               <div class="plan-day-title">Hafta 7: Model Iliskileri</div>
               <div class="plan-day-meta">2-3 saat</div>
               <div class="plan-day-goal">belongs_to / has_many / HABTM iliskilerini ayirt et.</div>
             </div>
-            <span class="plan-day-toggle">+</span>
-          </div>
+            <span class="plan-day-chevron" aria-hidden="true">+</span>
+          </summary>
           <div class="plan-day-body">
             <ul class="plan-tasks">
             <li>
               <input type="checkbox" id="intprog-w7-t20" data-task-id="intprog-w7-t20">
-              <label for="intprog-w7-t20">belongs_to: FK bu tabloda — has_many: karsi taraf cok<a href="#hafta-7-model-iliskileri-kategori">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="intprog-w7-t20">belongs_to: FK bu tabloda — has_many: karsi taraf cok</label>
+                <a class="plan-task-link" href="#hafta-7-model-iliskileri-kategori">Adima git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="intprog-w7-t21" data-task-id="intprog-w7-t21">
-              <label for="intprog-w7-t21">HABTM ara tablo mantigini oku<a href="#hafta-7-model-iliskileri-kategori">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="intprog-w7-t21">HABTM ara tablo mantigini oku</label>
+                <a class="plan-task-link" href="#hafta-7-model-iliskileri-kategori">Adima git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="intprog-w7-t22" data-task-id="intprog-w7-t22">
-              <label for="intprog-w7-t22">scaffold ile hizli CRUD nasil olusur?<a href="#hafta-7-model-iliskileri-kategori">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="intprog-w7-t22">scaffold ile hizli CRUD nasil olusur?</label>
+                <a class="plan-task-link" href="#hafta-7-model-iliskileri-kategori">Adima git →</a>
+              </div>
             </li>
             </ul>
             
@@ -1339,33 +1362,42 @@
             </div>
             
           </div>
-        </div>
+        </details>
         
-        <div class="plan-day path-week" data-week="8" id="path-week-8">
-          <div class="plan-day-head">
+        <details class="plan-day path-week" data-week="8" id="path-week-8">
+          <summary class="plan-day-head">
             <div class="plan-day-num">8</div>
-            <div>
+            <div class="plan-day-head-main">
               <div class="plan-day-title">Hafta 8: Validation &amp; Active Storage</div>
               <div class="plan-day-meta">2 saat</div>
               <div class="plan-day-goal">Model dogrulama kurallari ve dosya yukleme.</div>
             </div>
-            <span class="plan-day-toggle">+</span>
-          </div>
+            <span class="plan-day-chevron" aria-hidden="true">+</span>
+          </summary>
           <div class="plan-day-body">
             <ul class="plan-tasks">
             <li>
               <input type="checkbox" id="intprog-w8-t23" data-task-id="intprog-w8-t23">
-              <label for="intprog-w8-t23">validates presence, uniqueness, length ornekleri<a href="#hafta-8-validation-active-storage">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="intprog-w8-t23">validates presence, uniqueness, length ornekleri</label>
+                <a class="plan-task-link" href="#hafta-8-validation-active-storage">Adima git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="intprog-w8-t24" data-task-id="intprog-w8-t24">
-              <label for="intprog-w8-t24">normalizes ne zaman kullanilir?<a href="#hafta-8-validation-active-storage">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="intprog-w8-t24">normalizes ne zaman kullanilir?</label>
+                <a class="plan-task-link" href="#hafta-8-validation-active-storage">Adima git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="intprog-w8-t25" data-task-id="intprog-w8-t25">
-              <label for="intprog-w8-t25">has_one_attached :image mantigi<a href="#hafta-8-validation-active-storage">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="intprog-w8-t25">has_one_attached :image mantigi</label>
+                <a class="plan-task-link" href="#hafta-8-validation-active-storage">Adima git →</a>
+              </div>
             </li>
             </ul>
             
@@ -1375,33 +1407,42 @@
             </div>
             
           </div>
-        </div>
+        </details>
         
-        <div class="plan-day path-week" data-week="9" id="path-week-9">
-          <div class="plan-day-head">
+        <details class="plan-day path-week" data-week="9" id="path-week-9">
+          <summary class="plan-day-head">
             <div class="plan-day-num">9</div>
-            <div>
+            <div class="plan-day-head-main">
               <div class="plan-day-title">Hafta 9: I18n, FriendlyId &amp; Action Text</div>
               <div class="plan-day-meta">2 saat</div>
               <div class="plan-day-goal">Coklu dil, SEO URL ve zengin metin editoru.</div>
             </div>
-            <span class="plan-day-toggle">+</span>
-          </div>
+            <span class="plan-day-chevron" aria-hidden="true">+</span>
+          </summary>
           <div class="plan-day-body">
             <ul class="plan-tasks">
             <li>
               <input type="checkbox" id="intprog-w9-t26" data-task-id="intprog-w9-t26">
-              <label for="intprog-w9-t26">I18n.t ve locale= parametresi<a href="#hafta-9-i18n-friendlyid-action-text">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="intprog-w9-t26">I18n.t ve locale= parametresi</label>
+                <a class="plan-task-link" href="#hafta-9-i18n-friendlyid-action-text">Adima git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="intprog-w9-t27" data-task-id="intprog-w9-t27">
-              <label for="intprog-w9-t27">FriendlyId slug URL mantigi<a href="#hafta-9-i18n-friendlyid-action-text">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="intprog-w9-t27">FriendlyId slug URL mantigi</label>
+                <a class="plan-task-link" href="#hafta-9-i18n-friendlyid-action-text">Adima git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="intprog-w9-t28" data-task-id="intprog-w9-t28">
-              <label for="intprog-w9-t28">Action Text zengin metin editoru<a href="#hafta-9-i18n-friendlyid-action-text">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="intprog-w9-t28">Action Text zengin metin editoru</label>
+                <a class="plan-task-link" href="#hafta-9-i18n-friendlyid-action-text">Adima git →</a>
+              </div>
             </li>
             </ul>
             
@@ -1411,43 +1452,58 @@
             </div>
             
           </div>
-        </div>
+        </details>
         
-        <div class="plan-day path-week" data-week="10" id="path-week-10">
-          <div class="plan-day-head">
+        <details class="plan-day path-week" data-week="10" id="path-week-10">
+          <summary class="plan-day-head">
             <div class="plan-day-num">10</div>
-            <div>
+            <div class="plan-day-head-main">
               <div class="plan-day-title">Hafta 10: Devise &amp; Authorization</div>
               <div class="plan-day-meta">2-3 saat</div>
               <div class="plan-day-goal">Kullanici girisi ve rol bazli yetkilendirme.</div>
             </div>
-            <span class="plan-day-toggle">+</span>
-          </div>
+            <span class="plan-day-chevron" aria-hidden="true">+</span>
+          </summary>
           <div class="plan-day-body">
             <ul class="plan-tasks">
             <li>
               <input type="checkbox" id="intprog-w10-t29" data-task-id="intprog-w10-t29">
-              <label for="intprog-w10-t29">Devise kurulum ve temel akis<a href="#hafta-10-devise-authorization">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="intprog-w10-t29">Devise kurulum ve temel akis</label>
+                <a class="plan-task-link" href="#hafta-10-devise-authorization">Adima git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="intprog-w10-t30" data-task-id="intprog-w10-t30">
-              <label for="intprog-w10-t30">Authentication vs Authorization farki<a href="#hafta-10-devise-authorization">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="intprog-w10-t30">Authentication vs Authorization farki</label>
+                <a class="plan-task-link" href="#hafta-10-devise-authorization">Adima git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="intprog-w10-t31" data-task-id="intprog-w10-t31">
-              <label for="intprog-w10-t31">authenticate_user! ve current_user kullanimi<a href="#hafta-10-devise-authorization">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="intprog-w10-t31">authenticate_user! ve current_user kullanimi</label>
+                <a class="plan-task-link" href="#hafta-10-devise-authorization">Adima git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="intprog-w10-t32" data-task-id="intprog-w10-t32">
-              <label for="intprog-w10-t32">Ezber listesini oku<a href="#sinav-ezber-listesi">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="intprog-w10-t32">Ezber listesini oku</label>
+                <a class="plan-task-link" href="#sinav-ezber-listesi">Adima git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="intprog-w10-t33" data-task-id="intprog-w10-t33">
-              <label for="intprog-w10-t33">Quiz ile kendini test et<a href="#sinav-sorulari-kendini-test-et">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="intprog-w10-t33">Quiz ile kendini test et</label>
+                <a class="plan-task-link" href="#sinav-sorulari-kendini-test-et">Adima git →</a>
+              </div>
             </li>
             </ul>
             
@@ -1457,7 +1513,7 @@
             </div>
             
           </div>
-        </div>
+        </details>
         
       </div>
     </section>
@@ -1472,312 +1528,429 @@
       </div>
       <div class="special-body" style="padding-top:0">
         
-        <div class="plan-day" data-day="1">
-          <div class="plan-day-head">
+        <details class="plan-day" data-day="1" id="plan-gun-1" open>
+          <summary class="plan-day-head">
             <div class="plan-day-num">1</div>
-            <div>
+            <div class="plan-day-head-main">
               <div class="plan-day-title">Gun 1: Rails nedir? Temel iskelet</div>
               <div class="plan-day-meta">2-3 saat</div>
               <div class="plan-day-goal">MVC ve Ruby mantigini anla. Kod yazmana gerek yok.</div>
             </div>
-            <span class="plan-day-toggle">+</span>
-          </div>
+            <span class="plan-day-chevron" aria-hidden="true">+</span>
+          </summary>
           <div class="plan-day-body">
             <ul class="plan-tasks">
             <li>
               <input type="checkbox" id="d1-t1" data-task-id="d1-t1">
-              <label for="d1-t1">Hafta 2 — Basit Anlatim kutusunu oku<a href="#hafta-2-ruby-rails-giris">Konuya git →</a></label>
+              <div class="plan-task-text">
+                <label for="d1-t1">Hafta 2 — Basit Anlatim kutusunu oku</label>
+                <a class="plan-task-link" href="#hafta-2-ruby-rails-giris">Konuya git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="d1-t2" data-task-id="d1-t2">
-              <label for="d1-t2">MVC akisini ezberle: routes → controller → model → view<a href="#hafta-2-ruby-rails-giris">Konuya git →</a></label>
+              <div class="plan-task-text">
+                <label for="d1-t2">MVC akisini ezberle: routes → controller → model → view</label>
+                <a class="plan-task-link" href="#hafta-2-ruby-rails-giris">Konuya git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="d1-t3" data-task-id="d1-t3">
-              <label for="d1-t3">Ruby Temelleri panelini ac (Integer, String, Symbol farki)<a href="#hafta-2-ruby-rails-giris">Konuya git →</a></label>
+              <div class="plan-task-text">
+                <label for="d1-t3">Ruby Temelleri panelini ac (Integer, String, Symbol farki)</label>
+                <a class="plan-task-link" href="#hafta-2-ruby-rails-giris">Konuya git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="d1-t4" data-task-id="d1-t4">
-              <label for="d1-t4">Rails Dizin Yapisini gozden gecir (app/, config/, db/)<a href="#hafta-2-ruby-rails-giris">Konuya git →</a></label>
+              <div class="plan-task-text">
+                <label for="d1-t4">Rails Dizin Yapisini gozden gecir (app/, config/, db/)</label>
+                <a class="plan-task-link" href="#hafta-2-ruby-rails-giris">Konuya git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="d1-t5" data-task-id="d1-t5">
-              <label for="d1-t5">Test: Hafta 2 sorulari (1-5) — cevaplari kontrol et<a href="#sinav-sorulari-kendini-test-et">Konuya git →</a></label>
+              <div class="plan-task-text">
+                <label for="d1-t5">Test: Hafta 2 sorulari (1-5) — cevaplari kontrol et</label>
+                <a class="plan-task-link" href="#sinav-sorulari-kendini-test-et">Konuya git →</a>
+              </div>
             </li>
             </ul>
             <div class="plan-remember"><strong>Bu gunun sonunda bilmen gerekenler:</strong><ul><li>Ruby&#x27;de her sey nesnedir</li><li>Symbol tekil, String her seferinde yeni nesne</li><li>? metot → true/false, ! metot → orijinali degistirir</li></ul></div>
           </div>
-        </div>
+        </details>
         
-        <div class="plan-day" data-day="2">
-          <div class="plan-day-head">
+        <details class="plan-day" data-day="2" id="plan-gun-2">
+          <summary class="plan-day-head">
             <div class="plan-day-num">2</div>
-            <div>
+            <div class="plan-day-head-main">
               <div class="plan-day-title">Gun 2: Veritabani &amp; Active Record</div>
               <div class="plan-day-meta">2-3 saat</div>
               <div class="plan-day-goal">ORM ve find/find_by/where farkini bil.</div>
             </div>
-            <span class="plan-day-toggle">+</span>
-          </div>
+            <span class="plan-day-chevron" aria-hidden="true">+</span>
+          </summary>
           <div class="plan-day-body">
             <ul class="plan-tasks">
             <li>
               <input type="checkbox" id="d2-t6" data-task-id="d2-t6">
-              <label for="d2-t6">Hafta 3 — Basit Anlatim oku<a href="#hafta-3-orm-active-record">Konuya git →</a></label>
+              <div class="plan-task-text">
+                <label for="d2-t6">Hafta 3 — Basit Anlatim oku</label>
+                <a class="plan-task-link" href="#hafta-3-orm-active-record">Konuya git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="d2-t7" data-task-id="d2-t7">
-              <label for="d2-t7">ORM = tablo ↔ Ruby sinifi mantigini anla<a href="#hafta-3-orm-active-record">Konuya git →</a></label>
+              <div class="plan-task-text">
+                <label for="d2-t7">ORM = tablo ↔ Ruby sinifi mantigini anla</label>
+                <a class="plan-task-link" href="#hafta-3-orm-active-record">Konuya git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="d2-t8" data-task-id="d2-t8">
-              <label for="d2-t8">find vs find_by vs where tablosunu ezberle<a href="#hafta-3-orm-active-record">Konuya git →</a></label>
+              <div class="plan-task-text">
+                <label for="d2-t8">find vs find_by vs where tablosunu ezberle</label>
+                <a class="plan-task-link" href="#hafta-3-orm-active-record">Konuya git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="d2-t9" data-task-id="d2-t9">
-              <label for="d2-t9">Migration panelini oku (db:migrate, db:rollback)<a href="#hafta-3-orm-active-record">Konuya git →</a></label>
+              <div class="plan-task-text">
+                <label for="d2-t9">Migration panelini oku (db:migrate, db:rollback)</label>
+                <a class="plan-task-link" href="#hafta-3-orm-active-record">Konuya git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="d2-t10" data-task-id="d2-t10">
-              <label for="d2-t10">Komutlar bolumunden db:* komutlarina bak<a href="#komut-hizli-referans">Konuya git →</a></label>
+              <div class="plan-task-text">
+                <label for="d2-t10">Komutlar bolumunden db:* komutlarina bak</label>
+                <a class="plan-task-link" href="#komut-hizli-referans">Konuya git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="d2-t11" data-task-id="d2-t11">
-              <label for="d2-t11">Test: Hafta 3 sorulari (6-10)<a href="#sinav-sorulari-kendini-test-et">Konuya git →</a></label>
+              <div class="plan-task-text">
+                <label for="d2-t11">Test: Hafta 3 sorulari (6-10)</label>
+                <a class="plan-task-link" href="#sinav-sorulari-kendini-test-et">Konuya git →</a>
+              </div>
             </li>
             </ul>
             <div class="plan-remember"><strong>Bu gunun sonunda bilmen gerekenler:</strong><ul><li>find(1) → bulamazsa HATA</li><li>find_by → bulamazsa nil</li><li>where → liste doner</li><li>db:reset = sil + yeniden kur + seed</li></ul></div>
           </div>
-        </div>
+        </details>
         
-        <div class="plan-day" data-day="3">
-          <div class="plan-day-head">
+        <details class="plan-day" data-day="3" id="plan-gun-3">
+          <summary class="plan-day-head">
             <div class="plan-day-num">3</div>
-            <div>
+            <div class="plan-day-head-main">
               <div class="plan-day-title">Gun 3: Routes, HTTP &amp; CRUD</div>
               <div class="plan-day-meta">2-3 saat</div>
               <div class="plan-day-goal">HTTP metotlari ve 7 CRUD route&#x27;u bil.</div>
             </div>
-            <span class="plan-day-toggle">+</span>
-          </div>
+            <span class="plan-day-chevron" aria-hidden="true">+</span>
+          </summary>
           <div class="plan-day-body">
             <ul class="plan-tasks">
             <li>
               <input type="checkbox" id="d3-t12" data-task-id="d3-t12">
-              <label for="d3-t12">Hafta 4 — Basit Anlatim oku<a href="#hafta-4-enum-routes-controllers">Konuya git →</a></label>
+              <div class="plan-task-text">
+                <label for="d3-t12">Hafta 4 — Basit Anlatim oku</label>
+                <a class="plan-task-link" href="#hafta-4-enum-routes-controllers">Konuya git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="d3-t13" data-task-id="d3-t13">
-              <label for="d3-t13">GET/POST/PUT/PATCH/DELETE ne zaman kullanilir ezberle<a href="#hafta-4-enum-routes-controllers">Konuya git →</a></label>
+              <div class="plan-task-text">
+                <label for="d3-t13">GET/POST/PUT/PATCH/DELETE ne zaman kullanilir ezberle</label>
+                <a class="plan-task-link" href="#hafta-4-enum-routes-controllers">Konuya git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="d3-t14" data-task-id="d3-t14">
-              <label for="d3-t14">resources :posts = 7 route (index,show,new,create,edit,update,destroy)<a href="#hafta-4-enum-routes-controllers">Konuya git →</a></label>
+              <div class="plan-task-text">
+                <label for="d3-t14">resources :posts = 7 route (index,show,new,create,edit,update,destroy)</label>
+                <a class="plan-task-link" href="#hafta-4-enum-routes-controllers">Konuya git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="d3-t15" data-task-id="d3-t15">
-              <label for="d3-t15">Enum panelini oku (draft: 0 ne demek?)<a href="#hafta-4-enum-routes-controllers">Konuya git →</a></label>
+              <div class="plan-task-text">
+                <label for="d3-t15">Enum panelini oku (draft: 0 ne demek?)</label>
+                <a class="plan-task-link" href="#hafta-4-enum-routes-controllers">Konuya git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="d3-t16" data-task-id="d3-t16">
-              <label for="d3-t16">posts_path vs posts_url farkini ogren<a href="#hafta-4-enum-routes-controllers">Konuya git →</a></label>
+              <div class="plan-task-text">
+                <label for="d3-t16">posts_path vs posts_url farkini ogren</label>
+                <a class="plan-task-link" href="#hafta-4-enum-routes-controllers">Konuya git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="d3-t17" data-task-id="d3-t17">
-              <label for="d3-t17">Test: Hafta 4 sorulari (11-15)<a href="#sinav-sorulari-kendini-test-et">Konuya git →</a></label>
+              <div class="plan-task-text">
+                <label for="d3-t17">Test: Hafta 4 sorulari (11-15)</label>
+                <a class="plan-task-link" href="#sinav-sorulari-kendini-test-et">Konuya git →</a>
+              </div>
             </li>
             </ul>
             <div class="plan-remember"><strong>Bu gunun sonunda bilmen gerekenler:</strong><ul><li>GET = oku, POST = olustur, DELETE = sil</li><li>Enum: DB&#x27;de sayi, kodda isim (draft: 0)</li><li>_path = goreceli yol, _url = tam URL</li></ul></div>
           </div>
-        </div>
+        </details>
         
-        <div class="plan-day" data-day="4">
-          <div class="plan-day-head">
+        <details class="plan-day" data-day="4" id="plan-gun-4">
+          <summary class="plan-day-head">
             <div class="plan-day-num">4</div>
-            <div>
+            <div class="plan-day-head-main">
               <div class="plan-day-title">Gun 4: Formlar &amp; Guvenlik</div>
               <div class="plan-day-meta">2 saat</div>
               <div class="plan-day-goal">Strong Parameters ve form mantigini anla.</div>
             </div>
-            <span class="plan-day-toggle">+</span>
-          </div>
+            <span class="plan-day-chevron" aria-hidden="true">+</span>
+          </summary>
           <div class="plan-day-body">
             <ul class="plan-tasks">
             <li>
               <input type="checkbox" id="d4-t18" data-task-id="d4-t18">
-              <label for="d4-t18">Hafta 5 — Basit Anlatim oku<a href="#hafta-5-form-helpers-strong-parameters">Konuya git →</a></label>
+              <div class="plan-task-text">
+                <label for="d4-t18">Hafta 5 — Basit Anlatim oku</label>
+                <a class="plan-task-link" href="#hafta-5-form-helpers-strong-parameters">Konuya git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="d4-t19" data-task-id="d4-t19">
-              <label for="d4-t19">form_with model: @post ne ise yarar?<a href="#hafta-5-form-helpers-strong-parameters">Konuya git →</a></label>
+              <div class="plan-task-text">
+                <label for="d4-t19">form_with model: @post ne ise yarar?</label>
+                <a class="plan-task-link" href="#hafta-5-form-helpers-strong-parameters">Konuya git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="d4-t20" data-task-id="d4-t20">
-              <label for="d4-t20">Strong Parameters panelini oku (post_params)<a href="#hafta-5-form-helpers-strong-parameters">Konuya git →</a></label>
+              <div class="plan-task-text">
+                <label for="d4-t20">Strong Parameters panelini oku (post_params)</label>
+                <a class="plan-task-link" href="#hafta-5-form-helpers-strong-parameters">Konuya git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="d4-t21" data-task-id="d4-t21">
-              <label for="d4-t21">authenticity_token = CSRF korumasi<a href="#hafta-5-form-helpers-strong-parameters">Konuya git →</a></label>
+              <div class="plan-task-text">
+                <label for="d4-t21">authenticity_token = CSRF korumasi</label>
+                <a class="plan-task-link" href="#hafta-5-form-helpers-strong-parameters">Konuya git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="d4-t22" data-task-id="d4-t22">
-              <label for="d4-t22">Partial (_form) ve before_action mantigi<a href="#hafta-5-form-helpers-strong-parameters">Konuya git →</a></label>
+              <div class="plan-task-text">
+                <label for="d4-t22">Partial (_form) ve before_action mantigi</label>
+                <a class="plan-task-link" href="#hafta-5-form-helpers-strong-parameters">Konuya git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="d4-t23" data-task-id="d4-t23">
-              <label for="d4-t23">Test: Hafta 5 sorulari (16-20)<a href="#sinav-sorulari-kendini-test-et">Konuya git →</a></label>
+              <div class="plan-task-text">
+                <label for="d4-t23">Test: Hafta 5 sorulari (16-20)</label>
+                <a class="plan-task-link" href="#sinav-sorulari-kendini-test-et">Konuya git →</a>
+              </div>
             </li>
             </ul>
             <div class="plan-remember"><strong>Bu gunun sonunda bilmen gerekenler:</strong><ul><li>Strong Params → mass assignment saldirisini onler</li><li>Partial dosya adi _ ile baslar</li><li>button_to DELETE icin form olusturur</li></ul></div>
           </div>
-        </div>
+        </details>
         
-        <div class="plan-day" data-day="5">
-          <div class="plan-day-head">
+        <details class="plan-day" data-day="5" id="plan-gun-5">
+          <summary class="plan-day-head">
             <div class="plan-day-num">5</div>
-            <div>
+            <div class="plan-day-head-main">
               <div class="plan-day-title">Gun 5: Bootstrap &amp; Model Iliskileri</div>
               <div class="plan-day-meta">2-3 saat</div>
               <div class="plan-day-goal">Grid sistemi ve tablo iliskilerini bil.</div>
             </div>
-            <span class="plan-day-toggle">+</span>
-          </div>
+            <span class="plan-day-chevron" aria-hidden="true">+</span>
+          </summary>
           <div class="plan-day-body">
             <ul class="plan-tasks">
             <li>
               <input type="checkbox" id="d5-t24" data-task-id="d5-t24">
-              <label for="d5-t24">Hafta 6 — Basit Anlatim (12 sutun grid, container)<a href="#hafta-6-bootstrap-frontend">Konuya git →</a></label>
+              <div class="plan-task-text">
+                <label for="d5-t24">Hafta 6 — Basit Anlatim (12 sutun grid, container)</label>
+                <a class="plan-task-link" href="#hafta-6-bootstrap-frontend">Konuya git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="d5-t25" data-task-id="d5-t25">
-              <label for="d5-t25">Hafta 7 — Basit Anlatim (belongs_to, has_many, HABTM)<a href="#hafta-7-model-iliskileri-kategori">Konuya git →</a></label>
+              <div class="plan-task-text">
+                <label for="d5-t25">Hafta 7 — Basit Anlatim (belongs_to, has_many, HABTM)</label>
+                <a class="plan-task-link" href="#hafta-7-model-iliskileri-kategori">Konuya git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="d5-t26" data-task-id="d5-t26">
-              <label for="d5-t26">belongs_to FK hangi tabloda? — ezberle<a href="#hafta-7-model-iliskileri-kategori">Konuya git →</a></label>
+              <div class="plan-task-text">
+                <label for="d5-t26">belongs_to FK hangi tabloda? — ezberle</label>
+                <a class="plan-task-link" href="#hafta-7-model-iliskileri-kategori">Konuya git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="d5-t27" data-task-id="d5-t27">
-              <label for="d5-t27">HABTM join table: id yok, iki FK var<a href="#hafta-7-model-iliskileri-kategori">Konuya git →</a></label>
+              <div class="plan-task-text">
+                <label for="d5-t27">HABTM join table: id yok, iki FK var</label>
+                <a class="plan-task-link" href="#hafta-7-model-iliskileri-kategori">Konuya git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="d5-t28" data-task-id="d5-t28">
-              <label for="d5-t28">Test: Hafta 6 sorulari (21-23) + Hafta 7 (24-27)<a href="#sinav-sorulari-kendini-test-et">Konuya git →</a></label>
+              <div class="plan-task-text">
+                <label for="d5-t28">Test: Hafta 6 sorulari (21-23) + Hafta 7 (24-27)</label>
+                <a class="plan-task-link" href="#sinav-sorulari-kendini-test-et">Konuya git →</a>
+              </div>
             </li>
             </ul>
             <div class="plan-remember"><strong>Bu gunun sonunda bilmen gerekenler:</strong><ul><li>Bootstrap grid = 12 sutun</li><li>col-md-8: 768px+ yan yana, mobilde alt alta</li><li>dependent: :destroy → ust silinince alt da silinir</li></ul></div>
           </div>
-        </div>
+        </details>
         
-        <div class="plan-day" data-day="6">
-          <div class="plan-day-head">
+        <details class="plan-day" data-day="6" id="plan-gun-6">
+          <summary class="plan-day-head">
             <div class="plan-day-num">6</div>
-            <div>
+            <div class="plan-day-head-main">
               <div class="plan-day-title">Gun 6: Validation, I18n &amp; Devise</div>
               <div class="plan-day-meta">2-3 saat</div>
               <div class="plan-day-goal">Dogrulama, coklu dil ve kullanici girisi konularini bitir.</div>
             </div>
-            <span class="plan-day-toggle">+</span>
-          </div>
+            <span class="plan-day-chevron" aria-hidden="true">+</span>
+          </summary>
           <div class="plan-day-body">
             <ul class="plan-tasks">
             <li>
               <input type="checkbox" id="d6-t29" data-task-id="d6-t29">
-              <label for="d6-t29">Hafta 8 — validation vs normalization farki<a href="#hafta-8-validation-active-storage">Konuya git →</a></label>
+              <div class="plan-task-text">
+                <label for="d6-t29">Hafta 8 — validation vs normalization farki</label>
+                <a class="plan-task-link" href="#hafta-8-validation-active-storage">Konuya git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="d6-t30" data-task-id="d6-t30">
-              <label for="d6-t30">presence, uniqueness, length ne kontrol eder?<a href="#hafta-8-validation-active-storage">Konuya git →</a></label>
+              <div class="plan-task-text">
+                <label for="d6-t30">presence, uniqueness, length ne kontrol eder?</label>
+                <a class="plan-task-link" href="#hafta-8-validation-active-storage">Konuya git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="d6-t31" data-task-id="d6-t31">
-              <label for="d6-t31">HTTP 422 = validasyon hatasi<a href="#hafta-8-validation-active-storage">Konuya git →</a></label>
+              <div class="plan-task-text">
+                <label for="d6-t31">HTTP 422 = validasyon hatasi</label>
+                <a class="plan-task-link" href="#hafta-8-validation-active-storage">Konuya git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="d6-t32" data-task-id="d6-t32">
-              <label for="d6-t32">Hafta 9 — I18n.t, FriendlyId, Action Text (kisa oku)<a href="#hafta-9-i18n-friendlyid-action-text">Konuya git →</a></label>
+              <div class="plan-task-text">
+                <label for="d6-t32">Hafta 9 — I18n.t, FriendlyId, Action Text (kisa oku)</label>
+                <a class="plan-task-link" href="#hafta-9-i18n-friendlyid-action-text">Konuya git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="d6-t33" data-task-id="d6-t33">
-              <label for="d6-t33">Hafta 10 — Devise, Authentication vs Authorization<a href="#hafta-10-devise-authorization">Konuya git →</a></label>
+              <div class="plan-task-text">
+                <label for="d6-t33">Hafta 10 — Devise, Authentication vs Authorization</label>
+                <a class="plan-task-link" href="#hafta-10-devise-authorization">Konuya git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="d6-t34" data-task-id="d6-t34">
-              <label for="d6-t34">Test: Hafta 8-10 sorulari (28-39)<a href="#sinav-sorulari-kendini-test-et">Konuya git →</a></label>
+              <div class="plan-task-text">
+                <label for="d6-t34">Test: Hafta 8-10 sorulari (28-39)</label>
+                <a class="plan-task-link" href="#sinav-sorulari-kendini-test-et">Konuya git →</a>
+              </div>
             </li>
             </ul>
             <div class="plan-remember"><strong>Bu gunun sonunda bilmen gerekenler:</strong><ul><li>Validation reddeder, normalization duzenler</li><li>Authentication = kimlik, Authorization = yetki</li><li>authenticate_user! → giris zorunlu</li></ul></div>
           </div>
-        </div>
+        </details>
         
-        <div class="plan-day" data-day="7">
-          <div class="plan-day-head">
+        <details class="plan-day" data-day="7" id="plan-gun-7">
+          <summary class="plan-day-head">
             <div class="plan-day-num">7</div>
-            <div>
+            <div class="plan-day-head-main">
               <div class="plan-day-title">Gun 7: Tekrar &amp; Sinav Gunu</div>
               <div class="plan-day-meta">3-4 saat</div>
               <div class="plan-day-goal">Tum test sorularini 2. kez coz. Ezber listesini tekrar et.</div>
             </div>
-            <span class="plan-day-toggle">+</span>
-          </div>
+            <span class="plan-day-chevron" aria-hidden="true">+</span>
+          </summary>
           <div class="plan-day-body">
             <ul class="plan-tasks">
             <li>
               <input type="checkbox" id="d7-t35" data-task-id="d7-t35">
-              <label for="d7-t35">15 maddelik SINAV EZBER listesini oku (asagida)<a href="#sinav-ezber-listesi">Konuya git →</a></label>
+              <div class="plan-task-text">
+                <label for="d7-t35">15 maddelik SINAV EZBER listesini oku (asagida)</label>
+                <a class="plan-task-link" href="#sinav-ezber-listesi">Konuya git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="d7-t36" data-task-id="d7-t36">
-              <label for="d7-t36">39 test sorusunun TAMAMINI 2. tur coz<a href="#sinav-sorulari-kendini-test-et">Konuya git →</a></label>
+              <div class="plan-task-text">
+                <label for="d7-t36">39 test sorusunun TAMAMINI 2. tur coz</label>
+                <a class="plan-task-link" href="#sinav-sorulari-kendini-test-et">Konuya git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="d7-t37" data-task-id="d7-t37">
-              <label for="d7-t37">Yanlis yaptigin haftalari tekrar oku<a href="#7-gunluk-plan">Konuya git →</a></label>
+              <div class="plan-task-text">
+                <label for="d7-t37">Yanlis yaptigin haftalari tekrar oku</label>
+                <a class="plan-task-link" href="#7-gunluk-plan">Konuya git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="d7-t38" data-task-id="d7-t38">
-              <label for="d7-t38">Komutlar bolumunu son kez gozden gecir<a href="#komut-hizli-referans">Konuya git →</a></label>
+              <div class="plan-task-text">
+                <label for="d7-t38">Komutlar bolumunu son kez gozden gecir</label>
+                <a class="plan-task-link" href="#komut-hizli-referans">Konuya git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="d7-t39" data-task-id="d7-t39">
-              <label for="d7-t39">MVC + HTTP + find/find_by/where tekrar et<a href="#sinav-ezber-listesi">Konuya git →</a></label>
+              <div class="plan-task-text">
+                <label for="d7-t39">MVC + HTTP + find/find_by/where tekrar et</label>
+                <a class="plan-task-link" href="#sinav-ezber-listesi">Konuya git →</a>
+              </div>
             </li>
             </ul>
             <div class="plan-remember"><strong>Bu gunun sonunda bilmen gerekenler:</strong><ul><li>Sakin ol — cogu soru kavram sorusu</li><li>Bilmediginde mantik yurut: MVC akisina bak</li><li>Enum, Strong Params, Devise en cok cikan konular</li></ul></div>
           </div>
-        </div>
+        </details>
         
       </div>
     </section>
@@ -8640,31 +8813,40 @@ git add . &amp;&amp; git commit -m &quot;mesaj&quot; &amp;&amp; git push
       <div class="special-body" style="padding-top:0">
         <div class="callout callout-tip" style="margin-bottom:1rem">Sifirdan basliyorsan haftalari sirayla takip et. Her adimi tikla, sonra <strong>Adima git</strong> ile ilgili konuya gec.</div>
         
-        <div class="plan-day path-week" data-week="1" id="path-week-1">
-          <div class="plan-day-head">
+        <details class="plan-day path-week" data-week="1" id="path-week-1" open>
+          <summary class="plan-day-head">
             <div class="plan-day-num">1</div>
-            <div>
+            <div class="plan-day-head-main">
               <div class="plan-day-title">Hafta 1: OOP Giris &amp; Prosedurel Programlama</div>
               <div class="plan-day-meta">2 saat</div>
               <div class="plan-day-goal">Prosedurel ile OOP farkini anla; Python&#x27;da class mantigina gir.</div>
             </div>
-            <span class="plan-day-toggle">+</span>
-          </div>
+            <span class="plan-day-chevron" aria-hidden="true">+</span>
+          </summary>
           <div class="plan-day-body">
             <ul class="plan-tasks">
             <li>
               <input type="checkbox" id="oop-w1-t1" data-task-id="oop-w1-t1">
-              <label for="oop-w1-t1">Basit Anlatim: prosedurel vs OOP<a href="#hafta-1-oop-giris-prosedurel-programlama">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="oop-w1-t1">Basit Anlatim: prosedurel vs OOP</label>
+                <a class="plan-task-link" href="#hafta-1-oop-giris-prosedurel-programlama">Adima git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="oop-w1-t2" data-task-id="oop-w1-t2">
-              <label for="oop-w1-t2">OOP tarihi ve temel prensipler paneli<a href="#hafta-1-oop-giris-prosedurel-programlama">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="oop-w1-t2">OOP tarihi ve temel prensipler paneli</label>
+                <a class="plan-task-link" href="#hafta-1-oop-giris-prosedurel-programlama">Adima git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="oop-w1-t3" data-task-id="oop-w1-t3">
-              <label for="oop-w1-t3">Konu indeksinden OOP terimlerine bak<a href="#oop-konu-indeksi">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="oop-w1-t3">Konu indeksinden OOP terimlerine bak</label>
+                <a class="plan-task-link" href="#oop-konu-indeksi">Adima git →</a>
+              </div>
             </li>
             </ul>
             
@@ -8674,33 +8856,42 @@ git add . &amp;&amp; git commit -m &quot;mesaj&quot; &amp;&amp; git push
             </div>
             
           </div>
-        </div>
+        </details>
         
-        <div class="plan-day path-week" data-week="2" id="path-week-2">
-          <div class="plan-day-head">
+        <details class="plan-day path-week" data-week="2" id="path-week-2">
+          <summary class="plan-day-head">
             <div class="plan-day-num">2</div>
-            <div>
+            <div class="plan-day-head-main">
               <div class="plan-day-title">Hafta 2: Siniflar &amp; Nesneler</div>
               <div class="plan-day-meta">2-3 saat</div>
               <div class="plan-day-goal">class, __init__, self ve instance variable kavramlari.</div>
             </div>
-            <span class="plan-day-toggle">+</span>
-          </div>
+            <span class="plan-day-chevron" aria-hidden="true">+</span>
+          </summary>
           <div class="plan-day-body">
             <ul class="plan-tasks">
             <li>
               <input type="checkbox" id="oop-w2-t4" data-task-id="oop-w2-t4">
-              <label for="oop-w2-t4">class tanimi ve nesne olusturma ornekleri<a href="#hafta-2-siniflar-nesneler">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="oop-w2-t4">class tanimi ve nesne olusturma ornekleri</label>
+                <a class="plan-task-link" href="#hafta-2-siniflar-nesneler">Adima git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="oop-w2-t5" data-task-id="oop-w2-t5">
-              <label for="oop-w2-t5">__init__ ve self ne ise yarar?<a href="#hafta-2-siniflar-nesneler">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="oop-w2-t5">__init__ ve self ne ise yarar?</label>
+                <a class="plan-task-link" href="#hafta-2-siniflar-nesneler">Adima git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="oop-w2-t6" data-task-id="oop-w2-t6">
-              <label for="oop-w2-t6">Instance metot orneklerini kodla<a href="#hafta-2-siniflar-nesneler">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="oop-w2-t6">Instance metot orneklerini kodla</label>
+                <a class="plan-task-link" href="#hafta-2-siniflar-nesneler">Adima git →</a>
+              </div>
             </li>
             </ul>
             
@@ -8710,33 +8901,42 @@ git add . &amp;&amp; git commit -m &quot;mesaj&quot; &amp;&amp; git push
             </div>
             
           </div>
-        </div>
+        </details>
         
-        <div class="plan-day path-week" data-week="3" id="path-week-3">
-          <div class="plan-day-head">
+        <details class="plan-day path-week" data-week="3" id="path-week-3">
+          <summary class="plan-day-head">
             <div class="plan-day-num">3</div>
-            <div>
+            <div class="plan-day-head-main">
               <div class="plan-day-title">Hafta 3: Kapsulleme (Encapsulation)</div>
               <div class="plan-day-meta">2 saat</div>
               <div class="plan-day-goal">Veriyi gizleme, getter/setter, @property.</div>
             </div>
-            <span class="plan-day-toggle">+</span>
-          </div>
+            <span class="plan-day-chevron" aria-hidden="true">+</span>
+          </summary>
           <div class="plan-day-body">
             <ul class="plan-tasks">
             <li>
               <input type="checkbox" id="oop-w3-t7" data-task-id="oop-w3-t7">
-              <label for="oop-w3-t7">_ ve __ ile gizleme convention<a href="#hafta-3-kapsulleme">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="oop-w3-t7">_ ve __ ile gizleme convention</label>
+                <a class="plan-task-link" href="#hafta-3-kapsulleme">Adima git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="oop-w3-t8" data-task-id="oop-w3-t8">
-              <label for="oop-w3-t8">@property ile kontrollu erisim<a href="#hafta-3-kapsulleme">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="oop-w3-t8">@property ile kontrollu erisim</label>
+                <a class="plan-task-link" href="#hafta-3-kapsulleme">Adima git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="oop-w3-t9" data-task-id="oop-w3-t9">
-              <label for="oop-w3-t9">Kapsulleme neden gerekli? panelini oku<a href="#hafta-3-kapsulleme">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="oop-w3-t9">Kapsulleme neden gerekli? panelini oku</label>
+                <a class="plan-task-link" href="#hafta-3-kapsulleme">Adima git →</a>
+              </div>
             </li>
             </ul>
             
@@ -8746,33 +8946,42 @@ git add . &amp;&amp; git commit -m &quot;mesaj&quot; &amp;&amp; git push
             </div>
             
           </div>
-        </div>
+        </details>
         
-        <div class="plan-day path-week" data-week="4" id="path-week-4">
-          <div class="plan-day-head">
+        <details class="plan-day path-week" data-week="4" id="path-week-4">
+          <summary class="plan-day-head">
             <div class="plan-day-num">4</div>
-            <div>
+            <div class="plan-day-head-main">
               <div class="plan-day-title">Hafta 4: Kalitim (Inheritance)</div>
               <div class="plan-day-meta">2-3 saat</div>
               <div class="plan-day-goal">class Child(Parent), override ve super().</div>
             </div>
-            <span class="plan-day-toggle">+</span>
-          </div>
+            <span class="plan-day-chevron" aria-hidden="true">+</span>
+          </summary>
           <div class="plan-day-body">
             <ul class="plan-tasks">
             <li>
               <input type="checkbox" id="oop-w4-t10" data-task-id="oop-w4-t10">
-              <label for="oop-w4-t10">Kalitim syntax: class Cocuk(Ebeveyn)<a href="#hafta-4-kalitim-miras">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="oop-w4-t10">Kalitim syntax: class Cocuk(Ebeveyn)</label>
+                <a class="plan-task-link" href="#hafta-4-kalitim-miras">Adima git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="oop-w4-t11" data-task-id="oop-w4-t11">
-              <label for="oop-w4-t11">Method overriding ornekleri<a href="#hafta-4-kalitim-miras">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="oop-w4-t11">Method overriding ornekleri</label>
+                <a class="plan-task-link" href="#hafta-4-kalitim-miras">Adima git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="oop-w4-t12" data-task-id="oop-w4-t12">
-              <label for="oop-w4-t12">isinstance ve type kontrolu<a href="#hafta-4-kalitim-miras">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="oop-w4-t12">isinstance ve type kontrolu</label>
+                <a class="plan-task-link" href="#hafta-4-kalitim-miras">Adima git →</a>
+              </div>
             </li>
             </ul>
             
@@ -8782,33 +8991,42 @@ git add . &amp;&amp; git commit -m &quot;mesaj&quot; &amp;&amp; git push
             </div>
             
           </div>
-        </div>
+        </details>
         
-        <div class="plan-day path-week" data-week="5" id="path-week-5">
-          <div class="plan-day-head">
+        <details class="plan-day path-week" data-week="5" id="path-week-5">
+          <summary class="plan-day-head">
             <div class="plan-day-num">5</div>
-            <div>
+            <div class="plan-day-head-main">
               <div class="plan-day-title">Hafta 5: super, Coklu Miras &amp; @staticmethod</div>
               <div class="plan-day-meta">2-3 saat</div>
               <div class="plan-day-goal">MRO sirasi ve staticmethod farki.</div>
             </div>
-            <span class="plan-day-toggle">+</span>
-          </div>
+            <span class="plan-day-chevron" aria-hidden="true">+</span>
+          </summary>
           <div class="plan-day-body">
             <ul class="plan-tasks">
             <li>
               <input type="checkbox" id="oop-w5-t13" data-task-id="oop-w5-t13">
-              <label for="oop-w5-t13">super().__init__() kullanimi<a href="#hafta-5-super-coklu-miras-statik-metot">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="oop-w5-t13">super().__init__() kullanimi</label>
+                <a class="plan-task-link" href="#hafta-5-super-coklu-miras-statik-metot">Adima git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="oop-w5-t14" data-task-id="oop-w5-t14">
-              <label for="oop-w5-t14">Coklu miras ve MRO mantigi<a href="#hafta-5-super-coklu-miras-statik-metot">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="oop-w5-t14">Coklu miras ve MRO mantigi</label>
+                <a class="plan-task-link" href="#hafta-5-super-coklu-miras-statik-metot">Adima git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="oop-w5-t15" data-task-id="oop-w5-t15">
-              <label for="oop-w5-t15">@staticmethod vs instance metot<a href="#hafta-5-super-coklu-miras-statik-metot">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="oop-w5-t15">@staticmethod vs instance metot</label>
+                <a class="plan-task-link" href="#hafta-5-super-coklu-miras-statik-metot">Adima git →</a>
+              </div>
             </li>
             </ul>
             
@@ -8818,33 +9036,42 @@ git add . &amp;&amp; git commit -m &quot;mesaj&quot; &amp;&amp; git push
             </div>
             
           </div>
-        </div>
+        </details>
         
-        <div class="plan-day path-week" data-week="6" id="path-week-6">
-          <div class="plan-day-head">
+        <details class="plan-day path-week" data-week="6" id="path-week-6">
+          <summary class="plan-day-head">
             <div class="plan-day-num">6</div>
-            <div>
+            <div class="plan-day-head-main">
               <div class="plan-day-title">Hafta 6: Polimorfizm &amp; Soyut Sinif</div>
               <div class="plan-day-meta">2-3 saat</div>
               <div class="plan-day-goal">Polimorfizm, duck typing, ABC.</div>
             </div>
-            <span class="plan-day-toggle">+</span>
-          </div>
+            <span class="plan-day-chevron" aria-hidden="true">+</span>
+          </summary>
           <div class="plan-day-body">
             <ul class="plan-tasks">
             <li>
               <input type="checkbox" id="oop-w6-t16" data-task-id="oop-w6-t16">
-              <label for="oop-w6-t16">Ayni metod farkli davranis ornekleri<a href="#hafta-6-polimorfizm-soyut-sinif">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="oop-w6-t16">Ayni metod farkli davranis ornekleri</label>
+                <a class="plan-task-link" href="#hafta-6-polimorfizm-soyut-sinif">Adima git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="oop-w6-t17" data-task-id="oop-w6-t17">
-              <label for="oop-w6-t17">ABC ve @abstractmethod<a href="#hafta-6-polimorfizm-soyut-sinif">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="oop-w6-t17">ABC ve @abstractmethod</label>
+                <a class="plan-task-link" href="#hafta-6-polimorfizm-soyut-sinif">Adima git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="oop-w6-t18" data-task-id="oop-w6-t18">
-              <label for="oop-w6-t18">Duck typing ne demek?<a href="#hafta-6-polimorfizm-soyut-sinif">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="oop-w6-t18">Duck typing ne demek?</label>
+                <a class="plan-task-link" href="#hafta-6-polimorfizm-soyut-sinif">Adima git →</a>
+              </div>
             </li>
             </ul>
             
@@ -8854,33 +9081,42 @@ git add . &amp;&amp; git commit -m &quot;mesaj&quot; &amp;&amp; git push
             </div>
             
           </div>
-        </div>
+        </details>
         
-        <div class="plan-day path-week" data-week="7" id="path-week-7">
-          <div class="plan-day-head">
+        <details class="plan-day path-week" data-week="7" id="path-week-7">
+          <summary class="plan-day-head">
             <div class="plan-day-num">7</div>
-            <div>
+            <div class="plan-day-head-main">
               <div class="plan-day-title">Hafta 7: Tasarim Desenleri — Giris</div>
               <div class="plan-day-meta">2 saat</div>
               <div class="plan-day-goal">Singleton, Factory gibi temel desenler.</div>
             </div>
-            <span class="plan-day-toggle">+</span>
-          </div>
+            <span class="plan-day-chevron" aria-hidden="true">+</span>
+          </summary>
           <div class="plan-day-body">
             <ul class="plan-tasks">
             <li>
               <input type="checkbox" id="oop-w7-t19" data-task-id="oop-w7-t19">
-              <label for="oop-w7-t19">Tasarim deseni nedir? panelini oku<a href="#hafta-7-tasarim-desenleri-giris">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="oop-w7-t19">Tasarim deseni nedir? panelini oku</label>
+                <a class="plan-task-link" href="#hafta-7-tasarim-desenleri-giris">Adima git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="oop-w7-t20" data-task-id="oop-w7-t20">
-              <label for="oop-w7-t20">Singleton ornegini incele<a href="#hafta-7-tasarim-desenleri-giris">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="oop-w7-t20">Singleton ornegini incele</label>
+                <a class="plan-task-link" href="#hafta-7-tasarim-desenleri-giris">Adima git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="oop-w7-t21" data-task-id="oop-w7-t21">
-              <label for="oop-w7-t21">Factory pattern mantigi<a href="#hafta-7-tasarim-desenleri-giris">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="oop-w7-t21">Factory pattern mantigi</label>
+                <a class="plan-task-link" href="#hafta-7-tasarim-desenleri-giris">Adima git →</a>
+              </div>
             </li>
             </ul>
             
@@ -8890,33 +9126,42 @@ git add . &amp;&amp; git commit -m &quot;mesaj&quot; &amp;&amp; git push
             </div>
             
           </div>
-        </div>
+        </details>
         
-        <div class="plan-day path-week" data-week="8" id="path-week-8">
-          <div class="plan-day-head">
+        <details class="plan-day path-week" data-week="8" id="path-week-8">
+          <summary class="plan-day-head">
             <div class="plan-day-num">8</div>
-            <div>
+            <div class="plan-day-head-main">
               <div class="plan-day-title">Hafta 8: Tasarim Desenleri — Devam</div>
               <div class="plan-day-meta">2 saat</div>
               <div class="plan-day-goal">Observer, Decorator desenleri.</div>
             </div>
-            <span class="plan-day-toggle">+</span>
-          </div>
+            <span class="plan-day-chevron" aria-hidden="true">+</span>
+          </summary>
           <div class="plan-day-body">
             <ul class="plan-tasks">
             <li>
               <input type="checkbox" id="oop-w8-t22" data-task-id="oop-w8-t22">
-              <label for="oop-w8-t22">Observer deseni ornegi<a href="#hafta-8-tasarim-desenleri-devam">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="oop-w8-t22">Observer deseni ornegi</label>
+                <a class="plan-task-link" href="#hafta-8-tasarim-desenleri-devam">Adima git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="oop-w8-t23" data-task-id="oop-w8-t23">
-              <label for="oop-w8-t23">Decorator deseni ornegi<a href="#hafta-8-tasarim-desenleri-devam">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="oop-w8-t23">Decorator deseni ornegi</label>
+                <a class="plan-task-link" href="#hafta-8-tasarim-desenleri-devam">Adima git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="oop-w8-t24" data-task-id="oop-w8-t24">
-              <label for="oop-w8-t24">Desenler SOLID ile nasil uyumlu?<a href="#hafta-8-tasarim-desenleri-devam">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="oop-w8-t24">Desenler SOLID ile nasil uyumlu?</label>
+                <a class="plan-task-link" href="#hafta-8-tasarim-desenleri-devam">Adima git →</a>
+              </div>
             </li>
             </ul>
             
@@ -8926,33 +9171,42 @@ git add . &amp;&amp; git commit -m &quot;mesaj&quot; &amp;&amp; git push
             </div>
             
           </div>
-        </div>
+        </details>
         
-        <div class="plan-day path-week" data-week="9" id="path-week-9">
-          <div class="plan-day-head">
+        <details class="plan-day path-week" data-week="9" id="path-week-9">
+          <summary class="plan-day-head">
             <div class="plan-day-num">9</div>
-            <div>
+            <div class="plan-day-head-main">
               <div class="plan-day-title">Hafta 9: SOLID Prensipleri (PDF)</div>
               <div class="plan-day-meta">2-3 saat</div>
               <div class="plan-day-goal">SRP, OCP, LSP, ISP, DIP tanimlarini ogren.</div>
             </div>
-            <span class="plan-day-toggle">+</span>
-          </div>
+            <span class="plan-day-chevron" aria-hidden="true">+</span>
+          </summary>
           <div class="plan-day-body">
             <ul class="plan-tasks">
             <li>
               <input type="checkbox" id="oop-w9-t25" data-task-id="oop-w9-t25">
-              <label for="oop-w9-t25">Her SOLID harfi icin tanim panelini oku<a href="#hafta-9-solid-prensipleri">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="oop-w9-t25">Her SOLID harfi icin tanim panelini oku</label>
+                <a class="plan-task-link" href="#hafta-9-solid-prensipleri">Adima git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="oop-w9-t26" data-task-id="oop-w9-t26">
-              <label for="oop-w9-t26">Kotu vs iyi kod orneklerini karsilastir<a href="#hafta-9-solid-prensipleri">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="oop-w9-t26">Kotu vs iyi kod orneklerini karsilastir</label>
+                <a class="plan-task-link" href="#hafta-9-solid-prensipleri">Adima git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="oop-w9-t27" data-task-id="oop-w9-t27">
-              <label for="oop-w9-t27">OOP ezber listesinden SOLID maddelerine bak<a href="#oop-ezber">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="oop-w9-t27">OOP ezber listesinden SOLID maddelerine bak</label>
+                <a class="plan-task-link" href="#oop-ezber">Adima git →</a>
+              </div>
             </li>
             </ul>
             
@@ -8962,38 +9216,50 @@ git add . &amp;&amp; git commit -m &quot;mesaj&quot; &amp;&amp; git push
             </div>
             
           </div>
-        </div>
+        </details>
         
-        <div class="plan-day path-week" data-week="10" id="path-week-10">
-          <div class="plan-day-head">
+        <details class="plan-day path-week" data-week="10" id="path-week-10">
+          <summary class="plan-day-head">
             <div class="plan-day-num">10</div>
-            <div>
+            <div class="plan-day-head-main">
               <div class="plan-day-title">Hafta 10: SOLID Calisma &amp; Odev Cozumleri</div>
               <div class="plan-day-meta">3-4 saat</div>
               <div class="plan-day-goal">Odev formatinda SOLID; sinif arkadas ornekleri ve PDF alistirmalari.</div>
             </div>
-            <span class="plan-day-toggle">+</span>
-          </div>
+            <span class="plan-day-chevron" aria-hidden="true">+</span>
+          </summary>
           <div class="plan-day-body">
             <ul class="plan-tasks">
             <li>
               <input type="checkbox" id="oop-w10-t28" data-task-id="oop-w10-t28">
-              <label for="oop-w10-t28">5 SOLID ilkesi odev formatinda calis<a href="#hafta-10-solid-calisma-odev-cozumleri">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="oop-w10-t28">5 SOLID ilkesi odev formatinda calis</label>
+                <a class="plan-task-link" href="#hafta-10-solid-calisma-odev-cozumleri">Adima git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="oop-w10-t29" data-task-id="oop-w10-t29">
-              <label for="oop-w10-t29">Sinif arkadas orneklerini incele (SRP→DIP)<a href="#hafta-10-solid-calisma-odev-cozumleri">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="oop-w10-t29">Sinif arkadas orneklerini incele (SRP→DIP)</label>
+                <a class="plan-task-link" href="#hafta-10-solid-calisma-odev-cozumleri">Adima git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="oop-w10-t30" data-task-id="oop-w10-t30">
-              <label for="oop-w10-t30">PDF alistirmalari cozumlerini oku<a href="#hafta-10-solid-calisma-odev-cozumleri">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="oop-w10-t30">PDF alistirmalari cozumlerini oku</label>
+                <a class="plan-task-link" href="#hafta-10-solid-calisma-odev-cozumleri">Adima git →</a>
+              </div>
             </li>
             
             <li>
               <input type="checkbox" id="oop-w10-t31" data-task-id="oop-w10-t31">
-              <label for="oop-w10-t31">LSP Solo Leveling ornegini calis<a href="#hafta-10-solid-calisma-odev-cozumleri">Adima git →</a></label>
+              <div class="plan-task-text">
+                <label for="oop-w10-t31">LSP Solo Leveling ornegini calis</label>
+                <a class="plan-task-link" href="#hafta-10-solid-calisma-odev-cozumleri">Adima git →</a>
+              </div>
             </li>
             </ul>
             
@@ -9003,7 +9269,7 @@ git add . &amp;&amp; git commit -m &quot;mesaj&quot; &amp;&amp; git push
             </div>
             
           </div>
-        </div>
+        </details>
         
       </div>
     </section>
@@ -13872,102 +14138,202 @@ baskani_hazirla(SungJinwoo(), 10)</code></pre>
     </div>
   </div>
   </div>
-  <div id="jumpscare" class="jumpscare" hidden aria-hidden="true">
-    <div class="jumpscare-flash"></div>
-    <div class="jumpscare-red"></div>
-    <div class="jumpscare-vignette"></div>
-    <div class="jumpscare-frame">
-      <img id="jumpscareImg" class="jumpscare-photo" src="" alt="">
-    </div>
+  <div id="dvdSprite" class="dvd-sprite" hidden aria-hidden="true">
+    <img id="dvdSpriteImg" src="" alt="">
   </div>
   <script>
-    const JUMPSCARE_SRC = {
+    const DVD_SPRITE_SRC = {
       intprog: 'assets/jumpscare-intprog.png',
       oop: 'assets/jumpscare-oop.png',
     };
-    Object.values(JUMPSCARE_SRC).forEach(src => { const p = new Image(); p.src = src; });
+    Object.values(DVD_SPRITE_SRC).forEach(src => { const p = new Image(); p.src = src; });
 
-    let jumpscareTimer = null;
-    let jumpscareAudio = null;
-    function getJumpscareAudio() {
-      if (!jumpscareAudio) {
-        jumpscareAudio = new (window.AudioContext || window.webkitAudioContext)();
+    const DVD_SIZE = 72;
+    const DVD_BASE_SPEED = 1.45;
+    const DVD_HOVER_SPEED = 4;
+    let dvdAnimId = null;
+    let dvdLastTs = 0;
+    let dvdX = 0;
+    let dvdY = 0;
+    let dvdVx = 0;
+    let dvdVy = 0;
+    let dvdPointerX = -9999;
+    let dvdPointerY = -9999;
+    let dvdPointerHot = false;
+    let dvdCaughtBusy = false;
+    let dvdCloseTimer = null;
+
+    function dvdBox() { return document.getElementById('dvdSprite'); }
+
+    function dvdSetPointer(x, y, hot) {
+      dvdPointerX = x;
+      dvdPointerY = y;
+      if (typeof hot === 'boolean') dvdPointerHot = hot;
+    }
+
+    function dvdFleeFrom(px, py, speed) {
+      const cx = dvdX + DVD_SIZE / 2;
+      const cy = dvdY + DVD_SIZE / 2;
+      let dx = cx - px;
+      let dy = cy - py;
+      let len = Math.hypot(dx, dy);
+      if (len < 1) {
+        const a = Math.random() * Math.PI * 2;
+        dvdVx = Math.cos(a) * speed;
+        dvdVy = Math.sin(a) * speed;
+        return;
       }
-      return jumpscareAudio;
+      const targetVx = (dx / len) * speed;
+      const targetVy = (dy / len) * speed;
+      dvdVx = dvdVx * 0.55 + targetVx * 0.45;
+      dvdVy = dvdVy * 0.55 + targetVy * 0.45;
     }
-    function playJumpscareSound() {
-      try {
-        const ctx = getJumpscareAudio();
-        if (ctx.state === 'suspended') ctx.resume();
-        const t = ctx.currentTime;
-        const dur = 0.28;
-        const bufLen = Math.floor(ctx.sampleRate * dur);
-        const buf = ctx.createBuffer(1, bufLen, ctx.sampleRate);
-        const ch = buf.getChannelData(0);
-        for (let i = 0; i < bufLen; i++) {
-          ch[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bufLen * 0.07));
-        }
-        const noise = ctx.createBufferSource();
-        noise.buffer = buf;
-        const nGain = ctx.createGain();
-        nGain.gain.setValueAtTime(0.85, t);
-        nGain.gain.exponentialRampToValueAtTime(0.001, t + dur);
-        const hp = ctx.createBiquadFilter();
-        hp.type = 'highpass';
-        hp.frequency.value = 700;
-        noise.connect(hp);
-        hp.connect(nGain);
-        nGain.connect(ctx.destination);
-        noise.start(t);
-        noise.stop(t + dur + 0.05);
-        const boom = ctx.createOscillator();
-        boom.type = 'sawtooth';
-        boom.frequency.setValueAtTime(160, t);
-        boom.frequency.exponentialRampToValueAtTime(38, t + 0.18);
-        const bGain = ctx.createGain();
-        bGain.gain.setValueAtTime(0.75, t);
-        bGain.gain.exponentialRampToValueAtTime(0.001, t + 0.42);
-        boom.connect(bGain);
-        bGain.connect(ctx.destination);
-        boom.start(t);
-        boom.stop(t + 0.45);
-        const screech = ctx.createOscillator();
-        screech.type = 'square';
-        screech.frequency.setValueAtTime(820, t + 0.02);
-        screech.frequency.exponentialRampToValueAtTime(2400, t + 0.07);
-        screech.frequency.exponentialRampToValueAtTime(320, t + 0.24);
-        const sGain = ctx.createGain();
-        sGain.gain.setValueAtTime(0.0001, t);
-        sGain.gain.exponentialRampToValueAtTime(0.42, t + 0.03);
-        sGain.gain.exponentialRampToValueAtTime(0.001, t + 0.26);
-        screech.connect(sGain);
-        sGain.connect(ctx.destination);
-        screech.start(t + 0.02);
-        screech.stop(t + 0.28);
-      } catch (e) {}
+
+    function dvdNormalizeSpeed(speed) {
+      const mag = Math.hypot(dvdVx, dvdVy);
+      if (mag < 0.001) {
+        const a = Math.random() * Math.PI * 2;
+        dvdVx = Math.cos(a) * speed;
+        dvdVy = Math.sin(a) * speed;
+        return;
+      }
+      dvdVx = (dvdVx / mag) * speed;
+      dvdVy = (dvdVy / mag) * speed;
     }
-    function triggerJumpscare(course) {
-      const box = document.getElementById('jumpscare');
-      const img = document.getElementById('jumpscareImg');
+
+    function dvdClampPosition() {
+      const maxX = Math.max(0, window.innerWidth - DVD_SIZE);
+      const maxY = Math.max(0, window.innerHeight - DVD_SIZE);
+      dvdX = Math.min(maxX, Math.max(0, dvdX));
+      dvdY = Math.min(maxY, Math.max(0, dvdY));
+    }
+
+    function dvdTick(ts) {
+      const box = dvdBox();
+      if (!box || box.hasAttribute('hidden')) return;
+      if (box.classList.contains('is-caught') || box.classList.contains('is-closing')) return;
+
+      if (!dvdLastTs) dvdLastTs = ts;
+      const dt = Math.min((ts - dvdLastTs) / 16.667, 2.5);
+      dvdLastTs = ts;
+
+      if (dvdPointerHot) {
+        dvdFleeFrom(dvdPointerX, dvdPointerY, DVD_HOVER_SPEED);
+        box.classList.add('is-fleeing');
+      } else {
+        box.classList.remove('is-fleeing');
+      }
+
+      dvdX += dvdVx * dt;
+      dvdY += dvdVy * dt;
+
+      const maxX = Math.max(0, window.innerWidth - DVD_SIZE);
+      const maxY = Math.max(0, window.innerHeight - DVD_SIZE);
+
+      if (dvdX <= 0) {
+        dvdX = 0;
+        dvdVx = Math.abs(dvdVx);
+      } else if (dvdX >= maxX) {
+        dvdX = maxX;
+        dvdVx = -Math.abs(dvdVx);
+      }
+      if (dvdY <= 0) {
+        dvdY = 0;
+        dvdVy = Math.abs(dvdVy);
+      } else if (dvdY >= maxY) {
+        dvdY = maxY;
+        dvdVy = -Math.abs(dvdVy);
+      }
+
+      box.style.transform = 'translate3d(' + dvdX.toFixed(2) + 'px,' + dvdY.toFixed(2) + 'px,0)';
+      dvdAnimId = requestAnimationFrame(dvdTick);
+    }
+
+    function stopDvdSprite() {
+      if (dvdAnimId) cancelAnimationFrame(dvdAnimId);
+      dvdAnimId = null;
+      dvdLastTs = 0;
+      if (dvdCloseTimer) { clearTimeout(dvdCloseTimer); dvdCloseTimer = null; }
+      dvdCaughtBusy = false;
+      const box = dvdBox();
+      if (!box) return;
+      box.setAttribute('hidden', '');
+      box.setAttribute('aria-hidden', 'true');
+      box.classList.remove('is-fleeing', 'is-caught', 'is-closing', 'dvd-sprite--intprog', 'dvd-sprite--oop');
+      box.style.transform = '';
+      dvdSetPointer(-9999, -9999, false);
+    }
+
+    function catchDvdSprite(e) {
+      const box = dvdBox();
+      if (!box || box.hasAttribute('hidden') || dvdCaughtBusy) return;
+      if (box.classList.contains('is-caught') || box.classList.contains('is-closing')) return;
+      if (e && e.pointerType === 'mouse' && e.button !== 0) return;
+      e?.preventDefault();
+      e?.stopPropagation();
+      dvdCaughtBusy = true;
+      if (dvdAnimId) cancelAnimationFrame(dvdAnimId);
+      dvdAnimId = null;
+      dvdPointerHot = false;
+      box.classList.remove('is-fleeing');
+      box.style.transform = '';
+      box.classList.add('is-caught');
+      dvdCloseTimer = setTimeout(() => {
+        box.classList.add('is-closing');
+        dvdCloseTimer = setTimeout(() => stopDvdSprite(), 520);
+      }, 950);
+    }
+
+    function startDvdSprite(course) {
+      const box = dvdBox();
+      const img = document.getElementById('dvdSpriteImg');
       if (!box || !img) return;
-      if (jumpscareTimer) clearTimeout(jumpscareTimer);
-      img.className = 'jumpscare-photo jumpscare-photo--' + course;
-      img.src = JUMPSCARE_SRC[course] || JUMPSCARE_SRC.intprog;
-      box.classList.remove('is-active', 'jumpscare--intprog', 'jumpscare--oop');
-      box.classList.add('jumpscare--' + course);
+      stopDvdSprite();
+      img.src = DVD_SPRITE_SRC[course] || DVD_SPRITE_SRC.intprog;
+      box.classList.add('dvd-sprite--' + course);
       box.removeAttribute('hidden');
       box.setAttribute('aria-hidden', 'false');
-      void box.offsetWidth;
-      box.classList.add('is-active');
-      playJumpscareSound();
-      jumpscareTimer = setTimeout(() => {
-        box.classList.remove('is-active', 'jumpscare--intprog', 'jumpscare--oop');
-        box.setAttribute('hidden', '');
-        box.setAttribute('aria-hidden', 'true');
-        img.className = 'jumpscare-photo';
-        img.removeAttribute('src');
-      }, 780);
+      const maxX = Math.max(0, window.innerWidth - DVD_SIZE);
+      const maxY = Math.max(0, window.innerHeight - DVD_SIZE);
+      dvdX = Math.random() * maxX;
+      dvdY = Math.random() * maxY;
+      const angle = Math.random() * Math.PI * 2;
+      dvdVx = Math.cos(angle) * DVD_BASE_SPEED;
+      dvdVy = Math.sin(angle) * DVD_BASE_SPEED;
+      dvdLastTs = 0;
+      dvdClampPosition();
+      box.style.transform = 'translate3d(' + dvdX + 'px,' + dvdY + 'px,0)';
+      dvdAnimId = requestAnimationFrame(dvdTick);
     }
+
+    window.addEventListener('resize', () => {
+      if (dvdBox()?.hasAttribute('hidden')) return;
+      dvdClampPosition();
+    });
+    dvdBox()?.addEventListener('mouseenter', e => {
+      if (dvdCaughtBusy) return;
+      dvdSetPointer(e.clientX, e.clientY, true);
+      dvdFleeFrom(e.clientX, e.clientY, DVD_HOVER_SPEED);
+    });
+    dvdBox()?.addEventListener('mousemove', e => {
+      if (dvdCaughtBusy) return;
+      dvdSetPointer(e.clientX, e.clientY, true);
+    });
+    dvdBox()?.addEventListener('mouseleave', () => {
+      if (dvdCaughtBusy) return;
+      dvdPointerHot = false;
+      dvdNormalizeSpeed(DVD_BASE_SPEED);
+    });
+    dvdBox()?.addEventListener('pointerdown', e => catchDvdSprite(e));
+    dvdBox()?.addEventListener('touchstart', e => {
+      if (dvdCaughtBusy) return;
+      const t = e.touches[0];
+      if (!t) return;
+      dvdSetPointer(t.clientX, t.clientY, true);
+      dvdFleeFrom(t.clientX, t.clientY, DVD_HOVER_SPEED);
+    }, { passive: true });
+    dvdBox()?.addEventListener('touchend', () => { if (!dvdCaughtBusy) dvdPointerHot = false; });
+
     function scrollToSection(id) {
       const el = document.getElementById(id);
       const main = document.getElementById('courseMain');
@@ -14035,11 +14401,12 @@ baskani_hazirla(SungJinwoo(), 10)</code></pre>
       document.getElementById('siteNav')?.classList.remove('nav-open');
       if (courseTitle) courseTitle.textContent = 'Internet Prog II + Nesne Yonelimli Prog';
       if (courseSubtitle) courseSubtitle.textContent = 'Ders sec — hangi derse calisacaksin?';
+      stopDvdSprite();
       window.scrollTo({ top: 0 });
       if (history.replaceState) history.replaceState(null, '', window.location.pathname + window.location.search);
     }
 
-    function showCourse(course, scrollId, withJumpscare) {
+    function showCourse(course, scrollId) {
       landingEl?.classList.add('hidden');
       appShell?.classList.remove('hidden');
       appShell?.classList.remove('view-intprog', 'view-oop');
@@ -14052,7 +14419,7 @@ baskani_hazirla(SungJinwoo(), 10)</code></pre>
       if (courseSubtitle && meta) courseSubtitle.textContent = meta.subtitle;
       const bannerId = course === 'intprog' ? 'intprog-course' : 'oop-course';
       const defaultTarget = scrollId || (course === 'intprog' ? 'haftalik-calisma-yolu' : 'oop-haftalik-calisma-yolu');
-      if (withJumpscare) triggerJumpscare(course);
+      startDvdSprite(course);
       requestAnimationFrame(() => {
         const main = document.getElementById('courseMain');
         if (main) main.scrollTop = 0;
@@ -14061,7 +14428,7 @@ baskani_hazirla(SungJinwoo(), 10)</code></pre>
     }
 
     document.querySelectorAll('.landing-card').forEach(btn => {
-      btn.addEventListener('click', () => showCourse(btn.dataset.course, null, true));
+      btn.addEventListener('click', () => showCourse(btn.dataset.course));
     });
     document.querySelectorAll('[data-action="back-home"]').forEach(el => {
       el.addEventListener('click', e => { e.preventDefault(); showLanding(); });
@@ -14084,15 +14451,17 @@ baskani_hazirla(SungJinwoo(), 10)</code></pre>
     initFromHash();
     window.addEventListener('hashchange', initFromHash);
 
-    document.querySelectorAll('.course-pane a[href^="#"]').forEach(a => {
-      a.addEventListener('click', e => {
-        const id = a.getAttribute('href').slice(1);
-        if (!id || id === 'landing') return;
-        const el = document.getElementById(id);
-        if (!el) return;
-        e.preventDefault();
-        scrollToSection(id);
-      });
+    document.getElementById('courseMain')?.addEventListener('click', e => {
+      const link = e.target.closest('a[href^="#"]');
+      if (!link) return;
+      const href = link.getAttribute('href');
+      if (!href || href === '#landing') return;
+      const id = href.slice(1);
+      const el = document.getElementById(id);
+      if (!el) return;
+      e.preventDefault();
+      e.stopPropagation();
+      scrollToSection(id);
     });
 
     function setupScrollSpy(paneId, navSelector) {
@@ -14273,22 +14642,15 @@ baskani_hazirla(SungJinwoo(), 10)</code></pre>
         updateProgress();
       });
     });
-    document.querySelectorAll('#7-gunluk-plan .plan-day-head').forEach(head => {
-      head.addEventListener('click', e => {
-        if (e.target.tagName === 'INPUT' || e.target.tagName === 'A' || e.target.tagName === 'LABEL') return;
-        head.closest('.plan-day').classList.toggle('open');
-      });
-    });
     document.getElementById('openToday')?.addEventListener('click', () => {
-      document.querySelectorAll('#7-gunluk-plan .plan-day').forEach(d => d.classList.remove('open'));
-      const first = document.querySelector('#7-gunluk-plan .plan-day:not(.done)');
+      document.querySelectorAll('#7-gunluk-plan details.plan-day').forEach(d => d.removeAttribute('open'));
+      const first = document.querySelector('#7-gunluk-plan details.plan-day:not(.done)');
       if (first) {
-        first.classList.add('open');
+        first.setAttribute('open', '');
         scrollToSection(first.id || '7-gunluk-plan');
       }
     });
     updateProgress();
-    document.querySelector('#7-gunluk-plan .plan-day')?.classList.add('open');
 
     function setupPathProgress(sectionId, storageKey, barId, textId, openBtnId) {
       const section = document.getElementById(sectionId);
@@ -14312,34 +14674,27 @@ baskani_hazirla(SungJinwoo(), 10)</code></pre>
           day.classList.toggle('done', dboxes.length > 0 && ddone === dboxes.length);
         });
       }
-      const saved = load();
+      const pathSaved = load();
       section.querySelectorAll('.plan-tasks input[type=checkbox]').forEach(box => {
         const id = box.dataset.taskId;
-        if (saved[id]) box.checked = true;
+        if (pathSaved[id]) box.checked = true;
         const label = box.closest('li')?.querySelector('label');
         if (label && box.checked) label.classList.add('done');
         box.addEventListener('change', () => {
-          saved[id] = box.checked;
-          save(saved);
+          pathSaved[id] = box.checked;
+          save(pathSaved);
           if (label) label.classList.toggle('done', box.checked);
           update();
         });
       });
-      section.querySelectorAll('.plan-day-head').forEach(head => {
-        head.addEventListener('click', e => {
-          if (e.target.tagName === 'INPUT' || e.target.tagName === 'A' || e.target.tagName === 'LABEL') return;
-          head.closest('.plan-day').classList.toggle('open');
-        });
-      });
       document.getElementById(openBtnId)?.addEventListener('click', () => {
-        section.querySelectorAll('.plan-day').forEach(d => d.classList.remove('open'));
-        const first = section.querySelector('.plan-day:not(.done)');
+        section.querySelectorAll('details.plan-day').forEach(d => d.removeAttribute('open'));
+        const first = section.querySelector('details.plan-day:not(.done)');
         if (first) {
-          first.classList.add('open');
+          first.setAttribute('open', '');
           scrollToSection(first.id || sectionId);
         }
       });
-      section.querySelector('.plan-day')?.classList.add('open');
       update();
     }
     setupPathProgress('haftalik-calisma-yolu', 'intprog-weekly-v1', 'weeklyProgressBar-intprog', 'weeklyProgressText-intprog', 'openWeeklyIntprog');
