@@ -138,60 +138,77 @@ end""",
     {
         "letter": "L",
         "name": "Liskov Substitution Principle (LSP)",
-        "name_tr": "Liskov Yerine Koyma Ilkesi",
+        "name_tr": "Liskov Yerine Koyma / Yerine Gecme Ilkesi",
         "definition": (
             "Alt sinif nesneleri, ust sinif nesnelerinin yerine kullanilabilmeli; "
-            "programin davranisi bozulmamali."
+            "yerine konuldugunda programin davranisi bozulmamali."
         ),
         "purpose": (
             "Kalitim hiyerarsisinde alt sinifin ust sinifin sozlesmesini (contract) bozmamasini saglamak. "
-            "Polimorfizm guvenli calissin."
+            "Polimorfizm guvenli calissin. Sung Jinwoo da bir Avci — yerine konunca program calisiyor mu?"
         ),
-        "problem": "Alt sinif ust sinifin bekledigi davranisi degistirirse (ornegin fly metodu hata firlatirsa) polimorfizm kirilir.",
-        "bad_code": """class Bird
-  def fly
-    "Ucuyor"
+        "problem": (
+            "YanlisPlayer guc artirinca zeka da artiriyor; Avci bekleyen stat_test_et patlar. "
+            "Alt sinif ust sinifin yerine konuldugunda beklenmeyen davranis → LSP ihlali."
+        ),
+        "bad_code": """class Avci_Kotu:
+  def guc_artir(miktar)
+    @guc += miktar
+  end
+  def zeka_artir(miktar)
+    @zeka += miktar
   end
 end
 
-class Penguin < Bird
-  def fly
-    raise "Penguen ucamaz!"  # ust sinifin sozlesmesini bozar
+class YanlisPlayer < Avci_Kotu
+  def guc_artir(miktar)
+    @guc += miktar
+    @zeka += miktar  # BEKLENMEDIK!
   end
 end
 
-birds = [Bird.new, Penguin.new]
-birds.each { |b| b.fly }  # Penguin'de patlar""",
+# stat_test_et: guc+10, zeka+5 → guc=20, zeka=15 beklenir
+# YanlisPlayer → zeka=20 → KALDI""",
         "bad_why": (
-            "Penguin, Bird'in yerine konuldugunda fly cagrisi programi kirar. "
-            "Ust sinif 'her kus ucabilir' beklentisi vardir; alt sinif bunu ihlal eder. "
-            "LSP: alt sinif ust sinifin yerine guvenle kullanilamiyor."
+            "Avci'da guc ve zeka bagimsiz artar. YanlisPlayer guc artirinca zeka da artirir. "
+            "Ust sinifi bekleyen test/stat fonksiyonu patlar. Alt sinif yerine konulamaz — LSP ihlali. "
+            "Detayli Solo Leveling ornegi: site #lsp-solo-leveling bolumu."
         ),
-        "good_code": """class Bird
-  def move
+        "good_code": """class Hunter
+  def dungeon_temizle(seviye)
+    raise NotImplementedError
+  end
+  def skill_kullan
     raise NotImplementedError
   end
 end
 
-class Sparrow < Bird
-  def move
-    "Ucuyor"
+class ERankHunter < Hunter
+  def dungeon_temizle(seviye)
+    seviye <= 2
+  end
+  def skill_kullan
+    "temel saldiri"
   end
 end
 
-class Penguin < Bird
-  def move
-    "Yuzuyor"
+class SungJinwoo < Hunter
+  def dungeon_temizle(seviye)
+    @golge_sayisi += 1
+    true  # sozlesme: bool doner
+  end
+  def skill_kullan
+    "Arise kullandi"
   end
 end
 
-birds = [Sparrow.new, Penguin.new]
-birds.each { |b| puts b.move }  # ikisi de calisir""",
+# baskani_hazirla(hunter) — hangi hunter gelirse gelsin calisir""",
         "good_why": (
-            "Ortak sozlesme move metodudur; her alt sinif kendi gercegini uygular. "
-            "Penguin Bird yerine konuldugunda program bozulmaz. "
-            "Alt sinif ust sinifin bekledigi arayuzu korur — LSP'ye uygun."
+            "Her Hunter ayni sozlesmeye uyar: dungeon_temizle bool, skill_kullan string doner. "
+            "SungJinwoo ekstra ozellik ekler ama sozlesmeyi bozmaz. "
+            "Alt sinif ust sinifin yerine guvenle konulabilir — LSP'ye uygun."
         ),
+        "extra_section": "lsp-solo-leveling",
     },
     {
         "letter": "I",

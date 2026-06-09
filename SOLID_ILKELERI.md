@@ -86,39 +86,65 @@ end
 
 ---
 
-## L — Liskov Substitution Principle (Liskov Yerine Koyma İlkesi)
+## L — Liskov Substitution Principle (Liskov Yerine Geçme İlkesi)
 
 | | |
 |---|---|
-| **İlke tanımı** | Alt sınıf nesneleri, üst sınıf nesnelerinin yerine kullanılabilmeli; programın davranışı bozulmamalı. |
-| **Amacı / çözmeye çalıştığı problem** | Kalıtımda alt sınıfın üst sınıfın sözleşmesini bozmamasını sağlamak. Polimorfizm güvenli çalışsın. |
+| **İlke tanımı** | Alt sınıf, üst sınıfın yerine geçebilmeli; geçince program bozulmamalı. |
+| **Amacı / çözmeye çalıştığı problem** | Polimorfizmde alt sınıfın sözleşmeyi bozmaması. Sung Jinwoo da bir Avcı — yerine konunca program çalışıyor mu? |
 
-### İlkeye aykırı (kötü) kod örneği
+### İlkeye aykırı (kötü) kod — YanlisPlayer
 
-```ruby
-class Bird
-  def fly; "Uçuyor"; end
-end
-class Penguin < Bird
-  def fly
-    raise "Penguen uçamaz!"
-  end
-end
+```python
+class Avci_Kotu:
+    def guc_artir(self, miktar):
+        self.guc += miktar
+    def zeka_artir(self, miktar):
+        self.zeka += miktar
+
+class YanlisPlayer(Avci_Kotu):
+    def guc_artir(self, miktar):
+        self.guc += miktar
+        self.zeka += miktar  # BEKLENMEDİK!
+
+# stat_test_et: guc+10, zeka+5 → guc=20, zeka=15 beklenir
+# YanlisPlayer → zeka=20 → KALDI (LSP İHLALİ)
 ```
 
-**Neden kötü?** Penguin, Bird yerine konulduğunda `fly` çağrısı programı kırar — LSP ihlali.
+**Neden kötü?** Güç artınca zeka da artıyor; üst sınıfı bekleyen test patlar.
 
-### İlkeye uygun (iyi) kod örneği
+### İlkeye uygun (iyi) kod — Hunter / SungJinwoo
 
-```ruby
-class Bird
-  def move; raise NotImplementedError; end
-end
-class Sparrow < Bird; def move; "Uçuyor"; end; end
-class Penguin < Bird; def move; "Yüzüyor"; end; end
+```python
+class Hunter(ABC):
+    @abstractmethod
+    def dungeon_temizle(self, seviye: int) -> bool: ...
+    @abstractmethod
+    def skill_kullan(self) -> str: ...
+
+class SungJinwoo(Hunter):
+    def dungeon_temizle(self, seviye):
+        return True  # sözleşme: bool döner
+    def skill_kullan(self):
+        return "Arise kullandi"  # sözleşme: str döner
+
+def baskani_hazirla(hunter: Hunter, seviye):
+    if hunter.dungeon_temizle(seviye):
+        print(hunter.skill_kullan())
+# Hangi hunter gelirse gelsin çalışır — LSP TAMAM
 ```
 
-**Neden iyi?** Ortak sözleşme `move`; her alt sınıf kendi gerçeğini uygular — LSP'ye uygun.
+**Neden iyi?** Her alt sınıf aynı sözleşmeye uyar; SungJinwoo ekstra özellik ekler ama bozmaz.
+
+### LSP'nin 5 Kuralı (Solo Leveling)
+
+1. **Ön koşul** — Alt sınıf daha katı şart koyamaz (E-rank avcı seviye 5 dungeon reddedemez).
+2. **Son koşul** — Alt sınıf daha az garanti veremez (item düşmeli).
+3. **Değişmez** — İç kurallar bozulmamalı (toplam_stat = guc + zeka).
+4. **İstisna** — Yeni beklenmedik hata fırlatılamaz.
+5. **Dönüş tipi** — skill_kullan() her zaman str dönmeli.
+
+*Detaylı Python kodu: site #lsp-solo-leveling | Örnek çalışma: Muhammed Hamza Erha*
 
 ---
 

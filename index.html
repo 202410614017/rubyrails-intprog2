@@ -328,6 +328,31 @@
     .solid-code-box.bad .solid-why { background: #fff5f5; color: #991b1b; }
     .solid-code-box.good .solid-why { background: #f0fdf4; color: #14532d; }
 
+    .lsp-hero {
+      background: linear-gradient(135deg, #1e3a5f 0%, #312e81 50%, #4c1d95 100%);
+      color: white; border-radius: var(--radius); padding: 1.35rem 1.5rem; margin-bottom: 1rem;
+    }
+    .lsp-hero h3 { font-size: 1.15rem; margin-bottom: .35rem; }
+    .lsp-hero p { font-size: .88rem; opacity: .92; line-height: 1.55; }
+    .lsp-rules { display: grid; gap: .65rem; margin-top: 1rem; }
+    .lsp-rule {
+      border: 1px solid var(--line); border-radius: 8px; padding: .85rem 1rem; background: #fafbfc;
+    }
+    .lsp-rule-num {
+      display: inline-flex; width: 1.5rem; height: 1.5rem; border-radius: 6px;
+      background: #312e81; color: white; align-items: center; justify-content: center;
+      font-size: .72rem; font-weight: 700; margin-right: .4rem;
+    }
+    .lsp-rule h4 { font-size: .88rem; display: inline; }
+    .lsp-rule p { font-size: .84rem; color: var(--text-soft); margin: .4rem 0 0 1.9rem; line-height: 1.5; }
+    .lsp-credit { font-size: .78rem; color: var(--text-soft); margin-top: 1rem; font-style: italic; }
+    .solid-extra-link {
+      display: inline-block; margin-top: .75rem; font-size: .82rem; font-weight: 600;
+      color: #312e81; text-decoration: none; padding: .4rem .75rem;
+      background: #ede9fe; border-radius: 8px; border: 1px solid #c4b5fd;
+    }
+    .solid-extra-link:hover { background: #ddd6fe; }
+
     .quiz-toolbar {
       display: flex; flex-wrap: wrap; gap: .5rem; align-items: center;
       margin: .75rem 0 1rem;
@@ -472,6 +497,7 @@
 <a href="#konu-indeksi"><span class="w-num">A</span>Konu Indeksi</a>
 <a href="#internet-kaynaklari"><span class="w-num">W</span>Internet Kaynaklari</a>
 <a href="#solid-ilkeleri"><span class="w-num">S</span>SOLID Ilkeleri</a>
+<a href="#lsp-solo-leveling"><span class="w-num">L</span>LSP Solo Leveling</a>
 <a href="#sinav-ezber-listesi"><span class="w-num">!</span>Ezber Listesi</a>
 <div class="nav-label">Haftalar</div>
 <a href="#hafta-2-ruby-rails-giris"><span class="w-num">2</span>Ruby &amp; Rails Giriş</a>
@@ -1696,7 +1722,7 @@ end</code></pre>
   def publish(publisher:, notifier:, logger:)
     publisher.save(self)
     notifier.notify_subscribers(self)
-    logger.info(&quot;Post yayinlandi: \#{title}&quot;)
+    logger.info(&quot;Post yayinlandi: #{title}&quot;)
   end
 end
 
@@ -1720,6 +1746,7 @@ end</code></pre>
                 <div class="solid-why"><strong>Neden iyi?</strong> Her sinifin tek gorevi var: Post yayinlama kararini verir, diger isleri uzman siniflara devreder. E-posta mantigi degistiginde yalnizca EmailNotifier guncellenir. Siniflar kucuk, test edilebilir ve bakimi kolay — SRP&#x27;ye uygun.</div>
               </div>
             </div>
+            
           </div>
         </article>
         
@@ -1786,6 +1813,7 @@ end</code></pre>
                 <div class="solid-why"><strong>Neden iyi?</strong> PaymentProcessor artik hangi odeme tipi oldugunu bilmez; charge metoduna sahip her gateway calisir. CryptoGateway eklemek icin PaymentProcessor&#x27;a dokunulmaz. Mevcut kod kapali (degismez), yeni davranis genislemeyle acik — OCP&#x27;ye uygun.</div>
               </div>
             </div>
+            
           </div>
         </article>
         
@@ -1794,63 +1822,77 @@ end</code></pre>
             <div class="solid-letter">L</div>
             <div>
               <h3>Liskov Substitution Principle (LSP)</h3>
-              <span>Liskov Yerine Koyma Ilkesi</span>
+              <span>Liskov Yerine Koyma / Yerine Gecme Ilkesi</span>
             </div>
           </div>
           <div class="solid-body">
             <div class="solid-row">
               <div class="solid-row-label">Ilke tanimi</div>
-              <p>Alt sinif nesneleri, ust sinif nesnelerinin yerine kullanilabilmeli; programin davranisi bozulmamali.</p>
+              <p>Alt sinif nesneleri, ust sinif nesnelerinin yerine kullanilabilmeli; yerine konuldugunda programin davranisi bozulmamali.</p>
             </div>
             <div class="solid-row">
               <div class="solid-row-label">Amaci / cozmeye calistigi problem</div>
-              <p>Kalitim hiyerarsisinde alt sinifin ust sinifin sozlesmesini (contract) bozmamasini saglamak. Polimorfizm guvenli calissin.</p>
-              <p style="margin-top:.35rem"><em>Problem:</em> Alt sinif ust sinifin bekledigi davranisi degistirirse (ornegin fly metodu hata firlatirsa) polimorfizm kirilir.</p>
+              <p>Kalitim hiyerarsisinde alt sinifin ust sinifin sozlesmesini (contract) bozmamasini saglamak. Polimorfizm guvenli calissin. Sung Jinwoo da bir Avci — yerine konunca program calisiyor mu?</p>
+              <p style="margin-top:.35rem"><em>Problem:</em> YanlisPlayer guc artirinca zeka da artiriyor; Avci bekleyen stat_test_et patlar. Alt sinif ust sinifin yerine konuldugunda beklenmeyen davranis → LSP ihlali.</p>
             </div>
             <div class="solid-code-grid">
               <div class="solid-code-box bad">
                 <div class="solid-code-box-head">Ilkeye aykiri (kotu) kod</div>
-                <pre><code>class Bird
-  def fly
-    &quot;Ucuyor&quot;
+                <pre><code>class Avci_Kotu:
+  def guc_artir(miktar)
+    @guc += miktar
+  end
+  def zeka_artir(miktar)
+    @zeka += miktar
   end
 end
 
-class Penguin &lt; Bird
-  def fly
-    raise &quot;Penguen ucamaz!&quot;  # ust sinifin sozlesmesini bozar
+class YanlisPlayer &lt; Avci_Kotu
+  def guc_artir(miktar)
+    @guc += miktar
+    @zeka += miktar  # BEKLENMEDIK!
   end
 end
 
-birds = [Bird.new, Penguin.new]
-birds.each { |b| b.fly }  # Penguin&#x27;de patlar</code></pre>
-                <div class="solid-why"><strong>Neden kotu?</strong> Penguin, Bird&#x27;in yerine konuldugunda fly cagrisi programi kirar. Ust sinif &#x27;her kus ucabilir&#x27; beklentisi vardir; alt sinif bunu ihlal eder. LSP: alt sinif ust sinifin yerine guvenle kullanilamiyor.</div>
+# stat_test_et: guc+10, zeka+5 → guc=20, zeka=15 beklenir
+# YanlisPlayer → zeka=20 → KALDI</code></pre>
+                <div class="solid-why"><strong>Neden kotu?</strong> Avci&#x27;da guc ve zeka bagimsiz artar. YanlisPlayer guc artirinca zeka da artirir. Ust sinifi bekleyen test/stat fonksiyonu patlar. Alt sinif yerine konulamaz — LSP ihlali. Detayli Solo Leveling ornegi: site #lsp-solo-leveling bolumu.</div>
               </div>
               <div class="solid-code-box good">
                 <div class="solid-code-box-head">Ilkeye uygun (iyi) kod</div>
-                <pre><code>class Bird
-  def move
+                <pre><code>class Hunter
+  def dungeon_temizle(seviye)
+    raise NotImplementedError
+  end
+  def skill_kullan
     raise NotImplementedError
   end
 end
 
-class Sparrow &lt; Bird
-  def move
-    &quot;Ucuyor&quot;
+class ERankHunter &lt; Hunter
+  def dungeon_temizle(seviye)
+    seviye &lt;= 2
+  end
+  def skill_kullan
+    &quot;temel saldiri&quot;
   end
 end
 
-class Penguin &lt; Bird
-  def move
-    &quot;Yuzuyor&quot;
+class SungJinwoo &lt; Hunter
+  def dungeon_temizle(seviye)
+    @golge_sayisi += 1
+    true  # sozlesme: bool doner
+  end
+  def skill_kullan
+    &quot;Arise kullandi&quot;
   end
 end
 
-birds = [Sparrow.new, Penguin.new]
-birds.each { |b| puts b.move }  # ikisi de calisir</code></pre>
-                <div class="solid-why"><strong>Neden iyi?</strong> Ortak sozlesme move metodudur; her alt sinif kendi gercegini uygular. Penguin Bird yerine konuldugunda program bozulmaz. Alt sinif ust sinifin bekledigi arayuzu korur — LSP&#x27;ye uygun.</div>
+# baskani_hazirla(hunter) — hangi hunter gelirse gelsin calisir</code></pre>
+                <div class="solid-why"><strong>Neden iyi?</strong> Her Hunter ayni sozlesmeye uyar: dungeon_temizle bool, skill_kullan string doner. SungJinwoo ekstra ozellik ekler ama sozlesmeyi bozmaz. Alt sinif ust sinifin yerine guvenle konulabilir — LSP&#x27;ye uygun.</div>
               </div>
             </div>
+            <a class="solid-extra-link" href="#lsp-solo-leveling">Detayli Solo Leveling LSP ornegi (Python) →</a>
           </div>
         </article>
         
@@ -1930,6 +1972,7 @@ end</code></pre>
                 <div class="solid-why"><strong>Neden iyi?</strong> Arayuzler role gore ayrildi: Workable, Eatable. Robot yalnizca Workable alir; bos eat/sleep yazmak zorunda kalmaz. Her sinif sadece ihtiyaci olan davranisa bagimli — ISP&#x27;ye uygun.</div>
               </div>
             </div>
+            
           </div>
         </article>
         
@@ -1986,9 +2029,146 @@ PostsController.new(repository: PostRepository.new)</code></pre>
                 <div class="solid-why"><strong>Neden iyi?</strong> Controller somut veritabani sinifini bilmez; repository arayuzune bagimlidir. Testte sahte (mock) repository enjekte edilebilir. Ust ve alt seviye soyutlamaya bagimli — DIP&#x27;ye uygun. Rails&#x27;de ActiveRecord da bu soyutlamadir.</div>
               </div>
             </div>
+            
           </div>
         </article>
         
+      </div>
+    </section>
+    
+
+    <section class="special-block" id="lsp-solo-leveling">
+      <div class="special-head"><h2>LSP Detay — Solo Leveling Ornegi (Sinav Formati)</h2></div>
+      <div class="special-body">
+        <div class="lsp-hero">
+          <h3>Liskov Yerine Gecme Prensibi (LSP)</h3>
+          <p><strong>Ne demek?</strong> Alt sinif, ust sinifin YERINE GECEBILMELI. Gecince program BOZULMAMALI.</p>
+          <p style="margin-top:.5rem">Sung Jinwoo da bir Avci. Jinwoo&#x27;yu Avci yerine koyunca program calisiyor mu? Calisiyorsa LSP tamam, bozulduysa LSP ihlali.</p>
+        </div>
+        <div class="callout callout-web">
+          Asagidaki ornek sinif arkadas calismasindan (Muhammed Hamza Erha) uyarlanmistir.
+          Python kodu; __init__ yazim hatalari duzeltildi. Odev formatina uygun kotu/iyi kod + 5 kural.
+        </div>
+        <div class="solid-code-grid">
+          <div class="solid-code-box bad">
+            <div class="solid-code-box-head">Kotu kod — LSP ihlali (YanlisPlayer)</div>
+            <pre><code>class Avci_Kotu:
+    def __init__(self, guc: int, zeka: int):
+        self.guc = guc
+        self.zeka = zeka
+
+    def guc_artir(self, miktar: int):
+        self.guc += miktar       # sadece gucu arttirir
+
+    def zeka_artir(self, miktar: int):
+        self.zeka += miktar      # sadece zekayi arttirir
+
+
+class YanlisPlayer(Avci_Kotu):
+    def guc_artir(self, miktar: int):
+        self.guc += miktar
+        self.zeka += miktar      # BEKLENMEDIK! Avci bunu yapmiyor
+
+
+def stat_test_et(avci: Avci_Kotu):
+    avci.guc_artir(10)
+    avci.zeka_artir(5)
+    # Beklenen: guc=20, zeka=15
+    if avci.guc == 20 and avci.zeka == 15:
+        print(&quot;GECTI&quot;)
+    else:
+        print(&quot;KALDI (LSP IHLALI)&quot;)
+
+stat_test_et(Avci_Kotu(10, 10))      # GECTI
+stat_test_et(YanlisPlayer(10, 10))  # zeka=20 → KALDI</code></pre>
+            <div class="solid-why"><strong>Neden kotu?</strong> Avci sinifinda guc_artir ve zeka_artir bagimsizdir. YanlisPlayer guc artirinca zeka da artiyor — ust sinifi bekleyen stat_test_et patlar (guc=20, zeka=20 olur). Alt sinif ust sinifin yerine konuldugunda program bozuluyor → LSP ihlali.</div>
+          </div>
+          <div class="solid-code-box good">
+            <div class="solid-code-box-head">Iyi kod — LSP dogru (Hunter / SungJinwoo)</div>
+            <pre><code>from abc import ABC, abstractmethod
+
+class Hunter(ABC):
+    def __init__(self, isim: str, rank: str, guc: int, zeka: int):
+        self.isim = isim
+        self.rank = rank
+        self.guc = guc
+        self.zeka = zeka
+
+    @abstractmethod
+    def dungeon_temizle(self, seviye: int) -&gt; bool:
+        pass
+
+    @abstractmethod
+    def skill_kullan(self) -&gt; str:
+        pass
+
+
+class ERankHunter(Hunter):
+    def dungeon_temizle(self, seviye: int) -&gt; bool:
+        if seviye &gt; 2:
+            return False
+        return True
+
+    def skill_kullan(self) -&gt; str:
+        return f&quot;{self.isim} temel saldiri kullandi.&quot;
+
+
+class SungJinwoo(Hunter):
+    def __init__(self):
+        super().__init__(&quot;Sung Jinwoo&quot;, &quot;Ozel&quot;, guc=999, zeka=999)
+        self.golge_sayisi = 0
+
+    def dungeon_temizle(self, seviye: int) -&gt; bool:
+        self.golge_sayisi += 1
+        return True  # sozlesme bozulmadi: bool donuyor
+
+    def skill_kullan(self) -&gt; str:
+        return f&quot;{self.isim} Arise kullandi.&quot;
+
+
+def baskani_hazirla(hunter: Hunter, dungeon_seviyesi: int):
+    if hunter.dungeon_temizle(dungeon_seviyesi):
+        print(hunter.skill_kullan())
+
+# Hangi hunter gelirse gelsin calisir — LSP TAMAM
+baskani_hazirla(ERankHunter(&quot;Jinwoo&quot;, &quot;E&quot;, 10, 10), 1)
+baskani_hazirla(SungJinwoo(), 10)</code></pre>
+            <div class="solid-why"><strong>Neden iyi?</strong> Her Hunter tipi soyut siniftan kalitim alir ve dungeon_temizle → bool, skill_kullan → str sozlesmesine uyar. SungJinwoo ekstra ozellik (golge_sayisi) ekler ama sozlesmeyi bozmaz. baskani_hazirla(hunter) hangi alt sinif gelirse gelsin calisir.</div>
+          </div>
+        </div>
+        <h3 style="margin:1.25rem 0 .65rem;font-size:.95rem">LSP'nin 5 Kurali</h3>
+        <div class="lsp-rules">
+        <div class="lsp-rule">
+          <span class="lsp-rule-num">1</span>
+          <h4>On Kosul — Alt sinif daha kati sart koyamaz.</h4>
+          <p>Normal Avci her seviye dungeona girebilir beklenir. ERankAvci seviye 2&#x27;den yuksek dungeon&#x27;i reddederse, ust sinifi kullanan kod seviye 5 verdiginde program patlar.</p>
+        </div>
+        
+        <div class="lsp-rule">
+          <span class="lsp-rule-num">2</span>
+          <h4>Son Kosul — Alt sinif daha az garanti veremez.</h4>
+          <p>Dungeon temizlenince en az 1 item dusmeli. Jinwoo &#x27;item dusmedi, sadece golge aldim&#x27; derse loot bekleyen sistem patlar.</p>
+        </div>
+        
+        <div class="lsp-rule">
+          <span class="lsp-rule-num">3</span>
+          <h4>Degismez (Invariant) — Ust sinifin ic kurallari alt sinifta bozulmamali.</h4>
+          <p>toplam_stat = guc + zeka + dayaniklilik kurali varsa Jinwoo guc artirinca toplam_stat guncellenmezse sistem yanlis deger gosterir.</p>
+        </div>
+        
+        <div class="lsp-rule">
+          <span class="lsp-rule-num">4</span>
+          <h4>Istisna — Alt sinif yeni beklenmedik hata firlatamaz.</h4>
+          <p>Gate kapaninca GateKapandiHatasi firlatilir. Jinwoo MonarkUyandiHatasi firlatirsa kimse yakalamaz, sistem coker.</p>
+        </div>
+        
+        <div class="lsp-rule">
+          <span class="lsp-rule-num">5</span>
+          <h4>Donus Tipi — Alt sinif farkli tip donduremez.</h4>
+          <p>skill_kullan() her zaman str dondurmeli. None veya int dondururse .upper() cagrisi patlar.</p>
+        </div>
+        </div>
+        <p class="lsp-credit">Ornek calisma: Muhammed Hamza Erha — Solo Leveling temasiyla LSP aciklamasi</p>
       </div>
     </section>
     

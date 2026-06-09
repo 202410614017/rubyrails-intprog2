@@ -23,6 +23,9 @@ from quiz_data import QUIZ
 from study_plan import STUDY_PLAN, MUST_KNOW
 from web_enrichment import TOPICS, match_panel_topics, topics_for_week
 from solid_principles import SOLID, STUDENT_HEADER
+from lsp_solo_leveling import (
+    LSP_INTRO, BAD_CODE, BAD_WHY, GOOD_CODE, GOOD_WHY, LSP_FIVE_RULES, CREDIT,
+)
 
 BASE = Path(__file__).parent
 MD_FILE = BASE / "CALISMA_REHBERI.md"
@@ -480,6 +483,31 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     .solid-why {{ padding: .55rem .75rem; font-size: .82rem; line-height: 1.5; border-top: 1px solid var(--line); }}
     .solid-code-box.bad .solid-why {{ background: #fff5f5; color: #991b1b; }}
     .solid-code-box.good .solid-why {{ background: #f0fdf4; color: #14532d; }}
+
+    .lsp-hero {{
+      background: linear-gradient(135deg, #1e3a5f 0%, #312e81 50%, #4c1d95 100%);
+      color: white; border-radius: var(--radius); padding: 1.35rem 1.5rem; margin-bottom: 1rem;
+    }}
+    .lsp-hero h3 {{ font-size: 1.15rem; margin-bottom: .35rem; }}
+    .lsp-hero p {{ font-size: .88rem; opacity: .92; line-height: 1.55; }}
+    .lsp-rules {{ display: grid; gap: .65rem; margin-top: 1rem; }}
+    .lsp-rule {{
+      border: 1px solid var(--line); border-radius: 8px; padding: .85rem 1rem; background: #fafbfc;
+    }}
+    .lsp-rule-num {{
+      display: inline-flex; width: 1.5rem; height: 1.5rem; border-radius: 6px;
+      background: #312e81; color: white; align-items: center; justify-content: center;
+      font-size: .72rem; font-weight: 700; margin-right: .4rem;
+    }}
+    .lsp-rule h4 {{ font-size: .88rem; display: inline; }}
+    .lsp-rule p {{ font-size: .84rem; color: var(--text-soft); margin: .4rem 0 0 1.9rem; line-height: 1.5; }}
+    .lsp-credit {{ font-size: .78rem; color: var(--text-soft); margin-top: 1rem; font-style: italic; }}
+    .solid-extra-link {{
+      display: inline-block; margin-top: .75rem; font-size: .82rem; font-weight: 600;
+      color: #312e81; text-decoration: none; padding: .4rem .75rem;
+      background: #ede9fe; border-radius: 8px; border: 1px solid #c4b5fd;
+    }}
+    .solid-extra-link:hover {{ background: #ddd6fe; }}
 
     .quiz-toolbar {{
       display: flex; flex-wrap: wrap; gap: .5rem; align-items: center;
@@ -1128,6 +1156,7 @@ def build_solid_section() -> str:
                 <div class="solid-why"><strong>Neden iyi?</strong> {html.escape(p['good_why'])}</div>
               </div>
             </div>
+            {f'<a class="solid-extra-link" href="#{p["extra_section"]}">Detayli Solo Leveling LSP ornegi (Python) →</a>' if p.get("extra_section") else ""}
           </div>
         </article>
         """)
@@ -1145,6 +1174,50 @@ def build_solid_section() -> str:
           Yazdir butonu ile PDF olarak da alabilirsin.
         </div>
         {"".join(principles)}
+      </div>
+    </section>
+    """
+
+
+def build_lsp_detail_section() -> str:
+    rules = "".join(
+        f"""
+        <div class="lsp-rule">
+          <span class="lsp-rule-num">{r['num']}</span>
+          <h4>{html.escape(r['name'])} — {html.escape(r['rule'])}</h4>
+          <p>{html.escape(r['example'])}</p>
+        </div>
+        """
+        for r in LSP_FIVE_RULES
+    )
+    return f"""
+    <section class="special-block" id="lsp-solo-leveling">
+      <div class="special-head"><h2>LSP Detay — Solo Leveling Ornegi (Sinav Formati)</h2></div>
+      <div class="special-body">
+        <div class="lsp-hero">
+          <h3>{html.escape(LSP_INTRO['title'])}</h3>
+          <p><strong>Ne demek?</strong> {html.escape(LSP_INTRO['what'])}</p>
+          <p style="margin-top:.5rem">{html.escape(LSP_INTRO['short'])}</p>
+        </div>
+        <div class="callout callout-web">
+          Asagidaki ornek sinif arkadas calismasindan (Muhammed Hamza Erha) uyarlanmistir.
+          Python kodu; __init__ yazim hatalari duzeltildi. Odev formatina uygun kotu/iyi kod + 5 kural.
+        </div>
+        <div class="solid-code-grid">
+          <div class="solid-code-box bad">
+            <div class="solid-code-box-head">Kotu kod — LSP ihlali (YanlisPlayer)</div>
+            <pre><code>{html.escape(BAD_CODE)}</code></pre>
+            <div class="solid-why"><strong>Neden kotu?</strong> {html.escape(BAD_WHY)}</div>
+          </div>
+          <div class="solid-code-box good">
+            <div class="solid-code-box-head">Iyi kod — LSP dogru (Hunter / SungJinwoo)</div>
+            <pre><code>{html.escape(GOOD_CODE)}</code></pre>
+            <div class="solid-why"><strong>Neden iyi?</strong> {html.escape(GOOD_WHY)}</div>
+          </div>
+        </div>
+        <h3 style="margin:1.25rem 0 .65rem;font-size:.95rem">LSP'nin 5 Kurali</h3>
+        <div class="lsp-rules">{rules}</div>
+        <p class="lsp-credit">{html.escape(CREDIT)}</p>
       </div>
     </section>
     """
@@ -1230,6 +1303,7 @@ def build_toc(sections) -> str:
         '<a href="#konu-indeksi"><span class="w-num">A</span>Konu Indeksi</a>',
         '<a href="#internet-kaynaklari"><span class="w-num">W</span>Internet Kaynaklari</a>',
         '<a href="#solid-ilkeleri"><span class="w-num">S</span>SOLID Ilkeleri</a>',
+        '<a href="#lsp-solo-leveling"><span class="w-num">L</span>LSP Solo Leveling</a>',
         '<a href="#sinav-ezber-listesi"><span class="w-num">!</span>Ezber Listesi</a>',
         '<div class="nav-label">Haftalar</div>',
     ]
@@ -1259,6 +1333,7 @@ def build_content(sections) -> str:
     blocks.append(build_must_know_section())
     blocks.append(build_web_enrichment_section())
     blocks.append(build_solid_section())
+    blocks.append(build_lsp_detail_section())
     for title, sid, body in sections:
         if "cevap" in sid.lower() or "konu-indeksi" in sid:
             continue
