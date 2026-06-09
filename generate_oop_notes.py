@@ -120,7 +120,7 @@ TOPIC_INDEX = """
 WEEK9_EXERCISES_MD = """
 ## Hafta 9 — SOLID Alıştırmaları (Çözümlü)
 
-Site bolumu **#oop-solid-alistirmalar** altinda 4 alistirmanin kotu/iyi kodu ve aciklamasi yer alir.
+Site bolumu **Hafta 10 — SOLID Calisma & Odev Cozumleri** (#hafta-10-solid-calisma-odev-cozumleri) altinda 4 alistirmanin kotu/iyi kodu ve aciklamasi yer alir.
 
 | Ilke | Konu | Gist |
 |------|------|------|

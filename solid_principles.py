@@ -3,7 +3,7 @@
 
 STUDENT_HEADER = {
     "title": "SOLID Ilkeleri",
-    "subtitle": "Internet Programciligi II — Nesne Yonelimli Tasarim",
+    "subtitle": "Nesne Yonelimli Programlama — Sinav Odev Formati",
     "fields": ["Ad Soyad: ___________________________", "Ogrenci No: _________________________", "Tarih: ______________________________"],
 }
 

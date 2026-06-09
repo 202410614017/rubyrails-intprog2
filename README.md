@@ -1,24 +1,28 @@
-# İnternet Programcılığı II — Sınav Çalışma Rehberi
+# Sınav Çalışma Merkezi
 
-Hafta 2–10 ders notlarının anlatımlı özeti. Site GitHub Pages üzerinde yayınlanır.
+**Internet Programcılığı II** + **Nesne Yönelimli Programlama** — tek sitede.
 
 ## Yayın adresi
 
-Site yayına alındıktan sonra:
-
 `https://202410614017.github.io/rubyrails-intprog2/`
+
+## Bölümler
+
+| Bölüm | İçerik |
+|-------|--------|
+| **Int Prog II** | Hafta 2–10 Rails arşivi, videolar, quiz, 7 günlük plan |
+| **OOP** | Kapsülleme, kalıtım, SOLID, LSP Solo Leveling (PDF gelince genişler) |
 
 ## Dosyalar
 
 | Dosya | Açıklama |
 |-------|----------|
-| `index.html` | Çalışma sitesi (GitHub Pages bunu gösterir) |
-| `CALISMA_REHBERI.pdf` | PDF sürüm |
-| `CALISMA_REHBERI.md` | Kaynak metin |
-| `videos/hafta-2.mp4` … `hafta-10.mp4` | Haftalık kısa özet videolar (~30–70 sn) |
-| `generate_videos.py` | Videoları yeniden üretmek için (TTS + slayt) |
-| `web_enrichment.py` | PDF konulari icin internet kaynakli aciklama ve ornek kodlar |
-| `build_site.py` | Siteyi yeniden üretmek için |
+| `index.html` | Çalışma sitesi |
+| `CALISMA_REHBERI.md` | Int Prog PDF arşivi kaynağı |
+| `oop_content.py` | OOP ders konuları (PDF gelince genişlet) |
+| `solid_principles.py` | SOLID ilkeleri |
+| `lsp_solo_leveling.py` | LSP Solo Leveling örneği |
+| `build_site.py` | Siteyi yeniden üret |
 
 ## Siteyi güncellemek
 

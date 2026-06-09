@@ -23,6 +23,7 @@ from quiz_data import QUIZ
 from study_plan import STUDY_PLAN, MUST_KNOW
 from web_enrichment import TOPICS, match_panel_topics, topics_for_week
 from solid_principles import SOLID, STUDENT_HEADER
+from solid_class_examples import CLASS_EXAMPLES_BY_LETTER
 from lsp_solo_leveling import (
     LSP_INTRO, BAD_CODE, BAD_WHY, GOOD_CODE, GOOD_WHY, LSP_FIVE_RULES, CREDIT,
 )
@@ -179,9 +180,19 @@ OOP_WEEK_META = {
         "simple": ["Observer olay dinler", "Decorator davranis ekler", "Desenler SOLID ile uyumlu olmali"],
     },
     "hafta-9-solid-prensipleri": {
-        "num": 9, "tag": "SOLID",
-        "summary": "S-O-L-I-D ilkeleri slayt anlatimi. Alistirmalar ayri bolumde.",
-        "simple": ["SRP tek is", "OCP genislet degistirme", "LSP yerine koy", "ISP kucuk arayuz", "DIP soyut bagimlilik"],
+        "num": 9, "tag": "SOLID (PDF)",
+        "summary": "PDF 9. hafta slaytlari: SOLID tanimlari, SRP/OCP/LSP/ISP/DIP anlatimi.",
+        "simple": ["SRP tek is", "OCP genislet", "LSP yerine koy", "ISP kucuk arayuz", "DIP soyut bagimlilik"],
+    },
+    "hafta-10-solid-calisma-odev-cozumleri": {
+        "num": 10, "tag": "SOLID Calisma",
+        "summary": "Odev formatinda 5 SOLID ilkesi, PDF alistirmalari (OCP/LSP/ISP/DIP) cozumlu, LSP Solo Leveling.",
+        "simple": [
+            "Her ilke: tanim, amac, kotu/iyi kod, neden?",
+            "Sinif arkadas ornekleri: SRP, OCP, LSP, ISP, DIP (Python)",
+            "AlanHesaplayici, Dosya, Cihaz, Bildirim odevleri",
+            "Solo Leveling LSP ornegi — sinav icin",
+        ],
     },
 }
 
@@ -491,6 +502,34 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     .panel-enrich pre {{
       margin: .5rem 0 0; padding: .6rem .7rem; background: white; border-radius: 6px;
       border: 1px solid var(--blue-border); overflow-x: auto; font-size: .76rem;
+    }}
+
+    .ruby-faq-box {{
+      margin: .65rem 0 0; padding: .75rem .9rem; border-radius: 8px;
+      border: 1px solid #fca5a5; background: linear-gradient(180deg, #fff5f5 0%, #fff 100%);
+    }}
+    .ruby-faq-label {{
+      font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em;
+      color: #991b1b; margin-bottom: .45rem;
+    }}
+    .ruby-faq-q {{ font-size: .86rem; color: #7f1d1d; margin: .25rem 0 .35rem; }}
+    .ruby-faq-a {{ font-size: .84rem; color: #450a0a; line-height: 1.55; margin: 0 0 .5rem; }}
+    .ruby-faq-link {{
+      font-size: .78rem; font-weight: 600; color: #b91c1c; text-decoration: none;
+    }}
+    .ruby-faq-link:hover {{ text-decoration: underline; }}
+    .panel-enrich .ruby-faq-box {{ margin-top: .55rem; }}
+
+    .solid-class-example {{
+      margin-top: 1rem; padding: .85rem 1rem; border-radius: 8px;
+      border: 1px dashed #c4b5fd; background: #faf5ff;
+    }}
+    .solid-class-example .solid-row-label {{ color: #6d28d9; }}
+    .solid-example-meta {{
+      font-size: .78rem; color: #6b7280; margin: .2rem 0 .65rem;
+    }}
+    .solid-example-meta code {{
+      font-size: .74rem; background: #ede9fe; padding: .1rem .35rem; border-radius: 4px;
     }}
 
     .solid-header {{
@@ -1034,7 +1073,7 @@ def build_week_block(title: str, sid: str, body: str) -> str:
             )
             week_enrich_html = f"""
         <div class="callout callout-web" style="margin:.85rem 0 0">
-          <strong>Bu hafta — internet kaynakli aciklamalar:</strong>
+          <strong>Bu hafta — Ruby resmi SSS + internet aciklamalari (Turkce):</strong>
           <div class="enrich-sources" style="margin-top:.45rem">{links}</div>
         </div>
         """
@@ -1127,7 +1166,7 @@ def build_course_hub() -> str:
       <a class="course-card oop" href="#oop-course">
         <div class="course-card-kicker">Ders 2</div>
         <h3>Nesne Yonelimli Programlama</h3>
-        <p>Hafta 1-9 PDF arsivi, SOLID alistirmalari (OCP, LSP, ISP, DIP) cozumlu.</p>
+        <p>Hafta 1-9 PDF arsivi + Hafta 10 SOLID calisma ve odev cozumleri.</p>
       </a>
     </section>
     """
@@ -1158,12 +1197,10 @@ def build_oop_banner() -> str:
     return f"""
     <div class="course-banner course-banner-oop" id="oop-course">
       <h2>{html.escape(OOP_META['title'])}</h2>
-      <p>NYP II — Hafta 1-9 PDF arsivi, SOLID alistirmalari cozumlu, LSP Solo Leveling bonus.</p>
+      <p>NYP II — Hafta 1-9 PDF arsivi. Hafta 10: SOLID calismalari ve cozumlu alistirmalar.</p>
       <div class="course-banner-actions">
         <a class="btn" href="#oop-konu-indeksi">Konu Indeksi</a>
-        <a class="btn" href="#oop-solid-alistirmalar">Hafta 9 Alistirmalar</a>
-        <a class="btn" href="#solid-ilkeleri">SOLID Ilkeleri</a>
-        <a class="btn" href="#lsp-solo-leveling">LSP Ornegi</a>
+        <a class="btn" href="#hafta-10-solid-calisma-odev-cozumleri">Hafta 10 SOLID</a>
         <a class="btn" href="#oop-ezber">OOP Ezber</a>
       </div>
     </div>
@@ -1186,7 +1223,95 @@ def build_oop_must_know_section() -> str:
     """
 
 
-def build_week9_exercises_section() -> str:
+def build_solid_class_example_html(letter: str) -> str:
+    ex = CLASS_EXAMPLES_BY_LETTER.get(letter)
+    if not ex:
+        return ""
+    extra = ""
+    if ex.get("extra_link"):
+        extra = f'<a class="solid-extra-link" href="{html.escape(ex["extra_link"])}">Detayli LSP ornegi ve 5 kural →</a>'
+    return f"""
+            <div class="solid-class-example" id="solid-ornek-{letter.lower()}">
+              <div class="solid-row-label">Sinif arkadas ornegi (Python)</div>
+              <p style="font-size:.9rem;font-weight:600;margin:.25rem 0">{html.escape(ex['title'])}</p>
+              <p class="solid-example-meta">
+                Tema: {html.escape(ex['theme'])} · Hazirlayan: {html.escape(ex['author'])} ·
+                Dosya: <code>{html.escape(ex['filename'])}</code>
+              </p>
+              <div class="solid-code-grid">
+                <div class="solid-code-box bad">
+                  <div class="solid-code-box-head">Kotu kod</div>
+                  <pre><code>{html.escape(ex['bad_code'])}</code></pre>
+                  <div class="solid-why"><strong>Neden kotu?</strong> {html.escape(ex['bad_why'])}</div>
+                </div>
+                <div class="solid-code-box good">
+                  <div class="solid-code-box-head">Iyi kod</div>
+                  <pre><code>{html.escape(ex['good_code'])}</code></pre>
+                  <div class="solid-why"><strong>Neden iyi?</strong> {html.escape(ex['good_why'])}</div>
+                </div>
+              </div>
+              {extra}
+            </div>
+            """
+
+
+def build_solid_principles_inner() -> str:
+    fields = "".join(f'<div class="field">{html.escape(f)}</div>' for f in STUDENT_HEADER["fields"])
+    principles = []
+    for p in SOLID:
+        principles.append(f"""
+        <article class="solid-principle" id="solid-{p['letter'].lower()}">
+          <div class="solid-principle-head">
+            <div class="solid-letter">{html.escape(p['letter'])}</div>
+            <div>
+              <h3>{html.escape(p['name'])}</h3>
+              <span>{html.escape(p['name_tr'])}</span>
+            </div>
+          </div>
+          <div class="solid-body">
+            <div class="solid-row">
+              <div class="solid-row-label">Ilke tanimi</div>
+              <p>{html.escape(p['definition'])}</p>
+            </div>
+            <div class="solid-row">
+              <div class="solid-row-label">Amaci / cozmeye calistigi problem</div>
+              <p>{html.escape(p['purpose'])}</p>
+              <p style="margin-top:.35rem"><em>Problem:</em> {html.escape(p['problem'])}</p>
+            </div>
+            <div class="solid-code-grid">
+              <div class="solid-code-box bad">
+                <div class="solid-code-box-head">Ilkeye aykiri (kotu) kod</div>
+                <pre><code>{html.escape(p['bad_code'])}</code></pre>
+                <div class="solid-why"><strong>Neden kotu?</strong> {html.escape(p['bad_why'])}</div>
+              </div>
+              <div class="solid-code-box good">
+                <div class="solid-code-box-head">Ilkeye uygun (iyi) kod</div>
+                <pre><code>{html.escape(p['good_code'])}</code></pre>
+                <div class="solid-why"><strong>Neden iyi?</strong> {html.escape(p['good_why'])}</div>
+              </div>
+            </div>
+            {build_solid_class_example_html(p['letter'])}
+            {f'<a class="solid-extra-link" href="#lsp-solo-leveling">Detayli Solo Leveling LSP ornegi (Python) →</a>' if p.get("extra_section") and not CLASS_EXAMPLES_BY_LETTER.get(p['letter']) else ""}
+          </div>
+        </article>
+        """)
+    return f"""
+        <div id="solid-ilkeleri">
+        <div class="solid-header">
+          <h3>{html.escape(STUDENT_HEADER['title'])}</h3>
+          <p style="font-size:.85rem;color:var(--text-soft);margin-bottom:.75rem">{html.escape(STUDENT_HEADER['subtitle'])}</p>
+          {fields}
+        </div>
+        <div class="callout callout-exam">
+          Her SOLID ilkesi: <strong>ilke adi, tanimi, amaci, kotu/iyi kod</strong> ve aciklama.
+          Altinda sinif arkadaslarinin Python ornekleri (Makyaj Studyosu, Leon, Solo Leveling vb.) yer alir.
+        </div>
+        {"".join(principles)}
+        </div>
+        """
+
+
+def build_solid_exercises_inner() -> str:
     cards = []
     for ex in WEEK9_EXERCISES:
         gist = ""
@@ -1198,7 +1323,7 @@ def build_week9_exercises_section() -> str:
             <div class="solid-letter">{html.escape(ex['principle'])}</div>
             <div>
               <h3>{html.escape(ex['title'])}</h3>
-              <span>SOLID — Hafta 9 Alistirma</span>
+              <span>PDF 9. Hafta Alistirma — Cozumlu</span>
             </div>
           </div>
           <div class="solid-body">
@@ -1223,14 +1348,92 @@ def build_week9_exercises_section() -> str:
         </article>
         """)
     return f"""
-    <section class="special-block" id="oop-solid-alistirmalar">
-      <div class="special-head"><h2>Hafta 9 — SOLID Alistirmalari (Cozumlu)</h2></div>
-      <div class="special-body">
+        <div id="oop-solid-alistirmalar">
         <div class="callout callout-exam">
           PDF 9. hafta odevleri: AlanHesaplayici (OCP), Dosya (LSP), Cihaz (ISP), Bildirim (DIP).
-          Asagida kotu/iyi kod ve aciklama var.
         </div>
         {"".join(cards)}
+        </div>
+        """
+
+
+def build_lsp_detail_inner() -> str:
+    rules = "".join(
+        f"""
+        <div class="lsp-rule">
+          <span class="lsp-rule-num">{r['num']}</span>
+          <h4>{html.escape(r['name'])} — {html.escape(r['rule'])}</h4>
+          <p>{html.escape(r['example'])}</p>
+        </div>
+        """
+        for r in LSP_FIVE_RULES
+    )
+    return f"""
+        <div id="lsp-solo-leveling">
+        <div class="lsp-hero">
+          <h3>{html.escape(LSP_INTRO['title'])}</h3>
+          <p><strong>Ne demek?</strong> {html.escape(LSP_INTRO['what'])}</p>
+          <p style="margin-top:.5rem">{html.escape(LSP_INTRO['short'])}</p>
+        </div>
+        <div class="callout callout-web">
+          Sinif arkadas calismasindan uyarlandi (Muhammed Hamza Erha). Python kodu.
+        </div>
+        <div class="solid-code-grid">
+          <div class="solid-code-box bad">
+            <div class="solid-code-box-head">Kotu kod — LSP ihlali (YanlisPlayer)</div>
+            <pre><code>{html.escape(BAD_CODE)}</code></pre>
+            <div class="solid-why"><strong>Neden kotu?</strong> {html.escape(BAD_WHY)}</div>
+          </div>
+          <div class="solid-code-box good">
+            <div class="solid-code-box-head">Iyi kod — LSP dogru (Hunter / SungJinwoo)</div>
+            <pre><code>{html.escape(GOOD_CODE)}</code></pre>
+            <div class="solid-why"><strong>Neden iyi?</strong> {html.escape(GOOD_WHY)}</div>
+          </div>
+        </div>
+        <h3 style="margin:1.25rem 0 .65rem;font-size:.95rem">LSP'nin 5 Kurali</h3>
+        <div class="lsp-rules">{rules}</div>
+        <p class="lsp-credit">{html.escape(CREDIT)}</p>
+        </div>
+        """
+
+
+def build_oop_week10_block() -> str:
+    sid = "hafta-10-solid-calisma-odev-cozumleri"
+    meta = OOP_WEEK_META[sid]
+    num, tag, summary, simple = meta["num"], meta["tag"], meta["summary"], meta["simple"]
+    chips = "".join(f'<span class="chip">{html.escape(s)}</span>' for s in simple)
+    items = "".join(f"<li>{html.escape(s)}</li>" for s in simple)
+    panels = f"""
+        <details class="panel" open>
+          <summary>1. SOLID Ilkeleri — Odev / Sinav Formati (S-O-L-I-D)</summary>
+          <div class="panel-inner">{build_solid_principles_inner()}</div>
+        </details>
+        <details class="panel">
+          <summary>2. PDF Alistirmalari — OCP, LSP, ISP, DIP (Cozumlu)</summary>
+          <div class="panel-inner">{build_solid_exercises_inner()}</div>
+        </details>
+        <details class="panel">
+          <summary>3. LSP Solo Leveling Detay Ornegi</summary>
+          <div class="panel-inner">{build_lsp_detail_inner()}</div>
+        </details>
+        """
+    return f"""
+    <section class="week-block oop-week" id="{sid}">
+      <div class="week-head">
+        <div class="week-head-top">
+          <span class="week-badge">Hafta {num}</span>
+          <span class="week-tag">{html.escape(tag)}</span>
+        </div>
+        <h2>Hafta 10 — SOLID Calisma & Odev Cozumleri</h2>
+        <div class="week-summary"><strong>Bu haftada ne var?</strong> {html.escape(summary)}</div>
+        <div class="focus-chips">{chips}</div>
+      </div>
+      <div class="week-body">
+        <div class="simple-box">
+          <h3>Hafta 10 Ozeti</h3>
+          <ul>{items}</ul>
+        </div>
+        {panels}
       </div>
     </section>
     """
@@ -1253,9 +1456,7 @@ def build_oop_course(oop_sections) -> str:
             continue
         if title.lower().startswith("hafta"):
             blocks.append(build_oop_week_block(title, sid, body))
-    blocks.append(build_week9_exercises_section())
-    blocks.append(build_solid_section())
-    blocks.append(build_lsp_detail_section())
+    blocks.append(build_oop_week10_block())
     return "".join(blocks)
 
 
@@ -1336,6 +1537,30 @@ def build_enrich_code_html(code: str) -> str:
     return f'<div class="code-block"><div class="code-label">ornek kod</div><pre><code>{html.escape(code)}</code></pre></div>'
 
 
+def build_ruby_faq_html(topic: dict, compact: bool = False) -> str:
+    faq = topic.get("ruby_faq")
+    if not faq:
+        return ""
+    section = faq.get("section_title", "")
+    section_num = faq.get("section", "")
+    label = "Ruby Resmi SSS (Turkce)"
+    if section:
+        label += f" — Bolum {section_num}: {section}"
+    answer = faq["answer"]
+    if compact and len(answer) > 320:
+        answer = answer[:320].rsplit(" ", 1)[0] + "..."
+    return f"""
+        <div class="ruby-faq-box">
+          <div class="ruby-faq-label">{html.escape(label)}</div>
+          <p class="ruby-faq-q"><strong>S:</strong> {html.escape(faq['question'])}</p>
+          <p class="ruby-faq-a"><strong>C:</strong> {html.escape(answer)}</p>
+          <a class="ruby-faq-link" href="{html.escape(faq['url'])}" target="_blank" rel="noopener">
+            ruby-lang.org resmi FAQ →
+          </a>
+        </div>
+        """
+
+
 def build_inline_enrichment_html(topic: dict, compact: bool = False) -> str:
     code = build_enrich_code_html(topic["code"]) if not compact else ""
     exam = (
@@ -1346,9 +1571,10 @@ def build_inline_enrichment_html(topic: dict, compact: bool = False) -> str:
     if compact:
         return f"""
         <div class="panel-enrich" id="enrich-{html.escape(topic['id'])}">
-          <div class="panel-enrich-label">Internet kaynagi ile aciklama</div>
+          <div class="panel-enrich-label">Internet kaynagi + Ruby resmi SSS (Turkce)</div>
           <p><strong>{html.escape(topic['title'])}</strong> — {html.escape(topic['summary'])}</p>
           <p>{html.escape(topic['explain'][:280])}{'...' if len(topic['explain']) > 280 else ''}</p>
+          {build_ruby_faq_html(topic, compact=True)}
           {build_enrich_code_html(topic['code'])}
           {build_enrich_sources_html(topic['sources'])}
         </div>
@@ -1366,6 +1592,7 @@ def build_enrich_card_html(topic: dict) -> str:
       <div class="enrich-card-body">
         <p>{html.escape(topic['summary'])}</p>
         <p>{html.escape(topic['explain'])}</p>
+        {build_ruby_faq_html(topic)}
         {build_enrich_code_html(topic['code'])}
         {f'<div class="enrich-exam"><strong>Sinav ipucu:</strong> {html.escape(topic["exam_tip"])}</div>' if topic.get("exam_tip") else ""}
         {build_enrich_sources_html(topic['sources'])}
@@ -1384,113 +1611,12 @@ def build_web_enrichment_section() -> str:
       <div class="special-head"><h2>Internet Kaynaklari ile Derinlestirilmis Konular</h2></div>
       <div class="special-body">
         <div class="callout callout-web">
-          PDF slayt basliklari (kapsulleme, migration, Strong Parameters vb.) resmi Ruby/Rails dokumantasyonu
-          ve guvenilir kaynaklardan derlenerek aciklandi. Ornek kodlar sinava hazirlik icin guncellendi.
+          PDF slayt basliklari (kapsulleme, migration, kalitim vb.) resmi Ruby SSS
+          (<a href="https://www.ruby-lang.org/en/documentation/faq/7/" target="_blank" rel="noopener">ruby-lang.org</a>)
+          ve Rails dokumantasyonundan Turkce aciklamalarla desteklendi.
         </div>
         <div class="enrich-toolbar">{"".join(tabs)}</div>
         <div class="enrich-grid">{cards}</div>
-      </div>
-    </section>
-    """
-
-
-def build_solid_section() -> str:
-    fields = "".join(f'<div class="field">{html.escape(f)}</div>' for f in STUDENT_HEADER["fields"])
-    principles = []
-    for p in SOLID:
-        principles.append(f"""
-        <article class="solid-principle" id="solid-{p['letter'].lower()}">
-          <div class="solid-principle-head">
-            <div class="solid-letter">{html.escape(p['letter'])}</div>
-            <div>
-              <h3>{html.escape(p['name'])}</h3>
-              <span>{html.escape(p['name_tr'])}</span>
-            </div>
-          </div>
-          <div class="solid-body">
-            <div class="solid-row">
-              <div class="solid-row-label">Ilke tanimi</div>
-              <p>{html.escape(p['definition'])}</p>
-            </div>
-            <div class="solid-row">
-              <div class="solid-row-label">Amaci / cozmeye calistigi problem</div>
-              <p>{html.escape(p['purpose'])}</p>
-              <p style="margin-top:.35rem"><em>Problem:</em> {html.escape(p['problem'])}</p>
-            </div>
-            <div class="solid-code-grid">
-              <div class="solid-code-box bad">
-                <div class="solid-code-box-head">Ilkeye aykiri (kotu) kod</div>
-                <pre><code>{html.escape(p['bad_code'])}</code></pre>
-                <div class="solid-why"><strong>Neden kotu?</strong> {html.escape(p['bad_why'])}</div>
-              </div>
-              <div class="solid-code-box good">
-                <div class="solid-code-box-head">Ilkeye uygun (iyi) kod</div>
-                <pre><code>{html.escape(p['good_code'])}</code></pre>
-                <div class="solid-why"><strong>Neden iyi?</strong> {html.escape(p['good_why'])}</div>
-              </div>
-            </div>
-            {f'<a class="solid-extra-link" href="#{p["extra_section"]}">Detayli Solo Leveling LSP ornegi (Python) →</a>' if p.get("extra_section") else ""}
-          </div>
-        </article>
-        """)
-    return f"""
-    <section class="special-block" id="solid-ilkeleri">
-      <div class="special-head"><h2>SOLID Ilkeleri — Odev / Sinav Formati</h2></div>
-      <div class="special-body">
-        <div class="solid-header">
-          <h3>{html.escape(STUDENT_HEADER['title'])}</h3>
-          <p style="font-size:.85rem;color:var(--text-soft);margin-bottom:.75rem">{html.escape(STUDENT_HEADER['subtitle'])}</p>
-          {fields}
-        </div>
-        <div class="callout callout-exam">
-          Asagida her SOLID ilkesi icin: <strong>ilke adi, tanimi, amaci, kotu/iyi Ruby kod ornegi</strong> ve aciklamalari yer alir.
-          Yazdir butonu ile PDF olarak da alabilirsin.
-        </div>
-        {"".join(principles)}
-      </div>
-    </section>
-    """
-
-
-def build_lsp_detail_section() -> str:
-    rules = "".join(
-        f"""
-        <div class="lsp-rule">
-          <span class="lsp-rule-num">{r['num']}</span>
-          <h4>{html.escape(r['name'])} — {html.escape(r['rule'])}</h4>
-          <p>{html.escape(r['example'])}</p>
-        </div>
-        """
-        for r in LSP_FIVE_RULES
-    )
-    return f"""
-    <section class="special-block" id="lsp-solo-leveling">
-      <div class="special-head"><h2>LSP Detay — Solo Leveling Ornegi (Sinav Formati)</h2></div>
-      <div class="special-body">
-        <div class="lsp-hero">
-          <h3>{html.escape(LSP_INTRO['title'])}</h3>
-          <p><strong>Ne demek?</strong> {html.escape(LSP_INTRO['what'])}</p>
-          <p style="margin-top:.5rem">{html.escape(LSP_INTRO['short'])}</p>
-        </div>
-        <div class="callout callout-web">
-          Asagidaki ornek sinif arkadas calismasindan (Muhammed Hamza Erha) uyarlanmistir.
-          Python kodu; __init__ yazim hatalari duzeltildi. Odev formatina uygun kotu/iyi kod + 5 kural.
-        </div>
-        <div class="solid-code-grid">
-          <div class="solid-code-box bad">
-            <div class="solid-code-box-head">Kotu kod — LSP ihlali (YanlisPlayer)</div>
-            <pre><code>{html.escape(BAD_CODE)}</code></pre>
-            <div class="solid-why"><strong>Neden kotu?</strong> {html.escape(BAD_WHY)}</div>
-          </div>
-          <div class="solid-code-box good">
-            <div class="solid-code-box-head">Iyi kod — LSP dogru (Hunter / SungJinwoo)</div>
-            <pre><code>{html.escape(GOOD_CODE)}</code></pre>
-            <div class="solid-why"><strong>Neden iyi?</strong> {html.escape(GOOD_WHY)}</div>
-          </div>
-        </div>
-        <h3 style="margin:1.25rem 0 .65rem;font-size:.95rem">LSP'nin 5 Kurali</h3>
-        <div class="lsp-rules">{rules}</div>
-        <p class="lsp-credit">{html.escape(CREDIT)}</p>
       </div>
     </section>
     """
@@ -1600,9 +1726,6 @@ def build_toc(sections, oop_sections=None) -> str:
         ("#oop-course", "O", "OOP Giris"),
         ("#oop-konu-indeksi", "A", "Konu Indeksi"),
         ("#oop-ezber", "!", "OOP Ezber"),
-        ("#oop-solid-alistirmalar", "9", "Hafta 9 Odev"),
-        ("#solid-ilkeleri", "S", "SOLID Ilkeleri"),
-        ("#lsp-solo-leveling", "L", "LSP Ornegi"),
     ]
     for href, num, label in oop_links:
         lines.append(
@@ -1620,6 +1743,12 @@ def build_toc(sections, oop_sections=None) -> str:
             short = title.split("—")[-1].strip() if "—" in title else title
             lines.append(
                 f'<a class="nav-oop-link" href="#{sid}"><span class="w-num">{num}</span>{html.escape(short)}</a>'
+            )
+        h10 = OOP_WEEK_META["hafta-10-solid-calisma-odev-cozumleri"]
+        if not any(sid == "hafta-10-solid-calisma-odev-cozumleri" for _, sid, _ in oop_sections):
+            lines.append(
+                f'<a class="nav-oop-link" href="#hafta-10-solid-calisma-odev-cozumleri">'
+                f'<span class="w-num">{h10["num"]}</span>SOLID Calisma & Odev</a>'
             )
     return "\n".join(lines)
 

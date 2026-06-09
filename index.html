@@ -286,6 +286,39 @@
       border: 1px solid var(--blue-border); overflow-x: auto; font-size: .76rem;
     }
 
+    .ruby-faq-box {
+      margin: .65rem 0 0; padding: .75rem .9rem; border-radius: 8px;
+      border: 1px solid #fca5a5; background: linear-gradient(180deg, #fff5f5 0%, #fff 100%);
+    }
+    .ruby-faq-label {
+      font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em;
+      color: #991b1b; margin-bottom: .45rem;
+    }
+    .ruby-faq-q { font-size: .86rem; color: #7f1d1d; margin: .25rem 0 .35rem; }
+    .ruby-faq-a { font-size: .84rem; color: #450a0a; line-height: 1.55; margin: 0 0 .5rem; }
+    .ruby-faq-link {
+      font-size: .78rem; font-weight: 600; color: #b91c1c; text-decoration: none;
+    }
+    .ruby-faq-link:hover { text-decoration: underline; }
+    .panel-enrich .ruby-faq-box { margin-top: .55rem; }
+
+    .solid-extra-link {
+      display: inline-block; margin-top: .65rem; font-size: .82rem; font-weight: 600;
+      color: var(--oop-accent, #7c3aed); text-decoration: none;
+    }
+    .solid-extra-link:hover { text-decoration: underline; }
+    .solid-class-example {
+      margin-top: 1rem; padding: .85rem 1rem; border-radius: 8px;
+      border: 1px dashed #c4b5fd; background: #faf5ff;
+    }
+    .solid-class-example .solid-row-label { color: #6d28d9; }
+    .solid-example-meta {
+      font-size: .78rem; color: #6b7280; margin: .2rem 0 .65rem;
+    }
+    .solid-example-meta code {
+      font-size: .74rem; background: #ede9fe; padding: .1rem .35rem; border-radius: 4px;
+    }
+
     .solid-header {
       border: 2px dashed var(--line); border-radius: var(--radius); padding: 1.25rem 1.5rem;
       margin-bottom: 1.25rem; background: #fafbfc;
@@ -564,9 +597,6 @@
 <a class="nav-oop-link" href="#oop-course"><span class="w-num">O</span>OOP Giris</a>
 <a class="nav-oop-link" href="#oop-konu-indeksi"><span class="w-num">A</span>Konu Indeksi</a>
 <a class="nav-oop-link" href="#oop-ezber"><span class="w-num">!</span>OOP Ezber</a>
-<a class="nav-oop-link" href="#oop-solid-alistirmalar"><span class="w-num">9</span>Hafta 9 Odev</a>
-<a class="nav-oop-link" href="#solid-ilkeleri"><span class="w-num">S</span>SOLID Ilkeleri</a>
-<a class="nav-oop-link" href="#lsp-solo-leveling"><span class="w-num">L</span>LSP Ornegi</a>
 <div class="nav-label nav-oop">OOP Haftalar</div>
 <a class="nav-oop-link" href="#hafta-1-oop-giris-prosedurel-programlama"><span class="w-num">1</span>OOP Giriş &amp; Prosedürel Programlama</a>
 <a class="nav-oop-link" href="#hafta-2-siniflar-nesneler"><span class="w-num">2</span>Sınıflar &amp; Nesneler</a>
@@ -576,7 +606,8 @@
 <a class="nav-oop-link" href="#hafta-6-polimorfizm-soyut-sinif"><span class="w-num">6</span>Polimorfizm &amp; Soyut Sınıf</a>
 <a class="nav-oop-link" href="#hafta-7-tasarim-desenleri-giris"><span class="w-num">7</span>Tasarım Desenleri Giriş</a>
 <a class="nav-oop-link" href="#hafta-8-tasarim-desenleri-devam"><span class="w-num">8</span>Tasarım Desenleri Devam</a>
-<a class="nav-oop-link" href="#hafta-9-solid-prensipleri"><span class="w-num">9</span>SOLID Prensipleri</a></nav>
+<a class="nav-oop-link" href="#hafta-9-solid-prensipleri"><span class="w-num">9</span>SOLID Prensipleri</a>
+<a class="nav-oop-link" href="#hafta-10-solid-calisma-odev-cozumleri"><span class="w-num">10</span>SOLID Calisma & Odev</a></nav>
     </aside>
     <main class="main">
       
@@ -589,7 +620,7 @@
       <a class="course-card oop" href="#oop-course">
         <div class="course-card-kicker">Ders 2</div>
         <h3>Nesne Yonelimli Programlama</h3>
-        <p>Hafta 1-9 PDF arsivi, SOLID alistirmalari (OCP, LSP, ISP, DIP) cozumlu.</p>
+        <p>Hafta 1-9 PDF arsivi + Hafta 10 SOLID calisma ve odev cozumleri.</p>
       </a>
     </section>
     
@@ -1202,8 +1233,9 @@
       <div class="special-head"><h2>Internet Kaynaklari ile Derinlestirilmis Konular</h2></div>
       <div class="special-body">
         <div class="callout callout-web">
-          PDF slayt basliklari (kapsulleme, migration, Strong Parameters vb.) resmi Ruby/Rails dokumantasyonu
-          ve guvenilir kaynaklardan derlenerek aciklandi. Ornek kodlar sinava hazirlik icin guncellendi.
+          PDF slayt basliklari (kapsulleme, migration, kalitim vb.) resmi Ruby SSS
+          (<a href="https://www.ruby-lang.org/en/documentation/faq/7/" target="_blank" rel="noopener">ruby-lang.org</a>)
+          ve Rails dokumantasyonundan Turkce aciklamalarla desteklendi.
         </div>
         <div class="enrich-toolbar"><button type="button" class="enrich-tab active" data-week="all">Tumu</button><button type="button" class="enrich-tab" data-week="2">Hafta 2</button><button type="button" class="enrich-tab" data-week="3">Hafta 3</button><button type="button" class="enrich-tab" data-week="4">Hafta 4</button><button type="button" class="enrich-tab" data-week="5">Hafta 5</button><button type="button" class="enrich-tab" data-week="6">Hafta 6</button><button type="button" class="enrich-tab" data-week="7">Hafta 7</button><button type="button" class="enrich-tab" data-week="8">Hafta 8</button><button type="button" class="enrich-tab" data-week="9">Hafta 9</button><button type="button" class="enrich-tab" data-week="10">Hafta 10</button></div>
         <div class="enrich-grid">
@@ -1215,6 +1247,16 @@
       <div class="enrich-card-body">
         <p>Instance variable (@) disaridan dogrudan okunamaz; getter/setter ile kontrollu erisim saglanir.</p>
         <p>Ruby&#x27;de @ ile baslayan instance variable&#x27;lar nesnenin icindedir ve disaridan dogrudan erisilemez — bu iyi kapsullemeyi destekler. attr_reader sadece okuma, attr_writer sadece yazma, attr_accessor ikisini birden otomatik uretir. Resmi Ruby FAQ: instance variable&#x27;lara erisim icin bu accessor&#x27;lar tercih edilir.</p>
+        
+        <div class="ruby-faq-box">
+          <div class="ruby-faq-label">Ruby Resmi SSS (Turkce) — Bolum 7: Metotlar</div>
+          <p class="ruby-faq-q"><strong>S:</strong> Nesnenin instance variable&#x27;larina erisebilir miyim?</p>
+          <p class="ruby-faq-a"><strong>C:</strong> @ ile baslayan instance variable&#x27;lar nesnenin icindedir ve disaridan dogrudan okunamaz — bu iyi kapsullemeyi destekler. Ruby, bu degiskenlere kontrollu erisim icin attr_reader (sadece okuma), attr_writer (sadece yazma) ve attr_accessor (ikisi birden) tanimlamayi kolaylastirir. Kendi getter/setter metotlarinizi da yazabilirsiniz (ornegin dogrulama icin). attr_reader :name ile p.name cagrisi bir metot cagrisidir; @name dogrudan disaridan erisilemez.</p>
+          <a class="ruby-faq-link" href="https://www.ruby-lang.org/en/documentation/faq/7/" target="_blank" rel="noopener">
+            ruby-lang.org resmi FAQ →
+          </a>
+        </div>
+        
         <div class="code-block"><div class="code-label">ornek kod</div><pre><code>class Person
   attr_reader :name
   attr_accessor :age
@@ -1241,6 +1283,16 @@ p.age = 21  # =&gt; 21     (yazma)</code></pre></div>
       <div class="enrich-card-body">
         <p>Alt sinif ust siniftan ozellikleri alir; super ile ust sinif metodu cagrilir.</p>
         <p>Ruby&#x27;de class Child &lt; Parent ile kalitim kurulur. Alt sinif ust sinifin metotlarini kullanabilir veya override edebilir. super kelimesi ust siniftaki ayni metodu cagirir. Tek kalitim vardir (coklu kalitim yok); modul ile mixin kullanilir.</p>
+        
+        <div class="ruby-faq-box">
+          <div class="ruby-faq-label">Ruby Resmi SSS (Turkce) — Bolum 7: Metotlar</div>
+          <p class="ruby-faq-q"><strong>S:</strong> Ruby hangi metodu cagirmaya karar verir? (Kalitim / miras)</p>
+          <p class="ruby-faq-a"><strong>C:</strong> Ruby tum mesajlari metotlara dinamik olarak baglar. Once alicinin singleton metotlarina, sonra kendi sinifindaki metotlara, en son ust siniflara ve karistirilan (include) modullere bakar. ClassName.ancestors bu arama sirasini gosterir. Ust siniftaki ayni isimli metodu cagirmak icin super kullanilir. Modul eklemek icin include arama zincirinin sonuna ekler; ust siniftaki metodu ezmek icin prepend onune ekler.</p>
+          <a class="ruby-faq-link" href="https://www.ruby-lang.org/en/documentation/faq/7/" target="_blank" rel="noopener">
+            ruby-lang.org resmi FAQ →
+          </a>
+        </div>
+        
         <div class="code-block"><div class="code-label">ornek kod</div><pre><code>class Animal
   def speak
     &quot;Ses cikarir&quot;
@@ -1255,7 +1307,7 @@ end
 
 Dog.new.speak  # =&gt; &quot;Ses cikarir — hav hav!</code></pre></div>
         <div class="enrich-exam"><strong>Sinav ipucu:</strong> class X &lt; Y = X, Y&#x27;den turetilir. super = ust metod. Polimorfizm = ayni metod farkli davranis.</div>
-        <div class="enrich-sources"><a href="https://www.ruby-lang.org/en/documentation/quickstart/3/" target="_blank" rel="noopener">Ruby Classes Tutorial</a><a href="https://rubylearning.com/satishtalim/ruby_inheritance.html" target="_blank" rel="noopener">Ruby Inheritance (Learn Ruby)</a></div>
+        <div class="enrich-sources"><a href="https://www.ruby-lang.org/en/documentation/faq/7/" target="_blank" rel="noopener">Ruby Resmi SSS — Bolum 7 (Metotlar)</a><a href="https://www.ruby-lang.org/en/documentation/quickstart/3/" target="_blank" rel="noopener">Ruby Classes Tutorial</a><a href="https://rubylearning.com/satishtalim/ruby_inheritance.html" target="_blank" rel="noopener">Ruby Inheritance (Learn Ruby)</a></div>
       </div>
     </div>
     
@@ -1267,6 +1319,16 @@ Dog.new.speak  # =&gt; &quot;Ses cikarir — hav hav!</code></pre></div>
       <div class="enrich-card-body">
         <p>Ayni metod adi farkli siniflarda farkli davranis gosterir.</p>
         <p>Polimorfizm, ayni arayuzun (metod adinin) alt siniflarda farkli implementasyon sunmasidir. Ornegin speak metodu Animal&#x27;da genel, Dog&#x27;da &#x27;hav&#x27;, Cat&#x27;te &#x27;miyav&#x27; doner. Ruby&#x27;de duck typing sayesinde &#x27;ne olduguna degil, ne yapabildigine bakilir&#x27;.</p>
+        
+        <div class="ruby-faq-box">
+          <div class="ruby-faq-label">Ruby Resmi SSS (Turkce) — Bolum 2: Karsilastirmalar</div>
+          <p class="ruby-faq-q"><strong>S:</strong> Ruby saf nesne yonelimli bir dil mi?</p>
+          <p class="ruby-faq-a"><strong>C:</strong> Ruby, prosedurel gibi gorunen ama aslinda tamamen nesne yonelimli bir dildir. Fonksiyon yoktur, yalnizca metot cagrilari vardir. class disinda yazilan def aslında Object sinifina ait bir metot tanimlar. Her sey nesnedir; ayni metot adi farkli siniflarda farkli davranis gosterdiginde (override) polimorfizm ortaya cikar.</p>
+          <a class="ruby-faq-link" href="https://www.ruby-lang.org/en/documentation/faq/2/" target="_blank" rel="noopener">
+            ruby-lang.org resmi FAQ →
+          </a>
+        </div>
+        
         <div class="code-block"><div class="code-label">ornek kod</div><pre><code>class Cat &lt; Animal
   def speak
     &quot;Miyav!&quot;
@@ -1275,7 +1337,7 @@ end
 
 [Dog.new, Cat.new].each { |a| puts a.speak }</code></pre></div>
         <div class="enrich-exam"><strong>Sinav ipucu:</strong> Override = alt sinif ust metodu yeniden yazar. Polimorfizm sinavda genelde speak ornegiyle gelir.</div>
-        <div class="enrich-sources"><a href="https://www.ruby-lang.org/en/documentation/" target="_blank" rel="noopener">Ruby OOP — Polymorphism</a></div>
+        <div class="enrich-sources"><a href="https://www.ruby-lang.org/en/documentation/faq/2/" target="_blank" rel="noopener">Ruby Resmi SSS — Bolum 2 (Karsilastirmalar)</a><a href="https://www.ruby-lang.org/en/documentation/" target="_blank" rel="noopener">Ruby OOP — Polymorphism</a></div>
       </div>
     </div>
     
@@ -1287,6 +1349,16 @@ end
       <div class="enrich-card-body">
         <p>Model=veri, View=arayuz, Controller=istek isleme. Rails&#x27;in temel yapisi.</p>
         <p>Rails MVC mimarisini kullanir. Tarayici istegi routes.rb uzerinden Controller&#x27;a gelir. Controller Model ile veritabanina erisir, sonucu View&#x27;a (@degisken) aktarir. View ERB sablonu HTML uretir. Resmi Rails rehberi bu akisi &#x27;Getting Started&#x27; bolumunde anlatir.</p>
+        
+        <div class="ruby-faq-box">
+          <div class="ruby-faq-label">Ruby Resmi SSS (Turkce) — Bolum 1: Genel Sorular</div>
+          <p class="ruby-faq-q"><strong>S:</strong> Ruby nedir ve hangi ozelliklere sahiptir?</p>
+          <p class="ruby-faq-a"><strong>C:</strong> Ruby, Yukihiro Matsumoto (Matz) tarafindan yazilmis guclu bir nesne yonelimli dildir. Siniflar, metotlar, nesneler, mixin&#x27;ler, singleton metotlar, istisna yakalama, iterator&#x27;lar ve closure&#x27;lar icerir. Rails MVC yapisi Ruby&#x27;nin bu OOP temeli uzerine kurulur: Controller ve Model siniflari, View ise ERB ile Ruby kodu calistirir.</p>
+          <a class="ruby-faq-link" href="https://www.ruby-lang.org/en/documentation/faq/1/" target="_blank" rel="noopener">
+            ruby-lang.org resmi FAQ →
+          </a>
+        </div>
+        
         <div class="code-block"><div class="code-label">ornek kod</div><pre><code># config/routes.rb
 resources :posts
 
@@ -1296,7 +1368,7 @@ def show
 end
 # app/views/posts/show.html.erb  → View render</code></pre></div>
         <div class="enrich-exam"><strong>Sinav ipucu:</strong> Akis: Browser → Routes → Controller → Model → View. @post instance variable view&#x27;a gider.</div>
-        <div class="enrich-sources"><a href="https://guides.rubyonrails.org/getting_started.html#mvc-architecture" target="_blank" rel="noopener">Rails Guides — MVC</a><a href="https://guides.rubyonrails.org/routing.html" target="_blank" rel="noopener">Rails Routing</a></div>
+        <div class="enrich-sources"><a href="https://www.ruby-lang.org/en/documentation/faq/1/" target="_blank" rel="noopener">Ruby Resmi SSS — Bolum 1 (Genel Sorular)</a><a href="https://guides.rubyonrails.org/getting_started.html#mvc-architecture" target="_blank" rel="noopener">Rails Guides — MVC</a><a href="https://guides.rubyonrails.org/routing.html" target="_blank" rel="noopener">Rails Routing</a></div>
       </div>
     </div>
     
@@ -1308,13 +1380,23 @@ end
       <div class="enrich-card-body">
         <p>Symbol tekil ve degismez; String her seferinde yeni nesne. Hash key&#x27;lerde Symbol tercih edilir.</p>
         <p>Symbol (:name) bellekte tektir, ayni sembol tekrar kullanildiginda ayni nesneye isaret eder. String her literal yeni nesne olusturur. Rails&#x27;de status: :published gibi enum ve hash key&#x27;lerde Symbol yaygindir. object_id ile fark gorulebilir.</p>
+        
+        <div class="ruby-faq-box">
+          <div class="ruby-faq-label">Ruby Resmi SSS (Turkce) — Bolum 6: Sozdizimi</div>
+          <p class="ruby-faq-q"><strong>S:</strong> :name ne anlama gelir?</p>
+          <p class="ruby-faq-a"><strong>C:</strong> Isimden once gelen iki nokta (:name) bir Symbol nesnesi uretir. Program calisirken ayni isim icin hep ayni Symbol nesnesi kullanilir. Symbol&#x27;ler metot, degisken ve benzeri tanimlayicilari temsil eder. Hash anahtarlari icin sik kullanilir cunku String her seferinde yeni nesne olustururken Symbol tektir — bellek tasarrufu saglar. Rails enum ve params key&#x27;lerinde :draft gibi symbol&#x27;ler bu yuzden tercih edilir.</p>
+          <a class="ruby-faq-link" href="https://www.ruby-lang.org/en/documentation/faq/6/" target="_blank" rel="noopener">
+            ruby-lang.org resmi FAQ →
+          </a>
+        </div>
+        
         <div class="code-block"><div class="code-label">ornek kod</div><pre><code>:a.object_id == :a.object_id  # =&gt; true
 &quot;a&quot;.object_id == &quot;a&quot;.object_id  # =&gt; false (genelde)
 
 user = { name: &quot;Ali&quot;, role: :admin }
 user[:name]  # =&gt; &quot;Ali&quot;</code></pre></div>
         <div class="enrich-exam"><strong>Sinav ipucu:</strong> Symbol tekil, String cogaltilir. Rails enum ve params key&#x27;lerinde :draft gibi symbol kullanilir.</div>
-        <div class="enrich-sources"><a href="https://docs.ruby-lang.org/en/master/Symbol.html" target="_blank" rel="noopener">Ruby Symbol Documentation</a></div>
+        <div class="enrich-sources"><a href="https://www.ruby-lang.org/en/documentation/faq/6/" target="_blank" rel="noopener">Ruby Resmi SSS — Bolum 6 (Sozdizimi)</a><a href="https://docs.ruby-lang.org/en/master/Symbol.html" target="_blank" rel="noopener">Ruby Symbol Documentation</a></div>
       </div>
     </div>
     
@@ -1326,6 +1408,16 @@ user[:name]  # =&gt; &quot;Ali&quot;</code></pre></div>
       <div class="enrich-card-body">
         <p>Veritabani tablosu = Ruby sinifi. SQL yazmadan CRUD yapilir.</p>
         <p>ORM, iliskisel veritabani tablolarini nesne yonelimli siniflara esler. posts tablosu Post modeline karsilik gelir. Active Record Rails&#x27;in ORM katmanidir. Migration ile sema, model ile veri islemleri yonetilir.</p>
+        
+        <div class="ruby-faq-box">
+          <div class="ruby-faq-label">Ruby Resmi SSS (Turkce) — Bolum 1: Genel Sorular</div>
+          <p class="ruby-faq-q"><strong>S:</strong> Ruby&#x27;de her sey nesne midir?</p>
+          <p class="ruby-faq-a"><strong>C:</strong> Ruby tam entegre bir nesne yonelimli dildir. Active Record ORM&#x27;de posts tablosu Post sinifine karsilik gelir; Post.create ve Post.all gibi cagrilar aslinda Post sinifina gonderilen mesajlardir (metot cagrisi). Veritabani satiri Ruby nesnesi olarak temsil edilir — SQL yerine nesne uzerinden islem yapilir.</p>
+          <a class="ruby-faq-link" href="https://www.ruby-lang.org/en/documentation/faq/1/" target="_blank" rel="noopener">
+            ruby-lang.org resmi FAQ →
+          </a>
+        </div>
+        
         <div class="code-block"><div class="code-label">ornek kod</div><pre><code># db/migrate/xxx_create_posts.rb → posts tablosu
 # app/models/post.rb
 class Post &lt; ApplicationRecord
@@ -1334,7 +1426,7 @@ end
 Post.create(title: &quot;Merhaba&quot;)
 Post.all</code></pre></div>
         <div class="enrich-exam"><strong>Sinav ipucu:</strong> ORM = tablo ↔ sinif. Active Record = Rails ORM. SQL yazmadan Post.create, Post.all kullanilir.</div>
-        <div class="enrich-sources"><a href="https://guides.rubyonrails.org/active_record_basics.html" target="_blank" rel="noopener">Rails Active Record Basics</a></div>
+        <div class="enrich-sources"><a href="https://www.ruby-lang.org/en/documentation/faq/1/" target="_blank" rel="noopener">Ruby Resmi SSS — Bolum 1 (Genel Sorular)</a><a href="https://guides.rubyonrails.org/active_record_basics.html" target="_blank" rel="noopener">Rails Active Record Basics</a></div>
       </div>
     </div>
     
@@ -1346,6 +1438,16 @@ Post.all</code></pre></div>
       <div class="enrich-card-body">
         <p>Veritabani semasini versiyonlu Ruby dosyalariyla degistirir.</p>
         <p>Migration dosyalari db/migrate/ altindadir. up/down veya change metodu ile tablo olusturma, kolon ekleme yapilir. rails db:migrate bekleyen migrationlari uygular. db:rollback son migrationi geri alir. schema.rb guncel semayi tutar.</p>
+        
+        <div class="ruby-faq-box">
+          <div class="ruby-faq-label">Ruby Resmi SSS (Turkce) — Bolum 7: Metotlar</div>
+          <p class="ruby-faq-q"><strong>S:</strong> Ruby&#x27;de sinif tanimi ve metotlar nasil calisir?</p>
+          <p class="ruby-faq-a"><strong>C:</strong> Migration dosyalari Ruby sinifidir: class AddStatusToPosts &lt; ActiveRecord::Migration kalitim kullanir. change, up, down metotlari Ruby metotlaridir. Rails db:migrate komutu bu siniflari yukler ve change metodunu cagirir. Ruby FAQ&#x27;ye gore metot secimi kalitim zincirinde (ancestors) yapilir; Migration sinifi ust siniftan add_column gibi metotlari miras alir.</p>
+          <a class="ruby-faq-link" href="https://www.ruby-lang.org/en/documentation/faq/7/" target="_blank" rel="noopener">
+            ruby-lang.org resmi FAQ →
+          </a>
+        </div>
+        
         <div class="code-block"><div class="code-label">ornek kod</div><pre><code># rails g migration AddStatusToPosts status:integer
 class AddStatusToPosts &lt; ActiveRecord::Migration[7.0]
   def change
@@ -1355,7 +1457,7 @@ end
 
 # Terminal: rails db:migrate</code></pre></div>
         <div class="enrich-exam"><strong>Sinav ipucu:</strong> db:migrate uygula, db:rollback geri al, db:reset sil+yeniden kur+seed. Migration dosyasi db/migrate/.</div>
-        <div class="enrich-sources"><a href="https://guides.rubyonrails.org/active_record_migrations.html" target="_blank" rel="noopener">Rails Migration Guide</a><a href="https://api.rubyonrails.org/classes/ActiveRecord/Migration.html" target="_blank" rel="noopener">Rails db:migrate API</a></div>
+        <div class="enrich-sources"><a href="https://www.ruby-lang.org/en/documentation/faq/7/" target="_blank" rel="noopener">Ruby Resmi SSS — Bolum 7 (Metotlar)</a><a href="https://guides.rubyonrails.org/active_record_migrations.html" target="_blank" rel="noopener">Rails Migration Guide</a><a href="https://api.rubyonrails.org/classes/ActiveRecord/Migration.html" target="_blank" rel="noopener">Rails db:migrate API</a></div>
       </div>
     </div>
     
@@ -1367,12 +1469,22 @@ end
       <div class="enrich-card-body">
         <p>find id ile arar (hata), find_by kosul (nil), where filtre (liste/Relation).</p>
         <p>Post.find(1) primary key ile arar; kayit yoksa ActiveRecord::RecordNotFound hatasi. Post.find_by(title: &#x27;x&#x27;) ilk esleseni doner, yoksa nil. Post.where(status: 1) ActiveRecord::Relation doner (lazy, zincirlenebilir).</p>
+        
+        <div class="ruby-faq-box">
+          <div class="ruby-faq-label">Ruby Resmi SSS (Turkce) — Bolum 7: Metotlar</div>
+          <p class="ruby-faq-q"><strong>S:</strong> Ruby hangi metodu cagirir?</p>
+          <p class="ruby-faq-a"><strong>C:</strong> Post.find(1), Post.find_by(title: &#x27;x&#x27;) ve Post.where(status: 1) cagrilarinin hepsi Ruby&#x27;nin dinamik metot baglama kurallarina tabidir. find bulunamazsa exception firlatir; find_by nil doner — bunlar Active Record&#x27;un metot tanimlaridir. where ise Relation nesnesi dondurur; sonuc uzerinde order, limit gibi metotlar zincirlenebilir (her biri yeni mesaj / metot cagrisi).</p>
+          <a class="ruby-faq-link" href="https://www.ruby-lang.org/en/documentation/faq/7/" target="_blank" rel="noopener">
+            ruby-lang.org resmi FAQ →
+          </a>
+        </div>
+        
         <div class="code-block"><div class="code-label">ornek kod</div><pre><code>Post.find(1)                    # hata verebilir
 Post.find_by(title: &quot;Rails&quot;)    # nil veya kayit
 Post.where(status: :published)  # Relation
 Post.where(status: 1).order(created_at: :desc).limit(5)</code></pre></div>
         <div class="enrich-exam"><strong>Sinav ipucu:</strong> find → exception, find_by → nil, where → koleksiyon. where sonucu uzerinde order/limit zincirlenir.</div>
-        <div class="enrich-sources"><a href="https://guides.rubyonrails.org/active_record_querying.html" target="_blank" rel="noopener">Active Record Query Interface</a></div>
+        <div class="enrich-sources"><a href="https://www.ruby-lang.org/en/documentation/faq/7/" target="_blank" rel="noopener">Ruby Resmi SSS — Bolum 7 (Metotlar)</a><a href="https://guides.rubyonrails.org/active_record_querying.html" target="_blank" rel="noopener">Active Record Query Interface</a></div>
       </div>
     </div>
     
@@ -1384,6 +1496,16 @@ Post.where(status: 1).order(created_at: :desc).limit(5)</code></pre></div>
       <div class="enrich-card-body">
         <p>Integer kolona anlamli isim verir; DB&#x27;de sayi, kodda symbol.</p>
         <p>enum status: { draft: 0, published: 1 } ile status kolonuna isimler baglanir. post.draft? ve post.published! gibi yardimci metotlar otomatik olusur. Veritabaninda integer saklanir, Ruby tarafinda okunabilir.</p>
+        
+        <div class="ruby-faq-box">
+          <div class="ruby-faq-label">Ruby Resmi SSS (Turkce) — Bolum 6: Sozdizimi</div>
+          <p class="ruby-faq-q"><strong>S:</strong> Symbol hash anahtari olarak nasil kullanilir?</p>
+          <p class="ruby-faq-a"><strong>C:</strong> Ruby FAQ: Symbol&#x27;ler hash anahtari icin idealdir — { name: &#x27;Jane&#x27;, age: 24 } sozdizimi symbol key kullanir. Rails enum status: { draft: 0, published: 1 } tanimi veritabaninda integer saklar, Ruby tarafinda :draft gibi symbol isimleri kullanir. draft? ve published! yardimci metotlari otomatik uretilir.</p>
+          <a class="ruby-faq-link" href="https://www.ruby-lang.org/en/documentation/faq/6/" target="_blank" rel="noopener">
+            ruby-lang.org resmi FAQ →
+          </a>
+        </div>
+        
         <div class="code-block"><div class="code-label">ornek kod</div><pre><code>class Post &lt; ApplicationRecord
   enum :status, { draft: 0, published: 1, archived: 2 }
 end
@@ -1393,7 +1515,7 @@ post.draft!
 post.draft?       # =&gt; true
 post.status       # =&gt; &quot;draft&quot;</code></pre></div>
         <div class="enrich-exam"><strong>Sinav ipucu:</strong> enum status: { draft: 0 } — DB&#x27;de 0, kodda :draft. draft?, published! otomatik metotlar.</div>
-        <div class="enrich-sources"><a href="https://api.rubyonrails.org/classes/ActiveRecord/Enum.html" target="_blank" rel="noopener">Rails Enum API</a></div>
+        <div class="enrich-sources"><a href="https://www.ruby-lang.org/en/documentation/faq/6/" target="_blank" rel="noopener">Ruby Resmi SSS — Bolum 6 (Sozdizimi)</a><a href="https://api.rubyonrails.org/classes/ActiveRecord/Enum.html" target="_blank" rel="noopener">Rails Enum API</a></div>
       </div>
     </div>
     
@@ -1405,6 +1527,16 @@ post.status       # =&gt; &quot;draft&quot;</code></pre></div>
       <div class="enrich-card-body">
         <p>GET okur, POST olusturur, PATCH gunceller, DELETE siler. resources 7 route uretir.</p>
         <p>RESTful Rails uygulamalarinda HTTP metodu islemi belirler. resources :posts tek satirda index, show, new, create, edit, update, destroy route&#x27;larini olusturur. rails routes komutu ile listelenir.</p>
+        
+        <div class="ruby-faq-box">
+          <div class="ruby-faq-label">Ruby Resmi SSS (Turkce) — Bolum 7: Metotlar</div>
+          <p class="ruby-faq-q"><strong>S:</strong> +, -, * ... operator mu metot mu?</p>
+          <p class="ruby-faq-a"><strong>C:</strong> Ruby FAQ: +, - ve benzeri operator degil, metot cagrisidir; yeniden tanimlanabilir. Rails routes da HTTP istegini Controller&#x27;daki index, show, create gibi metotlara yönlendirir. resources :posts tek satirda yedi CRUD metodu icin yol olusturur — GET okuma, POST olusturma, PATCH guncelleme, DELETE silme.</p>
+          <a class="ruby-faq-link" href="https://www.ruby-lang.org/en/documentation/faq/7/" target="_blank" rel="noopener">
+            ruby-lang.org resmi FAQ →
+          </a>
+        </div>
+        
         <div class="code-block"><div class="code-label">ornek kod</div><pre><code># config/routes.rb
 resources :posts
 
@@ -1414,7 +1546,7 @@ resources :posts
 # PATCH  /posts/:id      → update
 # DELETE /posts/:id      → destroy</code></pre></div>
         <div class="enrich-exam"><strong>Sinav ipucu:</strong> GET=oku, POST=olustur, PATCH/PUT=guncelle, DELETE=sil. resources :posts = 7 CRUD route.</div>
-        <div class="enrich-sources"><a href="https://guides.rubyonrails.org/routing.html#restful-routing-the-rails-default" target="_blank" rel="noopener">Rails Routing — REST</a></div>
+        <div class="enrich-sources"><a href="https://www.ruby-lang.org/en/documentation/faq/7/" target="_blank" rel="noopener">Ruby Resmi SSS — Bolum 7 (Metotlar)</a><a href="https://guides.rubyonrails.org/routing.html#restful-routing-the-rails-default" target="_blank" rel="noopener">Rails Routing — REST</a></div>
       </div>
     </div>
     
@@ -1426,13 +1558,23 @@ resources :posts
       <div class="enrich-card-body">
         <p>&lt;% %&gt; Ruby kodu calistirir, &lt;%= %&gt; ciktiyi HTML&#x27;e yazar.</p>
         <p>ERB (Embedded Ruby) view dosyalarinda Ruby kodu calistirir. &lt;% if @post %&gt; sadece calistirir, &lt;%= @post.title %&gt; HTML&#x27;e escape edilmis cikti yazar. &lt;%- -%&gt; bosluk kirpma icin kullanilabilir.</p>
+        
+        <div class="ruby-faq-box">
+          <div class="ruby-faq-label">Ruby Resmi SSS (Turkce) — Bolum 5: Iterator&#x27;lar</div>
+          <p class="ruby-faq-q"><strong>S:</strong> Blok nedir ve ERB ile iliskisi?</p>
+          <p class="ruby-faq-a"><strong>C:</strong> Iterator, blok veya Proc kabul eden metottur; blok metot cagrisindan hemen sonra yazilir. ERB sablonlari da gomulu Ruby kodu calistirir: &lt;% %&gt; kod calistirir, &lt;%= %&gt; sonucu yazar. View&#x27;daki each donguleri FAQ&#x27;deki data.each { |i| puts i } ornegiyle ayni blok mantigini kullanir.</p>
+          <a class="ruby-faq-link" href="https://www.ruby-lang.org/en/documentation/faq/5/" target="_blank" rel="noopener">
+            ruby-lang.org resmi FAQ →
+          </a>
+        </div>
+        
         <div class="code-block"><div class="code-label">ornek kod</div><pre><code>&lt;%# yorum %&gt;
 &lt;h1&gt;&lt;%= @post.title %&gt;&lt;/h1&gt;
 &lt;% @posts.each do |post| %&gt;
   &lt;p&gt;&lt;%= link_to post.title, post %&gt;&lt;/p&gt;
 &lt;% end %&gt;</code></pre></div>
         <div class="enrich-exam"><strong>Sinav ipucu:</strong> &lt;% %&gt; kod, &lt;%= %&gt; cikti. @degisken controller&#x27;dan view&#x27;a gelir.</div>
-        <div class="enrich-sources"><a href="https://guides.rubyonrails.org/action_view_overview.html" target="_blank" rel="noopener">Rails Action View Overview</a></div>
+        <div class="enrich-sources"><a href="https://www.ruby-lang.org/en/documentation/faq/5/" target="_blank" rel="noopener">Ruby Resmi SSS — Bolum 5 (Iterator&#x27;lar)</a><a href="https://guides.rubyonrails.org/action_view_overview.html" target="_blank" rel="noopener">Rails Action View Overview</a></div>
       </div>
     </div>
     
@@ -1444,6 +1586,16 @@ resources :posts
       <div class="enrich-card-body">
         <p>params icinden sadece izin verilen alanlar gecirilir; guvenlik icin zorunlu.</p>
         <p>Strong Parameters mass assignment saldirisini onler. params.require(:post).permit(:title, :body) sadece title ve body&#x27;yi kabul eder. admin gibi ek alanlar permit edilmezse atanamaz.</p>
+        
+        <div class="ruby-faq-box">
+          <div class="ruby-faq-label">Ruby Resmi SSS (Turkce) — Bolum 4: Degiskenler ve Argumanlar</div>
+          <p class="ruby-faq-q"><strong>S:</strong> Argumanlar nasil gecirilir?</p>
+          <p class="ruby-faq-a"><strong>C:</strong> Ruby&#x27;de gercek arguman formal argumana atanir; nesne referansi kopyalanir, nesnenin kendisi degil. params.require(:post).permit(:title, :body) yalnizca izin verilen alanlari yeni Post nesnesine gecirir — kotu niyetli ek alanlar (admin: true gibi) atanamaz. Bu, Ruby&#x27;nin arguman gecirme modeli uzerine Rails guvenlik katmanidir.</p>
+          <a class="ruby-faq-link" href="https://www.ruby-lang.org/en/documentation/faq/4/" target="_blank" rel="noopener">
+            ruby-lang.org resmi FAQ →
+          </a>
+        </div>
+        
         <div class="code-block"><div class="code-label">ornek kod</div><pre><code>class PostsController &lt; ApplicationController
   def create
     @post = Post.new(post_params)
@@ -1457,7 +1609,7 @@ resources :posts
   end
 end</code></pre></div>
         <div class="enrich-exam"><strong>Sinav ipucu:</strong> require(:post).permit(...) — izinli alanlar. CSRF icin authenticity_token formda otomatik.</div>
-        <div class="enrich-sources"><a href="https://guides.rubyonrails.org/action_controller_overview.html#strong-parameters" target="_blank" rel="noopener">Rails Strong Parameters Guide</a></div>
+        <div class="enrich-sources"><a href="https://www.ruby-lang.org/en/documentation/faq/4/" target="_blank" rel="noopener">Ruby Resmi SSS — Bolum 4 (Degiskenler ve Argumanlar)</a><a href="https://guides.rubyonrails.org/action_controller_overview.html#strong-parameters" target="_blank" rel="noopener">Rails Strong Parameters Guide</a></div>
       </div>
     </div>
     
@@ -1469,6 +1621,16 @@ end</code></pre></div>
       <div class="enrich-card-body">
         <p>form_with model ile form olusturur; partial (_form) tekrari azaltir.</p>
         <p>form_with model: @post otomatik action/method belirler (new→create, edit→update). Partial dosyalar _ ile baslar: render &#x27;form&#x27;. before_action :set_post gibi callback&#x27;ler tekrar eden kodu controller&#x27;da toplar.</p>
+        
+        <div class="ruby-faq-box">
+          <div class="ruby-faq-label">Ruby Resmi SSS (Turkce) — Bolum 5: Iterator&#x27;lar</div>
+          <p class="ruby-faq-q"><strong>S:</strong> Blok iterator&#x27;a nasil gecirilir?</p>
+          <p class="ruby-faq-a"><strong>C:</strong> Blok, iterator cagrisindan hemen sonra yazilir. form_with model: @post do |f| ... end yapisinda |f| blogu form builder nesnesini alir — FAQ&#x27;deki each { |i| ... } ornegiyle ayni mantik. before_action gibi callback&#x27;ler de Ruby metotlaridir.</p>
+          <a class="ruby-faq-link" href="https://www.ruby-lang.org/en/documentation/faq/5/" target="_blank" rel="noopener">
+            ruby-lang.org resmi FAQ →
+          </a>
+        </div>
+        
         <div class="code-block"><div class="code-label">ornek kod</div><pre><code>&lt;%# app/views/posts/_form.html.erb %&gt;
 &lt;%= form_with model: @post do |f| %&gt;
   &lt;%= f.text_field :title %&gt;
@@ -1478,7 +1640,7 @@ end</code></pre></div>
 &lt;%# controller %&gt;
 before_action :set_post, only: [:show, :edit, :update, :destroy]</code></pre></div>
         <div class="enrich-exam"><strong>Sinav ipucu:</strong> Partial _ ile baslar. before_action DRY. button_to DELETE formu olusturur.</div>
-        <div class="enrich-sources"><a href="https://guides.rubyonrails.org/form_helpers.html" target="_blank" rel="noopener">Rails Form Helpers</a></div>
+        <div class="enrich-sources"><a href="https://www.ruby-lang.org/en/documentation/faq/5/" target="_blank" rel="noopener">Ruby Resmi SSS — Bolum 5 (Iterator&#x27;lar)</a><a href="https://guides.rubyonrails.org/form_helpers.html" target="_blank" rel="noopener">Rails Form Helpers</a></div>
       </div>
     </div>
     
@@ -1490,6 +1652,16 @@ before_action :set_post, only: [:show, :edit, :update, :destroy]</code></pre></d
       <div class="enrich-card-body">
         <p>12 sutunluk responsive grid; container, row, col-* siniflari.</p>
         <p>Bootstrap 5 grid sistemi 12 sutun uzerinden calisir. container icerigi ortalar, row satir, col-md-6 medium ekranda yarim genislik demektir. Rails 7+ ile rails new --css bootstrap veya importmap ile eklenir.</p>
+        
+        <div class="ruby-faq-box">
+          <div class="ruby-faq-label">Ruby Resmi SSS (Turkce) — Bolum 1: Genel Sorular</div>
+          <p class="ruby-faq-q"><strong>S:</strong> Ruby ile sunucu ve arayuz nasil birlikte calisir?</p>
+          <p class="ruby-faq-a"><strong>C:</strong> Bootstrap CSS/HTML katmanidir; Ruby FAQ dogrudan Bootstrap anlatmaz. Ancak Rails view&#x27;larinda ERB ile Ruby kodu calistirilirken HTML sinifleri (container, row, col) statik icerik olarak yazilir. Ruby&#x27;nin gorevi veriyi hazirlamak (@posts), Bootstrap in gorunumu duzenlemektir.</p>
+          <a class="ruby-faq-link" href="https://www.ruby-lang.org/en/documentation/faq/1/" target="_blank" rel="noopener">
+            ruby-lang.org resmi FAQ →
+          </a>
+        </div>
+        
         <div class="code-block"><div class="code-label">ornek kod</div><pre><code>&lt;div class=&quot;container&quot;&gt;
   &lt;div class=&quot;row&quot;&gt;
     &lt;div class=&quot;col-md-8&quot;&gt;Ana icerik&lt;/div&gt;
@@ -1497,7 +1669,7 @@ before_action :set_post, only: [:show, :edit, :update, :destroy]</code></pre></d
   &lt;/div&gt;
 &lt;/div&gt;</code></pre></div>
         <div class="enrich-exam"><strong>Sinav ipucu:</strong> 12 sutun grid. col-md-6 = yarim. container ortalar, container-fluid tam genislik.</div>
-        <div class="enrich-sources"><a href="https://getbootstrap.com/docs/5.3/layout/grid/" target="_blank" rel="noopener">Bootstrap Grid Docs</a></div>
+        <div class="enrich-sources"><a href="https://www.ruby-lang.org/en/documentation/faq/1/" target="_blank" rel="noopener">Ruby Resmi SSS — Bolum 1 (Genel Sorular)</a><a href="https://getbootstrap.com/docs/5.3/layout/grid/" target="_blank" rel="noopener">Bootstrap Grid Docs</a></div>
       </div>
     </div>
     
@@ -1509,6 +1681,16 @@ before_action :set_post, only: [:show, :edit, :update, :destroy]</code></pre></d
       <div class="enrich-card-body">
         <p>belongs_to FK bu tabloda; has_many karsi tarafta cok kayit.</p>
         <p>Post belongs_to :category — posts tablosunda category_id vardir. Category has_many :posts — bir kategorinin cok postu olabilir. has_many :through ara model ile iliski kurar. dependent: :destroy silme davranisini belirler.</p>
+        
+        <div class="ruby-faq-box">
+          <div class="ruby-faq-label">Ruby Resmi SSS (Turkce) — Bolum 7: Metotlar</div>
+          <p class="ruby-faq-q"><strong>S:</strong> Modul include / prepend ve kalitim zinciri</p>
+          <p class="ruby-faq-a"><strong>C:</strong> belongs_to ve has_many Rails iliskileridir; altta yatan Ruby kavrami kalitim ve modul karistirmadir. FAQ: include modulu ancestors zincirine ekler; prepend onune koyarak ust sinif metodunu ezebilirsiniz. post.category.name cagrisi once Post&#x27;ta, gerekirse ust siniflarda category metodunu arar.</p>
+          <a class="ruby-faq-link" href="https://www.ruby-lang.org/en/documentation/faq/7/" target="_blank" rel="noopener">
+            ruby-lang.org resmi FAQ →
+          </a>
+        </div>
+        
         <div class="code-block"><div class="code-label">ornek kod</div><pre><code>class Post &lt; ApplicationRecord
   belongs_to :category
   belongs_to :user
@@ -1521,7 +1703,7 @@ end
 post.category.name
 category.posts</code></pre></div>
         <div class="enrich-exam"><strong>Sinav ipucu:</strong> belongs_to = FK burada. has_many = karsi tarafta cok. HABTM = ara tablo, id yok.</div>
-        <div class="enrich-sources"><a href="https://guides.rubyonrails.org/association_basics.html" target="_blank" rel="noopener">Rails Associations Guide</a></div>
+        <div class="enrich-sources"><a href="https://www.ruby-lang.org/en/documentation/faq/7/" target="_blank" rel="noopener">Ruby Resmi SSS — Bolum 7 (Metotlar)</a><a href="https://guides.rubyonrails.org/association_basics.html" target="_blank" rel="noopener">Rails Associations Guide</a></div>
       </div>
     </div>
     
@@ -1533,6 +1715,16 @@ category.posts</code></pre></div>
       <div class="enrich-card-body">
         <p>Coktan coga iliski; ara join tablosu, genelde id kolonu yok.</p>
         <p>has_and_belongs_to_many iki model arasinda coktan coga baglanti kurar. posts_categories gibi ara tablo sadece iki foreign key icerir. Ek ozellik (tarih vb.) gerekiyorsa has_many :through tercih edilir.</p>
+        
+        <div class="ruby-faq-box">
+          <div class="ruby-faq-label">Ruby Resmi SSS (Turkce) — Bolum 2: Karsilastirmalar</div>
+          <p class="ruby-faq-q"><strong>S:</strong> Mixin (modul karistirma) nedir?</p>
+          <p class="ruby-faq-a"><strong>C:</strong> Ruby tek kalitim destekler ama guclu mixin kavramina sahiptir: sinif tanimina modul dahil edilince o modulun metotlari sinifa eklenir. has_and_belongs_to_many iki model arasinda coktan coga baglanti kurar; join tablosu ara nesne gibi davranir. Ek ozellik gerekiyorsa has_many :through tercih edilir.</p>
+          <a class="ruby-faq-link" href="https://www.ruby-lang.org/en/documentation/faq/2/" target="_blank" rel="noopener">
+            ruby-lang.org resmi FAQ →
+          </a>
+        </div>
+        
         <div class="code-block"><div class="code-label">ornek kod</div><pre><code>class Post &lt; ApplicationRecord
   has_and_belongs_to_many :categories
 end
@@ -1543,7 +1735,7 @@ end
 
 # join table: categories_posts (post_id, category_id)</code></pre></div>
         <div class="enrich-exam"><strong>Sinav ipucu:</strong> HABTM ara tablo, id yok. category_ids = [] ile coklu secim. Scaffold hizli CRUD uretir.</div>
-        <div class="enrich-sources"><a href="https://guides.rubyonrails.org/association_basics.html#the-has-and-belongs-to-many-association" target="_blank" rel="noopener">Rails HABTM</a></div>
+        <div class="enrich-sources"><a href="https://www.ruby-lang.org/en/documentation/faq/2/" target="_blank" rel="noopener">Ruby Resmi SSS — Bolum 2 (Karsilastirmalar)</a><a href="https://guides.rubyonrails.org/association_basics.html#the-has-and-belongs-to-many-association" target="_blank" rel="noopener">Rails HABTM</a></div>
       </div>
     </div>
     
@@ -1555,6 +1747,16 @@ end
       <div class="enrich-card-body">
         <p>Model kaydetmeden once veri kurallarini kontrol eder.</p>
         <p>validates :title, presence: true bos birakilamaz der. uniqueness tekil olmayi, length uzunluk sinirini kontrol eder. Gecersiz kayit save → false doner, errors mesajlari dolar.</p>
+        
+        <div class="ruby-faq-box">
+          <div class="ruby-faq-label">Ruby Resmi SSS (Turkce) — Bolum 7: Metotlar</div>
+          <p class="ruby-faq-q"><strong>S:</strong> Yikici (destructive) metot nedir?</p>
+          <p class="ruby-faq-a"><strong>C:</strong> Yikici metot nesnenin durumunu degistirir. String&#x27;de str ve str! farki gibi: validates kurallari gecmezse save false doner ve errors dolar — nesne durumu kaydedilmez. downcase! gibi ! ile biten metotlar aliciyi yerinde degistirir; validation gecersiz kaydi veritabanina yazmaz.</p>
+          <a class="ruby-faq-link" href="https://www.ruby-lang.org/en/documentation/faq/7/" target="_blank" rel="noopener">
+            ruby-lang.org resmi FAQ →
+          </a>
+        </div>
+        
         <div class="code-block"><div class="code-label">ornek kod</div><pre><code>class Post &lt; ApplicationRecord
   validates :title, presence: true, length: { minimum: 3 }
   validates :slug, uniqueness: true
@@ -1564,7 +1766,7 @@ post = Post.new
 post.valid?   # =&gt; false
 post.errors.full_messages</code></pre></div>
         <div class="enrich-exam"><strong>Sinav ipucu:</strong> presence, uniqueness, length en sik. Gecersizse save false. errors.full_messages hata listesi.</div>
-        <div class="enrich-sources"><a href="https://guides.rubyonrails.org/active_record_validations.html" target="_blank" rel="noopener">Rails Validations Guide</a></div>
+        <div class="enrich-sources"><a href="https://www.ruby-lang.org/en/documentation/faq/7/" target="_blank" rel="noopener">Ruby Resmi SSS — Bolum 7 (Metotlar)</a><a href="https://guides.rubyonrails.org/active_record_validations.html" target="_blank" rel="noopener">Rails Validations Guide</a></div>
       </div>
     </div>
     
@@ -1576,6 +1778,16 @@ post.errors.full_messages</code></pre></div>
       <div class="enrich-card-body">
         <p>Kaydetmeden once veriyi otomatik duzenler.</p>
         <p>Rails 7.1+ normalizes ile attribute kaydedilmeden once transform edilir. Ornegin email downcase, title strip ile bosluk temizlenir. Validation&#x27;dan once calisir, tutarli veri saglar.</p>
+        
+        <div class="ruby-faq-box">
+          <div class="ruby-faq-label">Ruby Resmi SSS (Turkce) — Bolum 4: Degiskenler ve Argumanlar</div>
+          <p class="ruby-faq-q"><strong>S:</strong> Atama nesnenin kopyasini mi uretir?</p>
+          <p class="ruby-faq-a"><strong>C:</strong> Ruby FAQ: Atama tek basina yeni nesne kopyasi olusturmaz; degiskenler nesneye referans tutar. normalizes email&#x27;i kaydetmeden once strip.downcase ile donusturur — validation&#x27;dan once calisir. Ayni referans mantigi: b.concat(&#x27;d&#x27;) cagrisi a ve A degiskenlerinin de gosterdigi nesneyi degistirebilir.</p>
+          <a class="ruby-faq-link" href="https://www.ruby-lang.org/en/documentation/faq/4/" target="_blank" rel="noopener">
+            ruby-lang.org resmi FAQ →
+          </a>
+        </div>
+        
         <div class="code-block"><div class="code-label">ornek kod</div><pre><code>class User &lt; ApplicationRecord
   normalizes :email, with: -&gt;(e) { e.strip.downcase }
 end
@@ -1583,7 +1795,7 @@ end
 User.create(email: &quot;  ALI@Mail.COM  &quot;)
 # email =&gt; &quot;ali@mail.com&quot;</code></pre></div>
         <div class="enrich-exam"><strong>Sinav ipucu:</strong> normalizes = kaydetmeden duzenle. validates = kural kontrol. Ikisi birlikte kullanilir.</div>
-        <div class="enrich-sources"><a href="https://api.rubyonrails.org/classes/ActiveRecord/Normalization/ClassMethods.html" target="_blank" rel="noopener">Rails normalizes API</a></div>
+        <div class="enrich-sources"><a href="https://www.ruby-lang.org/en/documentation/faq/4/" target="_blank" rel="noopener">Ruby Resmi SSS — Bolum 4 (Degiskenler ve Argumanlar)</a><a href="https://api.rubyonrails.org/classes/ActiveRecord/Normalization/ClassMethods.html" target="_blank" rel="noopener">Rails normalizes API</a></div>
       </div>
     </div>
     
@@ -1595,6 +1807,16 @@ User.create(email: &quot;  ALI@Mail.COM  &quot;)
       <div class="enrich-card-body">
         <p>Dosya/resim yukleme; has_one_attached / has_many_attached.</p>
         <p>Active Storage Cloud veya disk uzerinde dosya yonetir. has_one_attached :avatar model ile dosyayi iliskilendirir. Formda file_field :avatar kullanilir; variant ile thumbnail uretilebilir.</p>
+        
+        <div class="ruby-faq-box">
+          <div class="ruby-faq-label">Ruby Resmi SSS (Turkce) — Bolum 4: Degiskenler ve Argumanlar</div>
+          <p class="ruby-faq-q"><strong>S:</strong> Nesnem beklenmedik sekilde neden degisti?</p>
+          <p class="ruby-faq-a"><strong>C:</strong> Degiskenler nesneye referans tutar; a = b = &#x27;abc&#x27; sonrasinda b.concat(&#x27;d&#x27;) hem a&#x27;yi hem b&#x27;yi etkiler. has_one_attached :image dosyayi modele baglar; attached? ile kontrol edilir. Parametre gecirme de referans oldugu icin formdan gelen dosya nesnesi uzerinde islem yapilir.</p>
+          <a class="ruby-faq-link" href="https://www.ruby-lang.org/en/documentation/faq/4/" target="_blank" rel="noopener">
+            ruby-lang.org resmi FAQ →
+          </a>
+        </div>
+        
         <div class="code-block"><div class="code-label">ornek kod</div><pre><code>class Post &lt; ApplicationRecord
   has_one_attached :image
 end
@@ -1605,7 +1827,7 @@ end
 # view
 &lt;%= image_tag @post.image if @post.image.attached? %&gt;</code></pre></div>
         <div class="enrich-exam"><strong>Sinav ipucu:</strong> has_one_attached :image. file_field ile yukle. attached? dosya var mi kontrol.</div>
-        <div class="enrich-sources"><a href="https://guides.rubyonrails.org/active_storage_overview.html" target="_blank" rel="noopener">Rails Active Storage Overview</a></div>
+        <div class="enrich-sources"><a href="https://www.ruby-lang.org/en/documentation/faq/4/" target="_blank" rel="noopener">Ruby Resmi SSS — Bolum 4 (Degiskenler ve Argumanlar)</a><a href="https://guides.rubyonrails.org/active_storage_overview.html" target="_blank" rel="noopener">Rails Active Storage Overview</a></div>
       </div>
     </div>
     
@@ -1617,6 +1839,16 @@ end
       <div class="enrich-card-body">
         <p>Coklu dil destegi; I18n.t ve config/locales/*.yml dosyalari.</p>
         <p>I18n modulu metinleri YAML dosyalarinda tutar. I18n.t(&#x27;posts.title&#x27;) ceviri doner. URL&#x27;de ?locale=en veya session ile dil degistirilir. Rails varsayilan locale config/application.rb&#x27;de ayarlanir.</p>
+        
+        <div class="ruby-faq-box">
+          <div class="ruby-faq-label">Ruby Resmi SSS (Turkce) — Bolum 6: Sozdizimi</div>
+          <p class="ruby-faq-q"><strong>S:</strong> Symbol sabit veya enum degeri olarak</p>
+          <p class="ruby-faq-a"><strong>C:</strong> FAQ: status = :open veya NORTH = :NORTH gibi Symbol&#x27;ler sabit veya enum degeri olarak kullanilabilir. I18n.t(&#x27;posts.title&#x27;) ceviri anahtarini string olarak alir; locale=:en gibi symbol parametreler dil seciminde kullanilir.</p>
+          <a class="ruby-faq-link" href="https://www.ruby-lang.org/en/documentation/faq/6/" target="_blank" rel="noopener">
+            ruby-lang.org resmi FAQ →
+          </a>
+        </div>
+        
         <div class="code-block"><div class="code-label">ornek kod</div><pre><code># config/locales/tr.yml
 tr:
   posts:
@@ -1626,7 +1858,7 @@ tr:
 &lt;%= t(&#x27;posts.title&#x27;) %&gt;
 &lt;%= link_to &#x27;EN&#x27;, url_for(locale: :en) %&gt;</code></pre></div>
         <div class="enrich-exam"><strong>Sinav ipucu:</strong> I18n.t veya t() helper. locale= en/tr. YAML dosyalari config/locales/.</div>
-        <div class="enrich-sources"><a href="https://guides.rubyonrails.org/i18n.html" target="_blank" rel="noopener">Rails I18n Guide</a></div>
+        <div class="enrich-sources"><a href="https://www.ruby-lang.org/en/documentation/faq/6/" target="_blank" rel="noopener">Ruby Resmi SSS — Bolum 6 (Sozdizimi)</a><a href="https://guides.rubyonrails.org/i18n.html" target="_blank" rel="noopener">Rails I18n Guide</a></div>
       </div>
     </div>
     
@@ -1638,6 +1870,16 @@ tr:
       <div class="enrich-card-body">
         <p>/posts/1 yerine /posts/rails-rehberi gibi okunabilir URL.</p>
         <p>FriendlyId gem&#x27;i basliktan slug uretir ve URL&#x27;de id yerine slug kullanir. extend FriendlyId; friendly_id :title, use: :slugged ile model yapilandirilir. SEO ve kullanici deneyimi icin faydalidir.</p>
+        
+        <div class="ruby-faq-box">
+          <div class="ruby-faq-label">Ruby Resmi SSS (Turkce) — Bolum 6: Sozdizimi</div>
+          <p class="ruby-faq-q"><strong>S:</strong> Symbol ile metot cagrisi (send)</p>
+          <p class="ruby-faq-a"><strong>C:</strong> Symbol bir metoda karsilik geliyorsa demo.send(:hello) ile cagrilabilir. FriendlyId slug uretir; Post.friendly.find(params[:id]) find metodunun slug versiyonunu kullanir. Symbol&#x27;ler metot adlarini temsil etmek icin idealdir.</p>
+          <a class="ruby-faq-link" href="https://www.ruby-lang.org/en/documentation/faq/6/" target="_blank" rel="noopener">
+            ruby-lang.org resmi FAQ →
+          </a>
+        </div>
+        
         <div class="code-block"><div class="code-label">ornek kod</div><pre><code>class Post &lt; ApplicationRecord
   extend FriendlyId
   friendly_id :title, use: :slugged
@@ -1646,7 +1888,7 @@ end
 # /posts/ruby-on-rails-rehberi
 Post.friendly.find(params[:id])</code></pre></div>
         <div class="enrich-exam"><strong>Sinav ipucu:</strong> FriendlyId = slug URL. friendly_id :title. find yerine friendly.find kullanilir.</div>
-        <div class="enrich-sources"><a href="https://github.com/norman/friendly_id" target="_blank" rel="noopener">FriendlyId GitHub</a></div>
+        <div class="enrich-sources"><a href="https://www.ruby-lang.org/en/documentation/faq/6/" target="_blank" rel="noopener">Ruby Resmi SSS — Bolum 6 (Sozdizimi)</a><a href="https://github.com/norman/friendly_id" target="_blank" rel="noopener">FriendlyId GitHub</a></div>
       </div>
     </div>
     
@@ -1658,6 +1900,16 @@ Post.friendly.find(params[:id])</code></pre></div>
       <div class="enrich-card-body">
         <p>Zengin metin editoru (Trix); kalin, liste, resim embed.</p>
         <p>Action Text Rails&#x27;e dahil zengin metin cozumudur. has_rich_text :content ile model iliskilendirilir. Formda rich_text_area :content kullanilir. Trix editor arayuzu saglar, icerik HTML olarak saklanir.</p>
+        
+        <div class="ruby-faq-box">
+          <div class="ruby-faq-label">Ruby Resmi SSS (Turkce) — Bolum 4: Degiskenler ve Argumanlar</div>
+          <p class="ruby-faq-q"><strong>S:</strong> Formal arguman uzerinden metot cagirma</p>
+          <p class="ruby-faq-a"><strong>C:</strong> Ruby&#x27;de tum degiskenler nesneye referanstir; has_rich_text :content iliskisi kurulunca content uzerinden metot cagrilari yapilir. rich_text_area form helper&#x27;i Trix editor ile HTML icerigi nesneye baglar.</p>
+          <a class="ruby-faq-link" href="https://www.ruby-lang.org/en/documentation/faq/4/" target="_blank" rel="noopener">
+            ruby-lang.org resmi FAQ →
+          </a>
+        </div>
+        
         <div class="code-block"><div class="code-label">ornek kod</div><pre><code>class Post &lt; ApplicationRecord
   has_rich_text :content
 end
@@ -1666,7 +1918,7 @@ end
   &lt;%= f.rich_text_area :content %&gt;
 &lt;% end %&gt;</code></pre></div>
         <div class="enrich-exam"><strong>Sinav ipucu:</strong> has_rich_text :content. rich_text_area form helper. Trix editor kullanilir.</div>
-        <div class="enrich-sources"><a href="https://guides.rubyonrails.org/action_text_overview.html" target="_blank" rel="noopener">Rails Action Text Overview</a></div>
+        <div class="enrich-sources"><a href="https://www.ruby-lang.org/en/documentation/faq/4/" target="_blank" rel="noopener">Ruby Resmi SSS — Bolum 4 (Degiskenler ve Argumanlar)</a><a href="https://guides.rubyonrails.org/action_text_overview.html" target="_blank" rel="noopener">Rails Action Text Overview</a></div>
       </div>
     </div>
     
@@ -1678,6 +1930,16 @@ end
       <div class="enrich-card-body">
         <p>Hazir kullanici girisi: kayit, giris, sifre sifirlama.</p>
         <p>Devise gem&#x27;i User modeline moduller ekler (:database_authenticatable, :registerable vb.). authenticate_user! giris zorunlu kilar. current_user oturum acmis kullaniciyi doner. devise_for :users routes.rb&#x27;ye login/register yollarini ekler.</p>
+        
+        <div class="ruby-faq-box">
+          <div class="ruby-faq-label">Ruby Resmi SSS (Turkce) — Bolum 7: Metotlar</div>
+          <p class="ruby-faq-q"><strong>S:</strong> Bu basit fonksiyon benzeri metotlar nereden geliyor?</p>
+          <p class="ruby-faq-a"><strong>C:</strong> class disinda yazilan def aslinda Object sinifina ait metottur; self gizli alicidir. Devise User modeline modul ekleyerek sign_in, current_user gibi metotlari Controller&#x27;a getirir. authenticate_user! cagrilmazsa yonlendirme yapilir — Ruby&#x27;de her sey metot mesajidir.</p>
+          <a class="ruby-faq-link" href="https://www.ruby-lang.org/en/documentation/faq/7/" target="_blank" rel="noopener">
+            ruby-lang.org resmi FAQ →
+          </a>
+        </div>
+        
         <div class="code-block"><div class="code-label">ornek kod</div><pre><code>class ApplicationController &lt; ActionController::Base
   before_action :authenticate_user!
 end
@@ -1688,7 +1950,7 @@ class PostsController &lt; ApplicationController
   end
 end</code></pre></div>
         <div class="enrich-exam"><strong>Sinav ipucu:</strong> Devise = authentication. authenticate_user! giris zorunlu. current_user aktif kullanici.</div>
-        <div class="enrich-sources"><a href="https://github.com/heartcombo/devise" target="_blank" rel="noopener">Devise GitHub Wiki</a><a href="https://github.com/heartcombo/devise#getting-started" target="_blank" rel="noopener">Devise Getting Started</a></div>
+        <div class="enrich-sources"><a href="https://www.ruby-lang.org/en/documentation/faq/7/" target="_blank" rel="noopener">Ruby Resmi SSS — Bolum 7 (Metotlar)</a><a href="https://github.com/heartcombo/devise" target="_blank" rel="noopener">Devise GitHub Wiki</a><a href="https://github.com/heartcombo/devise#getting-started" target="_blank" rel="noopener">Devise Getting Started</a></div>
       </div>
     </div>
     
@@ -1700,6 +1962,16 @@ end</code></pre></div>
       <div class="enrich-card-body">
         <p>Kim oldugunu degil, ne yapabilecegini kontrol eder.</p>
         <p>Authentication kimlik dogrulama (Devise), Authorization yetkilendirme (admin mi?). user.admin? gibi metotlar veya Pundit/Cancancan gem&#x27;leri ile erisim kontrol edilir. Controller&#x27;da unless current_user.admin? redirect yapilir.</p>
+        
+        <div class="ruby-faq-box">
+          <div class="ruby-faq-label">Ruby Resmi SSS (Turkce) — Bolum 7: Metotlar</div>
+          <p class="ruby-faq-q"><strong>S:</strong> private ve protected arasindaki fark nedir?</p>
+          <p class="ruby-faq-a"><strong>C:</strong> private: metot yalnizca fonksiyon formunda (alici yazilmadan) cagrilabilir; other.foo seklinde baska nesnede cagrilamaz. protected: kendi sinifi ve alt siniflar icinden alici ile cagrilabilir (ornegin age &lt;=&gt; other.age). Authorization: current_user.admin? ile yetki kontrolu — authentication (Devise) kim oldugunu, authorization ne yapabilecegini belirler.</p>
+          <a class="ruby-faq-link" href="https://www.ruby-lang.org/en/documentation/faq/7/" target="_blank" rel="noopener">
+            ruby-lang.org resmi FAQ →
+          </a>
+        </div>
+        
         <div class="code-block"><div class="code-label">ornek kod</div><pre><code>def destroy
   unless current_user.admin?
     redirect_to root_path, alert: &quot;Yetkiniz yok&quot;
@@ -1708,7 +1980,7 @@ end</code></pre></div>
   @post.destroy
 end</code></pre></div>
         <div class="enrich-exam"><strong>Sinav ipucu:</strong> Authentication=kimlik, Authorization=yetki. admin? rol kontrolu. Devise auth, rol ayri.</div>
-        <div class="enrich-sources"><a href="https://guides.rubyonrails.org/security.html" target="_blank" rel="noopener">Rails Security Guide</a></div>
+        <div class="enrich-sources"><a href="https://www.ruby-lang.org/en/documentation/faq/7/" target="_blank" rel="noopener">Ruby Resmi SSS — Bolum 7 (Metotlar)</a><a href="https://guides.rubyonrails.org/security.html" target="_blank" rel="noopener">Rails Security Guide</a></div>
       </div>
     </div>
     
@@ -1720,6 +1992,16 @@ end</code></pre></div>
       <div class="enrich-card-body">
         <p>Blok do/end veya {}; Proc/Lambda farkli arguman kurallari.</p>
         <p>Bloklar Ruby&#x27;nin guclu yonudur: [1,2,3].each { |n| puts n }. Proc arguman sayisina toleransli, Lambda katidir (arity kontrol). yield metot icinden blogu cagirir.</p>
+        
+        <div class="ruby-faq-box">
+          <div class="ruby-faq-label">Ruby Resmi SSS (Turkce) — Bolum 5: Iterator&#x27;lar</div>
+          <p class="ruby-faq-q"><strong>S:</strong> Iterator nedir?</p>
+          <p class="ruby-faq-a"><strong>C:</strong> Iterator, blok veya Proc kabul eden metottur. [1,2,3].each { |n| puts n } orneginde each iterator&#x27;dur. Blok do/end veya { } ile yazilir. yield metot icinden blogu cagirir; &amp; parametresi blogu Proc&#x27;a cevirir. Proc arguman sayisina toleransli, lambda katidir.</p>
+          <a class="ruby-faq-link" href="https://www.ruby-lang.org/en/documentation/faq/5/" target="_blank" rel="noopener">
+            ruby-lang.org resmi FAQ →
+          </a>
+        </div>
+        
         <div class="code-block"><div class="code-label">ornek kod</div><pre><code>[1, 2, 3].map { |x| x * 2 }  # =&gt; [2, 4, 6]
 
 my_proc = Proc.new { |a, b| a + b }
@@ -1728,7 +2010,7 @@ my_proc.call(1)      # =&gt; 1 (eksik arg OK)
 my_lambda = -&gt;(a, b) { a + b }
 # my_lambda.call(1)  # ArgumentError</code></pre></div>
         <div class="enrich-exam"><strong>Sinav ipucu:</strong> each/map blok alir. Lambda -&gt; veya lambda{}. Proc toleransli, Lambda katı arguman.</div>
-        <div class="enrich-sources"><a href="https://docs.ruby-lang.org/en/master/Proc.html" target="_blank" rel="noopener">Ruby Proc vs Lambda</a></div>
+        <div class="enrich-sources"><a href="https://www.ruby-lang.org/en/documentation/faq/5/" target="_blank" rel="noopener">Ruby Resmi SSS — Bolum 5 (Iterator&#x27;lar)</a><a href="https://docs.ruby-lang.org/en/master/Proc.html" target="_blank" rel="noopener">Ruby Proc vs Lambda</a></div>
       </div>
     </div>
     </div>
@@ -1756,7 +2038,7 @@ my_lambda = -&gt;(a, b) { a + b }
         </div>
         
         <div class="callout callout-web" style="margin:.85rem 0 0">
-          <strong>Bu hafta — internet kaynakli aciklamalar:</strong>
+          <strong>Bu hafta — Ruby resmi SSS + internet aciklamalari (Turkce):</strong>
           <div class="enrich-sources" style="margin-top:.45rem"><a href="#enrich-kapsulleme">Kapsulleme (Encapsulation)</a><a href="#enrich-kalitim">Kalitim / Miras (Inheritance)</a><a href="#enrich-polimorfizm">Polimorfizm</a><a href="#enrich-mvc">MVC Mimarisi</a><a href="#enrich-symbol">Symbol vs String</a><a href="#enrich-bloklar">Bloklar, Proc ve Lambda</a></div>
         </div>
         
@@ -1910,15 +2192,25 @@ Demek ki hiyerarşi şu şekilde:
 String &lt; Object &lt; BasicObject
 </code></pre></div>
         <div class="panel-enrich" id="enrich-symbol">
-          <div class="panel-enrich-label">Internet kaynagi ile aciklama</div>
+          <div class="panel-enrich-label">Internet kaynagi + Ruby resmi SSS (Turkce)</div>
           <p><strong>Symbol vs String</strong> — Symbol tekil ve degismez; String her seferinde yeni nesne. Hash key&#x27;lerde Symbol tercih edilir.</p>
           <p>Symbol (:name) bellekte tektir, ayni sembol tekrar kullanildiginda ayni nesneye isaret eder. String her literal yeni nesne olusturur. Rails&#x27;de status: :published gibi enum ve hash key&#x27;lerde Symbol yaygindir. object_id ile fark gorulebilir.</p>
+          
+        <div class="ruby-faq-box">
+          <div class="ruby-faq-label">Ruby Resmi SSS (Turkce) — Bolum 6: Sozdizimi</div>
+          <p class="ruby-faq-q"><strong>S:</strong> :name ne anlama gelir?</p>
+          <p class="ruby-faq-a"><strong>C:</strong> Isimden once gelen iki nokta (:name) bir Symbol nesnesi uretir. Program calisirken ayni isim icin hep ayni Symbol nesnesi kullanilir. Symbol&#x27;ler metot, degisken ve benzeri tanimlayicilari temsil eder. Hash anahtarlari icin sik kullanilir cunku String her seferinde yeni nesne olustururken Symbol tektir — bellek...</p>
+          <a class="ruby-faq-link" href="https://www.ruby-lang.org/en/documentation/faq/6/" target="_blank" rel="noopener">
+            ruby-lang.org resmi FAQ →
+          </a>
+        </div>
+        
           <div class="code-block"><div class="code-label">ornek kod</div><pre><code>:a.object_id == :a.object_id  # =&gt; true
 &quot;a&quot;.object_id == &quot;a&quot;.object_id  # =&gt; false (genelde)
 
 user = { name: &quot;Ali&quot;, role: :admin }
 user[:name]  # =&gt; &quot;Ali&quot;</code></pre></div>
-          <div class="enrich-sources"><a href="https://docs.ruby-lang.org/en/master/Symbol.html" target="_blank" rel="noopener">Ruby Symbol Documentation</a></div>
+          <div class="enrich-sources"><a href="https://www.ruby-lang.org/en/documentation/faq/6/" target="_blank" rel="noopener">Ruby Resmi SSS — Bolum 6 (Sozdizimi)</a><a href="https://docs.ruby-lang.org/en/master/Symbol.html" target="_blank" rel="noopener">Ruby Symbol Documentation</a></div>
         </div>
         </div>
         </details>
@@ -2013,9 +2305,19 @@ u.public_message
 &quot;Bu protected metot.&quot;
 </code></pre></div>
         <div class="panel-enrich" id="enrich-kapsulleme">
-          <div class="panel-enrich-label">Internet kaynagi ile aciklama</div>
+          <div class="panel-enrich-label">Internet kaynagi + Ruby resmi SSS (Turkce)</div>
           <p><strong>Kapsulleme (Encapsulation)</strong> — Instance variable (@) disaridan dogrudan okunamaz; getter/setter ile kontrollu erisim saglanir.</p>
           <p>Ruby&#x27;de @ ile baslayan instance variable&#x27;lar nesnenin icindedir ve disaridan dogrudan erisilemez — bu iyi kapsullemeyi destekler. attr_reader sadece okuma, attr_writer sadece yazma, attr_accessor ikisini birden otomatik uretir. Resmi Ruby FAQ: instance variable&#x27;lara erisim icin b...</p>
+          
+        <div class="ruby-faq-box">
+          <div class="ruby-faq-label">Ruby Resmi SSS (Turkce) — Bolum 7: Metotlar</div>
+          <p class="ruby-faq-q"><strong>S:</strong> Nesnenin instance variable&#x27;larina erisebilir miyim?</p>
+          <p class="ruby-faq-a"><strong>C:</strong> @ ile baslayan instance variable&#x27;lar nesnenin icindedir ve disaridan dogrudan okunamaz — bu iyi kapsullemeyi destekler. Ruby, bu degiskenlere kontrollu erisim icin attr_reader (sadece okuma), attr_writer (sadece yazma) ve attr_accessor (ikisi birden) tanimlamayi kolaylastirir. Kendi getter/setter metotlarinizi da...</p>
+          <a class="ruby-faq-link" href="https://www.ruby-lang.org/en/documentation/faq/7/" target="_blank" rel="noopener">
+            ruby-lang.org resmi FAQ →
+          </a>
+        </div>
+        
           <div class="code-block"><div class="code-label">ornek kod</div><pre><code>class Person
   attr_reader :name
   attr_accessor :age
@@ -2251,9 +2553,19 @@ Framework::HttpFunctions.fetch_url
           <summary>Bloklar</summary>
           <div class="panel-inner">
         <div class="panel-enrich" id="enrich-bloklar">
-          <div class="panel-enrich-label">Internet kaynagi ile aciklama</div>
+          <div class="panel-enrich-label">Internet kaynagi + Ruby resmi SSS (Turkce)</div>
           <p><strong>Bloklar, Proc ve Lambda</strong> — Blok do/end veya {}; Proc/Lambda farkli arguman kurallari.</p>
           <p>Bloklar Ruby&#x27;nin guclu yonudur: [1,2,3].each { |n| puts n }. Proc arguman sayisina toleransli, Lambda katidir (arity kontrol). yield metot icinden blogu cagirir.</p>
+          
+        <div class="ruby-faq-box">
+          <div class="ruby-faq-label">Ruby Resmi SSS (Turkce) — Bolum 5: Iterator&#x27;lar</div>
+          <p class="ruby-faq-q"><strong>S:</strong> Iterator nedir?</p>
+          <p class="ruby-faq-a"><strong>C:</strong> Iterator, blok veya Proc kabul eden metottur. [1,2,3].each { |n| puts n } orneginde each iterator&#x27;dur. Blok do/end veya { } ile yazilir. yield metot icinden blogu cagirir; &amp; parametresi blogu Proc&#x27;a cevirir. Proc arguman sayisina toleransli, lambda katidir.</p>
+          <a class="ruby-faq-link" href="https://www.ruby-lang.org/en/documentation/faq/5/" target="_blank" rel="noopener">
+            ruby-lang.org resmi FAQ →
+          </a>
+        </div>
+        
           <div class="code-block"><div class="code-label">ornek kod</div><pre><code>[1, 2, 3].map { |x| x * 2 }  # =&gt; [2, 4, 6]
 
 my_proc = Proc.new { |a, b| a + b }
@@ -2261,7 +2573,7 @@ my_proc.call(1)      # =&gt; 1 (eksik arg OK)
 
 my_lambda = -&gt;(a, b) { a + b }
 # my_lambda.call(1)  # ArgumentError</code></pre></div>
-          <div class="enrich-sources"><a href="https://docs.ruby-lang.org/en/master/Proc.html" target="_blank" rel="noopener">Ruby Proc vs Lambda</a></div>
+          <div class="enrich-sources"><a href="https://www.ruby-lang.org/en/documentation/faq/5/" target="_blank" rel="noopener">Ruby Resmi SSS — Bolum 5 (Iterator&#x27;lar)</a><a href="https://docs.ruby-lang.org/en/master/Proc.html" target="_blank" rel="noopener">Ruby Proc vs Lambda</a></div>
         </div>
         </div>
         </details>
@@ -2509,9 +2821,19 @@ app/views/home/index.html.erb
 <div class="code-block"><div class="code-label">ruby</div><pre><code>get &quot;/users&quot;, to: &quot;users/index&quot;
 </code></pre></div>
         <div class="panel-enrich" id="enrich-mvc">
-          <div class="panel-enrich-label">Internet kaynagi ile aciklama</div>
+          <div class="panel-enrich-label">Internet kaynagi + Ruby resmi SSS (Turkce)</div>
           <p><strong>MVC Mimarisi</strong> — Model=veri, View=arayuz, Controller=istek isleme. Rails&#x27;in temel yapisi.</p>
           <p>Rails MVC mimarisini kullanir. Tarayici istegi routes.rb uzerinden Controller&#x27;a gelir. Controller Model ile veritabanina erisir, sonucu View&#x27;a (@degisken) aktarir. View ERB sablonu HTML uretir. Resmi Rails rehberi bu akisi &#x27;Getting Started&#x27; bolumunde anlatir.</p>
+          
+        <div class="ruby-faq-box">
+          <div class="ruby-faq-label">Ruby Resmi SSS (Turkce) — Bolum 1: Genel Sorular</div>
+          <p class="ruby-faq-q"><strong>S:</strong> Ruby nedir ve hangi ozelliklere sahiptir?</p>
+          <p class="ruby-faq-a"><strong>C:</strong> Ruby, Yukihiro Matsumoto (Matz) tarafindan yazilmis guclu bir nesne yonelimli dildir. Siniflar, metotlar, nesneler, mixin&#x27;ler, singleton metotlar, istisna yakalama, iterator&#x27;lar ve closure&#x27;lar icerir. Rails MVC yapisi Ruby&#x27;nin bu OOP temeli uzerine kurulur: Controller ve Model siniflari, View ise ERB ile Ruby kodu...</p>
+          <a class="ruby-faq-link" href="https://www.ruby-lang.org/en/documentation/faq/1/" target="_blank" rel="noopener">
+            ruby-lang.org resmi FAQ →
+          </a>
+        </div>
+        
           <div class="code-block"><div class="code-label">ornek kod</div><pre><code># config/routes.rb
 resources :posts
 
@@ -2520,7 +2842,7 @@ def show
   @post = Post.find(params[:id])  # Model
 end
 # app/views/posts/show.html.erb  → View render</code></pre></div>
-          <div class="enrich-sources"><a href="https://guides.rubyonrails.org/getting_started.html#mvc-architecture" target="_blank" rel="noopener">Rails Guides — MVC</a><a href="https://guides.rubyonrails.org/routing.html" target="_blank" rel="noopener">Rails Routing</a></div>
+          <div class="enrich-sources"><a href="https://www.ruby-lang.org/en/documentation/faq/1/" target="_blank" rel="noopener">Ruby Resmi SSS — Bolum 1 (Genel Sorular)</a><a href="https://guides.rubyonrails.org/getting_started.html#mvc-architecture" target="_blank" rel="noopener">Rails Guides — MVC</a><a href="https://guides.rubyonrails.org/routing.html" target="_blank" rel="noopener">Rails Routing</a></div>
         </div>
         </div>
         </details>
@@ -2748,7 +3070,7 @@ puts &quot;#{amount} #{result}.&quot;
         </div>
         
         <div class="callout callout-web" style="margin:.85rem 0 0">
-          <strong>Bu hafta — internet kaynakli aciklamalar:</strong>
+          <strong>Bu hafta — Ruby resmi SSS + internet aciklamalari (Turkce):</strong>
           <div class="enrich-sources" style="margin-top:.45rem"><a href="#enrich-orm">ORM (Object Relational Mapping)</a><a href="#enrich-migration">Migration</a><a href="#enrich-find-where">find / find_by / where</a></div>
         </div>
         
@@ -2772,9 +3094,19 @@ puts &quot;#{amount} #{result}.&quot;
 <p>tekniği belli bir programlama diline bağlı değildir ve her nesneye yönelik dillerde</p>
 <p>yazılabilir/kullanılabilir.</p>
         <div class="panel-enrich" id="enrich-orm">
-          <div class="panel-enrich-label">Internet kaynagi ile aciklama</div>
+          <div class="panel-enrich-label">Internet kaynagi + Ruby resmi SSS (Turkce)</div>
           <p><strong>ORM (Object Relational Mapping)</strong> — Veritabani tablosu = Ruby sinifi. SQL yazmadan CRUD yapilir.</p>
           <p>ORM, iliskisel veritabani tablolarini nesne yonelimli siniflara esler. posts tablosu Post modeline karsilik gelir. Active Record Rails&#x27;in ORM katmanidir. Migration ile sema, model ile veri islemleri yonetilir.</p>
+          
+        <div class="ruby-faq-box">
+          <div class="ruby-faq-label">Ruby Resmi SSS (Turkce) — Bolum 1: Genel Sorular</div>
+          <p class="ruby-faq-q"><strong>S:</strong> Ruby&#x27;de her sey nesne midir?</p>
+          <p class="ruby-faq-a"><strong>C:</strong> Ruby tam entegre bir nesne yonelimli dildir. Active Record ORM&#x27;de posts tablosu Post sinifine karsilik gelir; Post.create ve Post.all gibi cagrilar aslinda Post sinifina gonderilen mesajlardir (metot cagrisi). Veritabani satiri Ruby nesnesi olarak temsil edilir — SQL yerine nesne uzerinden islem yapilir.</p>
+          <a class="ruby-faq-link" href="https://www.ruby-lang.org/en/documentation/faq/1/" target="_blank" rel="noopener">
+            ruby-lang.org resmi FAQ →
+          </a>
+        </div>
+        
           <div class="code-block"><div class="code-label">ornek kod</div><pre><code># db/migrate/xxx_create_posts.rb → posts tablosu
 # app/models/post.rb
 class Post &lt; ApplicationRecord
@@ -2782,7 +3114,7 @@ end
 
 Post.create(title: &quot;Merhaba&quot;)
 Post.all</code></pre></div>
-          <div class="enrich-sources"><a href="https://guides.rubyonrails.org/active_record_basics.html" target="_blank" rel="noopener">Rails Active Record Basics</a></div>
+          <div class="enrich-sources"><a href="https://www.ruby-lang.org/en/documentation/faq/1/" target="_blank" rel="noopener">Ruby Resmi SSS — Bolum 1 (Genel Sorular)</a><a href="https://guides.rubyonrails.org/active_record_basics.html" target="_blank" rel="noopener">Rails Active Record Basics</a></div>
         </div>
         </div>
         </details>
@@ -2926,9 +3258,19 @@ phone = “+16105551234”
           <summary>Rails Migration Status</summary>
           <div class="panel-inner"><p>Rollback STEP parametresi ile istenilen sayı kadar geri gidilebilir.</p>
         <div class="panel-enrich" id="enrich-migration">
-          <div class="panel-enrich-label">Internet kaynagi ile aciklama</div>
+          <div class="panel-enrich-label">Internet kaynagi + Ruby resmi SSS (Turkce)</div>
           <p><strong>Migration</strong> — Veritabani semasini versiyonlu Ruby dosyalariyla degistirir.</p>
           <p>Migration dosyalari db/migrate/ altindadir. up/down veya change metodu ile tablo olusturma, kolon ekleme yapilir. rails db:migrate bekleyen migrationlari uygular. db:rollback son migrationi geri alir. schema.rb guncel semayi tutar.</p>
+          
+        <div class="ruby-faq-box">
+          <div class="ruby-faq-label">Ruby Resmi SSS (Turkce) — Bolum 7: Metotlar</div>
+          <p class="ruby-faq-q"><strong>S:</strong> Ruby&#x27;de sinif tanimi ve metotlar nasil calisir?</p>
+          <p class="ruby-faq-a"><strong>C:</strong> Migration dosyalari Ruby sinifidir: class AddStatusToPosts &lt; ActiveRecord::Migration kalitim kullanir. change, up, down metotlari Ruby metotlaridir. Rails db:migrate komutu bu siniflari yukler ve change metodunu cagirir. Ruby FAQ&#x27;ye gore metot secimi kalitim zincirinde (ancestors) yapilir; Migration sinifi ust...</p>
+          <a class="ruby-faq-link" href="https://www.ruby-lang.org/en/documentation/faq/7/" target="_blank" rel="noopener">
+            ruby-lang.org resmi FAQ →
+          </a>
+        </div>
+        
           <div class="code-block"><div class="code-label">ornek kod</div><pre><code># rails g migration AddStatusToPosts status:integer
 class AddStatusToPosts &lt; ActiveRecord::Migration[7.0]
   def change
@@ -2937,7 +3279,7 @@ class AddStatusToPosts &lt; ActiveRecord::Migration[7.0]
 end
 
 # Terminal: rails db:migrate</code></pre></div>
-          <div class="enrich-sources"><a href="https://guides.rubyonrails.org/active_record_migrations.html" target="_blank" rel="noopener">Rails Migration Guide</a><a href="https://api.rubyonrails.org/classes/ActiveRecord/Migration.html" target="_blank" rel="noopener">Rails db:migrate API</a></div>
+          <div class="enrich-sources"><a href="https://www.ruby-lang.org/en/documentation/faq/7/" target="_blank" rel="noopener">Ruby Resmi SSS — Bolum 7 (Metotlar)</a><a href="https://guides.rubyonrails.org/active_record_migrations.html" target="_blank" rel="noopener">Rails Migration Guide</a><a href="https://api.rubyonrails.org/classes/ActiveRecord/Migration.html" target="_blank" rel="noopener">Rails db:migrate API</a></div>
         </div>
         </div>
         </details>
@@ -3104,14 +3446,24 @@ kaydedilmediği için id, created_at ve updated_at zaman damgaları nil’dir.
 <p>Post.where(id: [1, 2]).and(Post.where.not(title: nil))</p>
 <p>Id değeri 1 veya 2 olan ve title bilgisi boş olmayan post girdilerini bul.</p>
         <div class="panel-enrich" id="enrich-find-where">
-          <div class="panel-enrich-label">Internet kaynagi ile aciklama</div>
+          <div class="panel-enrich-label">Internet kaynagi + Ruby resmi SSS (Turkce)</div>
           <p><strong>find / find_by / where</strong> — find id ile arar (hata), find_by kosul (nil), where filtre (liste/Relation).</p>
           <p>Post.find(1) primary key ile arar; kayit yoksa ActiveRecord::RecordNotFound hatasi. Post.find_by(title: &#x27;x&#x27;) ilk esleseni doner, yoksa nil. Post.where(status: 1) ActiveRecord::Relation doner (lazy, zincirlenebilir).</p>
+          
+        <div class="ruby-faq-box">
+          <div class="ruby-faq-label">Ruby Resmi SSS (Turkce) — Bolum 7: Metotlar</div>
+          <p class="ruby-faq-q"><strong>S:</strong> Ruby hangi metodu cagirir?</p>
+          <p class="ruby-faq-a"><strong>C:</strong> Post.find(1), Post.find_by(title: &#x27;x&#x27;) ve Post.where(status: 1) cagrilarinin hepsi Ruby&#x27;nin dinamik metot baglama kurallarina tabidir. find bulunamazsa exception firlatir; find_by nil doner — bunlar Active Record&#x27;un metot tanimlaridir. where ise Relation nesnesi dondurur; sonuc uzerinde order, limit gibi metotlar...</p>
+          <a class="ruby-faq-link" href="https://www.ruby-lang.org/en/documentation/faq/7/" target="_blank" rel="noopener">
+            ruby-lang.org resmi FAQ →
+          </a>
+        </div>
+        
           <div class="code-block"><div class="code-label">ornek kod</div><pre><code>Post.find(1)                    # hata verebilir
 Post.find_by(title: &quot;Rails&quot;)    # nil veya kayit
 Post.where(status: :published)  # Relation
 Post.where(status: 1).order(created_at: :desc).limit(5)</code></pre></div>
-          <div class="enrich-sources"><a href="https://guides.rubyonrails.org/active_record_querying.html" target="_blank" rel="noopener">Active Record Query Interface</a></div>
+          <div class="enrich-sources"><a href="https://www.ruby-lang.org/en/documentation/faq/7/" target="_blank" rel="noopener">Ruby Resmi SSS — Bolum 7 (Metotlar)</a><a href="https://guides.rubyonrails.org/active_record_querying.html" target="_blank" rel="noopener">Active Record Query Interface</a></div>
         </div>
         </div>
         </details>
@@ -3430,7 +3782,7 @@ Post.last(10)
         </div>
         
         <div class="callout callout-web" style="margin:.85rem 0 0">
-          <strong>Bu hafta — internet kaynakli aciklamalar:</strong>
+          <strong>Bu hafta — Ruby resmi SSS + internet aciklamalari (Turkce):</strong>
           <div class="enrich-sources" style="margin-top:.45rem"><a href="#enrich-enum">Active Record Enum</a><a href="#enrich-http-crud">HTTP Metotlari ve CRUD</a><a href="#enrich-erb">ERB Sablonlari</a></div>
         </div>
         
@@ -3456,15 +3808,25 @@ değerini çıktı olarak vermesini söyler.
 views/posts/index.html.erb
 </code></pre></div>
         <div class="panel-enrich" id="enrich-erb">
-          <div class="panel-enrich-label">Internet kaynagi ile aciklama</div>
+          <div class="panel-enrich-label">Internet kaynagi + Ruby resmi SSS (Turkce)</div>
           <p><strong>ERB Sablonlari</strong> — &lt;% %&gt; Ruby kodu calistirir, &lt;%= %&gt; ciktiyi HTML&#x27;e yazar.</p>
           <p>ERB (Embedded Ruby) view dosyalarinda Ruby kodu calistirir. &lt;% if @post %&gt; sadece calistirir, &lt;%= @post.title %&gt; HTML&#x27;e escape edilmis cikti yazar. &lt;%- -%&gt; bosluk kirpma icin kullanilabilir.</p>
+          
+        <div class="ruby-faq-box">
+          <div class="ruby-faq-label">Ruby Resmi SSS (Turkce) — Bolum 5: Iterator&#x27;lar</div>
+          <p class="ruby-faq-q"><strong>S:</strong> Blok nedir ve ERB ile iliskisi?</p>
+          <p class="ruby-faq-a"><strong>C:</strong> Iterator, blok veya Proc kabul eden metottur; blok metot cagrisindan hemen sonra yazilir. ERB sablonlari da gomulu Ruby kodu calistirir: &lt;% %&gt; kod calistirir, &lt;%= %&gt; sonucu yazar. View&#x27;daki each donguleri FAQ&#x27;deki data.each { |i| puts i } ornegiyle ayni blok mantigini kullanir.</p>
+          <a class="ruby-faq-link" href="https://www.ruby-lang.org/en/documentation/faq/5/" target="_blank" rel="noopener">
+            ruby-lang.org resmi FAQ →
+          </a>
+        </div>
+        
           <div class="code-block"><div class="code-label">ornek kod</div><pre><code>&lt;%# yorum %&gt;
 &lt;h1&gt;&lt;%= @post.title %&gt;&lt;/h1&gt;
 &lt;% @posts.each do |post| %&gt;
   &lt;p&gt;&lt;%= link_to post.title, post %&gt;&lt;/p&gt;
 &lt;% end %&gt;</code></pre></div>
-          <div class="enrich-sources"><a href="https://guides.rubyonrails.org/action_view_overview.html" target="_blank" rel="noopener">Rails Action View Overview</a></div>
+          <div class="enrich-sources"><a href="https://www.ruby-lang.org/en/documentation/faq/5/" target="_blank" rel="noopener">Ruby Resmi SSS — Bolum 5 (Iterator&#x27;lar)</a><a href="https://guides.rubyonrails.org/action_view_overview.html" target="_blank" rel="noopener">Rails Action View Overview</a></div>
         </div>
         </div>
         </details>
@@ -3479,9 +3841,19 @@ end
 controllers/posts_controller.rb
 </code></pre></div>
         <div class="panel-enrich" id="enrich-enum">
-          <div class="panel-enrich-label">Internet kaynagi ile aciklama</div>
+          <div class="panel-enrich-label">Internet kaynagi + Ruby resmi SSS (Turkce)</div>
           <p><strong>Active Record Enum</strong> — Integer kolona anlamli isim verir; DB&#x27;de sayi, kodda symbol.</p>
           <p>enum status: { draft: 0, published: 1 } ile status kolonuna isimler baglanir. post.draft? ve post.published! gibi yardimci metotlar otomatik olusur. Veritabaninda integer saklanir, Ruby tarafinda okunabilir.</p>
+          
+        <div class="ruby-faq-box">
+          <div class="ruby-faq-label">Ruby Resmi SSS (Turkce) — Bolum 6: Sozdizimi</div>
+          <p class="ruby-faq-q"><strong>S:</strong> Symbol hash anahtari olarak nasil kullanilir?</p>
+          <p class="ruby-faq-a"><strong>C:</strong> Ruby FAQ: Symbol&#x27;ler hash anahtari icin idealdir — { name: &#x27;Jane&#x27;, age: 24 } sozdizimi symbol key kullanir. Rails enum status: { draft: 0, published: 1 } tanimi veritabaninda integer saklar, Ruby tarafinda :draft gibi symbol isimleri kullanir. draft? ve published! yardimci metotlari otomatik uretilir.</p>
+          <a class="ruby-faq-link" href="https://www.ruby-lang.org/en/documentation/faq/6/" target="_blank" rel="noopener">
+            ruby-lang.org resmi FAQ →
+          </a>
+        </div>
+        
           <div class="code-block"><div class="code-label">ornek kod</div><pre><code>class Post &lt; ApplicationRecord
   enum :status, { draft: 0, published: 1, archived: 2 }
 end
@@ -3490,13 +3862,23 @@ post = Post.new
 post.draft!
 post.draft?       # =&gt; true
 post.status       # =&gt; &quot;draft&quot;</code></pre></div>
-          <div class="enrich-sources"><a href="https://api.rubyonrails.org/classes/ActiveRecord/Enum.html" target="_blank" rel="noopener">Rails Enum API</a></div>
+          <div class="enrich-sources"><a href="https://www.ruby-lang.org/en/documentation/faq/6/" target="_blank" rel="noopener">Ruby Resmi SSS — Bolum 6 (Sozdizimi)</a><a href="https://api.rubyonrails.org/classes/ActiveRecord/Enum.html" target="_blank" rel="noopener">Rails Enum API</a></div>
         </div>
         
         <div class="panel-enrich" id="enrich-http-crud">
-          <div class="panel-enrich-label">Internet kaynagi ile aciklama</div>
+          <div class="panel-enrich-label">Internet kaynagi + Ruby resmi SSS (Turkce)</div>
           <p><strong>HTTP Metotlari ve CRUD</strong> — GET okur, POST olusturur, PATCH gunceller, DELETE siler. resources 7 route uretir.</p>
           <p>RESTful Rails uygulamalarinda HTTP metodu islemi belirler. resources :posts tek satirda index, show, new, create, edit, update, destroy route&#x27;larini olusturur. rails routes komutu ile listelenir.</p>
+          
+        <div class="ruby-faq-box">
+          <div class="ruby-faq-label">Ruby Resmi SSS (Turkce) — Bolum 7: Metotlar</div>
+          <p class="ruby-faq-q"><strong>S:</strong> +, -, * ... operator mu metot mu?</p>
+          <p class="ruby-faq-a"><strong>C:</strong> Ruby FAQ: +, - ve benzeri operator degil, metot cagrisidir; yeniden tanimlanabilir. Rails routes da HTTP istegini Controller&#x27;daki index, show, create gibi metotlara yönlendirir. resources :posts tek satirda yedi CRUD metodu icin yol olusturur — GET okuma, POST olusturma, PATCH guncelleme, DELETE silme.</p>
+          <a class="ruby-faq-link" href="https://www.ruby-lang.org/en/documentation/faq/7/" target="_blank" rel="noopener">
+            ruby-lang.org resmi FAQ →
+          </a>
+        </div>
+        
           <div class="code-block"><div class="code-label">ornek kod</div><pre><code># config/routes.rb
 resources :posts
 
@@ -3505,7 +3887,7 @@ resources :posts
 # POST   /posts          → create
 # PATCH  /posts/:id      → update
 # DELETE /posts/:id      → destroy</code></pre></div>
-          <div class="enrich-sources"><a href="https://guides.rubyonrails.org/routing.html#restful-routing-the-rails-default" target="_blank" rel="noopener">Rails Routing — REST</a></div>
+          <div class="enrich-sources"><a href="https://www.ruby-lang.org/en/documentation/faq/7/" target="_blank" rel="noopener">Ruby Resmi SSS — Bolum 7 (Metotlar)</a><a href="https://guides.rubyonrails.org/routing.html#restful-routing-the-rails-default" target="_blank" rel="noopener">Rails Routing — REST</a></div>
         </div>
         </div>
         </details>
@@ -3981,7 +4363,7 @@ değişkenler @ ile başlar.
         </div>
         
         <div class="callout callout-web" style="margin:.85rem 0 0">
-          <strong>Bu hafta — internet kaynakli aciklamalar:</strong>
+          <strong>Bu hafta — Ruby resmi SSS + internet aciklamalari (Turkce):</strong>
           <div class="enrich-sources" style="margin-top:.45rem"><a href="#enrich-strong-parameters">Strong Parameters</a><a href="#enrich-form-with">form_with ve Partials</a></div>
         </div>
         
@@ -4152,9 +4534,19 @@ params.require(:post).permit(:title, :article, :status)
 end
 </code></pre></div>
         <div class="panel-enrich" id="enrich-strong-parameters">
-          <div class="panel-enrich-label">Internet kaynagi ile aciklama</div>
+          <div class="panel-enrich-label">Internet kaynagi + Ruby resmi SSS (Turkce)</div>
           <p><strong>Strong Parameters</strong> — params icinden sadece izin verilen alanlar gecirilir; guvenlik icin zorunlu.</p>
           <p>Strong Parameters mass assignment saldirisini onler. params.require(:post).permit(:title, :body) sadece title ve body&#x27;yi kabul eder. admin gibi ek alanlar permit edilmezse atanamaz.</p>
+          
+        <div class="ruby-faq-box">
+          <div class="ruby-faq-label">Ruby Resmi SSS (Turkce) — Bolum 4: Degiskenler ve Argumanlar</div>
+          <p class="ruby-faq-q"><strong>S:</strong> Argumanlar nasil gecirilir?</p>
+          <p class="ruby-faq-a"><strong>C:</strong> Ruby&#x27;de gercek arguman formal argumana atanir; nesne referansi kopyalanir, nesnenin kendisi degil. params.require(:post).permit(:title, :body) yalnizca izin verilen alanlari yeni Post nesnesine gecirir — kotu niyetli ek alanlar (admin: true gibi) atanamaz. Bu, Ruby&#x27;nin arguman gecirme modeli uzerine Rails guvenlik...</p>
+          <a class="ruby-faq-link" href="https://www.ruby-lang.org/en/documentation/faq/4/" target="_blank" rel="noopener">
+            ruby-lang.org resmi FAQ →
+          </a>
+        </div>
+        
           <div class="code-block"><div class="code-label">ornek kod</div><pre><code>class PostsController &lt; ApplicationController
   def create
     @post = Post.new(post_params)
@@ -4167,7 +4559,7 @@ end
     params.require(:post).permit(:title, :body, :status)
   end
 end</code></pre></div>
-          <div class="enrich-sources"><a href="https://guides.rubyonrails.org/action_controller_overview.html#strong-parameters" target="_blank" rel="noopener">Rails Strong Parameters Guide</a></div>
+          <div class="enrich-sources"><a href="https://www.ruby-lang.org/en/documentation/faq/4/" target="_blank" rel="noopener">Ruby Resmi SSS — Bolum 4 (Degiskenler ve Argumanlar)</a><a href="https://guides.rubyonrails.org/action_controller_overview.html#strong-parameters" target="_blank" rel="noopener">Rails Strong Parameters Guide</a></div>
         </div>
         </div>
         </details>
@@ -4228,9 +4620,19 @@ Post 1 Başlık - Görüntüle
 &lt;%= link_to &quot;Geri&quot;, posts_path %&gt;
 </code></pre></div>
         <div class="panel-enrich" id="enrich-form-with">
-          <div class="panel-enrich-label">Internet kaynagi ile aciklama</div>
+          <div class="panel-enrich-label">Internet kaynagi + Ruby resmi SSS (Turkce)</div>
           <p><strong>form_with ve Partials</strong> — form_with model ile form olusturur; partial (_form) tekrari azaltir.</p>
           <p>form_with model: @post otomatik action/method belirler (new→create, edit→update). Partial dosyalar _ ile baslar: render &#x27;form&#x27;. before_action :set_post gibi callback&#x27;ler tekrar eden kodu controller&#x27;da toplar.</p>
+          
+        <div class="ruby-faq-box">
+          <div class="ruby-faq-label">Ruby Resmi SSS (Turkce) — Bolum 5: Iterator&#x27;lar</div>
+          <p class="ruby-faq-q"><strong>S:</strong> Blok iterator&#x27;a nasil gecirilir?</p>
+          <p class="ruby-faq-a"><strong>C:</strong> Blok, iterator cagrisindan hemen sonra yazilir. form_with model: @post do |f| ... end yapisinda |f| blogu form builder nesnesini alir — FAQ&#x27;deki each { |i| ... } ornegiyle ayni mantik. before_action gibi callback&#x27;ler de Ruby metotlaridir.</p>
+          <a class="ruby-faq-link" href="https://www.ruby-lang.org/en/documentation/faq/5/" target="_blank" rel="noopener">
+            ruby-lang.org resmi FAQ →
+          </a>
+        </div>
+        
           <div class="code-block"><div class="code-label">ornek kod</div><pre><code>&lt;%# app/views/posts/_form.html.erb %&gt;
 &lt;%= form_with model: @post do |f| %&gt;
   &lt;%= f.text_field :title %&gt;
@@ -4239,7 +4641,7 @@ Post 1 Başlık - Görüntüle
 
 &lt;%# controller %&gt;
 before_action :set_post, only: [:show, :edit, :update, :destroy]</code></pre></div>
-          <div class="enrich-sources"><a href="https://guides.rubyonrails.org/form_helpers.html" target="_blank" rel="noopener">Rails Form Helpers</a></div>
+          <div class="enrich-sources"><a href="https://www.ruby-lang.org/en/documentation/faq/5/" target="_blank" rel="noopener">Ruby Resmi SSS — Bolum 5 (Iterator&#x27;lar)</a><a href="https://guides.rubyonrails.org/form_helpers.html" target="_blank" rel="noopener">Rails Form Helpers</a></div>
         </div>
         </div>
         </details>
@@ -4449,7 +4851,7 @@ Ardından views/posts/ new.html.erb dosyasını oluşturun.
         </div>
         
         <div class="callout callout-web" style="margin:.85rem 0 0">
-          <strong>Bu hafta — internet kaynakli aciklamalar:</strong>
+          <strong>Bu hafta — Ruby resmi SSS + internet aciklamalari (Turkce):</strong>
           <div class="enrich-sources" style="margin-top:.45rem"><a href="#enrich-bootstrap-grid">Bootstrap Grid</a></div>
         </div>
         
@@ -4464,16 +4866,26 @@ Ardından views/posts/ new.html.erb dosyasını oluşturun.
 <p>bir frontend çerçevesidir. Formlar, butonlar, tablolar, navigation, modals gibi html</p>
 <p>ve css templateleri mevcuttur ve isteğe bağlı bazı JS eklentileri de mevcuttur.</p>
         <div class="panel-enrich" id="enrich-bootstrap-grid">
-          <div class="panel-enrich-label">Internet kaynagi ile aciklama</div>
+          <div class="panel-enrich-label">Internet kaynagi + Ruby resmi SSS (Turkce)</div>
           <p><strong>Bootstrap Grid</strong> — 12 sutunluk responsive grid; container, row, col-* siniflari.</p>
           <p>Bootstrap 5 grid sistemi 12 sutun uzerinden calisir. container icerigi ortalar, row satir, col-md-6 medium ekranda yarim genislik demektir. Rails 7+ ile rails new --css bootstrap veya importmap ile eklenir.</p>
+          
+        <div class="ruby-faq-box">
+          <div class="ruby-faq-label">Ruby Resmi SSS (Turkce) — Bolum 1: Genel Sorular</div>
+          <p class="ruby-faq-q"><strong>S:</strong> Ruby ile sunucu ve arayuz nasil birlikte calisir?</p>
+          <p class="ruby-faq-a"><strong>C:</strong> Bootstrap CSS/HTML katmanidir; Ruby FAQ dogrudan Bootstrap anlatmaz. Ancak Rails view&#x27;larinda ERB ile Ruby kodu calistirilirken HTML sinifleri (container, row, col) statik icerik olarak yazilir. Ruby&#x27;nin gorevi veriyi hazirlamak (@posts), Bootstrap in gorunumu duzenlemektir.</p>
+          <a class="ruby-faq-link" href="https://www.ruby-lang.org/en/documentation/faq/1/" target="_blank" rel="noopener">
+            ruby-lang.org resmi FAQ →
+          </a>
+        </div>
+        
           <div class="code-block"><div class="code-label">ornek kod</div><pre><code>&lt;div class=&quot;container&quot;&gt;
   &lt;div class=&quot;row&quot;&gt;
     &lt;div class=&quot;col-md-8&quot;&gt;Ana icerik&lt;/div&gt;
     &lt;div class=&quot;col-md-4&quot;&gt;Sidebar&lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;</code></pre></div>
-          <div class="enrich-sources"><a href="https://getbootstrap.com/docs/5.3/layout/grid/" target="_blank" rel="noopener">Bootstrap Grid Docs</a></div>
+          <div class="enrich-sources"><a href="https://www.ruby-lang.org/en/documentation/faq/1/" target="_blank" rel="noopener">Ruby Resmi SSS — Bolum 1 (Genel Sorular)</a><a href="https://getbootstrap.com/docs/5.3/layout/grid/" target="_blank" rel="noopener">Bootstrap Grid Docs</a></div>
         </div>
         </div>
         </details>
@@ -4882,7 +5294,7 @@ Bu kod bir örnektir.
         </div>
         
         <div class="callout callout-web" style="margin:.85rem 0 0">
-          <strong>Bu hafta — internet kaynakli aciklamalar:</strong>
+          <strong>Bu hafta — Ruby resmi SSS + internet aciklamalari (Turkce):</strong>
           <div class="enrich-sources" style="margin-top:.45rem"><a href="#enrich-associations">Model Iliskileri (belongs_to / has_many)</a><a href="#enrich-habtm">HABTM (has_and_belongs_to_many)</a></div>
         </div>
         
@@ -4903,9 +5315,19 @@ belongs_to :author
 end
 </code></pre></div>
         <div class="panel-enrich" id="enrich-associations">
-          <div class="panel-enrich-label">Internet kaynagi ile aciklama</div>
+          <div class="panel-enrich-label">Internet kaynagi + Ruby resmi SSS (Turkce)</div>
           <p><strong>Model Iliskileri (belongs_to / has_many)</strong> — belongs_to FK bu tabloda; has_many karsi tarafta cok kayit.</p>
           <p>Post belongs_to :category — posts tablosunda category_id vardir. Category has_many :posts — bir kategorinin cok postu olabilir. has_many :through ara model ile iliski kurar. dependent: :destroy silme davranisini belirler.</p>
+          
+        <div class="ruby-faq-box">
+          <div class="ruby-faq-label">Ruby Resmi SSS (Turkce) — Bolum 7: Metotlar</div>
+          <p class="ruby-faq-q"><strong>S:</strong> Modul include / prepend ve kalitim zinciri</p>
+          <p class="ruby-faq-a"><strong>C:</strong> belongs_to ve has_many Rails iliskileridir; altta yatan Ruby kavrami kalitim ve modul karistirmadir. FAQ: include modulu ancestors zincirine ekler; prepend onune koyarak ust sinif metodunu ezebilirsiniz. post.category.name cagrisi once Post&#x27;ta, gerekirse ust siniflarda category metodunu arar.</p>
+          <a class="ruby-faq-link" href="https://www.ruby-lang.org/en/documentation/faq/7/" target="_blank" rel="noopener">
+            ruby-lang.org resmi FAQ →
+          </a>
+        </div>
+        
           <div class="code-block"><div class="code-label">ornek kod</div><pre><code>class Post &lt; ApplicationRecord
   belongs_to :category
   belongs_to :user
@@ -4917,7 +5339,7 @@ end
 
 post.category.name
 category.posts</code></pre></div>
-          <div class="enrich-sources"><a href="https://guides.rubyonrails.org/association_basics.html" target="_blank" rel="noopener">Rails Associations Guide</a></div>
+          <div class="enrich-sources"><a href="https://www.ruby-lang.org/en/documentation/faq/7/" target="_blank" rel="noopener">Ruby Resmi SSS — Bolum 7 (Metotlar)</a><a href="https://guides.rubyonrails.org/association_basics.html" target="_blank" rel="noopener">Rails Associations Guide</a></div>
         </div>
         </div>
         </details>
@@ -4932,9 +5354,19 @@ has_and_belongs_to_many :users
 end
 </code></pre></div>
         <div class="panel-enrich" id="enrich-habtm">
-          <div class="panel-enrich-label">Internet kaynagi ile aciklama</div>
+          <div class="panel-enrich-label">Internet kaynagi + Ruby resmi SSS (Turkce)</div>
           <p><strong>HABTM (has_and_belongs_to_many)</strong> — Coktan coga iliski; ara join tablosu, genelde id kolonu yok.</p>
           <p>has_and_belongs_to_many iki model arasinda coktan coga baglanti kurar. posts_categories gibi ara tablo sadece iki foreign key icerir. Ek ozellik (tarih vb.) gerekiyorsa has_many :through tercih edilir.</p>
+          
+        <div class="ruby-faq-box">
+          <div class="ruby-faq-label">Ruby Resmi SSS (Turkce) — Bolum 2: Karsilastirmalar</div>
+          <p class="ruby-faq-q"><strong>S:</strong> Mixin (modul karistirma) nedir?</p>
+          <p class="ruby-faq-a"><strong>C:</strong> Ruby tek kalitim destekler ama guclu mixin kavramina sahiptir: sinif tanimina modul dahil edilince o modulun metotlari sinifa eklenir. has_and_belongs_to_many iki model arasinda coktan coga baglanti kurar; join tablosu ara nesne gibi davranir. Ek ozellik gerekiyorsa has_many :through tercih edilir.</p>
+          <a class="ruby-faq-link" href="https://www.ruby-lang.org/en/documentation/faq/2/" target="_blank" rel="noopener">
+            ruby-lang.org resmi FAQ →
+          </a>
+        </div>
+        
           <div class="code-block"><div class="code-label">ornek kod</div><pre><code>class Post &lt; ApplicationRecord
   has_and_belongs_to_many :categories
 end
@@ -4944,7 +5376,7 @@ class Category &lt; ApplicationRecord
 end
 
 # join table: categories_posts (post_id, category_id)</code></pre></div>
-          <div class="enrich-sources"><a href="https://guides.rubyonrails.org/association_basics.html#the-has-and-belongs-to-many-association" target="_blank" rel="noopener">Rails HABTM</a></div>
+          <div class="enrich-sources"><a href="https://www.ruby-lang.org/en/documentation/faq/2/" target="_blank" rel="noopener">Ruby Resmi SSS — Bolum 2 (Karsilastirmalar)</a><a href="https://guides.rubyonrails.org/association_basics.html#the-has-and-belongs-to-many-association" target="_blank" rel="noopener">Rails HABTM</a></div>
         </div>
         </div>
         </details>
@@ -5395,7 +5827,7 @@ db/migrate/create_join_table_posts_categories
         </div>
         
         <div class="callout callout-web" style="margin:.85rem 0 0">
-          <strong>Bu hafta — internet kaynakli aciklamalar:</strong>
+          <strong>Bu hafta — Ruby resmi SSS + internet aciklamalari (Turkce):</strong>
           <div class="enrich-sources" style="margin-top:.45rem"><a href="#enrich-validation">Validation (validates)</a><a href="#enrich-normalizes">Normalization (normalizes)</a><a href="#enrich-active-storage">Active Storage</a></div>
         </div>
         
@@ -5414,9 +5846,19 @@ bırakılamaz.&quot;}
 end
 </code></pre></div>
         <div class="panel-enrich" id="enrich-validation">
-          <div class="panel-enrich-label">Internet kaynagi ile aciklama</div>
+          <div class="panel-enrich-label">Internet kaynagi + Ruby resmi SSS (Turkce)</div>
           <p><strong>Validation (validates)</strong> — Model kaydetmeden once veri kurallarini kontrol eder.</p>
           <p>validates :title, presence: true bos birakilamaz der. uniqueness tekil olmayi, length uzunluk sinirini kontrol eder. Gecersiz kayit save → false doner, errors mesajlari dolar.</p>
+          
+        <div class="ruby-faq-box">
+          <div class="ruby-faq-label">Ruby Resmi SSS (Turkce) — Bolum 7: Metotlar</div>
+          <p class="ruby-faq-q"><strong>S:</strong> Yikici (destructive) metot nedir?</p>
+          <p class="ruby-faq-a"><strong>C:</strong> Yikici metot nesnenin durumunu degistirir. String&#x27;de str ve str! farki gibi: validates kurallari gecmezse save false doner ve errors dolar — nesne durumu kaydedilmez. downcase! gibi ! ile biten metotlar aliciyi yerinde degistirir; validation gecersiz kaydi veritabanina yazmaz.</p>
+          <a class="ruby-faq-link" href="https://www.ruby-lang.org/en/documentation/faq/7/" target="_blank" rel="noopener">
+            ruby-lang.org resmi FAQ →
+          </a>
+        </div>
+        
           <div class="code-block"><div class="code-label">ornek kod</div><pre><code>class Post &lt; ApplicationRecord
   validates :title, presence: true, length: { minimum: 3 }
   validates :slug, uniqueness: true
@@ -5425,7 +5867,7 @@ end
 post = Post.new
 post.valid?   # =&gt; false
 post.errors.full_messages</code></pre></div>
-          <div class="enrich-sources"><a href="https://guides.rubyonrails.org/active_record_validations.html" target="_blank" rel="noopener">Rails Validations Guide</a></div>
+          <div class="enrich-sources"><a href="https://www.ruby-lang.org/en/documentation/faq/7/" target="_blank" rel="noopener">Ruby Resmi SSS — Bolum 7 (Metotlar)</a><a href="https://guides.rubyonrails.org/active_record_validations.html" target="_blank" rel="noopener">Rails Validations Guide</a></div>
         </div>
         </div>
         </details>
@@ -5434,16 +5876,26 @@ post.errors.full_messages</code></pre></div>
           <summary>Kategori modelindeki name alanının boş geçilmemesini ve normalizasyon</summary>
           <div class="panel-inner"><p>ile titleize edilmesini sağlayın.</p>
         <div class="panel-enrich" id="enrich-normalizes">
-          <div class="panel-enrich-label">Internet kaynagi ile aciklama</div>
+          <div class="panel-enrich-label">Internet kaynagi + Ruby resmi SSS (Turkce)</div>
           <p><strong>Normalization (normalizes)</strong> — Kaydetmeden once veriyi otomatik duzenler.</p>
           <p>Rails 7.1+ normalizes ile attribute kaydedilmeden once transform edilir. Ornegin email downcase, title strip ile bosluk temizlenir. Validation&#x27;dan once calisir, tutarli veri saglar.</p>
+          
+        <div class="ruby-faq-box">
+          <div class="ruby-faq-label">Ruby Resmi SSS (Turkce) — Bolum 4: Degiskenler ve Argumanlar</div>
+          <p class="ruby-faq-q"><strong>S:</strong> Atama nesnenin kopyasini mi uretir?</p>
+          <p class="ruby-faq-a"><strong>C:</strong> Ruby FAQ: Atama tek basina yeni nesne kopyasi olusturmaz; degiskenler nesneye referans tutar. normalizes email&#x27;i kaydetmeden once strip.downcase ile donusturur — validation&#x27;dan once calisir. Ayni referans mantigi: b.concat(&#x27;d&#x27;) cagrisi a ve A degiskenlerinin de gosterdigi nesneyi degistirebilir.</p>
+          <a class="ruby-faq-link" href="https://www.ruby-lang.org/en/documentation/faq/4/" target="_blank" rel="noopener">
+            ruby-lang.org resmi FAQ →
+          </a>
+        </div>
+        
           <div class="code-block"><div class="code-label">ornek kod</div><pre><code>class User &lt; ApplicationRecord
   normalizes :email, with: -&gt;(e) { e.strip.downcase }
 end
 
 User.create(email: &quot;  ALI@Mail.COM  &quot;)
 # email =&gt; &quot;ali@mail.com&quot;</code></pre></div>
-          <div class="enrich-sources"><a href="https://api.rubyonrails.org/classes/ActiveRecord/Normalization/ClassMethods.html" target="_blank" rel="noopener">Rails normalizes API</a></div>
+          <div class="enrich-sources"><a href="https://www.ruby-lang.org/en/documentation/faq/4/" target="_blank" rel="noopener">Ruby Resmi SSS — Bolum 4 (Degiskenler ve Argumanlar)</a><a href="https://api.rubyonrails.org/classes/ActiveRecord/Normalization/ClassMethods.html" target="_blank" rel="noopener">Rails normalizes API</a></div>
         </div>
         </div>
         </details>
@@ -5905,9 +6357,19 @@ Blog postuna resim alanı ekleyebilmek için dosya upload edebilmemiz
 gerekiyor. Burada Active Storage devreye giriyor.
 </code></pre></div>
         <div class="panel-enrich" id="enrich-active-storage">
-          <div class="panel-enrich-label">Internet kaynagi ile aciklama</div>
+          <div class="panel-enrich-label">Internet kaynagi + Ruby resmi SSS (Turkce)</div>
           <p><strong>Active Storage</strong> — Dosya/resim yukleme; has_one_attached / has_many_attached.</p>
           <p>Active Storage Cloud veya disk uzerinde dosya yonetir. has_one_attached :avatar model ile dosyayi iliskilendirir. Formda file_field :avatar kullanilir; variant ile thumbnail uretilebilir.</p>
+          
+        <div class="ruby-faq-box">
+          <div class="ruby-faq-label">Ruby Resmi SSS (Turkce) — Bolum 4: Degiskenler ve Argumanlar</div>
+          <p class="ruby-faq-q"><strong>S:</strong> Nesnem beklenmedik sekilde neden degisti?</p>
+          <p class="ruby-faq-a"><strong>C:</strong> Degiskenler nesneye referans tutar; a = b = &#x27;abc&#x27; sonrasinda b.concat(&#x27;d&#x27;) hem a&#x27;yi hem b&#x27;yi etkiler. has_one_attached :image dosyayi modele baglar; attached? ile kontrol edilir. Parametre gecirme de referans oldugu icin formdan gelen dosya nesnesi uzerinde islem yapilir.</p>
+          <a class="ruby-faq-link" href="https://www.ruby-lang.org/en/documentation/faq/4/" target="_blank" rel="noopener">
+            ruby-lang.org resmi FAQ →
+          </a>
+        </div>
+        
           <div class="code-block"><div class="code-label">ornek kod</div><pre><code>class Post &lt; ApplicationRecord
   has_one_attached :image
 end
@@ -5917,7 +6379,7 @@ end
 
 # view
 &lt;%= image_tag @post.image if @post.image.attached? %&gt;</code></pre></div>
-          <div class="enrich-sources"><a href="https://guides.rubyonrails.org/active_storage_overview.html" target="_blank" rel="noopener">Rails Active Storage Overview</a></div>
+          <div class="enrich-sources"><a href="https://www.ruby-lang.org/en/documentation/faq/4/" target="_blank" rel="noopener">Ruby Resmi SSS — Bolum 4 (Degiskenler ve Argumanlar)</a><a href="https://guides.rubyonrails.org/active_storage_overview.html" target="_blank" rel="noopener">Rails Active Storage Overview</a></div>
         </div>
         </div>
         </details>
@@ -6045,7 +6507,7 @@ Eklenen Resmin Blog Sayfasında Gösterilmesi
         </div>
         
         <div class="callout callout-web" style="margin:.85rem 0 0">
-          <strong>Bu hafta — internet kaynakli aciklamalar:</strong>
+          <strong>Bu hafta — Ruby resmi SSS + internet aciklamalari (Turkce):</strong>
           <div class="enrich-sources" style="margin-top:.45rem"><a href="#enrich-i18n">I18n (Yerellestirme)</a><a href="#enrich-friendly-id">FriendlyId (Slug URL)</a><a href="#enrich-action-text">Action Text</a></div>
         </div>
         
@@ -6124,9 +6586,19 @@ show linki.
 btn-sm&quot; %&gt;
 </code></pre></div>
         <div class="panel-enrich" id="enrich-i18n">
-          <div class="panel-enrich-label">Internet kaynagi ile aciklama</div>
+          <div class="panel-enrich-label">Internet kaynagi + Ruby resmi SSS (Turkce)</div>
           <p><strong>I18n (Yerellestirme)</strong> — Coklu dil destegi; I18n.t ve config/locales/*.yml dosyalari.</p>
           <p>I18n modulu metinleri YAML dosyalarinda tutar. I18n.t(&#x27;posts.title&#x27;) ceviri doner. URL&#x27;de ?locale=en veya session ile dil degistirilir. Rails varsayilan locale config/application.rb&#x27;de ayarlanir.</p>
+          
+        <div class="ruby-faq-box">
+          <div class="ruby-faq-label">Ruby Resmi SSS (Turkce) — Bolum 6: Sozdizimi</div>
+          <p class="ruby-faq-q"><strong>S:</strong> Symbol sabit veya enum degeri olarak</p>
+          <p class="ruby-faq-a"><strong>C:</strong> FAQ: status = :open veya NORTH = :NORTH gibi Symbol&#x27;ler sabit veya enum degeri olarak kullanilabilir. I18n.t(&#x27;posts.title&#x27;) ceviri anahtarini string olarak alir; locale=:en gibi symbol parametreler dil seciminde kullanilir.</p>
+          <a class="ruby-faq-link" href="https://www.ruby-lang.org/en/documentation/faq/6/" target="_blank" rel="noopener">
+            ruby-lang.org resmi FAQ →
+          </a>
+        </div>
+        
           <div class="code-block"><div class="code-label">ornek kod</div><pre><code># config/locales/tr.yml
 tr:
   posts:
@@ -6135,7 +6607,7 @@ tr:
 # view
 &lt;%= t(&#x27;posts.title&#x27;) %&gt;
 &lt;%= link_to &#x27;EN&#x27;, url_for(locale: :en) %&gt;</code></pre></div>
-          <div class="enrich-sources"><a href="https://guides.rubyonrails.org/i18n.html" target="_blank" rel="noopener">Rails I18n Guide</a></div>
+          <div class="enrich-sources"><a href="https://www.ruby-lang.org/en/documentation/faq/6/" target="_blank" rel="noopener">Ruby Resmi SSS — Bolum 6 (Sozdizimi)</a><a href="https://guides.rubyonrails.org/i18n.html" target="_blank" rel="noopener">Rails I18n Guide</a></div>
         </div>
         </div>
         </details>
@@ -6505,7 +6977,7 @@ app/models/post.rb
         </div>
         
         <div class="callout callout-web" style="margin:.85rem 0 0">
-          <strong>Bu hafta — internet kaynakli aciklamalar:</strong>
+          <strong>Bu hafta — Ruby resmi SSS + internet aciklamalari (Turkce):</strong>
           <div class="enrich-sources" style="margin-top:.45rem"><a href="#enrich-devise">Devise (Authentication)</a><a href="#enrich-authorization">Authorization (Yetkilendirme)</a></div>
         </div>
         
@@ -6523,9 +6995,19 @@ app/models/user.rb
 User modeline gender (cinsiyet) için parametreleri enum olarak ekleyelim ve
 </code></pre></div>
         <div class="panel-enrich" id="enrich-devise">
-          <div class="panel-enrich-label">Internet kaynagi ile aciklama</div>
+          <div class="panel-enrich-label">Internet kaynagi + Ruby resmi SSS (Turkce)</div>
           <p><strong>Devise (Authentication)</strong> — Hazir kullanici girisi: kayit, giris, sifre sifirlama.</p>
           <p>Devise gem&#x27;i User modeline moduller ekler (:database_authenticatable, :registerable vb.). authenticate_user! giris zorunlu kilar. current_user oturum acmis kullaniciyi doner. devise_for :users routes.rb&#x27;ye login/register yollarini ekler.</p>
+          
+        <div class="ruby-faq-box">
+          <div class="ruby-faq-label">Ruby Resmi SSS (Turkce) — Bolum 7: Metotlar</div>
+          <p class="ruby-faq-q"><strong>S:</strong> Bu basit fonksiyon benzeri metotlar nereden geliyor?</p>
+          <p class="ruby-faq-a"><strong>C:</strong> class disinda yazilan def aslinda Object sinifina ait metottur; self gizli alicidir. Devise User modeline modul ekleyerek sign_in, current_user gibi metotlari Controller&#x27;a getirir. authenticate_user! cagrilmazsa yonlendirme yapilir — Ruby&#x27;de her sey metot mesajidir.</p>
+          <a class="ruby-faq-link" href="https://www.ruby-lang.org/en/documentation/faq/7/" target="_blank" rel="noopener">
+            ruby-lang.org resmi FAQ →
+          </a>
+        </div>
+        
           <div class="code-block"><div class="code-label">ornek kod</div><pre><code>class ApplicationController &lt; ActionController::Base
   before_action :authenticate_user!
 end
@@ -6535,7 +7017,7 @@ class PostsController &lt; ApplicationController
     @post = current_user.posts.new(post_params)
   end
 end</code></pre></div>
-          <div class="enrich-sources"><a href="https://github.com/heartcombo/devise" target="_blank" rel="noopener">Devise GitHub Wiki</a><a href="https://github.com/heartcombo/devise#getting-started" target="_blank" rel="noopener">Devise Getting Started</a></div>
+          <div class="enrich-sources"><a href="https://www.ruby-lang.org/en/documentation/faq/7/" target="_blank" rel="noopener">Ruby Resmi SSS — Bolum 7 (Metotlar)</a><a href="https://github.com/heartcombo/devise" target="_blank" rel="noopener">Devise GitHub Wiki</a><a href="https://github.com/heartcombo/devise#getting-started" target="_blank" rel="noopener">Devise Getting Started</a></div>
         </div>
         </div>
         </details>
@@ -6684,9 +7166,19 @@ tr:
           <summary>Authentication ve Authorization Farkları</summary>
           <div class="panel-inner">
         <div class="panel-enrich" id="enrich-authorization">
-          <div class="panel-enrich-label">Internet kaynagi ile aciklama</div>
+          <div class="panel-enrich-label">Internet kaynagi + Ruby resmi SSS (Turkce)</div>
           <p><strong>Authorization (Yetkilendirme)</strong> — Kim oldugunu degil, ne yapabilecegini kontrol eder.</p>
           <p>Authentication kimlik dogrulama (Devise), Authorization yetkilendirme (admin mi?). user.admin? gibi metotlar veya Pundit/Cancancan gem&#x27;leri ile erisim kontrol edilir. Controller&#x27;da unless current_user.admin? redirect yapilir.</p>
+          
+        <div class="ruby-faq-box">
+          <div class="ruby-faq-label">Ruby Resmi SSS (Turkce) — Bolum 7: Metotlar</div>
+          <p class="ruby-faq-q"><strong>S:</strong> private ve protected arasindaki fark nedir?</p>
+          <p class="ruby-faq-a"><strong>C:</strong> private: metot yalnizca fonksiyon formunda (alici yazilmadan) cagrilabilir; other.foo seklinde baska nesnede cagrilamaz. protected: kendi sinifi ve alt siniflar icinden alici ile cagrilabilir (ornegin age &lt;=&gt; other.age). Authorization: current_user.admin? ile yetki kontrolu — authentication (Devise) kim oldugunu,...</p>
+          <a class="ruby-faq-link" href="https://www.ruby-lang.org/en/documentation/faq/7/" target="_blank" rel="noopener">
+            ruby-lang.org resmi FAQ →
+          </a>
+        </div>
+        
           <div class="code-block"><div class="code-label">ornek kod</div><pre><code>def destroy
   unless current_user.admin?
     redirect_to root_path, alert: &quot;Yetkiniz yok&quot;
@@ -6694,7 +7186,7 @@ tr:
   end
   @post.destroy
 end</code></pre></div>
-          <div class="enrich-sources"><a href="https://guides.rubyonrails.org/security.html" target="_blank" rel="noopener">Rails Security Guide</a></div>
+          <div class="enrich-sources"><a href="https://www.ruby-lang.org/en/documentation/faq/7/" target="_blank" rel="noopener">Ruby Resmi SSS — Bolum 7 (Metotlar)</a><a href="https://guides.rubyonrails.org/security.html" target="_blank" rel="noopener">Rails Security Guide</a></div>
         </div>
         </div>
         </details>
@@ -7291,12 +7783,10 @@ git add . &amp;&amp; git commit -m &quot;mesaj&quot; &amp;&amp; git push
     
     <div class="course-banner course-banner-oop" id="oop-course">
       <h2>Nesne Yonelimli Programlama</h2>
-      <p>NYP II — Hafta 1-9 PDF arsivi, SOLID alistirmalari cozumlu, LSP Solo Leveling bonus.</p>
+      <p>NYP II — Hafta 1-9 PDF arsivi. Hafta 10: SOLID calismalari ve cozumlu alistirmalar.</p>
       <div class="course-banner-actions">
         <a class="btn" href="#oop-konu-indeksi">Konu Indeksi</a>
-        <a class="btn" href="#oop-solid-alistirmalar">Hafta 9 Alistirmalar</a>
-        <a class="btn" href="#solid-ilkeleri">SOLID Ilkeleri</a>
-        <a class="btn" href="#lsp-solo-leveling">LSP Ornegi</a>
+        <a class="btn" href="#hafta-10-solid-calisma-odev-cozumleri">Hafta 10 SOLID</a>
         <a class="btn" href="#oop-ezber">OOP Ezber</a>
       </div>
     </div>
@@ -10570,17 +11060,17 @@ print(ogr2
       <div class="week-head">
         <div class="week-head-top">
           <span class='week-badge'>Hafta 9</span>
-          <span class='week-tag'>SOLID</span>
+          <span class='week-tag'>SOLID (PDF)</span>
         </div>
         <h2>Hafta 9 — SOLID Prensipleri</h2>
-        <div class='week-summary'><strong>Bu haftada ne ogreniyorsun?</strong> S-O-L-I-D ilkeleri slayt anlatimi. Alistirmalar ayri bolumde.</div>
-        <div class='focus-chips'><span class="chip">SRP tek is</span><span class="chip">OCP genislet degistirme</span><span class="chip">LSP yerine koy</span><span class="chip">ISP kucuk arayuz</span><span class="chip">DIP soyut bagimlilik</span></div>
+        <div class='week-summary'><strong>Bu haftada ne ogreniyorsun?</strong> PDF 9. hafta slaytlari: SOLID tanimlari, SRP/OCP/LSP/ISP/DIP anlatimi.</div>
+        <div class='focus-chips'><span class="chip">SRP tek is</span><span class="chip">OCP genislet</span><span class="chip">LSP yerine koy</span><span class="chip">ISP kucuk arayuz</span><span class="chip">DIP soyut bagimlilik</span></div>
       </div>
       <div class="week-body">
     
         <div class="simple-box">
           <h3>Basit Anlatim</h3>
-          <ul><li>SRP tek is</li><li>OCP genislet degistirme</li><li>LSP yerine koy</li><li>ISP kucuk arayuz</li><li>DIP soyut bagimlilik</li></ul>
+          <ul><li>SRP tek is</li><li>OCP genislet</li><li>LSP yerine koy</li><li>ISP kucuk arayuz</li><li>DIP soyut bagimlilik</li></ul>
         </div>
         
         <details class="panel">
@@ -11098,292 +11588,34 @@ SaltOkunurDosya(Okunabilir), GeciciDosya(Okunabilir, Yazilabilir)
           <div class="panel-inner"><p>Slayttaki tüm örnek kodları çözme</p></div>
         </details>
         </div></section>
-    <section class="special-block" id="oop-solid-alistirmalar">
-      <div class="special-head"><h2>Hafta 9 — SOLID Alistirmalari (Cozumlu)</h2></div>
-      <div class="special-body">
-        <div class="callout callout-exam">
-          PDF 9. hafta odevleri: AlanHesaplayici (OCP), Dosya (LSP), Cihaz (ISP), Bildirim (DIP).
-          Asagida kotu/iyi kod ve aciklama var.
+    <section class="week-block oop-week" id="hafta-10-solid-calisma-odev-cozumleri">
+      <div class="week-head">
+        <div class="week-head-top">
+          <span class="week-badge">Hafta 10</span>
+          <span class="week-tag">SOLID Calisma</span>
+        </div>
+        <h2>Hafta 10 — SOLID Calisma & Odev Cozumleri</h2>
+        <div class="week-summary"><strong>Bu haftada ne var?</strong> Odev formatinda 5 SOLID ilkesi, PDF alistirmalari (OCP/LSP/ISP/DIP) cozumlu, LSP Solo Leveling.</div>
+        <div class="focus-chips"><span class="chip">Her ilke: tanim, amac, kotu/iyi kod, neden?</span><span class="chip">Sinif arkadas ornekleri: SRP, OCP, LSP, ISP, DIP (Python)</span><span class="chip">AlanHesaplayici, Dosya, Cihaz, Bildirim odevleri</span><span class="chip">Solo Leveling LSP ornegi — sinav icin</span></div>
+      </div>
+      <div class="week-body">
+        <div class="simple-box">
+          <h3>Hafta 10 Ozeti</h3>
+          <ul><li>Her ilke: tanim, amac, kotu/iyi kod, neden?</li><li>Sinif arkadas ornekleri: SRP, OCP, LSP, ISP, DIP (Python)</li><li>AlanHesaplayici, Dosya, Cihaz, Bildirim odevleri</li><li>Solo Leveling LSP ornegi — sinav icin</li></ul>
         </div>
         
-        <article class="solid-principle" id="oop-ex-ocp-alan-hesaplayici">
-          <div class="solid-principle-head">
-            <div class="solid-letter">O</div>
-            <div>
-              <h3>Open/Closed — AlanHesaplayici</h3>
-              <span>SOLID — Hafta 9 Alistirma</span>
-            </div>
-          </div>
-          <div class="solid-body">
-            <div class="solid-row">
-              <div class="solid-row-label">Problem</div>
-              <p>Yeni sekil eklendiginde AlanHesaplayici icindeki if/elif blogu degismek zorunda. Mevcut kod her yeni sekilde kirilganlasir.</p>
-            </div>
-            <div class="solid-code-grid">
-              <div class="solid-code-box bad">
-                <div class="solid-code-box-head">Ilkeye aykiri (kotu) kod</div>
-                <pre><code>class AlanHesaplayici:
-    def alan_hesapla(self, sekil_tipi, *args):
-        if sekil_tipi == &quot;daire&quot;:
-            yaricap = args[0]
-            return 3.14159 * yaricap * yaricap
-        elif sekil_tipi == &quot;kare&quot;:
-            kenar = args[0]
-            return kenar * kenar
-        elif sekil_tipi == &quot;dikdortgen&quot;:
-            return args[0] * args[1]
-        elif sekil_tipi == &quot;ucgen&quot;:
-            return (args[0] * args[1]) / 2
-        else:
-            raise ValueError(f&quot;Bilinmeyen sekil: {sekil_tipi}&quot;)</code></pre>
-                <div class="solid-why"><strong>Neden kotu?</strong> Her yeni sekil (elips, yamuk) icin alan_hesapla metoduna elif eklenmeli. Sinif degisiklige kapali degil, genislemeye kapali — OCP ihlali.</div>
-              </div>
-              <div class="solid-code-box good">
-                <div class="solid-code-box-head">Ilkeye uygun (iyi) kod</div>
-                <pre><code>from abc import ABC, abstractmethod
-
-class Sekil(ABC):
-    @abstractmethod
-    def alan(self):
-        pass
-
-class Daire(Sekil):
-    def __init__(self, yaricap):
-        self.yaricap = yaricap
-    def alan(self):
-        return 3.14159 * self.yaricap ** 2
-
-class Dikdortgen(Sekil):
-    def __init__(self, u, g):
-        self.u, self.g = u, g
-    def alan(self):
-        return self.u * self.g
-
-class AlanHesaplayici:
-    def alan_hesapla(self, sekil: Sekil):
-        return sekil.alan()  # yeni sekil = yeni sinif, bu sinif degismez</code></pre>
-                <div class="solid-why"><strong>Neden iyi?</strong> AlanHesaplayici artik sekil tipini bilmez; alan() metoduna sahip her nesne calisir. Elips eklemek icin sadece Elips(Sekil) yazilir — mevcut kod degismez. OCP&#x27;ye uygun.</div>
-              </div>
-            </div>
-            <div class="enrich-sources"><a href="https://gist.github.com/ecmelkytz/f3290c0269b51c66e79f2dc6529457e9" target="_blank" rel="noopener">PDF Gist cozumu</a></div>
-          </div>
-        </article>
-        
-        <article class="solid-principle" id="oop-ex-lsp-dosya">
-          <div class="solid-principle-head">
-            <div class="solid-letter">L</div>
-            <div>
-              <h3>Liskov Substitution — Dosya Sistemi</h3>
-              <span>SOLID — Hafta 9 Alistirma</span>
-            </div>
-          </div>
-          <div class="solid-body">
-            <div class="solid-row">
-              <div class="solid-row-label">Problem</div>
-              <p>SaltOkunurDosya ve GeciciDosya, Dosya yerine konuldugunda yaz/sil cagrisi patlar. dosya_islemleri(Dosya) guvenle calismiyor.</p>
-            </div>
-            <div class="solid-code-grid">
-              <div class="solid-code-box bad">
-                <div class="solid-code-box-head">Ilkeye aykiri (kotu) kod</div>
-                <pre><code>class Dosya:
-    def oku(self):
-        return f&quot;{self.ad} okundu&quot;
-    def yaz(self, veri):
-        return f&quot;{self.ad} yazildi&quot;
-    def sil(self):
-        return &quot;silindi&quot;
-
-class SaltOkunurDosya(Dosya):
-    def yaz(self, veri):
-        raise PermissionError(&quot;Salt okunur!&quot;)
-    def sil(self):
-        raise PermissionError(&quot;Silinemez!&quot;)
-
-def dosya_islemleri(dosya: Dosya):
-    print(dosya.oku())
-    print(dosya.yaz(&quot;Merhaba&quot;))  # SaltOkunur&#x27;da patlar!
-    print(dosya.sil())</code></pre>
-                <div class="solid-why"><strong>Neden kotu?</strong> Ust sinif Dosya yaz/sil vaat ediyor ama alt siniflar bozuyor. Dosya yerine SaltOkunurDosya konunca program kirilir — LSP ihlali.</div>
-              </div>
-              <div class="solid-code-box good">
-                <div class="solid-code-box-head">Ilkeye uygun (iyi) kod</div>
-                <pre><code>from abc import ABC, abstractmethod
-
-class Okunabilir(ABC):
-    @abstractmethod
-    def oku(self): pass
-
-class Yazilabilir(ABC):
-    @abstractmethod
-    def yaz(self, veri): pass
-
-class Silinebilir(ABC):
-    @abstractmethod
-    def sil(self): pass
-
-class NormalDosya(Okunabilir, Yazilabilir, Silinebilir):
-    def oku(self): return &quot;okundu&quot;
-    def yaz(self, v): return &quot;yazildi&quot;
-    def sil(self): return &quot;silindi&quot;
-
-class SaltOkunurDosya(Okunabilir):
-    def oku(self): return &quot;okundu&quot;
-
-def oku_ve_yaz(obj: Yazilabilir, veri):
-    if isinstance(obj, Okunabilir):
-        print(obj.oku())
-    obj.yaz(veri)  # sadece Yazilabilir nesnelerle cagir</code></pre>
-                <div class="solid-why"><strong>Neden iyi?</strong> Yeteneklere gore kucuk arayuzler: Okunabilir, Yazilabilir, Silinebilir. SaltOkunur sadece Okunabilir — yaz cagrisi zorlanmaz. LSP&#x27;ye uygun.</div>
-              </div>
-            </div>
-            <div class="enrich-sources"><a href="https://gist.github.com/ecmelkytz/49596f9fb8b61d0af0e64155edd2dacba" target="_blank" rel="noopener">PDF Gist cozumu</a></div>
-          </div>
-        </article>
-        
-        <article class="solid-principle" id="oop-ex-isp-cihaz">
-          <div class="solid-principle-head">
-            <div class="solid-letter">I</div>
-            <div>
-              <h3>Interface Segregation — Akilli Ev Cihazlari</h3>
-              <span>SOLID — Hafta 9 Alistirma</span>
-            </div>
-          </div>
-          <div class="solid-body">
-            <div class="solid-row">
-              <div class="solid-row-label">Problem</div>
-              <p>Tek buyuk Cihaz ABC&#x27;si tum metotlari zorunlu kiliyor. Ampul video_kaydet icin NotImplementedError firlatiyor — kullanilmayan arayuze bagimli.</p>
-            </div>
-            <div class="solid-code-grid">
-              <div class="solid-code-box bad">
-                <div class="solid-code-box-head">Ilkeye aykiri (kotu) kod</div>
-                <pre><code>class Cihaz(ABC):
-    @abstractmethod
-    def ac(self): pass
-    @abstractmethod
-    def kapat(self): pass
-    @abstractmethod
-    def sicaklik_ayarla(self, d): pass
-    @abstractmethod
-    def video_kaydet(self): pass
-    @abstractmethod
-    def hareket_algila(self): pass
-
-class Ampul(Cihaz):
-    def ac(self): print(&quot;Acildi&quot;)
-    def kapat(self): print(&quot;Kapandi&quot;)
-    def sicaklik_ayarla(self, d):
-        raise NotImplementedError(&quot;Ampul sicaklik ayarlayamaz&quot;)
-    def video_kaydet(self):
-        raise NotImplementedError()
-    def hareket_algila(self):
-        raise NotImplementedError()</code></pre>
-                <div class="solid-why"><strong>Neden kotu?</strong> Ampul kullanmadigi 3 metodu bos/raise ile implement etmek zorunda. Buyuk arayuz gereksiz bagimlilik — ISP ihlali.</div>
-              </div>
-              <div class="solid-code-box good">
-                <div class="solid-code-box-head">Ilkeye uygun (iyi) kod</div>
-                <pre><code>class Acilabilir(ABC):
-    @abstractmethod
-    def ac(self): pass
-    @abstractmethod
-    def kapat(self): pass
-
-class SicaklikAyarlanabilir(ABC):
-    @abstractmethod
-    def sicaklik_ayarla(self, d): pass
-
-class GuvenlikCihazi(ABC):
-    @abstractmethod
-    def video_kaydet(self): pass
-    @abstractmethod
-    def hareket_algila(self): pass
-
-class Ampul(Acilabilir):
-    def ac(self): print(&quot;Ampul acildi&quot;)
-    def kapat(self): print(&quot;Ampul kapandi&quot;)
-
-class Termostat(Acilabilir, SicaklikAyarlanabilir):
-    def ac(self): pass
-    def kapat(self): pass
-    def sicaklik_ayarla(self, d): print(f&quot;{d} derece&quot;)</code></pre>
-                <div class="solid-why"><strong>Neden iyi?</strong> Her cihaz sadece ihtiyaci olan arayuzleri implement eder. Ampul sadece Acilabilir — gereksiz metot yok. ISP&#x27;ye uygun.</div>
-              </div>
-            </div>
-            <div class="enrich-sources"><a href="https://gist.github.com/ecmelkytz/ec49ef94dce542dd661544e3a618dca0" target="_blank" rel="noopener">PDF Gist cozumu</a></div>
-          </div>
-        </article>
-        
-        <article class="solid-principle" id="oop-ex-dip-bildirim">
-          <div class="solid-principle-head">
-            <div class="solid-letter">D</div>
-            <div>
-              <h3>Dependency Inversion — Bildirim Sistemi</h3>
-              <span>SOLID — Hafta 9 Alistirma</span>
-            </div>
-          </div>
-          <div class="solid-body">
-            <div class="solid-row">
-              <div class="solid-row-label">Problem</div>
-              <p>NotificationManager dogrudan EmailService, SMSService somut siniflarina bagli. Yeni kanal eklemek veya test icin mock kullanmak zor.</p>
-            </div>
-            <div class="solid-code-grid">
-              <div class="solid-code-box bad">
-                <div class="solid-code-box-head">Ilkeye aykiri (kotu) kod</div>
-                <pre><code>class EmailService:
-    def send_email(self, message):
-        print(f&quot;Email: {message}&quot;)
-
-class NotificationManager:
-    def __init__(self):
-        self.email = EmailService()
-        self.sms = SMSService()
-
-    def send(self, message, channel):
-        if channel == &quot;email&quot;:
-            self.email.send_email(message)
-        elif channel == &quot;sms&quot;:
-            self.sms.send_sms(message)</code></pre>
-                <div class="solid-why"><strong>Neden kotu?</strong> Ust seviye NotificationManager alt seviye somut siniflara bagimli. Email servisi degisince manager degismek zorunda — DIP ihlali.</div>
-              </div>
-              <div class="solid-code-box good">
-                <div class="solid-code-box-head">Ilkeye uygun (iyi) kod</div>
-                <pre><code>from abc import ABC, abstractmethod
-
-class BildirimKanali(ABC):
-    @abstractmethod
-    def gonder(self, mesaj: str):
-        pass
-
-class EmailKanali(BildirimKanali):
-    def gonder(self, mesaj):
-        print(f&quot;Email: {mesaj}&quot;)
-
-class NotificationManager:
-    def __init__(self, kanallar: dict):
-        self.kanallar = kanallar  # enjekte edilen soyut bagimlilik
-
-    def send(self, mesaj, channel):
-        self.kanallar[channel].gonder(mesaj)</code></pre>
-                <div class="solid-why"><strong>Neden iyi?</strong> Manager somut siniflari bilmez; BildirimKanali soyutlamasina bagimlidir. Testte sahte kanal enjekte edilebilir. DIP&#x27;ye uygun.</div>
-              </div>
-            </div>
-            <div class="enrich-sources"><a href="https://gist.github.com/ecmelkytz/d12748bb40cb30421978119fabe9eda4" target="_blank" rel="noopener">PDF Gist cozumu</a></div>
-          </div>
-        </article>
-        
-      </div>
-    </section>
-    
-    <section class="special-block" id="solid-ilkeleri">
-      <div class="special-head"><h2>SOLID Ilkeleri — Odev / Sinav Formati</h2></div>
-      <div class="special-body">
+        <details class="panel" open>
+          <summary>1. SOLID Ilkeleri — Odev / Sinav Formati (S-O-L-I-D)</summary>
+          <div class="panel-inner">
+        <div id="solid-ilkeleri">
         <div class="solid-header">
           <h3>SOLID Ilkeleri</h3>
           <p style="font-size:.85rem;color:var(--text-soft);margin-bottom:.75rem">Nesne Yonelimli Programlama — Sinav Odev Formati</p>
           <div class="field">Ad Soyad: ___________________________</div><div class="field">Ogrenci No: _________________________</div><div class="field">Tarih: ______________________________</div>
         </div>
         <div class="callout callout-exam">
-          Asagida her SOLID ilkesi icin: <strong>ilke adi, tanimi, amaci, kotu/iyi Ruby kod ornegi</strong> ve aciklamalari yer alir.
-          Yazdir butonu ile PDF olarak da alabilirsin.
+          Her SOLID ilkesi: <strong>ilke adi, tanimi, amaci, kotu/iyi kod</strong> ve aciklama.
+          Altinda sinif arkadaslarinin Python ornekleri (Makyaj Studyosu, Leon, Solo Leveling vb.) yer alir.
         </div>
         
         <article class="solid-principle" id="solid-s">
@@ -11459,6 +11691,54 @@ end</code></pre>
               </div>
             </div>
             
+            <div class="solid-class-example" id="solid-ornek-s">
+              <div class="solid-row-label">Sinif arkadas ornegi (Python)</div>
+              <p style="font-size:.9rem;font-weight:600;margin:.25rem 0">Makyaj Studyosu — Tek Sorumluluk (SRP)</p>
+              <p class="solid-example-meta">
+                Tema: Makyaj salonu islemleri · Hazirlayan: Gizem Senol ·
+                Dosya: <code>solid_examples/single_responsibility.py</code>
+              </p>
+              <div class="solid-code-grid">
+                <div class="solid-code-box bad">
+                  <div class="solid-code-box-head">Kotu kod</div>
+                  <pre><code>class MakyajStudyosu:
+    def __init__(self, musteri_adi, hizmet_turu, ucret):
+        self.musteri_adi = musteri_adi
+        self.hizmet_turu = hizmet_turu
+        self.ucret = ucret
+
+    def makyaj_uygula(self):
+        print(f&quot;{self.musteri_adi} — {self.hizmet_turu} makyaji&quot;)
+
+    def fircalari_ve_salonu_temizle(self):
+        print(&quot;Firçalar dezenfekte, salon temizleniyor&quot;)
+
+    def fatura_kes(self):
+        kdv_dahil = self.ucret * 1.20
+        print(f&quot;Fatura: {kdv_dahil} TL&quot;)</code></pre>
+                  <div class="solid-why"><strong>Neden kotu?</strong> Sinifin degismesi icin 3 farkli neden var: makyaj, hijyen, finans. KDV orani degisirse makyaj koduna dokunmak gerekir — SRP ihlali.</div>
+                </div>
+                <div class="solid-code-box good">
+                  <div class="solid-code-box-head">Iyi kod</div>
+                  <pre><code>class MakyajHizmeti:
+    def makyaj_uygula(self): ...
+
+class HijyenYoneticisi:
+    def fircalari_temizle(self): ...
+    def salonu_temizle(self): ...
+
+class FinansYonetimi:
+    @staticmethod
+    def fatura_kes(musteri_adi, ucret):
+        kdv_dahil = ucret * 1.20
+        ...</code></pre>
+                  <div class="solid-why"><strong>Neden iyi?</strong> Her sinif tek is yapar: makyaj, hijyen veya fatura. Vergi kurali degisince yalnizca FinansYonetimi guncellenir.</div>
+                </div>
+              </div>
+              
+            </div>
+            
+            
           </div>
         </article>
         
@@ -11525,6 +11805,48 @@ end</code></pre>
                 <div class="solid-why"><strong>Neden iyi?</strong> PaymentProcessor artik hangi odeme tipi oldugunu bilmez; charge metoduna sahip her gateway calisir. CryptoGateway eklemek icin PaymentProcessor&#x27;a dokunulmaz. Mevcut kod kapali (degismez), yeni davranis genislemeyle acik — OCP&#x27;ye uygun.</div>
               </div>
             </div>
+            
+            <div class="solid-class-example" id="solid-ornek-o">
+              <div class="solid-row-label">Sinif arkadas ornegi (Python)</div>
+              <p style="font-size:.9rem;font-weight:600;margin:.25rem 0">Para Transferi — Acik/Kapali (OCP)</p>
+              <p class="solid-example-meta">
+                Tema: Banka transfer yontemleri · Hazirlayan: Salih KOZA ·
+                Dosya: <code>solid_examples/open_closed.py</code>
+              </p>
+              <div class="solid-code-grid">
+                <div class="solid-code-box bad">
+                  <div class="solid-code-box-head">Kotu kod</div>
+                  <pre><code>class ParaTransferi:
+    def transfer_yap(self, miktar, yontem):
+        if yontem == &quot;havale&quot;:
+            print(f&quot;{miktar} TL Havale. Komisyon: 0&quot;)
+        elif yontem == &quot;eft&quot;:
+            print(f&quot;{miktar} TL EFT. Komisyon: 5&quot;)
+        else:
+            raise ValueError(&quot;Bilinmeyen yontem!&quot;)</code></pre>
+                  <div class="solid-why"><strong>Neden kotu?</strong> SWIFT veya kripto eklemek icin sinifi acip yeni elif yazmak gerekir. Calisan havale/EFT kodu risk altinda — OCP ihlali, if/elif spagetti.</div>
+                </div>
+                <div class="solid-code-box good">
+                  <div class="solid-code-box-head">Iyi kod</div>
+                  <pre><code>class TransferYontemi(ABC):
+    @abstractmethod
+    def islem_yap(self, miktar): pass
+
+class Havale(TransferYontemi):
+    def islem_yap(self, miktar): ...
+
+class EFT(TransferYontemi):
+    def islem_yap(self, miktar): ...
+
+class TransferMerkezi:
+    def transferi_baslat(self, miktar, yontem: TransferYontemi):
+        yontem.islem_yap(miktar)  # if/elif yok!</code></pre>
+                  <div class="solid-why"><strong>Neden iyi?</strong> TransferMerkezi degismez; yeni yontem icin sadece yeni sinif eklenir (ornegin class SwiftTransfer). Mevcut kod kapali, genisleme acik — OCP uygun.</div>
+                </div>
+              </div>
+              
+            </div>
+            
             
           </div>
         </article>
@@ -11604,7 +11926,56 @@ end
                 <div class="solid-why"><strong>Neden iyi?</strong> Her Hunter ayni sozlesmeye uyar: dungeon_temizle bool, skill_kullan string doner. SungJinwoo ekstra ozellik ekler ama sozlesmeyi bozmaz. Alt sinif ust sinifin yerine guvenle konulabilir — LSP&#x27;ye uygun.</div>
               </div>
             </div>
-            <a class="solid-extra-link" href="#lsp-solo-leveling">Detayli Solo Leveling LSP ornegi (Python) →</a>
+            
+            <div class="solid-class-example" id="solid-ornek-l">
+              <div class="solid-row-label">Sinif arkadas ornegi (Python)</div>
+              <p style="font-size:.9rem;font-weight:600;margin:.25rem 0">Solo Leveling Avci — Liskov (LSP)</p>
+              <p class="solid-example-meta">
+                Tema: Solo Leveling / Hunter hiyerarsisi · Hazirlayan: Muhammed Hamza Erhan ·
+                Dosya: <code>solid_examples/liskov.py</code>
+              </p>
+              <div class="solid-code-grid">
+                <div class="solid-code-box bad">
+                  <div class="solid-code-box-head">Kotu kod</div>
+                  <pre><code>class Avci_Kotu:
+    def guc_artir(self, miktar):
+        self.guc += miktar
+    def zeka_artir(self, miktar):
+        self.zeka += miktar
+
+class YanlisPlayer(Avci_Kotu):
+    def guc_artir(self, miktar):
+        self.guc += miktar
+        self.zeka += miktar  # beklenmeyen!
+
+def stat_test_et(avci):
+    avci.guc_artir(10); avci.zeka_artir(5)
+    # Beklenen: guc=20, zeka=15
+    # YanlisPlayer → zeka=20 → KALDI</code></pre>
+                  <div class="solid-why"><strong>Neden kotu?</strong> Avci&#x27;da guc ve zeka bagimsiz artar. YanlisPlayer guc artirinca zeka da artar; stat_test_et patlar. Alt sinif ust sinifin yerine konulamaz — LSP ihlali.</div>
+                </div>
+                <div class="solid-code-box good">
+                  <div class="solid-code-box-head">Iyi kod</div>
+                  <pre><code>class Hunter(ABC):
+    @abstractmethod
+    def dungeon_temizle(self, seviye: int) -&gt; bool: pass
+    @abstractmethod
+    def skill_kullan(self) -&gt; str: pass
+
+class ERankHunter(Hunter): ...
+class SungJinwoo(Hunter): ...
+
+def baskani_hazirla(hunter: Hunter, seviye: int):
+    if hunter.dungeon_temizle(seviye):
+        print(hunter.skill_kullan())
+# Hangi hunter gelirse gelsin calisir</code></pre>
+                  <div class="solid-why"><strong>Neden iyi?</strong> Her Hunter bool/str sozlesmesine uyar. SungJinwoo ekstra ozellik ekler ama sozlesmeyi bozmaz. Detay: asagidaki LSP Solo Leveling paneli.</div>
+                </div>
+              </div>
+              <a class="solid-extra-link" href="#lsp-solo-leveling">Detayli LSP ornegi ve 5 kural →</a>
+            </div>
+            
+            
           </div>
         </article>
         
@@ -11685,6 +12056,59 @@ end</code></pre>
               </div>
             </div>
             
+            <div class="solid-class-example" id="solid-ornek-i">
+              <div class="solid-row-label">Sinif arkadas ornegi (Python)</div>
+              <p style="font-size:.9rem;font-weight:600;margin:.25rem 0">Hayvan Arayuzleri — Arayuz Ayirimi (ISP)</p>
+              <p class="solid-example-meta">
+                Tema: Kartal, kopek, kedi davranislari · Hazirlayan: Hilmi Arda Dagci ·
+                Dosya: <code>solid_examples/Interface_segration.py</code>
+              </p>
+              <div class="solid-code-grid">
+                <div class="solid-code-box bad">
+                  <div class="solid-code-box-head">Kotu kod</div>
+                  <pre><code>class Animal(ABC):
+    @abstractmethod
+    def eat(self): pass
+    @abstractmethod
+    def fly(self): pass
+    @abstractmethod
+    def swim(self): pass
+
+class Eagle(Animal):
+    def eat(self): ...
+    def fly(self): ...
+    def swim(self): pass  # Kartal yuzmez!
+
+class Dog(Animal):
+    def eat(self): ...
+    def fly(self): pass   # Kopek ucamaz!
+    def swim(self): ...</code></pre>
+                  <div class="solid-why"><strong>Neden kotu?</strong> Eagle, Dog ve Cat kullanmadigi fly/swim metotlarini bos implement etmek zorunda. Siskin arayuz gereksiz kod ve hata riski — ISP ihlali.</div>
+                </div>
+                <div class="solid-code-box good">
+                  <div class="solid-code-box-head">Iyi kod</div>
+                  <pre><code>class Eatable(ABC):
+    @abstractmethod
+    def eat(self): pass
+
+class Flyable(ABC):
+    @abstractmethod
+    def fly(self): pass
+
+class Swimmable(ABC):
+    @abstractmethod
+    def swim(self): pass
+
+class Eagle(Eatable, Flyable): ...
+class Dog(Eatable, Swimmable): ...
+class Cat(Eatable): ...</code></pre>
+                  <div class="solid-why"><strong>Neden iyi?</strong> Her sinif yalnizca ihtiyaci olan kucuk arayuzu alir. Kedi yuzme/uçma metodu yazmak zorunda kalmaz — ISP uygun.</div>
+                </div>
+              </div>
+              
+            </div>
+            
+            
           </div>
         </article>
         
@@ -11742,23 +12166,343 @@ PostsController.new(repository: PostRepository.new)</code></pre>
               </div>
             </div>
             
+            <div class="solid-class-example" id="solid-ornek-d">
+              <div class="solid-row-label">Sinif arkadas ornegi (Python)</div>
+              <p style="font-size:.9rem;font-weight:600;margin:.25rem 0">Leon &amp; Silah — Bagimlilik Tersine Cevirme (DIP)</p>
+              <p class="solid-example-meta">
+                Tema: Resident Evil — Leon silah secimi · Hazirlayan: Emir Can BICEN ·
+                Dosya: <code>solid_examples/Dependency_inversion.py</code>
+              </p>
+              <div class="solid-code-grid">
+                <div class="solid-code-box bad">
+                  <div class="solid-code-box-head">Kotu kod</div>
+                  <pre><code>class Tabanca:
+    def ates_et(self):
+        print(&quot;BANG!&quot;)
+
+class Leon:
+    def __init__(self):
+        self.silah = Tabanca()  # somut sinifa bagimli
+
+    def saldir(self):
+        self.silah.ates_et()</code></pre>
+                  <div class="solid-why"><strong>Neden kotu?</strong> Leon yalnizca Tabanca kullanabilir. Shotgun veya Requiem eklemek icin Leon sinifini degistirmek gerekir — ust seviye alt seviyeye bagimli, DIP ihlali.</div>
+                </div>
+                <div class="solid-code-box good">
+                  <div class="solid-code-box-head">Iyi kod</div>
+                  <pre><code>class Silah(ABC):
+    @abstractmethod
+    def ates_et(self): pass
+
+class Tabanca(Silah): ...
+class Shotgun(Silah): ...
+class Requiem(Silah): ...
+
+class Leon:
+    def __init__(self, silah: Silah):
+        self.silah = silah  # disaridan enjekte
+
+leon_boss = Leon(Requiem())
+leon_boss.saldir()</code></pre>
+                  <div class="solid-why"><strong>Neden iyi?</strong> Leon somut silahi bilmez; Silah soyutlamasina bagimlidir. Yeni silah = yeni sinif, Leon degismez — Dependency Injection ile DIP uygun.</div>
+                </div>
+              </div>
+              
+            </div>
+            
+            
           </div>
         </article>
         
-      </div>
-    </section>
-    
-    <section class="special-block" id="lsp-solo-leveling">
-      <div class="special-head"><h2>LSP Detay — Solo Leveling Ornegi (Sinav Formati)</h2></div>
-      <div class="special-body">
+        </div>
+        </div>
+        </details>
+        <details class="panel">
+          <summary>2. PDF Alistirmalari — OCP, LSP, ISP, DIP (Cozumlu)</summary>
+          <div class="panel-inner">
+        <div id="oop-solid-alistirmalar">
+        <div class="callout callout-exam">
+          PDF 9. hafta odevleri: AlanHesaplayici (OCP), Dosya (LSP), Cihaz (ISP), Bildirim (DIP).
+        </div>
+        
+        <article class="solid-principle" id="oop-ex-ocp-alan-hesaplayici">
+          <div class="solid-principle-head">
+            <div class="solid-letter">O</div>
+            <div>
+              <h3>Open/Closed — AlanHesaplayici</h3>
+              <span>PDF 9. Hafta Alistirma — Cozumlu</span>
+            </div>
+          </div>
+          <div class="solid-body">
+            <div class="solid-row">
+              <div class="solid-row-label">Problem</div>
+              <p>Yeni sekil eklendiginde AlanHesaplayici icindeki if/elif blogu degismek zorunda. Mevcut kod her yeni sekilde kirilganlasir.</p>
+            </div>
+            <div class="solid-code-grid">
+              <div class="solid-code-box bad">
+                <div class="solid-code-box-head">Ilkeye aykiri (kotu) kod</div>
+                <pre><code>class AlanHesaplayici:
+    def alan_hesapla(self, sekil_tipi, *args):
+        if sekil_tipi == &quot;daire&quot;:
+            yaricap = args[0]
+            return 3.14159 * yaricap * yaricap
+        elif sekil_tipi == &quot;kare&quot;:
+            kenar = args[0]
+            return kenar * kenar
+        elif sekil_tipi == &quot;dikdortgen&quot;:
+            return args[0] * args[1]
+        elif sekil_tipi == &quot;ucgen&quot;:
+            return (args[0] * args[1]) / 2
+        else:
+            raise ValueError(f&quot;Bilinmeyen sekil: {sekil_tipi}&quot;)</code></pre>
+                <div class="solid-why"><strong>Neden kotu?</strong> Her yeni sekil (elips, yamuk) icin alan_hesapla metoduna elif eklenmeli. Sinif degisiklige kapali degil, genislemeye kapali — OCP ihlali.</div>
+              </div>
+              <div class="solid-code-box good">
+                <div class="solid-code-box-head">Ilkeye uygun (iyi) kod</div>
+                <pre><code>from abc import ABC, abstractmethod
+
+class Sekil(ABC):
+    @abstractmethod
+    def alan(self):
+        pass
+
+class Daire(Sekil):
+    def __init__(self, yaricap):
+        self.yaricap = yaricap
+    def alan(self):
+        return 3.14159 * self.yaricap ** 2
+
+class Dikdortgen(Sekil):
+    def __init__(self, u, g):
+        self.u, self.g = u, g
+    def alan(self):
+        return self.u * self.g
+
+class AlanHesaplayici:
+    def alan_hesapla(self, sekil: Sekil):
+        return sekil.alan()  # yeni sekil = yeni sinif, bu sinif degismez</code></pre>
+                <div class="solid-why"><strong>Neden iyi?</strong> AlanHesaplayici artik sekil tipini bilmez; alan() metoduna sahip her nesne calisir. Elips eklemek icin sadece Elips(Sekil) yazilir — mevcut kod degismez. OCP&#x27;ye uygun.</div>
+              </div>
+            </div>
+            <div class="enrich-sources"><a href="https://gist.github.com/ecmelkytz/f3290c0269b51c66e79f2dc6529457e9" target="_blank" rel="noopener">PDF Gist cozumu</a></div>
+          </div>
+        </article>
+        
+        <article class="solid-principle" id="oop-ex-lsp-dosya">
+          <div class="solid-principle-head">
+            <div class="solid-letter">L</div>
+            <div>
+              <h3>Liskov Substitution — Dosya Sistemi</h3>
+              <span>PDF 9. Hafta Alistirma — Cozumlu</span>
+            </div>
+          </div>
+          <div class="solid-body">
+            <div class="solid-row">
+              <div class="solid-row-label">Problem</div>
+              <p>SaltOkunurDosya ve GeciciDosya, Dosya yerine konuldugunda yaz/sil cagrisi patlar. dosya_islemleri(Dosya) guvenle calismiyor.</p>
+            </div>
+            <div class="solid-code-grid">
+              <div class="solid-code-box bad">
+                <div class="solid-code-box-head">Ilkeye aykiri (kotu) kod</div>
+                <pre><code>class Dosya:
+    def oku(self):
+        return f&quot;{self.ad} okundu&quot;
+    def yaz(self, veri):
+        return f&quot;{self.ad} yazildi&quot;
+    def sil(self):
+        return &quot;silindi&quot;
+
+class SaltOkunurDosya(Dosya):
+    def yaz(self, veri):
+        raise PermissionError(&quot;Salt okunur!&quot;)
+    def sil(self):
+        raise PermissionError(&quot;Silinemez!&quot;)
+
+def dosya_islemleri(dosya: Dosya):
+    print(dosya.oku())
+    print(dosya.yaz(&quot;Merhaba&quot;))  # SaltOkunur&#x27;da patlar!
+    print(dosya.sil())</code></pre>
+                <div class="solid-why"><strong>Neden kotu?</strong> Ust sinif Dosya yaz/sil vaat ediyor ama alt siniflar bozuyor. Dosya yerine SaltOkunurDosya konunca program kirilir — LSP ihlali.</div>
+              </div>
+              <div class="solid-code-box good">
+                <div class="solid-code-box-head">Ilkeye uygun (iyi) kod</div>
+                <pre><code>from abc import ABC, abstractmethod
+
+class Okunabilir(ABC):
+    @abstractmethod
+    def oku(self): pass
+
+class Yazilabilir(ABC):
+    @abstractmethod
+    def yaz(self, veri): pass
+
+class Silinebilir(ABC):
+    @abstractmethod
+    def sil(self): pass
+
+class NormalDosya(Okunabilir, Yazilabilir, Silinebilir):
+    def oku(self): return &quot;okundu&quot;
+    def yaz(self, v): return &quot;yazildi&quot;
+    def sil(self): return &quot;silindi&quot;
+
+class SaltOkunurDosya(Okunabilir):
+    def oku(self): return &quot;okundu&quot;
+
+def oku_ve_yaz(obj: Yazilabilir, veri):
+    if isinstance(obj, Okunabilir):
+        print(obj.oku())
+    obj.yaz(veri)  # sadece Yazilabilir nesnelerle cagir</code></pre>
+                <div class="solid-why"><strong>Neden iyi?</strong> Yeteneklere gore kucuk arayuzler: Okunabilir, Yazilabilir, Silinebilir. SaltOkunur sadece Okunabilir — yaz cagrisi zorlanmaz. LSP&#x27;ye uygun.</div>
+              </div>
+            </div>
+            <div class="enrich-sources"><a href="https://gist.github.com/ecmelkytz/49596f9fb8b61d0af0e64155edd2dacba" target="_blank" rel="noopener">PDF Gist cozumu</a></div>
+          </div>
+        </article>
+        
+        <article class="solid-principle" id="oop-ex-isp-cihaz">
+          <div class="solid-principle-head">
+            <div class="solid-letter">I</div>
+            <div>
+              <h3>Interface Segregation — Akilli Ev Cihazlari</h3>
+              <span>PDF 9. Hafta Alistirma — Cozumlu</span>
+            </div>
+          </div>
+          <div class="solid-body">
+            <div class="solid-row">
+              <div class="solid-row-label">Problem</div>
+              <p>Tek buyuk Cihaz ABC&#x27;si tum metotlari zorunlu kiliyor. Ampul video_kaydet icin NotImplementedError firlatiyor — kullanilmayan arayuze bagimli.</p>
+            </div>
+            <div class="solid-code-grid">
+              <div class="solid-code-box bad">
+                <div class="solid-code-box-head">Ilkeye aykiri (kotu) kod</div>
+                <pre><code>class Cihaz(ABC):
+    @abstractmethod
+    def ac(self): pass
+    @abstractmethod
+    def kapat(self): pass
+    @abstractmethod
+    def sicaklik_ayarla(self, d): pass
+    @abstractmethod
+    def video_kaydet(self): pass
+    @abstractmethod
+    def hareket_algila(self): pass
+
+class Ampul(Cihaz):
+    def ac(self): print(&quot;Acildi&quot;)
+    def kapat(self): print(&quot;Kapandi&quot;)
+    def sicaklik_ayarla(self, d):
+        raise NotImplementedError(&quot;Ampul sicaklik ayarlayamaz&quot;)
+    def video_kaydet(self):
+        raise NotImplementedError()
+    def hareket_algila(self):
+        raise NotImplementedError()</code></pre>
+                <div class="solid-why"><strong>Neden kotu?</strong> Ampul kullanmadigi 3 metodu bos/raise ile implement etmek zorunda. Buyuk arayuz gereksiz bagimlilik — ISP ihlali.</div>
+              </div>
+              <div class="solid-code-box good">
+                <div class="solid-code-box-head">Ilkeye uygun (iyi) kod</div>
+                <pre><code>class Acilabilir(ABC):
+    @abstractmethod
+    def ac(self): pass
+    @abstractmethod
+    def kapat(self): pass
+
+class SicaklikAyarlanabilir(ABC):
+    @abstractmethod
+    def sicaklik_ayarla(self, d): pass
+
+class GuvenlikCihazi(ABC):
+    @abstractmethod
+    def video_kaydet(self): pass
+    @abstractmethod
+    def hareket_algila(self): pass
+
+class Ampul(Acilabilir):
+    def ac(self): print(&quot;Ampul acildi&quot;)
+    def kapat(self): print(&quot;Ampul kapandi&quot;)
+
+class Termostat(Acilabilir, SicaklikAyarlanabilir):
+    def ac(self): pass
+    def kapat(self): pass
+    def sicaklik_ayarla(self, d): print(f&quot;{d} derece&quot;)</code></pre>
+                <div class="solid-why"><strong>Neden iyi?</strong> Her cihaz sadece ihtiyaci olan arayuzleri implement eder. Ampul sadece Acilabilir — gereksiz metot yok. ISP&#x27;ye uygun.</div>
+              </div>
+            </div>
+            <div class="enrich-sources"><a href="https://gist.github.com/ecmelkytz/ec49ef94dce542dd661544e3a618dca0" target="_blank" rel="noopener">PDF Gist cozumu</a></div>
+          </div>
+        </article>
+        
+        <article class="solid-principle" id="oop-ex-dip-bildirim">
+          <div class="solid-principle-head">
+            <div class="solid-letter">D</div>
+            <div>
+              <h3>Dependency Inversion — Bildirim Sistemi</h3>
+              <span>PDF 9. Hafta Alistirma — Cozumlu</span>
+            </div>
+          </div>
+          <div class="solid-body">
+            <div class="solid-row">
+              <div class="solid-row-label">Problem</div>
+              <p>NotificationManager dogrudan EmailService, SMSService somut siniflarina bagli. Yeni kanal eklemek veya test icin mock kullanmak zor.</p>
+            </div>
+            <div class="solid-code-grid">
+              <div class="solid-code-box bad">
+                <div class="solid-code-box-head">Ilkeye aykiri (kotu) kod</div>
+                <pre><code>class EmailService:
+    def send_email(self, message):
+        print(f&quot;Email: {message}&quot;)
+
+class NotificationManager:
+    def __init__(self):
+        self.email = EmailService()
+        self.sms = SMSService()
+
+    def send(self, message, channel):
+        if channel == &quot;email&quot;:
+            self.email.send_email(message)
+        elif channel == &quot;sms&quot;:
+            self.sms.send_sms(message)</code></pre>
+                <div class="solid-why"><strong>Neden kotu?</strong> Ust seviye NotificationManager alt seviye somut siniflara bagimli. Email servisi degisince manager degismek zorunda — DIP ihlali.</div>
+              </div>
+              <div class="solid-code-box good">
+                <div class="solid-code-box-head">Ilkeye uygun (iyi) kod</div>
+                <pre><code>from abc import ABC, abstractmethod
+
+class BildirimKanali(ABC):
+    @abstractmethod
+    def gonder(self, mesaj: str):
+        pass
+
+class EmailKanali(BildirimKanali):
+    def gonder(self, mesaj):
+        print(f&quot;Email: {mesaj}&quot;)
+
+class NotificationManager:
+    def __init__(self, kanallar: dict):
+        self.kanallar = kanallar  # enjekte edilen soyut bagimlilik
+
+    def send(self, mesaj, channel):
+        self.kanallar[channel].gonder(mesaj)</code></pre>
+                <div class="solid-why"><strong>Neden iyi?</strong> Manager somut siniflari bilmez; BildirimKanali soyutlamasina bagimlidir. Testte sahte kanal enjekte edilebilir. DIP&#x27;ye uygun.</div>
+              </div>
+            </div>
+            <div class="enrich-sources"><a href="https://gist.github.com/ecmelkytz/d12748bb40cb30421978119fabe9eda4" target="_blank" rel="noopener">PDF Gist cozumu</a></div>
+          </div>
+        </article>
+        
+        </div>
+        </div>
+        </details>
+        <details class="panel">
+          <summary>3. LSP Solo Leveling Detay Ornegi</summary>
+          <div class="panel-inner">
+        <div id="lsp-solo-leveling">
         <div class="lsp-hero">
           <h3>Liskov Yerine Gecme Prensibi (LSP)</h3>
           <p><strong>Ne demek?</strong> Alt sinif, ust sinifin YERINE GECEBILMELI. Gecince program BOZULMAMALI.</p>
           <p style="margin-top:.5rem">Sung Jinwoo da bir Avci. Jinwoo&#x27;yu Avci yerine koyunca program calisiyor mu? Calisiyorsa LSP tamam, bozulduysa LSP ihlali.</p>
         </div>
         <div class="callout callout-web">
-          Asagidaki ornek sinif arkadas calismasindan (Muhammed Hamza Erha) uyarlanmistir.
-          Python kodu; __init__ yazim hatalari duzeltildi. Odev formatina uygun kotu/iyi kod + 5 kural.
+          Sinif arkadas calismasindan uyarlandi (Muhammed Hamza Erha). Python kodu.
         </div>
         <div class="solid-code-grid">
           <div class="solid-code-box bad">
@@ -11880,6 +12624,10 @@ baskani_hazirla(SungJinwoo(), 10)</code></pre>
         </div>
         </div>
         <p class="lsp-credit">Ornek calisma: Muhammed Hamza Erha — Solo Leveling temasiyla LSP aciklamasi</p>
+        </div>
+        </div>
+        </details>
+        
       </div>
     </section>
     

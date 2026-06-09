@@ -639,3 +639,8 @@ def match_panel_topics(panel_title: str, week: int):
                 matched.append(topic)
                 break
     return matched
+
+
+from ruby_faq_tr import attach_ruby_faq_to_topics
+
+attach_ruby_faq_to_topics(TOPICS)
